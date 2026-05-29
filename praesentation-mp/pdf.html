@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @page{size:A4;margin:0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --onyx:#0d0a18;--ink:#1a1a22;--body:#3b3b46;--smoke:#6b6b76;
+    --paper:#ffffff;--veil:#f4f3f8;--line:#e6e2ee;--moon:#7d6bf0;--moon2:#9a8cff;
+    --red:#e0463c;--amber:#e7a01f;--green:#1f9d57;
+    --disp:'Space Grotesk',sans-serif;--bf:'Inter',sans-serif;--mono:'Space Mono',monospace;
+  }
+  body{font-family:var(--bf);color:var(--body);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:210mm;height:297mm;padding:15mm 15mm 13mm;background:var(--paper);position:relative;overflow:hidden}
+  .page+.page{page-break-before:always}
+  h1,h2,h3{font-family:var(--disp);color:var(--ink);letter-spacing:-.015em;line-height:1.08}
+  .kicker{font-family:var(--mono);font-size:8.5pt;letter-spacing:.26em;text-transform:uppercase;color:var(--moon)}
+  .brand{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:16px}
+  .brand .wm{height:20px}
+  .brand .acc{font-family:var(--mono);font-size:7.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--smoke)}
+  .accentline{height:3px;width:54px;background:var(--moon);border-radius:2px;margin:2px 0 10px}
+  h1.title{font-size:23pt;font-weight:700;margin:6px 0 6px;max-width:21ch}
+  h1.title em{font-style:normal;color:var(--moon)}
+  .lead{font-size:10.5pt;color:var(--body);max-width:64ch}
+  .rule{height:1px;background:var(--line);margin:13px 0}
+  h2.sec{font-size:14pt;font-weight:700;margin-bottom:9px}
+  .heute{display:grid;grid-template-columns:1.1fr 1fr;gap:13px;align-items:start}
+  .shot{border:1px solid var(--line);border-radius:9px;overflow:hidden}
+  .shot .bar{background:#eceaf3;display:flex;gap:5px;padding:7px 9px}
+  .shot .bar i{width:8px;height:8px;border-radius:50%;background:#cfcad8;display:block}
+  .shot img{width:100%;display:block}
+  .amp{list-style:none;display:flex;flex-direction:column;gap:7px}
+  .amp li{display:flex;gap:8px;align-items:flex-start;font-size:9pt;line-height:1.42}
+  .amp .d{flex:0 0 auto;width:9px;height:9px;border-radius:50%;margin-top:4px}
+  .r{background:var(--red)}.a{background:var(--amber)}.g{background:var(--green)}
+  .amp b{font-family:var(--disp);font-weight:600;color:var(--ink);font-size:9.5pt}
+  .vrow{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:11px;background:var(--paper)}
+  .vrow .frame{width:53%;flex:0 0 53%;border-right:1px solid var(--line);background:#eceaf3}
+  .vrow .frame .bar{display:flex;gap:5px;padding:6px 9px;background:#e4e0ee}
+  .vrow .frame .bar i{width:7px;height:7px;border-radius:50%;background:#c7c1d6;display:block}
+  .vrow .frame .crop{height:118px;overflow:hidden}
+  .vrow .frame img{width:100%;display:block;object-fit:cover;object-position:top}
+  .vrow .vt{padding:11px 14px}
+  .vrow .tag{font-family:var(--mono);font-size:7.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--moon)}
+  .vrow h3{font-size:12.5pt;font-weight:700;margin:2px 0 3px}
+  .vrow p{font-size:9pt;color:var(--body);line-height:1.42}
+  .vn{display:flex;flex-direction:column;gap:6px}
+  .vnrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .vnrow>div{border-radius:8px;padding:8px 11px;font-size:8.7pt;line-height:1.38}
+  .old{background:#fbeeec;border:1px solid #f3d3ce;color:#8a3a33}
+  .new{background:#eef0ff;border:1px solid #d6d3f6;color:#3b3486}
+  .vnrow .lab{font-family:var(--mono);font-weight:700;font-size:6.5pt;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:2px;opacity:.85}
+  .vnrow b{color:inherit}
+  .steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .step{border:1px solid var(--line);border-radius:10px;padding:13px 13px}
+  .step .n{font-family:var(--disp);font-weight:700;font-size:15pt;color:var(--moon)}
+  .step h3{font-size:10.5pt;margin:3px 0 3px}
+  .step p{font-size:8.7pt;color:var(--body);line-height:1.42}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:2px}
+  .box{border:1px solid var(--line);border-radius:11px;padding:15px 16px;background:var(--veil)}
+  .box h3{font-size:11.5pt;margin-bottom:5px}
+  .box p{font-size:9pt;color:var(--body);line-height:1.45}
+  .box ul{margin:6px 0 0 0;padding:0;list-style:none}
+  .box li{font-size:8.7pt;color:var(--body);padding-left:13px;position:relative;margin-bottom:2px}
+  .box li:before{content:"";position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;background:var(--moon)}
+  .qrrow{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-top:12px;background:var(--paper)}
+  .qrrow h3{font-size:11.5pt;margin-bottom:4px}
+  .qrrow p{font-size:9pt;color:var(--body);line-height:1.45}
+  .qrrow .kontakt{font-family:var(--disp);font-size:9.5pt;color:var(--ink);margin-top:7px}
+  .qrrow .kontakt b{color:var(--moon)}
+  .qr{text-align:center}.qr img{width:84px;height:84px;display:block;margin:0 auto 4px}
+  .qr span{font-family:var(--mono);font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke)}
+  .pfoot{position:absolute;left:15mm;right:15mm;bottom:9mm;border-top:1px solid var(--line);padding-top:7px;display:flex;justify-content:space-between;align-items:center}
+  .pfoot .l{font-family:var(--mono);font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke)}
+  .pfoot .r{font-size:7.5pt;color:var(--smoke);background:transparent !important}
+  a{color:inherit;text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- SEITE 1 -->
+<div class="page">
+  <div class="brand">
+    <svg class="wm" viewBox="0 0 760 96" xmlns="http://www.w3.org/2000/svg" aria-label="AKIRA Studio">
+      <text x="0" y="68" font-family="'Space Grotesk',sans-serif" font-weight="500" font-size="68" letter-spacing="19" fill="#1a1a22">AKIRA</text>
+      <circle cx="468" cy="48" r="4.5" fill="#9a8cff"/>
+      <text x="498" y="59" font-family="'Space Mono',monospace" font-weight="400" font-size="18" letter-spacing="7" fill="#1a1a22">STUDIO</text>
+    </svg>
+    <span class="acc">Ihr neuer Auftritt · Vorschlag</span>
+  </div>
+  <span class="kicker">// Für M&P Reifenservice, Gladbeck</span>
+  <div class="accentline"></div>
+  <h1 class="title">Ihr Reifen-Spezialist verdient einen Auftritt wie <em>Ihren Service.</em></h1>
+  <p class="lead">Guten Tag, wie besprochen — hier Ihre aktuelle Seite und drei moderne Entwürfe. Alle drei können Sie über den QR-Code auf der letzten Seite live ansehen, gern am Handy.</p>
+  <div class="rule"></div>
+
+  <h2 class="sec">So steht Ihre Seite heute da</h2>
+  <div class="heute">
+    <div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="img/heute.jpg" alt="Aktuelle Seite"></div>
+    <ul class="amp">
+      <li><span class="d a"></span><div><b>Technik aus einer anderen Zeit</b> — alter Frameset-Aufbau, der heute überholt ist und sofort veraltet wirkt.</div></li>
+      <li><span class="d a"></span><div><b>Nicht fürs Handy gebaut</b> — am Smartphone kaum bedienbar, kein klarer Anruf- oder WhatsApp-Button.</div></li>
+      <li><span class="d a"></span><div><b>Verschenkte Stärken</b> — große Reifen- und Felgenauswahl, Komplettservice, Lage an der A2: online fast nicht zu sehen.</div></li>
+      <li><span class="d g"></span><div><b>Das ist stark:</b> Ihre Substanz — Auswahl aller Marken, Komplettservice, Top-Lage an der A2 Gladbeck. Darauf bauen wir auf.</div></li>
+    </ul>
+  </div>
+  <div class="pfoot"><span class="l">AKIRA Studio · Marke der Acthentic GmbH</span><span class="r">www.akira.studio · Seite 1 / 3</span></div>
+</div>
+
+<!-- SEITE 2 -->
+<div class="page">
+  <span class="kicker">// Drei Möglichkeiten</span>
+  <div class="accentline"></div>
+  <h2 class="sec" style="font-size:16pt;margin-bottom:12px">Ihre Seite — drei Entwürfe</h2>
+
+  <div class="vrow">
+    <div class="frame"><div class="bar"><i></i><i></i><i></i></div><div class="crop"><img src="img/thumb-a.jpg" alt="Variante A"></div></div>
+    <div class="vt"><span class="tag">Variante A</span><h3>Klar &amp; vertraut</h3><p>Ihre Farben (Rot/Dunkel) bleiben — alles wird modern, mobil und schnell. Reifen, Felgen und Service auf einen Blick.</p></div>
+  </div>
+  <div class="vrow">
+    <div class="frame"><div class="bar"><i></i><i></i><i></i></div><div class="crop"><img src="img/thumb-b.jpg" alt="Variante B"></div></div>
+    <div class="vt"><span class="tag">Variante B</span><h3>Modern &amp; technisch</h3><p>Ein eigenständiger, kühl-technischer Auftritt mit klarer Kante — für alle, die online besonders herausstechen wollen.</p></div>
+  </div>
+  <div class="vrow">
+    <div class="frame"><div class="bar"><i></i><i></i><i></i></div><div class="crop"><img src="img/thumb-c.jpg" alt="Variante C"></div></div>
+    <div class="vt"><span class="tag">Variante C</span><h3>Ihr Service als Film</h3><p>Der besondere Auftritt — mit einem kurzen Werkstatt-Film. Das i-Tüpfelchen, das im Gedächtnis bleibt.</p></div>
+  </div>
+
+  <div class="rule"></div>
+  <h2 class="sec">Vorher und nachher</h2>
+  <div class="vn">
+    <div class="vnrow"><div class="old"><span class="lab">Vorher</span>Alter Frameset-Aufbau, Technik längst überholt.</div><div class="new"><span class="lab">Nachher</span><b>Moderner Auftritt von 2026</b> — passt zu einem etablierten Reifen-Spezialisten.</div></div>
+    <div class="vnrow"><div class="old"><span class="lab">Vorher</span>Am Handy umständlich, kein klarer Kontaktweg.</div><div class="new"><span class="lab">Nachher</span><b>Anrufen, WhatsApp, Formular</b> — ein Fingertipp genügt.</div></div>
+    <div class="vnrow"><div class="old"><span class="lab">Vorher</span>Auswahl &amp; Komplettservice kaum sichtbar.</div><div class="new"><span class="lab">Nachher</span><b>Reifen, Felgen-Marken &amp; Service klar präsentiert</b> — inkl. Lage an der A2.</div></div>
+  </div>
+  <div class="pfoot"><span class="l">AKIRA Studio · Marke der Acthentic GmbH</span><span class="r">www.akira.studio · Seite 2 / 3</span></div>
+</div>
+
+<!-- SEITE 3 -->
+<div class="page">
+  <span class="kicker">// So geht es weiter</span>
+  <div class="accentline"></div>
+  <h2 class="sec" style="font-size:16pt;margin-bottom:12px">So einfach geht es</h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Anschauen</h3><p>Sie sehen die Entwürfe und sagen, welcher gefällt.</p></div>
+    <div class="step"><div class="n">2</div><h3>Kurz sprechen</h3><p>In fünf Minuten klären wir Wünsche und Festpreis.</p></div>
+    <div class="step"><div class="n">3</div><h3>Wir machen den Rest</h3><p>Texte, Bilder, Technik, Hosting — alles aus einer Hand.</p></div>
+  </div>
+
+  <div class="two">
+    <div class="box">
+      <h3>Was kostet das?</h3>
+      <p>Es gibt <b>feste Preise</b>, die wir vorher gemeinsam vereinbaren — <b>einmalig</b> oder bequem <b>monatlich</b>. Kein Stundensatz, keine versteckten Kosten. Seite, Technik und Hosting inklusive.</p>
+    </div>
+    <div class="box">
+      <h3>Mehr als nur die Website</h3>
+      <p>Auf Wunsch übernehmen wir Ihr ganzes Digitales:</p>
+      <ul>
+        <li>Bei Google gefunden werden (lokale Sichtbarkeit, Google-Profil)</li>
+        <li>Online-Terminanfrage &amp; WhatsApp für Ihre Kunden</li>
+        <li>Pflege, Hosting &amp; Sicherheit — ein Ansprechpartner für alles</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qrrow">
+    <div>
+      <h3>Alle drei Varianten live ansehen</h3>
+      <p>Scannen Sie den Code mit der Handy-Kamera — Sie sehen alle drei Entwürfe in Bewegung und können mit einem Tipp auf <b>„Angebot anfordern"</b> unverbindlich ein Angebot anfragen. Wir melden uns dann bei Ihnen.</p>
+      <div class="kontakt">Ihr Ansprechpartner: <b>AKIRA Studio</b> · info@akira.studio · www.akira.studio</div>
+    </div>
+    <div class="qr"><img src="img/qr.png" alt="QR-Code"><span>Scannen &amp; ansehen</span></div>
+  </div>
+
+  <div class="pfoot">
+    <span class="l">AKIRA Studio · Marke der Acthentic GmbH</span>
+    <span class="r">Acthentic GmbH · Talstrasse 20, 8001 Zürich · www.akira.studio · Seite 3 / 3</span>
+  </div>
+</div>
+
+</body>
+</html>

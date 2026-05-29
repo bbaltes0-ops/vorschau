@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontakt · FF-Service Center in Freigericht-Somborn</title>
+<meta name="description" content="Kontakt zu FF-Service Center in Freigericht-Somborn: Termin anfragen, anrufen oder vorbeikommen. Wir freuen uns auf Sie.">
+<meta name="robots" content="noindex">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav solid" id="nav"><div class="wrap">
+  <a class="logo" href="index.html"><span class="logo-wm">FF-Service Center</span></a>
+  <nav class="links">
+    <a href="index.html">Start</a>
+    <div class="dd"><button>Leistungen <span class="caret">&#9662;</span></button><div class="menu">
+      <a href="leistungen.html#inspektion">Inspektion &amp; Wartung</a>
+      <a href="leistungen.html#hu-au">HU/AU (TÜV)</a>
+      <a href="leistungen.html#reifen">Reifen &amp; Räder</a>
+      <a href="leistungen.html#bremsen">Bremsen</a>
+      <a href="leistungen.html#klima">Klimaservice</a>
+      <a href="leistungen.html#karosserie">Unfall &amp; Karosserie</a>
+    </div></div>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="kontakt.html" class="act">Kontakt</a>
+    <a class="cta" href="#kontaktform">Termin anfragen</a>
+  </nav>
+</div></header>
+
+<section class="phero">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Start</a> / Kontakt</div>
+    <span class="eyebrow">Kontakt</span>
+    <h1>Wir sind für Sie <em>da.</em></h1>
+    <p>Termin anfragen, anrufen oder einfach vorbeikommen – FF-Service Center in Freigericht-Somborn freut sich auf Sie.</p>
+  </div>
+</section>
+
+<section id="kontaktform" style="background:var(--bg)">
+  <div class="wrap" id="kontakt">
+    <div class="reveal">
+      <span class="eyebrow">Anfrage</span>
+      <h2 class="h2" style="margin-top:8px">Termin <em>anfragen.</em></h2>
+      <form class="form" style="margin-top:24px" onsubmit="event.preventDefault();this.style.display='none';document.getElementById('ok').style.display='block';">
+        <label>Ihr Name</label><input type="text" required placeholder="Max Mustermann">
+        <label>Telefon</label><input type="tel" required placeholder="0151 …">
+        <label>E-Mail</label><input type="email" placeholder="name@beispiel.de">
+        <label>Worum geht es?</label><textarea rows="4" placeholder="z. B. Inspektion, HU/AU, Reifenwechsel, Bremsen, Klimaservice …"></textarea>
+        <button class="btn btn-brand" type="submit">Anfrage senden</button>
+      </form>
+      <div id="ok" class="ok">Danke! Ihre Anfrage ist eingegangen – wir melden uns zeitnah bei Ihnen.</div>
+    </div>
+    <div class="info reveal">
+      <h3>So erreichen Sie uns</h3>
+      <div class="row"><span class="lab">Firma</span><div>FF-Service Center</div></div>
+      <div class="row"><span class="lab">Adresse</span><div>Borsigstraße 1, 63579 Freigericht-Somborn</div></div>
+      <div class="row"><span class="lab">Telefon</span><div><a href="tel:+4960559345130"><b>06055 9345130</b></a></div></div>
+      <div class="row"><span class="lab">Mobil</span><div><a href="tel:06055 9345130">06055 9345130</a></div></div>
+      <div class="row"><span class="lab">E-Mail</span><div><a href="mailto:info@ff-service-center.de">info@ff-service-center.de</a></div></div>
+      <div class="row"><span class="lab">Ansprech</span><div>das Team vom FF-Service Center</div></div>
+      <div class="quick">
+        <a class="btn btn-brand" href="tel:+4960559345130">Jetzt anrufen</a>
+        <a class="btn btn-dark" href="mailto:info@ff-service-center.de">E-Mail schreiben</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <div><span class="logo-wm" style="color:#fff">FF-Service Center</span><p style="margin-top:10px">Ihr Kfz-Meisterbetrieb in Freigericht — Reparaturen aller Art, TÜV, Reifen & Lack<br>Ihre KFZ-Meisterwerkstatt in Freigericht-Somborn.</p></div>
+  <div><h4>Leistungen</h4><a href="leistungen.html#inspektion">Inspektion &amp; Wartung</a><a href="leistungen.html#hu-au">HU/AU (TÜV)</a><a href="leistungen.html#reifen">Reifen &amp; Räder</a><a href="leistungen.html#karosserie">Unfall &amp; Karosserie</a></div>
+  <div><h4>Kontakt</h4><a href="kontakt.html">Borsigstraße 1, 63579 Freigericht-Somborn</a><a href="tel:+4960559345130">06055 9345130</a><a href="#kontaktform">Termin anfragen</a></div>
+  <div class="copy">© 2026 FF-Service Center · Borsigstraße 1, 63579 Freigericht-Somborn · Impressum · Datenschutz</div>
+</div></footer>
+
+<script>
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(e){e.classList.add('in')})},2600);
+</script>
+</body>
+</html>

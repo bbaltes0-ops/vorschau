@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leistungen — Elektro Hinzelmann</title>
+<meta name="description" content="Leistungen von Elektro Hinzelmann: Elektroinstallation, Lichtgestaltung, E-Check, KNX Smart Home, Photovoltaik und TV/SAT. Meisterbetrieb aus Raesfeld seit 1949.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0c1a2e;--night-3:#08111f;--cyan:#21d4fd;--cyan-soft:#6fe3ff;--gold:#e7a52b;--gold-soft:#f4c45f;
+    --cream:#f4f1e9;--cream-dim:#cdd6e3;--line:rgba(111,227,255,.16);--card:rgba(255,255,255,.035);--card-border:rgba(255,255,255,.08);
+    --display:"Fraunces",Georgia,serif;--body:"Hanken Grotesk",system-ui,sans-serif;--maxw:1180px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--night);color:var(--cream-dim);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:var(--display);color:var(--cream);font-weight:500;line-height:1.1;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  em{font-style:italic;color:var(--gold-soft)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:rgba(8,17,31,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:padding .3s ease}
+  .brand{font-family:var(--display);font-weight:600;font-size:1.12rem;letter-spacing:.13em;color:var(--cream);text-transform:uppercase}
+  .brand span{color:var(--cyan)}
+  .nav-links{display:flex;gap:30px;align-items:center;font-size:.92rem}
+  .nav-links a{color:var(--cream-dim);transition:color .2s ease}
+  .nav-links a:hover,.nav-links a.active{color:var(--cyan)}
+  .nav-cta{border:1px solid var(--cyan);color:var(--cyan);padding:9px 20px;border-radius:999px;font-weight:600;font-size:.86rem;transition:background .2s ease,color .2s ease,box-shadow .2s ease}
+  .nav-cta:hover{background:var(--cyan);color:var(--night);box-shadow:0 0 24px rgba(33,212,253,.45)}
+  .burger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:5px;padding:6px}
+  .burger span{width:26px;height:2px;background:var(--cream);display:block}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:999px;font-weight:600;font-size:.98rem;transition:transform .2s ease,box-shadow .2s ease,background .2s ease,color .2s ease,border-color .2s ease;cursor:pointer}
+  .btn-primary{background:linear-gradient(135deg,var(--cyan),#1aa6c9);color:#04141f;box-shadow:0 10px 36px rgba(33,212,253,.32)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(33,212,253,.5)}
+  .btn-ghost{border:1px solid rgba(244,241,233,.32);color:var(--cream)}
+  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+
+  .page-hero{padding:170px 0 80px;background:radial-gradient(120% 90% at 75% 10%,#143256,#0c1a2e 55%,#08111f);position:relative;overflow:hidden}
+  .page-hero::after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(80px);background:radial-gradient(circle,rgba(33,212,253,.3),transparent 70%);top:-160px;right:-100px}
+  .page-hero .eyebrow{font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan-soft);margin-bottom:22px;display:inline-flex;align-items:center;gap:10px}
+  .page-hero .eyebrow::before{content:"";width:34px;height:1px;background:var(--cyan)}
+  .page-hero h1{font-size:clamp(2.4rem,5.5vw,4.4rem);font-weight:400;color:var(--cream);max-width:16ch;margin-bottom:22px;position:relative;z-index:2}
+  .page-hero p{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:52ch;color:var(--cream-dim);position:relative;z-index:2}
+
+  .toc{display:flex;flex-wrap:wrap;gap:10px;margin-top:38px;position:relative;z-index:2}
+  .toc a{font-size:.84rem;letter-spacing:.04em;padding:8px 16px;border:1px solid var(--line);border-radius:999px;color:var(--cyan-soft);transition:background .2s ease,color .2s ease,border-color .2s ease}
+  .toc a:hover{background:var(--cyan);color:var(--night);border-color:var(--cyan)}
+
+  .leist{padding:90px 0}
+  .leist:nth-child(even){background:linear-gradient(180deg,#08111f,#0c1a2e)}
+  .leist-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .leist:nth-of-type(even) .leist-grid{direction:rtl}
+  .leist:nth-of-type(even) .leist-grid > *{direction:ltr}
+  .leist .num{font-family:var(--display);font-size:.9rem;letter-spacing:.2em;color:var(--gold-soft);margin-bottom:14px}
+  .leist h2{font-size:clamp(1.8rem,3.4vw,2.7rem);font-weight:400;color:var(--cream);margin-bottom:20px}
+  .leist p{font-size:1.05rem;margin-bottom:16px}
+  .leist ul{list-style:none;display:grid;gap:12px;margin-top:22px}
+  .leist li{display:flex;gap:13px;align-items:flex-start;font-size:1rem;color:var(--cream-dim)}
+  .leist li::before{content:"";flex:none;margin-top:8px;width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+  .leist-media{border-radius:22px;overflow:hidden;border:1px solid var(--card-border);position:relative}
+  .leist-media img{width:100%;height:420px;object-fit:cover}
+  .leist-media::after{content:"";position:absolute;inset:0;background:linear-gradient(150deg,rgba(33,212,253,.12),transparent 50%,rgba(12,26,46,.45))}
+  .leist-icon-card{background:var(--card);border:1px solid var(--card-border);border-radius:22px;padding:54px;display:flex;align-items:center;justify-content:center;min-height:420px;position:relative;overflow:hidden}
+  .leist-icon-card::after{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(231,165,43,.18),transparent 70%)}
+  .leist-icon-card svg{width:140px;height:140px;color:var(--cyan);position:relative;z-index:1}
+  .scroll-target{scroll-margin-top:96px}
+
+  .cta-band{padding:110px 0;text-align:center;background:radial-gradient(120% 130% at 50% 100%,#143256,#08111f 70%)}
+  .cta-band h2{font-size:clamp(2rem,3.8vw,3.2rem);font-weight:400;color:var(--cream);max-width:18ch;margin:0 auto 20px}
+  .cta-band p{max-width:46ch;margin:0 auto 34px;color:var(--cream-dim);font-size:1.06rem}
+  .cta-band .row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+  footer{background:var(--night-3);border-top:1px solid var(--line);padding:60px 0 40px}
+  .foot-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;align-items:flex-start;margin-bottom:40px}
+  .foot-brand{font-family:var(--display);font-weight:600;letter-spacing:.13em;font-size:1.1rem;color:var(--cream);text-transform:uppercase}
+  .foot-brand span{color:var(--cyan)}
+  .foot-col p,.foot-col a{font-size:.92rem;color:var(--cream-dim);display:block;margin-top:8px}
+  .foot-col a:hover{color:var(--cyan)}
+  .foot-col h4{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan-soft);margin-bottom:6px;font-family:var(--body);font-weight:600}
+  .foot-bottom{border-top:1px solid var(--line);padding-top:26px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:.84rem;color:var(--cream-dim)}
+  .foot-bottom a{color:var(--cream-dim)}.foot-bottom a:hover{color:var(--cyan)}
+
+  .sales{position:fixed;left:20px;bottom:20px;z-index:150;max-width:300px;background:rgba(8,17,31,.92);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:0 18px 48px rgba(0,0,0,.5)}
+  .sales .akira{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:8px}
+  .sales strong{display:block;font-family:var(--display);color:var(--cream);font-size:1.06rem;font-weight:500;margin-bottom:4px}
+  .sales p{font-size:.86rem;color:var(--cream-dim);margin-bottom:14px}
+  .sales .s-actions{display:flex;flex-direction:column;gap:9px}
+  .sales .s-btn{background:linear-gradient(135deg,var(--cyan),#1aa6c9);color:#04141f;text-align:center;padding:10px;border-radius:10px;font-weight:600;font-size:.88rem;transition:box-shadow .2s ease,transform .2s ease}
+  .sales .s-btn:hover{box-shadow:0 0 22px rgba(33,212,253,.5);transform:translateY(-1px)}
+  .sales .s-link{font-size:.82rem;color:var(--cyan-soft);text-align:center}
+  .sales .s-link:hover{color:var(--cyan)}
+  .sales-close{position:absolute;top:8px;right:11px;background:none;border:0;color:var(--cream-dim);cursor:pointer;font-size:1.2rem;line-height:1}
+  .sales-close:hover{color:var(--cyan)}
+
+  @media (max-width:900px){.leist-grid{grid-template-columns:1fr;gap:36px}.leist:nth-of-type(even) .leist-grid{direction:ltr}.leist-media img,.leist-icon-card{height:320px;min-height:320px}}
+  @media (max-width:768px){
+    .nav-links{position:fixed;top:0;right:0;height:100vh;width:78%;max-width:320px;background:rgba(8,17,31,.97);backdrop-filter:blur(14px);flex-direction:column;justify-content:center;gap:30px;transform:translateX(100%);transition:transform .3s ease;border-left:1px solid var(--line)}
+    .nav-links.open{transform:none}.burger{display:flex}
+  }
+  @media (max-width:560px){.wrap{padding:0 20px}.sales{left:14px;right:14px;max-width:none}.cta-band .row{flex-direction:column}.btn{justify-content:center}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a href="index.html" class="brand">Elektro <span>Hinzelmann</span></a>
+  <nav class="nav-links" id="navLinks">
+    <a href="leistungen.html" class="active">Leistungen</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="index.html#kontakt">Kontakt</a>
+    <a href="index.html#kontakt" class="nav-cta">Termin sichern</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">Leistungen · seit 1949</div>
+    <h1>Energie in jeder Disziplin — sauber gedacht.</h1>
+    <p>Von der klassischen Elektroinstallation bis zur vernetzten Energiezukunft: Sechs Leistungsfelder, ein verlässlicher Meisterbetrieb für Raesfeld und die Region.</p>
+    <div class="toc">
+      <a href="#installation">Elektroinstallation</a>
+      <a href="#licht">Lichtgestaltung</a>
+      <a href="#echeck">E-Check</a>
+      <a href="#knx">KNX / Smart Home</a>
+      <a href="#solar">Photovoltaik</a>
+      <a href="#medien">TV / SAT &amp; Medien</a>
+    </div>
+  </div>
+</section>
+
+<!-- 01 Installation -->
+<section class="leist" id="installation">
+  <div class="wrap">
+    <div class="leist-grid scroll-target">
+      <div>
+        <div class="num">01 — Elektroinstallation</div>
+        <h2>Die Basis, auf der alles läuft.</h2>
+        <p>Ob Neubau, Sanierung oder Modernisierung — wir planen und installieren Elektroanlagen, die heute zuverlässig arbeiten und für morgen vorbereitet sind. Sauber verlegt, normgerecht dokumentiert.</p>
+        <ul>
+          <li>Neubau und schlüsselfertige Elektroinstallation</li>
+          <li>Renovierung und Sanierung im Bestand</li>
+          <li>Modernisierung alter Anlagen und Verteiler</li>
+          <li>Zukunftssichere Verkabelung für Smart Home und PV</li>
+        </ul>
+      </div>
+      <div class="leist-media"><img src="img/installation.jpg" alt="Elektroinstallation und Verkabelung durch Elektro Hinzelmann"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 Licht -->
+<section class="leist" id="licht">
+  <div class="wrap">
+    <div class="leist-grid scroll-target">
+      <div>
+        <div class="num">02 — Lichtgestaltung</div>
+        <h2>Licht, das Räume erzählt.</h2>
+        <p>Gutes Licht ist mehr als Helligkeit. Wir gestalten effiziente, dynamische Beleuchtungskonzepte und Lichtmanagement, das sich an Tageszeit, Nutzung und Stimmung anpasst.</p>
+        <ul>
+          <li>Lichtplanung für Wohnen, Gewerbe und Außenbereich</li>
+          <li>Energieeffiziente LED- und Dimm-Lösungen</li>
+          <li>Lichtszenen und tageslichtabhängige Steuerung</li>
+          <li>Integration in KNX und Smart Home</li>
+        </ul>
+      </div>
+      <div class="leist-media"><img src="img/licht.jpg" alt="Moderne Lichtgestaltung an einer Decke"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 E-Check -->
+<section class="leist" id="echeck">
+  <div class="wrap">
+    <div class="leist-grid scroll-target">
+      <div>
+        <div class="num">03 — E-Check</div>
+        <h2>Sicherheit, schwarz auf weiß.</h2>
+        <p>Mit dem E-Check prüfen und dokumentieren wir den Zustand aller elektrischen Anlagen und Geräte. Für Eigentümer, Vermieter und Betriebe — nachweisbar und auf der sicheren Seite.</p>
+        <ul>
+          <li>Prüfung elektrischer Anlagen nach Norm</li>
+          <li>Geräteprüfung für Haushalt und Gewerbe</li>
+          <li>Vollständige Dokumentation und Prüfprotokoll</li>
+          <li>Frühzeitiges Erkennen von Schwachstellen</li>
+        </ul>
+      </div>
+      <div class="leist-icon-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 KNX -->
+<section class="leist" id="knx">
+  <div class="wrap">
+    <div class="leist-grid scroll-target">
+      <div>
+        <div class="num">04 — KNX / Smart Home</div>
+        <h2>Ein Zuhause, das mitdenkt.</h2>
+        <p>Mit KNX/EIB automatisieren wir Licht, Heizung, Beschattung und mehr. Komfortabel per App oder Schalter, sicher dank Anwesenheits-Simulation und sparsam im Verbrauch.</p>
+        <ul>
+          <li>KNX/EIB-Planung und Programmierung</li>
+          <li>Automatisierung von Licht, Heizung und Beschattung</li>
+          <li>Fernsteuerung per App und Sprachassistent</li>
+          <li>Sicherheit durch Szenen und Simulation</li>
+        </ul>
+      </div>
+      <div class="leist-icon-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 6.5 10 10M17 6.5 14 10M7 17.5 10 14M17 17.5 14 14"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Solar -->
+<section class="leist" id="solar">
+  <div class="wrap">
+    <div class="leist-grid scroll-target">
+      <div>
+        <div class="num">05 — Photovoltaik</div>
+        <h2>Die Sonne arbeitet für Sie.</h2>
+        <p>Eigene Sonnenenergie vom Dach senkt Kosten und macht unabhängiger. Wir begleiten Ihre PV-Anlage von der Planung über die Montage bis zur Inbetriebnahme — alles aus einer Hand.</p>
+        <ul>
+          <li>Planung und Auslegung Ihrer PV-Anlage</li>
+          <li>Montage auf Dach und Fläche</li>
+          <li>Speicher und Wallbox-Vorbereitung</li>
+          <li>Inbetriebnahme und Einbindung ins Smart Home</li>
+        </ul>
+      </div>
+      <div class="leist-media"><img src="img/solar.jpg" alt="Photovoltaik-Montage auf einem Dach"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 Medien -->
+<section class="leist" id="medien">
+  <div class="wrap">
+    <div class="leist-grid scroll-target">
+      <div>
+        <div class="num">06 — TV / SAT &amp; Medien</div>
+        <h2>Verbunden bleiben — überall.</h2>
+        <p>Vom Fernsehempfang bis zur Telefonanlage: Wir montieren und richten Ihre Medien- und Kommunikationstechnik sauber ein, damit Bild, Ton und Verbindung einfach funktionieren.</p>
+        <ul>
+          <li>TV- und SAT-Anlagen, Montage und Ausrichtung</li>
+          <li>Telefonanlagen und Kommunikationstechnik</li>
+          <li>Kabelanschluss und Verteilung</li>
+          <li>Beratung und Einrichtung vor Ort</li>
+        </ul>
+      </div>
+      <div class="leist-icon-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="13" rx="2"/><path d="M8 21h8M12 18v3M7 9l3 2-3 2"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Welche Leistung bringt Ihr Projekt voran?</h2>
+    <p>Erzählen Sie uns von Ihrem Vorhaben — wir beraten Sie persönlich und unverbindlich.</p>
+    <div class="row">
+      <a href="index.html#kontakt" class="btn btn-primary">Beratung anfragen</a>
+      <a href="tel:+49286510555" class="btn btn-ghost">02865 10555 anrufen</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">Elektro <span>Hinzelmann</span></div>
+        <p>Elektro-Meisterbetrieb<br>Für Raesfeld und die Region · seit 1949</p>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <a href="leistungen.html">Leistungen</a>
+        <a href="ueber-uns.html">Über uns</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </div>
+      <div class="foot-col">
+        <h4>Kontakt</h4>
+        <a href="tel:+49286510555">02865 10555</a>
+        <a href="mailto:info@elektro-hinzelmann.de">info@elektro-hinzelmann.de</a>
+        <p>Dorstener Straße 5, 46348 Raesfeld</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Elektro Hinzelmann · Dorstener Straße 5, 46348 Raesfeld</span>
+      <span><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="sales" id="sales">
+  <button class="sales-close" id="salesClose" aria-label="Schließen">&times;</button>
+  <div class="akira">Akira Studio</div>
+  <strong>Für Elektro Hinzelmann</strong>
+  <p>Gefällt Ihnen dieser Entwurf?</p>
+  <div class="s-actions">
+    <a class="s-btn" href="mailto:info@akira.studio?subject=Angebot%20anfordern%20-%20Elektro%20Hinzelmann%20(Variante%20C)">Angebot anfordern</a>
+    <a class="s-link" href="https://bbaltes0-ops.github.io/vorschau/praesentation-eh/">Zur Übersicht</a>
+  </div>
+</div>
+
+<script>
+  const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+  burger.addEventListener('click',()=>{const o=navLinks.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');burger.setAttribute('aria-expanded',false)}));
+  document.getElementById('salesClose').addEventListener('click',()=>{document.getElementById('sales').style.display='none'});
+</script>
+</body>
+</html>
