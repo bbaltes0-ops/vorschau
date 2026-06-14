@@ -6,8 +6,10 @@
 :root{--gruen:#14A146;--gruen-dunkel:#026938;--salbei:#318F62;--tinte:#18211C;--stein:#6B716D;
 --silber:#A4A5A6;--nebel:#E6E9E7;--papier:#F5F6F4;--weiss:#fff;--sand:#DCD2BD;
 --disp:'Archivo','Helvetica Neue',Arial,sans-serif;--sans:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;}
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
-body{background:var(--weiss);color:var(--tinte);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.65;overflow-x:hidden}
+*{box-sizing:border-box;margin:0;padding:0;min-width:0}html{scroll-behavior:smooth;overflow-x:hidden}
+html,body{width:100%;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+body{background:var(--weiss);color:var(--tinte);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.65;position:relative}
+img,svg,video,iframe{max-width:100%}
 h1,h2,h3,.disp{font-family:var(--disp)}
 .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px)}
 a{color:inherit}.grn{color:var(--gruen)}
@@ -43,9 +45,12 @@ nav.menu a:hover{opacity:1;color:var(--gruen-dunkel)}
  nav.menu .nl{display:block;padding:16px 2px;border-top:1px solid var(--nebel);font-size:16.5px;opacity:1}
  .legal{display:block}
  .has-drop{display:block;position:static;padding:0}
- .has-drop>.lbl{display:flex;justify-content:space-between;align-items:center;padding:16px 2px;font-size:16.5px;opacity:1;border-top:1px solid var(--nebel)}
- .dropdown{position:static;transform:none;opacity:1;visibility:visible;display:block;box-shadow:none;border:0;padding:2px 0 8px;min-width:0;background:transparent}
- .dropdown a{display:block;padding:13px 14px;font-size:15.5px}
+ .has-drop>.lbl{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 2px;font-size:16.5px;opacity:1;border-top:1px solid var(--nebel);cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+ .has-drop>.lbl svg{flex:none;transition:transform .25s ease}
+ .has-drop.open>.lbl svg{transform:rotate(180deg)}
+ .dropdown{position:static;transform:none;opacity:1;visibility:visible;display:block;box-shadow:none;border:0;min-width:0;background:transparent;max-height:0;overflow:hidden;padding:0;transition:max-height .3s ease}
+ .has-drop.open .dropdown{max-height:760px;padding:0 0 6px}
+ .dropdown a{display:block;padding:13px 14px;font-size:15.5px;opacity:.82}
  nav.menu .cta-call{margin-top:16px;justify-content:center;padding:15px}
 }
 @media(max-width:680px){.tgrid{grid-template-columns:1fr}.lgrid{grid-template-columns:1fr}.opts{grid-template-columns:repeat(2,1fr)}}
@@ -187,7 +192,10 @@ footer a{color:#cdd3cf;text-decoration:none;font-size:14px;opacity:.8}footer a:h
 </div><div class="fbar"><div>© 2026 Stefan Janus Malerfachbetrieb</div>
 <div><a href="impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="datenschutz.html">Datenschutz</a></div></div></div></footer><script>
 (function(){var b=document.getElementById('navtoggle'),m=document.getElementById('navmenu');if(!b||!m)return;
-function set(o){m.classList.toggle('open',o);b.classList.toggle('x',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Menü schließen':'Menü öffnen');}
+var mq=window.matchMedia('(max-width:980px)');
+function set(o){m.classList.toggle('open',o);b.classList.toggle('x',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Menü schließen':'Menü öffnen');if(!o){m.querySelectorAll('.has-drop.open').forEach(function(d){d.classList.remove('open');});}}
 b.addEventListener('click',function(e){e.stopPropagation();set(!m.classList.contains('open'));});
+m.querySelectorAll('.has-drop>.lbl').forEach(function(l){l.addEventListener('click',function(e){if(!mq.matches)return;e.preventDefault();e.stopPropagation();l.parentNode.classList.toggle('open');});});
 m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+document.addEventListener('click',function(e){if(m.classList.contains('open')&&!m.contains(e.target)&&e.target!==b&&!b.contains(e.target))set(false);});
 })();</script></body></html>
