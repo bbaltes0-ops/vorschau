@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GASCHNA · Sanitär · Heizung · Solar · Wärme, die Zukunft hat | Meisterbetrieb Augsburg</title>
+<meta name="description" content="GASCHNA · SHK-Meisterbetrieb in Augsburg. Wärmepumpe, Solar & moderne Haustechnik. Beratung zu Förderung & GEG, Notdienst 24/7 für Augsburg und die Region.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0c2a26;       /* tiefes Nachtgrün */
+  --night-2:#10342e;     /* Petrolnacht */
+  --night-3:#072019;     /* extra dunkel */
+  --cream:#f3efe6;       /* warmes Creme */
+  --cream-2:#ece5d6;
+  --honey:#f0b429;       /* Sonnen-/Honig-Akzent */
+  --energy:#3bbf8f;      /* frisches Energie-Grün */
+  --ink:#13201d;         /* dunkle Schrift auf Creme */
+  --ink-soft:#3c4b46;
+  --white:#ffffff;
+  --line:rgba(243,239,230,.16);
+  --shadow:0 24px 60px -28px rgba(0,0,0,.55);
+  --radius:22px;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacing:-.01em}
+.serif-it{font-style:italic;font-weight:400}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+.eyebrow{font-family:var(--sans);font-weight:600;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase}
+
+/* ---------- Header ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:120;transition:all .3s ease}
+.nav{display:flex;align-items:center;justify-content:space-between;height:78px;
+  background:rgba(8,28,24,.62);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  padding:0 28px;transition:all .3s ease}
+header.scrolled .nav{background:rgba(7,28,22,.93);height:66px}
+.nav__logo img{height:34px;width:auto}
+.nav__links{display:flex;align-items:center;gap:34px}
+.nav__links a{color:var(--cream);font-weight:500;font-size:.96rem;position:relative;transition:color .2s ease}
+.nav__links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--honey);transition:width .25s ease}
+.nav__links a:hover{color:var(--white)}
+.nav__links a:hover::after{width:100%}
+.nav__cta{background:var(--honey);color:var(--night-3);padding:11px 22px;border-radius:100px;font-weight:700;font-size:.92rem;transition:transform .2s ease,box-shadow .2s ease}
+.nav__cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px -10px rgba(240,180,41,.7)}
+.nav__cta::after{display:none}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{width:26px;height:2px;background:var(--cream);transition:all .3s ease}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:6px}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;
+  background:radial-gradient(140% 120% at 80% -10%,#15433a 0%,var(--night-2) 45%,var(--night-3) 100%);
+  color:var(--cream);overflow:hidden;padding-top:78px}
+.hero__scene{position:absolute;inset:0;z-index:1}
+.hero__scene svg{width:100%;height:100%}
+.hero__glow{position:absolute;width:680px;height:680px;border-radius:50%;
+  background:radial-gradient(circle,rgba(59,191,143,.22),transparent 65%);
+  top:-160px;right:-120px;z-index:1;filter:blur(8px)}
+.hero__glow.b{background:radial-gradient(circle,rgba(240,180,41,.14),transparent 65%);left:-180px;bottom:-220px;top:auto;right:auto}
+.hero__inner{position:relative;z-index:3;width:100%}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.hero__copy{max-width:600px}
+.hero .eyebrow{color:var(--energy);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;
+  opacity:0;transform:translateY(18px);animation:fadeUp .8s ease .15s forwards}
+.hero .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--energy);box-shadow:0 0 0 0 rgba(59,191,143,.6);animation:pulse 2.4s ease-in-out infinite}
+.hero h1{font-size:clamp(2.7rem,6.2vw,5rem);color:var(--white);margin-bottom:24px;letter-spacing:-.02em;
+  opacity:0;transform:translateY(26px);animation:fadeUp .9s ease .3s forwards}
+.hero h1 .serif-it{color:var(--honey)}
+.hero__sub{font-size:clamp(1.05rem,1.6vw,1.28rem);color:rgba(243,239,230,.82);max-width:500px;margin-bottom:36px;
+  opacity:0;transform:translateY(22px);animation:fadeUp .9s ease .5s forwards}
+.hero__sub b{color:var(--cream);font-weight:600}
+.hero__actions{display:flex;gap:16px;flex-wrap:wrap;opacity:0;transform:translateY(20px);animation:fadeUp .9s ease .68s forwards}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:1rem;padding:15px 30px;border-radius:100px;transition:transform .2s ease,box-shadow .2s ease,background .2s ease;cursor:pointer;border:0}
+.btn--honey{background:var(--honey);color:var(--night-3)}
+.btn--honey:hover{transform:translateY(-3px);box-shadow:0 16px 34px -12px rgba(240,180,41,.7)}
+.btn--ghost{background:transparent;color:var(--cream);border:1.6px solid rgba(243,239,230,.4)}
+.btn--ghost:hover{border-color:var(--energy);color:var(--white);transform:translateY(-3px)}
+.btn--dark{background:var(--night-2);color:var(--cream)}
+.btn--dark:hover{background:var(--night-3);transform:translateY(-3px)}
+.hero__stats{display:flex;gap:30px;margin-top:46px;flex-wrap:wrap;opacity:0;animation:fadeUp .9s ease .85s forwards}
+.hero__stat .n{font-family:var(--serif);font-size:1.9rem;color:var(--honey);line-height:1}
+.hero__stat .l{font-size:.82rem;color:rgba(243,239,230,.7);margin-top:6px}
+
+/* animated energy scene (right) */
+.scene-card{position:relative;z-index:3}
+.energy-house{width:100%;max-width:480px;margin-left:auto;filter:drop-shadow(0 30px 50px rgba(0,0,0,.4))}
+.flow-line{stroke-dasharray:6 14;animation:dash 1.6s linear infinite}
+.flow-line.s2{animation-delay:.4s}
+.flow-line.s3{animation-delay:.8s}
+.spark{transform-box:fill-box;transform-origin:center;animation:floaty 3s ease-in-out infinite}
+.spark.b{animation-delay:.6s}
+.spark.c{animation-delay:1.2s}
+.fan{transform-box:fill-box;transform-origin:center;animation:spin 4s linear infinite}
+.house-glow{animation:glowpulse 3.2s ease-in-out infinite}
+
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(59,191,143,.55)}70%{box-shadow:0 0 0 12px rgba(59,191,143,0)}100%{box-shadow:0 0 0 0 rgba(59,191,143,0)}}
+@keyframes dash{to{stroke-dashoffset:-40}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glowpulse{0%,100%{opacity:.5}50%{opacity:1}}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:4;color:rgba(243,239,230,.6);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-hint .m{width:24px;height:38px;border:2px solid rgba(243,239,230,.4);border-radius:14px;position:relative}
+.scroll-hint .m::after{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);width:4px;height:7px;background:var(--energy);border-radius:3px;animation:scrolldot 1.8s ease infinite}
+@keyframes scrolldot{0%{opacity:0;top:7px}40%{opacity:1}100%{opacity:0;top:18px}}
+
+/* ---------- Manifest ---------- */
+.manifest{padding:120px 0;background:var(--cream)}
+.manifest__grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
+.manifest .eyebrow{color:#0c6b4f;margin-bottom:18px}
+.manifest h2{font-size:clamp(2rem,3.6vw,3.1rem);color:var(--ink);line-height:1.1}
+.manifest h2 .serif-it{color:#0c6b4f}
+.manifest__text p{font-size:1.12rem;color:var(--ink-soft);margin-bottom:20px;max-width:620px}
+.manifest__text p:first-child{font-size:1.32rem;color:var(--ink);font-weight:500}
+.manifest__badges{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.mbadge{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid rgba(19,32,29,.1);padding:11px 18px;border-radius:100px;font-weight:600;font-size:.92rem;color:var(--ink);box-shadow:0 6px 18px -12px rgba(0,0,0,.25)}
+.mbadge .tick{color:var(--energy);font-weight:800}
+.fv-seal{display:flex;align-items:center;gap:14px;margin-top:34px;padding:16px 20px;background:#fff;border-radius:16px;border:1px solid rgba(19,32,29,.08);max-width:420px;box-shadow:0 10px 30px -18px rgba(0,0,0,.3)}
+.fv-seal img{height:54px;width:auto}
+.fv-seal span{font-size:.88rem;color:var(--ink-soft);line-height:1.4}
+
+/* ---------- Programm (Leistungen) ---------- */
+.programm{padding:120px 0;background:var(--night-2);color:var(--cream);position:relative;overflow:hidden}
+.programm::before{content:"";position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(59,191,143,.12),transparent 70%);top:-160px;left:-140px}
+.programm .wrap{position:relative;z-index:2}
+.programm__head{max-width:680px;margin-bottom:54px}
+.programm .eyebrow{color:var(--energy);margin-bottom:18px}
+.programm h2{font-size:clamp(2rem,3.6vw,3.1rem);color:var(--white)}
+.programm h2 .serif-it{color:var(--honey)}
+.programm__head p{color:rgba(243,239,230,.78);font-size:1.1rem;margin-top:16px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:linear-gradient(180deg,rgba(243,239,230,.06),rgba(243,239,230,.02));
+  border:1px solid var(--line);border-radius:var(--radius);padding:32px 30px 28px;display:flex;flex-direction:column;
+  transition:transform .25s ease,border-color .25s ease,background .25s ease;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-6px);border-color:rgba(59,191,143,.5);background:linear-gradient(180deg,rgba(59,191,143,.08),rgba(243,239,230,.02))}
+.card__ico{width:52px;height:52px;border-radius:14px;background:rgba(59,191,143,.14);display:flex;align-items:center;justify-content:center;margin-bottom:22px;color:var(--energy)}
+.card__ico svg{width:26px;height:26px}
+.card h3{font-size:1.42rem;color:var(--white);margin-bottom:12px}
+.card p{color:rgba(243,239,230,.74);font-size:.97rem;flex-grow:1}
+.card__more{margin-top:22px;display:inline-flex;align-items:center;gap:8px;color:var(--honey);font-weight:600;font-size:.94rem;transition:gap .2s ease}
+.card:hover .card__more{gap:13px}
+
+/* ---------- Spar-Teaser ---------- */
+.teaser{padding:120px 0;background:var(--cream);position:relative}
+.teaser__box{background:linear-gradient(135deg,var(--night-2),var(--night-3));border-radius:30px;
+  padding:56px 56px;color:var(--cream);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.teaser__box::after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(240,180,41,.13),transparent 70%);bottom:-180px;right:-120px}
+.teaser__grid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;position:relative;z-index:2}
+.teaser .eyebrow{color:var(--energy);margin-bottom:16px}
+.teaser h2{font-size:clamp(1.8rem,3vw,2.6rem);color:var(--white);margin-bottom:16px}
+.teaser h2 .serif-it{color:var(--honey)}
+.teaser__lead{color:rgba(243,239,230,.8);margin-bottom:26px;max-width:440px}
+.slider-row{margin-bottom:8px}
+.slider-row label{display:block;font-weight:600;color:var(--cream);margin-bottom:14px;font-size:.98rem}
+.slider-ends{display:flex;justify-content:space-between;font-size:.82rem;color:rgba(243,239,230,.6);margin-top:10px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:8px;
+  background:linear-gradient(90deg,var(--energy) 0%,var(--energy) var(--p,50%),rgba(243,239,230,.18) var(--p,50%));outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--honey);border:4px solid var(--night-3);cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.35);transition:transform .15s ease}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--honey);border:4px solid var(--night-3);cursor:pointer}
+.teaser__result{background:rgba(8,28,24,.55);border:1px solid var(--line);border-radius:22px;padding:34px}
+.tr-row{margin-bottom:26px}
+.tr-row:last-child{margin-bottom:0}
+.tr-row .lab{font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(243,239,230,.62);margin-bottom:8px}
+.tr-row .val{font-family:var(--serif);font-size:2.5rem;color:var(--honey);line-height:1}
+.tr-row.co2 .val{color:var(--energy)}
+.tr-row .unit{font-family:var(--sans);font-size:1rem;color:rgba(243,239,230,.7);font-weight:500}
+.tr-bar{height:12px;border-radius:8px;background:rgba(243,239,230,.12);margin-top:14px;overflow:hidden}
+.tr-bar span{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--energy),var(--honey));width:50%;transition:width .5s cubic-bezier(.22,1,.36,1)}
+.teaser__note{font-size:.78rem;color:rgba(243,239,230,.55);margin-top:22px;line-height:1.5}
+
+/* ---------- Feature (Bild) ---------- */
+.feature{padding:0 0 120px;background:var(--cream)}
+.feature__inner{display:grid;grid-template-columns:1.05fr .95fr;gap:0;border-radius:30px;overflow:hidden;box-shadow:var(--shadow);background:var(--night-2)}
+.feature__img{position:relative;min-height:480px;background-size:cover;background-position:center}
+.feature__img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,rgba(12,42,38,.5))}
+.feature__txt{padding:64px 56px;color:var(--cream);display:flex;flex-direction:column;justify-content:center}
+.feature .eyebrow{color:var(--energy);margin-bottom:16px}
+.feature__txt h2{font-size:clamp(1.8rem,3vw,2.6rem);color:var(--white);margin-bottom:18px}
+.feature__txt h2 .serif-it{color:var(--honey)}
+.feature__txt p{color:rgba(243,239,230,.8);margin-bottom:16px}
+.feature__list{list-style:none;margin:14px 0 28px}
+.feature__list li{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;color:rgba(243,239,230,.85)}
+.feature__list .tick{color:var(--energy);font-weight:800;flex-shrink:0}
+
+/* ---------- Notdienst-Zitatband ---------- */
+.quote{padding:110px 0;background:var(--night-3);color:var(--cream);text-align:center;position:relative;overflow:hidden}
+.quote::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(195,0,22,.16),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
+.quote .wrap{position:relative;z-index:2;max-width:860px}
+.quote .eyebrow{color:var(--honey);margin-bottom:26px}
+.quote blockquote{font-family:var(--serif);font-size:clamp(1.6rem,3.4vw,2.7rem);color:var(--white);line-height:1.25;font-weight:500}
+.quote blockquote .serif-it{color:var(--honey)}
+.quote__sub{color:rgba(243,239,230,.78);margin:26px auto 32px;max-width:560px}
+.quote__call{display:inline-flex;align-items:center;gap:14px;background:var(--honey);color:var(--night-3);padding:18px 34px;border-radius:100px;font-weight:800;font-size:1.25rem;transition:transform .2s ease,box-shadow .2s ease}
+.quote__call:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 40px -14px rgba(240,180,41,.6)}
+.quote__avail{margin-top:18px;font-size:.9rem;color:rgba(243,239,230,.7)}
+
+/* ---------- Kontakt ---------- */
+.kontakt{padding:120px 0;background:var(--cream)}
+.kontakt__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:54px;align-items:start}
+.kontakt .eyebrow{color:#0c6b4f;margin-bottom:16px}
+.kontakt h2{font-size:clamp(2rem,3.4vw,3rem);color:var(--ink);margin-bottom:14px}
+.kontakt h2 .serif-it{color:#0c6b4f}
+.kontakt__lead{color:var(--ink-soft);margin-bottom:30px;max-width:520px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column}
+.field.full{grid-column:1/-1}
+.field label{font-weight:600;font-size:.88rem;color:var(--ink);margin-bottom:7px}
+.field input,.field textarea,.field select{padding:13px 15px;border:1.5px solid rgba(19,32,29,.16);border-radius:12px;font-family:var(--sans);font-size:1rem;background:#fff;color:var(--ink);transition:border-color .2s ease}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--energy)}
+.field textarea{resize:vertical;min-height:120px}
+.form-note{font-size:.78rem;color:var(--ink-soft);margin-top:6px}
+.form-msg{display:none;margin-top:16px;padding:14px 18px;border-radius:12px;background:rgba(59,191,143,.14);border:1px solid rgba(12,107,79,.3);color:#0c5e44;font-weight:600}
+.infocard{background:var(--night-2);color:var(--cream);border-radius:26px;padding:40px 36px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.infocard::after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(59,191,143,.13),transparent 70%);top:-120px;right:-90px}
+.infocard h3{color:var(--white);font-size:1.5rem;margin-bottom:24px;position:relative}
+.info-item{display:flex;gap:14px;margin-bottom:22px;position:relative}
+.info-item .ico{width:40px;height:40px;border-radius:11px;background:rgba(59,191,143,.16);display:flex;align-items:center;justify-content:center;color:var(--energy);flex-shrink:0}
+.info-item .ico svg{width:20px;height:20px}
+.info-item .k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(243,239,230,.6);margin-bottom:3px}
+.info-item .v{color:var(--cream);font-weight:600;font-size:1.05rem}
+.info-item .v a{color:var(--cream);transition:color .2s ease}
+.info-item .v a:hover{color:var(--honey)}
+.info-item .v small{display:block;font-weight:400;font-size:.86rem;color:rgba(243,239,230,.7)}
+.infocard__social{display:flex;gap:12px;margin-top:8px;position:relative}
+.infocard__social a{width:42px;height:42px;border-radius:11px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--cream);transition:all .2s ease}
+.infocard__social a:hover{background:var(--honey);color:var(--night-3);border-color:var(--honey);transform:translateY(-2px)}
+
+/* ---------- Angebot CTA ---------- */
+.angebot{padding:0 0 120px;background:var(--cream)}
+.angebot__box{background:radial-gradient(120% 140% at 80% 0%,#15433a,var(--night-3));border-radius:30px;padding:72px 56px;text-align:center;color:var(--cream);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.angebot__box::before{content:"";position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(240,180,41,.16),transparent 70%);top:-200px;left:-120px}
+.angebot__box::after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(59,191,143,.16),transparent 70%);bottom:-200px;right:-100px}
+.angebot__box .inner{position:relative;z-index:2}
+.angebot .eyebrow{color:var(--energy);margin-bottom:18px}
+.angebot h2{font-size:clamp(2rem,4vw,3.4rem);color:var(--white);margin-bottom:18px}
+.angebot h2 .serif-it{color:var(--honey)}
+.angebot p{color:rgba(243,239,230,.82);max-width:560px;margin:0 auto 34px;font-size:1.12rem}
+.angebot__actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- Footer ---------- */
+footer{background:var(--night-3);color:rgba(243,239,230,.72);padding:64px 0 30px}
+.footer__top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+.footer__brand img{height:38px;margin-bottom:18px}
+.footer__brand p{font-size:.95rem;max-width:320px}
+.footer__col h4{font-family:var(--sans);font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);margin-bottom:18px}
+.footer__col a,.footer__col p{display:block;color:rgba(243,239,230,.72);font-size:.96rem;margin-bottom:11px;transition:color .2s ease}
+.footer__col a:hover{color:var(--honey)}
+.footer__bottom{padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.85rem;color:rgba(243,239,230,.55)}
+.footer__bottom a{color:rgba(243,239,230,.55)}
+.footer__bottom a:hover{color:var(--honey)}
+
+/* ---------- Welcome Popup ---------- */
+.overlay{position:fixed;inset:0;z-index:300;background:rgba(7,24,20,.78);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;animation:ovIn .4s ease forwards}
+@keyframes ovIn{to{opacity:1}}
+.welcome{background:linear-gradient(160deg,var(--night-2),var(--night-3));border:1px solid var(--line);border-radius:26px;max-width:480px;width:100%;padding:46px 42px;text-align:center;color:var(--cream);box-shadow:0 40px 90px -30px rgba(0,0,0,.7);position:relative;transform:translateY(20px) scale(.97);animation:wIn .5s cubic-bezier(.22,1,.36,1) .05s forwards}
+@keyframes wIn{to{transform:translateY(0) scale(1)}}
+.welcome img{height:40px;margin:0 auto 24px}
+.welcome .eyebrow{color:var(--energy);margin-bottom:14px}
+.welcome h2{font-size:1.9rem;color:var(--white);margin-bottom:14px}
+.welcome h2 .serif-it{color:var(--honey)}
+.welcome p{color:rgba(243,239,230,.78);margin-bottom:28px;font-size:1rem}
+.welcome .btn{width:100%;justify-content:center}
+.welcome__close{position:absolute;top:16px;right:18px;background:none;border:0;color:rgba(243,239,230,.6);font-size:1.6rem;cursor:pointer;line-height:1;transition:color .2s ease}
+.welcome__close:hover{color:var(--cream)}
+
+/* ---------- Sales Overlay ---------- */
+.sales{position:fixed;bottom:20px;left:20px;z-index:200;background:rgba(7,24,20,.92);backdrop-filter:blur(12px);border:1px solid rgba(240,180,41,.35);border-radius:18px;padding:18px 20px;max-width:300px;box-shadow:0 20px 50px -20px rgba(0,0,0,.6);color:var(--cream);transition:transform .3s ease,opacity .3s ease}
+.sales.hidden{transform:translateY(140%);opacity:0;pointer-events:none}
+.sales__label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--honey);font-weight:700;margin-bottom:6px}
+.sales__title{font-family:var(--serif);font-size:1.18rem;color:var(--white);margin-bottom:14px;line-height:1.2}
+.sales__actions{display:flex;flex-direction:column;gap:9px}
+.sales__btn{background:var(--honey);color:var(--night-3);text-align:center;padding:11px;border-radius:100px;font-weight:700;font-size:.92rem;transition:transform .2s ease}
+.sales__btn:hover{transform:translateY(-2px)}
+.sales__link{text-align:center;font-size:.88rem;color:rgba(243,239,230,.78);text-decoration:underline;text-underline-offset:3px}
+.sales__link:hover{color:var(--honey)}
+.sales__close{position:absolute;top:8px;right:11px;background:none;border:0;color:rgba(243,239,230,.55);font-size:1.2rem;cursor:pointer;line-height:1}
+.sales__close:hover{color:var(--cream)}
+
+/* ---------- Responsive ---------- */
+@media(max-width:980px){
+  .nav__links{display:none}
+  .burger{display:flex}
+  .hero__grid{grid-template-columns:1fr}
+  .scene-card{display:none}
+  .manifest__grid,.teaser__grid,.feature__inner,.kontakt__grid,.footer__top{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr 1fr}
+  .feature__img{min-height:300px}
+  .feature__txt{padding:44px 32px}
+}
+@media(max-width:640px){
+  .wrap{padding:0 20px}
+  .nav{padding:0 20px}
+  .cards{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .teaser__box{padding:36px 26px}
+  .angebot__box{padding:48px 26px}
+  .hero__stats{gap:22px}
+  .sales{left:14px;right:14px;bottom:14px;max-width:none}
+  .quote__call{font-size:1.05rem;padding:15px 26px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .hero .eyebrow,.hero h1,.hero__sub,.hero__actions,.hero__stats,.welcome,.overlay{opacity:1!important;transform:none!important}
+}
+
+/* mobile menu */
+.mobile-menu{position:fixed;inset:0;z-index:130;background:var(--night-3);transform:translateX(100%);transition:transform .35s ease;display:flex;flex-direction:column;padding:100px 32px 40px;gap:8px}
+.mobile-menu.open{transform:translateX(0)}
+.mobile-menu a{color:var(--cream);font-family:var(--serif);font-size:1.6rem;padding:14px 0;border-bottom:1px solid var(--line)}
+.mobile-menu a:hover{color:var(--honey)}
+.mobile-menu .btn{margin-top:24px;justify-content:center}
+.mobile-close{position:absolute;top:26px;right:26px;background:none;border:0;color:var(--cream);font-size:2rem;cursor:pointer;line-height:1}
+</style>
+  <!--BRS-ANALYTICS-->
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['disableCookies']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function(){ var u='https://analytics.black-rabbit.studio/';
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!--/BRS-ANALYTICS-->
+</head>
+<body>
+
+<!-- ===== Welcome Popup ===== -->
+<div class="overlay" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+  <div class="welcome">
+    <button class="welcome__close" id="welcomeClose" aria-label="Schließen">&times;</button>
+    <img src="img/logo-white.png" alt="GASCHNA">
+    <div class="eyebrow">Vorschau · Variante C</div>
+    <h2 id="welcome-title">Wärme, die <span class="serif-it">Zukunft</span> hat.</h2>
+    <p>Ein Entwurf für die neue Website von GASCHNA · Sanitär, Heizung & Solar aus Augsburg. Werfen Sie einen Blick auf das Energie-Erlebnis.</p>
+    <button class="btn btn--honey" id="welcomeEnter">Seite ansehen</button>
+  </div>
+</div>
+
+<!-- ===== Header ===== -->
+<header id="header">
+  <nav class="nav">
+    <a href="index.html" class="nav__logo" aria-label="GASCHNA Startseite"><img src="img/logo-white.png" alt="GASCHNA"></a>
+    <div class="nav__links">
+      <a href="leistungen.html">Leistungen</a>
+      <a href="leistungen.html#waermepumpe">Wärmepumpe</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="leistungen.html#notdienst">Notdienst</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="tel:+4982174822874" class="nav__cta">0821 / 74 82 28 74</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- ===== Mobile Menu ===== -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Menü schließen">&times;</button>
+  <a href="leistungen.html">Leistungen</a>
+  <a href="leistungen.html#waermepumpe">Wärmepumpe</a>
+  <a href="ueber-uns.html">Über uns</a>
+  <a href="leistungen.html#notdienst">Notdienst</a>
+  <a href="#kontakt">Kontakt</a>
+  <a href="tel:+4982174822874" class="btn btn--honey">Anrufen</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero__glow"></div>
+  <div class="hero__glow b"></div>
+  <div class="hero__inner wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <span class="eyebrow"><span class="dot"></span>SHK-Meisterbetrieb · Augsburg & Region</span>
+        <h1>Wärme, die<br><span class="serif-it">Zukunft</span> hat.</h1>
+        <p class="hero__sub">Wärmepumpe · Solar · moderne Haustechnik vom Meisterbetrieb in Augsburg. Wir begleiten Ihre <b>Energiewende</b> · von der Förderung bis zur fertigen Anlage.</p>
+        <div class="hero__actions">
+          <a href="#teaser" class="btn btn--honey">Sparpotenzial entdecken</a>
+          <a href="leistungen.html#waermepumpe" class="btn btn--ghost">Zur Wärmepumpe</a>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat"><div class="n">Meister</div><div class="l">Betrieb mit Verantwortung</div></div>
+          <div class="hero__stat"><div class="n">24/7</div><div class="l">Notdienst für die Region</div></div>
+          <div class="hero__stat"><div class="n">GEG</div><div class="l">Beratung zu Förderung & Gesetz</div></div>
+        </div>
+      </div>
+      <div class="scene-card">
+        <!-- Animierte Energiefluss-Szene: Wärmepumpe -> Haus -->
+        <svg class="energy-house" viewBox="0 0 480 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animierte Darstellung: Energie fließt von der Wärmepumpe ins Haus">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#15433a"/><stop offset="1" stop-color="#0a2620"/>
+            </linearGradient>
+            <linearGradient id="houseG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f3efe6"/><stop offset="1" stop-color="#d9d2c2"/>
+            </linearGradient>
+            <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#3bbf8f"/><stop offset="1" stop-color="#f0b429"/>
+            </linearGradient>
+            <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#f0b429"/><stop offset="1" stop-color="#f0b429" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- Boden -->
+          <rect x="0" y="330" width="480" height="90" fill="#072019"/>
+          <!-- Sonne / Energie oben -->
+          <circle class="house-glow" cx="120" cy="70" r="46" fill="url(#sun)"/>
+          <circle cx="120" cy="70" r="20" fill="#f0b429"/>
+          <!-- HAUS -->
+          <g>
+            <rect x="270" y="180" width="160" height="150" rx="6" fill="url(#houseG)"/>
+            <polygon points="262,182 350,118 438,182" fill="#10342e"/>
+            <polygon points="262,182 350,118 438,182" fill="none" stroke="#3bbf8f" stroke-width="1" opacity=".4"/>
+            <!-- Solarpaneele auf Dach -->
+            <g transform="translate(300,140) rotate(-36)">
+              <rect x="0" y="0" width="58" height="34" rx="3" fill="#0c2a26" stroke="#3bbf8f" stroke-width="1.4"/>
+              <line x1="0" y1="11" x2="58" y2="11" stroke="#3bbf8f" stroke-width=".8" opacity=".6"/>
+              <line x1="0" y1="22" x2="58" y2="22" stroke="#3bbf8f" stroke-width=".8" opacity=".6"/>
+              <line x1="19" y1="0" x2="19" y2="34" stroke="#3bbf8f" stroke-width=".8" opacity=".6"/>
+              <line x1="38" y1="0" x2="38" y2="34" stroke="#3bbf8f" stroke-width=".8" opacity=".6"/>
+            </g>
+            <!-- Fenster (leuchten warm) -->
+            <rect class="house-glow" x="295" y="215" width="40" height="40" rx="4" fill="#f0b429" opacity=".85"/>
+            <rect x="365" y="215" width="40" height="40" rx="4" fill="#10342e" opacity=".5"/>
+            <!-- Tür -->
+            <rect x="335" y="278" width="34" height="52" rx="3" fill="#10342e"/>
+          </g>
+          <!-- WÄRMEPUMPE (links) -->
+          <g>
+            <rect x="40" y="240" width="120" height="90" rx="10" fill="#0c2a26" stroke="#3bbf8f" stroke-width="2"/>
+            <rect x="40" y="240" width="120" height="26" rx="10" fill="#10342e"/>
+            <!-- Lüfter -->
+            <circle cx="100" cy="292" r="32" fill="#072019" stroke="#3bbf8f" stroke-width="1.6"/>
+            <g class="fan">
+              <path d="M100 292 C 100 272, 118 280, 100 292 Z" fill="#3bbf8f" opacity=".85"/>
+              <path d="M100 292 C 120 292, 112 310, 100 292 Z" fill="#3bbf8f" opacity=".85"/>
+              <path d="M100 292 C 100 312, 82 304, 100 292 Z" fill="#3bbf8f" opacity=".85"/>
+              <path d="M100 292 C 80 292, 88 274, 100 292 Z" fill="#3bbf8f" opacity=".85"/>
+            </g>
+            <circle cx="100" cy="292" r="6" fill="#f0b429"/>
+            <text x="100" y="258" text-anchor="middle" font-family="Hanken Grotesk,sans-serif" font-size="11" fill="#f3efe6" font-weight="700">WP</text>
+          </g>
+          <!-- ENERGIEFLUSS Wärmepumpe -> Haus -->
+          <path class="flow-line" d="M160 280 C 210 280, 230 250, 268 240" fill="none" stroke="url(#flow)" stroke-width="4" stroke-linecap="round"/>
+          <path class="flow-line s2" d="M160 295 C 215 295, 235 270, 268 262" fill="none" stroke="url(#flow)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+          <path class="flow-line s3" d="M160 310 C 220 310, 240 292, 268 285" fill="none" stroke="url(#flow)" stroke-width="2.4" stroke-linecap="round" opacity=".5"/>
+          <!-- Sparks / Partikel -->
+          <circle class="spark" cx="210" cy="265" r="4" fill="#3bbf8f"/>
+          <circle class="spark b" cx="235" cy="255" r="3" fill="#f0b429"/>
+          <circle class="spark c" cx="190" cy="300" r="3" fill="#3bbf8f"/>
+          <!-- Sonne -> Solar Energiefluss -->
+          <path class="flow-line s2" d="M140 90 C 220 120, 270 130, 318 150" fill="none" stroke="url(#flow)" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><div class="m"></div>Scrollen</div>
+</section>
+
+<!-- ===== Manifest ===== -->
+<section class="manifest">
+  <div class="wrap manifest__grid">
+    <div>
+      <div class="eyebrow">Unser Anspruch</div>
+      <h2>Die Wärmewende ist <span class="serif-it">Handwerk.</span></h2>
+      <div class="fv-seal">
+        <img src="img/fachverband.png" alt="Fachverband Sanitär-, Heizungs- und Klimatechnik Bayern">
+        <span>Mitglied im Fachverband Sanitär-, Heizungs- und Klimatechnik Bayern.</span>
+      </div>
+    </div>
+    <div class="manifest__text">
+      <p>Heizen wird neu gedacht · und genau hier sind wir zu Hause. Als Meisterbetrieb in Augsburg planen, installieren und warten wir moderne Energietechnik, die Ihr Zuhause unabhängiger macht.</p>
+      <p>Wärmepumpe, Solarthermie, moderne Haustechnik: Wir verbinden die Themen von morgen mit dem soliden Handwerk, auf das Sie sich seit jeher verlassen. Ehrlich beraten, sauber gebaut, zuverlässig betreut · für Augsburg und die Region.</p>
+      <p>Von der Förderberatung bis zur fertigen Anlage begleiten wir Sie persönlich. Ein Ansprechpartner, ein Meister, ein Wort.</p>
+      <div class="manifest__badges">
+        <span class="mbadge"><span class="tick">+</span> Beratung zu Förderung & GEG</span>
+        <span class="mbadge"><span class="tick">+</span> Bosch · Buderus · Vaillant · Viessmann</span>
+        <span class="mbadge"><span class="tick">+</span> Wartung & Notdienst</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Programm (Leistungen) ===== -->
+<section class="programm" id="programm">
+  <div class="wrap">
+    <div class="programm__head">
+      <div class="eyebrow">Unser Programm</div>
+      <h2>Alles aus einer Hand —<br>vom <span class="serif-it">Keller</span> bis aufs Dach.</h2>
+      <p>Sechs Felder, ein Meisterbetrieb. Was Ihr Zuhause warm, komfortabel und zukunftsfähig macht.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="card__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3>Wärmepumpe</h3>
+        <p>Luft-Wasser, Wasser-Wasser, Sole-Wasser & Luft-Luft. Planung, Umstellung auf Umweltenergie und Förderberatung für EFH bis Wohnanlage.</p>
+        <a href="leistungen.html#waermepumpe" class="card__more">Mehr erfahren &rarr;</a>
+      </article>
+      <article class="card">
+        <div class="card__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M12 2v4"/><path d="M5 8h14v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8z"/><path d="M9 13c1 1 1 2 0 3M15 13c1 1 1 2 0 3"/></svg></div>
+        <h3>Heizung</h3>
+        <p>Neuanlagen & Modernisierung: Gas, Pellet, Scheitholz, Hackschnitzel und Solarthermie. Markentechnik von Viessmann, Buderus, Weishaupt u.v.m.</p>
+        <a href="leistungen.html#heizung" class="card__more">Mehr erfahren &rarr;</a>
+      </article>
+      <article class="card">
+        <div class="card__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-5z"/><path d="M7 12V6a2 2 0 0 1 2-2h1"/><path d="M10 4v3"/></svg></div>
+        <h3>Bad & Sanitär</h3>
+        <p>Bäder, Armaturen, Toiletten und Heizkörper im Wunschdesign. Rohre und Leitungen · sauber geplant, fachgerecht installiert.</p>
+        <a href="leistungen.html#bad" class="card__more">Mehr erfahren &rarr;</a>
+      </article>
+      <article class="card">
+        <div class="card__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+        <h3>Solarthermie</h3>
+        <p>Nachhaltige Systeme, die Sonnenenergie für Warmwasser und Heizung nutzen · ideal kombiniert mit Ihrer Wärmepumpe.</p>
+        <a href="leistungen.html#solar" class="card__more">Mehr erfahren &rarr;</a>
+      </article>
+      <article class="card">
+        <div class="card__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h13a3 3 0 1 0-3-3"/><path d="M3 12h17a3 3 0 1 1-3 3"/><path d="M3 16h9a3 3 0 1 1-3 3"/></svg></div>
+        <h3>Klima & Lüftung</h3>
+        <p>Klima- und Lüftungstechnik für ein gesundes Raumklima · frische Luft, angenehme Temperaturen, das ganze Jahr.</p>
+        <a href="leistungen.html#klima" class="card__more">Mehr erfahren &rarr;</a>
+      </article>
+      <article class="card">
+        <div class="card__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5z"/></svg></div>
+        <h3>Wartung & Notdienst</h3>
+        <p>Wartungsvertrag für lange Lebensdauer und 24/7-Notdienst bei Störungen, Rohrbrüchen und defekten Anlagen · auch am Wochenende.</p>
+        <a href="leistungen.html#notdienst" class="card__more">Mehr erfahren &rarr;</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Spar-Teaser ===== -->
+<section class="teaser" id="teaser">
+  <div class="wrap">
+    <div class="teaser__box">
+      <div class="teaser__grid">
+        <div>
+          <div class="eyebrow">Spar-Indikator</div>
+          <h2>Vom Heizöl zur <span class="serif-it">Wärmepumpe.</span></h2>
+          <p class="teaser__lead">Schieben Sie den Regler in Richtung Wärmepumpe und sehen Sie eine grobe Orientierung, wie sich CO₂-Ausstoß und Energiekosten verändern können.</p>
+          <div class="slider-row">
+            <label for="spar">Alte Heizung <span aria-hidden="true">&rarr;</span> Wärmepumpe</label>
+            <input type="range" id="spar" min="0" max="100" value="50" step="1" aria-label="Anteil Umstellung auf Wärmepumpe in Prozent">
+            <div class="slider-ends"><span>Alte Ölheizung</span><span>Moderne Wärmepumpe</span></div>
+          </div>
+        </div>
+        <div class="teaser__result" aria-live="polite">
+          <div class="tr-row co2">
+            <div class="lab">Geschätzte CO₂-Ersparnis / Jahr</div>
+            <div class="val"><span id="co2val">1,9</span> <span class="unit">Tonnen</span></div>
+            <div class="tr-bar"><span id="co2bar"></span></div>
+          </div>
+          <div class="tr-row">
+            <div class="lab">Geschätzte Energiekosten-Ersparnis / Jahr</div>
+            <div class="val">rund <span id="eurval">950</span> <span class="unit">€</span></div>
+            <div class="tr-bar"><span id="eurbar"></span></div>
+          </div>
+          <p class="teaser__note">Unverbindliche Orientierung auf Basis grober Durchschnittswerte · keine Zusage oder Garantie. Ihren tatsächlichen Bedarf ermitteln wir gemeinsam in einer persönlichen Beratung vor Ort.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Feature (Bild) ===== -->
+<section class="feature">
+  <div class="wrap">
+    <div class="feature__inner">
+      <div class="feature__img" style="background-image:url('img/solar.jpg')" role="img" aria-label="Solaranlage auf einem Hausdach"></div>
+      <div class="feature__txt">
+        <div class="eyebrow">Sonne speichern</div>
+        <h2>Ihr Dach kann <span class="serif-it">mehr.</span></h2>
+        <p>Solarthermie und nachhaltige Systeme holen kostenlose Energie vom Himmel · für Warmwasser, zur Heizungsunterstützung und im Zusammenspiel mit Ihrer Wärmepumpe.</p>
+        <ul class="feature__list">
+          <li><span class="tick">+</span> Solarthermie für Warmwasser & Heizung</li>
+          <li><span class="tick">+</span> Perfekt kombinierbar mit der Wärmepumpe</li>
+          <li><span class="tick">+</span> Planung, Installation & Wartung aus einer Hand</li>
+        </ul>
+        <a href="leistungen.html#solar" class="btn btn--honey">Solar entdecken</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Notdienst-Zitatband ===== -->
+<section class="quote" id="notdienst">
+  <div class="wrap">
+    <div class="eyebrow">Notdienst · auch Sa, So & Feiertags</div>
+    <blockquote>„Wenn die Heizung ausfällt, zählt jede Stunde. Wir sind <span class="serif-it">da</span> · schnell, zuverlässig, rund um die Uhr."</blockquote>
+    <p class="quote__sub">Rohrbruch, defekte Armatur, Heizungsausfall oder Störung an Solarthermie und Durchlauferhitzer? Rufen Sie uns an.</p>
+    <a href="tel:+4915121284969" class="quote__call">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+      0151 / 21 28 49 69
+    </a>
+    <p class="quote__avail">Notdienst-Mobil · auch am Wochenende und an Feiertagen erreichbar.</p>
+  </div>
+</section>
+
+<!-- ===== Kontakt ===== -->
+<section class="kontakt" id="kontakt">
+  <div class="wrap kontakt__grid">
+    <div>
+      <div class="eyebrow">Kontakt</div>
+      <h2>Lassen Sie uns <span class="serif-it">starten.</span></h2>
+      <p class="kontakt__lead">Sie planen eine Wärmepumpe, ein neues Bad oder brauchen Beratung zur Förderung? Schreiben Sie uns · wir melden uns zeitnah zurück.</p>
+      <form id="kontaktForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="tel">Telefon</label>
+            <input type="tel" id="tel" name="tel" autocomplete="tel">
+          </div>
+          <div class="field full">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+          </div>
+          <div class="field full">
+            <label for="thema">Ihr Anliegen</label>
+            <select id="thema" name="thema">
+              <option>Wärmepumpe / Energiewende</option>
+              <option>Heizung modernisieren</option>
+              <option>Bad / Sanitär</option>
+              <option>Solar / Klima / Lüftung</option>
+              <option>Wartung</option>
+              <option>Notdienst</option>
+              <option>Sonstiges</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="msg">Nachricht</label>
+            <textarea id="msg" name="msg" placeholder="Erzählen Sie uns kurz von Ihrem Vorhaben."></textarea>
+          </div>
+        </div>
+        <p class="form-note">Demo-Formular dieser Vorschau · es werden keine Daten übermittelt oder gespeichert.</p>
+        <button type="submit" class="btn btn--dark" style="margin-top:18px">Nachricht senden</button>
+        <div class="form-msg" id="formMsg">Vielen Dank! In der finalen Website ginge Ihre Nachricht jetzt direkt an GASCHNA.</div>
+      </form>
+    </div>
+    <aside class="infocard">
+      <h3>GASCHNA · Augsburg</h3>
+      <div class="info-item">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.7-7-11a7 7 0 0 1 14 0c0 5.3-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+        <div><div class="k">Adresse</div><div class="v">Sonnenbachweg 51<br><small>86169 Augsburg</small></div></div>
+      </div>
+      <div class="info-item">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></div>
+        <div><div class="k">Telefon</div><div class="v"><a href="tel:+4982174822874">0821 / 74 82 28 74</a><br><small>Notdienst: <a href="tel:+4915121284969">0151 / 21 28 49 69</a></small></div></div>
+      </div>
+      <div class="info-item">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+        <div><div class="k">E-Mail</div><div class="v"><a href="mailto:gaschna@web.de">gaschna@web.de</a></div></div>
+      </div>
+      <div class="info-item">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div><div class="k">Terminvergabe</div><div class="v">Mo–Fr 07:00–16:00 Uhr<br><small>Notdienst auch Sa, So & Feiertags</small></div></div>
+      </div>
+      <div class="infocard__social">
+        <a href="https://www.instagram.com/firma_gaschna/" target="_blank" rel="noopener" aria-label="GASCHNA auf Instagram">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" aria-label="GASCHNA auf Facebook">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ===== Angebot CTA ===== -->
+<section class="angebot">
+  <div class="wrap">
+    <div class="angebot__box">
+      <div class="inner">
+        <div class="eyebrow">Bereit für die Wärmewende?</div>
+        <h2>Heute beraten,<br>morgen <span class="serif-it">behaglich.</span></h2>
+        <p>Vereinbaren Sie ein unverbindliches Gespräch · wir prüfen Ihre Möglichkeiten, Förderung und den passenden Weg zur neuen Anlage.</p>
+        <div class="angebot__actions">
+          <a href="tel:+4982174822874" class="btn btn--honey">0821 / 74 82 28 74</a>
+          <a href="mailto:gaschna@web.de" class="btn btn--ghost">E-Mail schreiben</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="img/logo-white.png" alt="GASCHNA">
+        <p>Sanitär · Heizung · Solar · SHK-Meisterbetrieb in Augsburg. Für Augsburg und die Region.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Leistungen</h4>
+        <a href="leistungen.html#waermepumpe">Wärmepumpe</a>
+        <a href="leistungen.html#heizung">Heizung</a>
+        <a href="leistungen.html#bad">Bad & Sanitär</a>
+        <a href="leistungen.html#solar">Solarthermie</a>
+        <a href="leistungen.html#klima">Klima & Lüftung</a>
+        <a href="leistungen.html#notdienst">Notdienst</a>
+      </div>
+      <div class="footer__col">
+        <h4>Kontakt</h4>
+        <p>Sonnenbachweg 51<br>86169 Augsburg</p>
+        <a href="tel:+4982174822874">0821 / 74 82 28 74</a>
+        <a href="tel:+4915121284969">Notdienst: 0151 / 21 28 49 69</a>
+        <a href="mailto:gaschna@web.de">gaschna@web.de</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div>© 2026 GASCHNA · Sanitär · Heizung · Solar · Sonnenbachweg 51, 86169 Augsburg</div>
+      <div><a href="#">Impressum</a> · <a href="#">Datenschutz</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== Sales Overlay ===== -->
+<div class="sales" id="sales">
+  <button class="sales__close" id="salesClose" aria-label="Hinweis schließen">&times;</button>
+  <div class="sales__label">Für GASCHNA</div>
+  <div class="sales__title">Gefällt Ihnen dieser Entwurf?</div>
+  <div class="sales__actions">
+    <a class="sales__btn" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20GASCHNA%20(Variante%20C)">Angebot anfordern</a>
+    <a class="sales__link" href="https://bbaltes0-ops.github.io/vorschau/praesentation-gaschna/">Zur Übersicht</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Welcome popup
+  var welcome=document.getElementById('welcome');
+  function closeWelcome(){welcome.style.display='none';document.body.style.overflow='';}
+  document.getElementById('welcomeEnter').addEventListener('click',closeWelcome);
+  document.getElementById('welcomeClose').addEventListener('click',closeWelcome);
+  welcome.addEventListener('click',function(e){if(e.target===welcome)closeWelcome();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeWelcome();});
+
+  // Header scroll
+  var header=document.getElementById('header');
+  window.addEventListener('scroll',function(){header.classList.toggle('scrolled',window.scrollY>40);});
+
+  // Mobile menu
+  var burger=document.getElementById('burger'),mm=document.getElementById('mobileMenu');
+  function toggleMenu(open){mm.classList.toggle('open',open);burger.setAttribute('aria-expanded',open);}
+  burger.addEventListener('click',function(){toggleMenu(!mm.classList.contains('open'));});
+  document.getElementById('mobileClose').addEventListener('click',function(){toggleMenu(false);});
+  mm.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){toggleMenu(false);});});
+
+  // Sales close
+  document.getElementById('salesClose').addEventListener('click',function(){document.getElementById('sales').classList.add('hidden');});
+
+  // Spar-Teaser
+  var spar=document.getElementById('spar'),co2val=document.getElementById('co2val'),eurval=document.getElementById('eurval'),
+      co2bar=document.getElementById('co2bar'),eurbar=document.getElementById('eurbar');
+  function fmtDe(n,dec){return n.toLocaleString('de-DE',{minimumFractionDigits:dec,maximumFractionDigits:dec});}
+  function updateTeaser(){
+    var p=parseInt(spar.value,10);
+    spar.style.setProperty('--p',p+'%');
+    var co2=(p/100)*3.8; // bis ~3,8 t/Jahr
+    var eur=(p/100)*1900; // bis ~1.900 €/Jahr
+    co2val.textContent=fmtDe(co2,1);
+    eurval.textContent=fmtDe(Math.round(eur/10)*10,0);
+    co2bar.style.width=p+'%';
+    eurbar.style.width=p+'%';
+  }
+  spar.addEventListener('input',updateTeaser);
+  updateTeaser();
+
+  // Form demo
+  var form=document.getElementById('kontaktForm');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    document.getElementById('formMsg').style.display='block';
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>

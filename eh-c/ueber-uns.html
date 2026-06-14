@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Über uns · Elektro Hinzelmann</title>
+<meta name="description" content="Elektro Hinzelmann aus Raesfeld: Familienbetrieb in dritter Generation seit 1949. Inhaber Benedikt und Thomas Hinzelmann. Tradition trifft moderne Elektrotechnik.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0c1a2e;--night-3:#08111f;--cyan:#21d4fd;--cyan-soft:#6fe3ff;--gold:#e7a52b;--gold-soft:#f4c45f;
+    --cream:#f4f1e9;--cream-dim:#cdd6e3;--line:rgba(111,227,255,.16);--card:rgba(255,255,255,.035);--card-border:rgba(255,255,255,.08);
+    --display:"Fraunces",Georgia,serif;--body:"Hanken Grotesk",system-ui,sans-serif;--maxw:1180px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--night);color:var(--cream-dim);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:var(--display);color:var(--cream);font-weight:500;line-height:1.1;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  em{font-style:italic;color:var(--gold-soft)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:rgba(8,17,31,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .brand{font-family:var(--display);font-weight:600;font-size:1.12rem;letter-spacing:.13em;color:var(--cream);text-transform:uppercase}
+  .brand span{color:var(--cyan)}
+  .nav-links{display:flex;gap:30px;align-items:center;font-size:.92rem}
+  .nav-links a{color:var(--cream-dim);transition:color .2s ease}
+  .nav-links a:hover,.nav-links a.active{color:var(--cyan)}
+  .nav-cta{border:1px solid var(--cyan);color:var(--cyan);padding:9px 20px;border-radius:999px;font-weight:600;font-size:.86rem;transition:background .2s ease,color .2s ease,box-shadow .2s ease}
+  .nav-cta:hover{background:var(--cyan);color:var(--night);box-shadow:0 0 24px rgba(33,212,253,.45)}
+  .burger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:5px;padding:6px}
+  .burger span{width:26px;height:2px;background:var(--cream);display:block}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:999px;font-weight:600;font-size:.98rem;transition:transform .2s ease,box-shadow .2s ease,background .2s ease,color .2s ease,border-color .2s ease;cursor:pointer}
+  .btn-primary{background:linear-gradient(135deg,var(--cyan),#1aa6c9);color:#04141f;box-shadow:0 10px 36px rgba(33,212,253,.32)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(33,212,253,.5)}
+  .btn-ghost{border:1px solid rgba(244,241,233,.32);color:var(--cream)}
+  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+
+  .page-hero{padding:170px 0 80px;background:radial-gradient(120% 90% at 25% 10%,#143256,#0c1a2e 55%,#08111f);position:relative;overflow:hidden}
+  .page-hero::after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(80px);background:radial-gradient(circle,rgba(231,165,43,.22),transparent 70%);bottom:-180px;left:-120px}
+  .page-hero .eyebrow{font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan-soft);margin-bottom:22px;display:inline-flex;align-items:center;gap:10px}
+  .page-hero .eyebrow::before{content:"";width:34px;height:1px;background:var(--cyan)}
+  .page-hero h1{font-size:clamp(2.4rem,5.5vw,4.4rem);font-weight:400;color:var(--cream);max-width:16ch;margin-bottom:22px;position:relative;z-index:2}
+  .page-hero h1 em{display:inline-block}
+  .page-hero p{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:54ch;color:var(--cream-dim);position:relative;z-index:2}
+
+  .story{padding:100px 0;background:linear-gradient(180deg,#0c1a2e,#08111f)}
+  .story-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+  .story h2{font-size:clamp(1.9rem,3.4vw,2.8rem);font-weight:400;color:var(--cream);margin-bottom:22px}
+  .story p{font-size:1.06rem;margin-bottom:18px}
+  .story-media{border-radius:24px;overflow:hidden;border:1px solid var(--card-border);position:relative}
+  .story-media img{width:100%;height:500px;object-fit:cover}
+  .story-media::after{content:"";position:absolute;inset:0;background:linear-gradient(150deg,rgba(33,212,253,.14),transparent 50%,rgba(12,26,46,.5))}
+
+  .timeline{padding:100px 0;background:var(--night)}
+  .timeline .head{text-align:center;margin-bottom:64px}
+  .timeline .head .lbl{font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+  .timeline .head h2{font-size:clamp(2rem,3.6vw,3rem);font-weight:400;color:var(--cream)}
+  .tl{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .tl .step{background:var(--card);border:1px solid var(--card-border);border-radius:20px;padding:36px 30px;position:relative;overflow:hidden;transition:transform .25s ease,border-color .25s ease}
+  .tl .step:hover{transform:translateY(-5px);border-color:rgba(33,212,253,.4)}
+  .tl .step::after{content:"";position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(33,212,253,.16),transparent 70%)}
+  .tl .yr{font-family:var(--display);font-size:2.4rem;font-weight:500;color:var(--cyan);margin-bottom:12px}
+  .tl .step h3{font-size:1.2rem;font-weight:500;color:var(--cream);margin-bottom:10px}
+  .tl .step p{font-size:.96rem;color:var(--cream-dim)}
+
+  .values{padding:100px 0;background:linear-gradient(180deg,#08111f,#0c1a2e)}
+  .values .head{text-align:center;margin-bottom:56px}
+  .values .head .lbl{font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+  .values .head h2{font-size:clamp(2rem,3.6vw,3rem);font-weight:400;color:var(--cream)}
+  .vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .vcard{background:var(--card);border:1px solid var(--card-border);border-radius:20px;padding:36px 30px}
+  .vcard .ico{width:46px;height:46px;color:var(--cyan);margin-bottom:20px}
+  .vcard h3{font-size:1.2rem;font-weight:500;color:var(--cream);margin-bottom:10px}
+  .vcard p{font-size:.96rem;color:var(--cream-dim)}
+
+  .owners{padding:100px 0;background:radial-gradient(110% 120% at 50% 0%,#102a47,#08111f 70%)}
+  .owners .head{text-align:center;margin-bottom:56px}
+  .owners .head .lbl{font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+  .owners .head h2{font-size:clamp(2rem,3.6vw,3rem);font-weight:400;color:var(--cream)}
+  .owners .head p{max-width:48ch;margin:14px auto 0;color:var(--cream-dim)}
+  .ogrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:760px;margin:0 auto}
+  .ocard{background:linear-gradient(160deg,#102a47,#0a1626);border:1px solid var(--line);border-radius:22px;padding:38px 34px;text-align:center;position:relative;overflow:hidden}
+  .ocard::after{content:"";position:absolute;top:-50px;right:-50px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(231,165,43,.18),transparent 70%)}
+  .ocard .ring{width:78px;height:78px;border-radius:50%;border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:var(--display);font-size:1.6rem;color:var(--cyan);background:rgba(33,212,253,.07);position:relative;z-index:1}
+  .ocard h3{font-size:1.3rem;font-weight:500;color:var(--cream);margin-bottom:6px;position:relative;z-index:1}
+  .ocard .role{font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:18px;position:relative;z-index:1}
+  .ocard a{color:var(--cyan);font-weight:600;font-size:1rem;position:relative;z-index:1}
+  .ocard a:hover{color:var(--cyan-soft)}
+
+  .cta-band{padding:110px 0;text-align:center;background:radial-gradient(120% 130% at 50% 100%,#143256,#08111f 70%)}
+  .cta-band h2{font-size:clamp(2rem,3.8vw,3.2rem);font-weight:400;color:var(--cream);max-width:18ch;margin:0 auto 20px}
+  .cta-band p{max-width:46ch;margin:0 auto 34px;color:var(--cream-dim);font-size:1.06rem}
+  .cta-band .row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+  footer{background:var(--night-3);border-top:1px solid var(--line);padding:60px 0 40px}
+  .foot-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;align-items:flex-start;margin-bottom:40px}
+  .foot-brand{font-family:var(--display);font-weight:600;letter-spacing:.13em;font-size:1.1rem;color:var(--cream);text-transform:uppercase}
+  .foot-brand span{color:var(--cyan)}
+  .foot-col p,.foot-col a{font-size:.92rem;color:var(--cream-dim);display:block;margin-top:8px}
+  .foot-col a:hover{color:var(--cyan)}
+  .foot-col h4{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan-soft);margin-bottom:6px;font-family:var(--body);font-weight:600}
+  .foot-bottom{border-top:1px solid var(--line);padding-top:26px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:.84rem;color:var(--cream-dim)}
+  .foot-bottom a{color:var(--cream-dim)}.foot-bottom a:hover{color:var(--cyan)}
+
+  .sales{position:fixed;left:20px;bottom:20px;z-index:150;max-width:300px;background:rgba(8,17,31,.92);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:0 18px 48px rgba(0,0,0,.5)}
+  .sales .akira{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:8px}
+  .sales strong{display:block;font-family:var(--display);color:var(--cream);font-size:1.06rem;font-weight:500;margin-bottom:4px}
+  .sales p{font-size:.86rem;color:var(--cream-dim);margin-bottom:14px}
+  .sales .s-actions{display:flex;flex-direction:column;gap:9px}
+  .sales .s-btn{background:linear-gradient(135deg,var(--cyan),#1aa6c9);color:#04141f;text-align:center;padding:10px;border-radius:10px;font-weight:600;font-size:.88rem;transition:box-shadow .2s ease,transform .2s ease}
+  .sales .s-btn:hover{box-shadow:0 0 22px rgba(33,212,253,.5);transform:translateY(-1px)}
+  .sales .s-link{font-size:.82rem;color:var(--cyan-soft);text-align:center}
+  .sales .s-link:hover{color:var(--cyan)}
+  .sales-close{position:absolute;top:8px;right:11px;background:none;border:0;color:var(--cream-dim);cursor:pointer;font-size:1.2rem;line-height:1}
+  .sales-close:hover{color:var(--cyan)}
+
+  @media (max-width:900px){.story-grid{grid-template-columns:1fr;gap:36px}.story-media img{height:360px}.tl,.vgrid{grid-template-columns:1fr}.ogrid{grid-template-columns:1fr;max-width:420px}}
+  @media (max-width:768px){
+    .nav-links{position:fixed;top:0;right:0;height:100vh;width:78%;max-width:320px;background:rgba(8,17,31,.97);backdrop-filter:blur(14px);flex-direction:column;justify-content:center;gap:30px;transform:translateX(100%);transition:transform .3s ease;border-left:1px solid var(--line)}
+    .nav-links.open{transform:none}.burger{display:flex}
+  }
+  @media (max-width:560px){.wrap{padding:0 20px}.sales{left:14px;right:14px;max-width:none}.cta-band .row{flex-direction:column}.btn{justify-content:center}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+  <!--BRS-ANALYTICS-->
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['disableCookies']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function(){ var u='https://analytics.black-rabbit.studio/';
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!--/BRS-ANALYTICS-->
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a href="index.html" class="brand">Elektro <span>Hinzelmann</span></a>
+  <nav class="nav-links" id="navLinks">
+    <a href="leistungen.html">Leistungen</a>
+    <a href="ueber-uns.html" class="active">Über uns</a>
+    <a href="index.html#kontakt">Kontakt</a>
+    <a href="index.html#kontakt" class="nav-cta">Termin sichern</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">Über uns · Familienbetrieb seit 1949</div>
+    <h1>Drei Generationen <em>unter Strom</em>.</h1>
+    <p>Seit 1949 steht der Name Hinzelmann in Raesfeld für ehrliches Elektrohandwerk. Was als Familienbetrieb begann, führen wir heute in dritter Generation weiter · mit demselben Anspruch und moderner Technik.</p>
+  </div>
+</section>
+
+<section class="story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div>
+        <h2>Vom kleinen Familienbetrieb zum Meisterbetrieb.</h2>
+        <p>1949 gegründet, hat sich Elektro Hinzelmann über die Jahrzehnte stetig mit der Technik weiterentwickelt · vom klassischen Hausanschluss bis zur vernetzten Energieversorgung. Geblieben ist, was uns ausmacht: Verlässlichkeit, saubere Arbeit und das persönliche Wort.</p>
+        <p>Als Meisterbetrieb verbinden wir handwerkliche Erfahrung mit aktuellem Wissen in Smart Home, Photovoltaik und Lichttechnik. Für unsere Kundinnen und Kunden in Raesfeld und der Region sind wir der Ansprechpartner, der bleibt · über Generationen.</p>
+      </div>
+      <div class="story-media"><img src="img/elektriker.jpg" alt="Elektriker von Elektro Hinzelmann am Schaltschrank"></div>
+    </div>
+  </div>
+</section>
+
+<section class="timeline">
+  <div class="wrap">
+    <div class="head">
+      <div class="lbl">Unsere Geschichte</div>
+      <h2>Tradition, die unter Strom steht.</h2>
+    </div>
+    <div class="tl">
+      <div class="step">
+        <div class="yr">1949</div>
+        <h3>Der Anfang</h3>
+        <p>Gründung des Familienbetriebs in Raesfeld · der Beginn von über sieben Jahrzehnten Elektrohandwerk in der Region.</p>
+      </div>
+      <div class="step">
+        <div class="yr">2. Gen.</div>
+        <h3>Wachstum</h3>
+        <p>Der Betrieb wächst mit der Technik: vom Hausanschluss zur umfassenden Elektroinstallation für Wohnen und Gewerbe.</p>
+      </div>
+      <div class="step">
+        <div class="yr">Heute</div>
+        <h3>Vernetzt</h3>
+        <p>In dritter Generation vereinen wir Tradition mit KNX Smart Home, Photovoltaik, E-Check und moderner Lichtgestaltung.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="values">
+  <div class="wrap">
+    <div class="head">
+      <div class="lbl">Wofür wir stehen</div>
+      <h2>Werte, die Spannung halten.</h2>
+    </div>
+    <div class="vgrid">
+      <div class="vcard">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <h3>Verlässlichkeit</h3>
+        <p>Termine, Absprachen, Qualität · auf uns ist Verlass. Seit drei Generationen und über die gesamte Region hinweg.</p>
+      </div>
+      <div class="vcard">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></span>
+        <h3>Moderne Technik</h3>
+        <p>Wir bilden uns laufend weiter und bringen Smart Home, Photovoltaik und effiziente Lichttechnik auf den neuesten Stand.</p>
+      </div>
+      <div class="vcard">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
+        <h3>Persönlich</h3>
+        <p>Ein Familienbetrieb mit Gesicht: Sie sprechen direkt mit den Inhabern und haben einen festen Ansprechpartner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="owners">
+  <div class="wrap">
+    <div class="head">
+      <div class="lbl">Inhaber</div>
+      <h2>Ihre Ansprechpartner.</h2>
+      <p>Bei Elektro Hinzelmann erreichen Sie die Verantwortlichen direkt · kurz, persönlich und ohne Umwege.</p>
+    </div>
+    <div class="ogrid">
+      <div class="ocard">
+        <div class="ring">BH</div>
+        <h3>Benedikt Hinzelmann</h3>
+        <div class="role">Inhaber</div>
+        <a href="tel:+4917642003750">0176 4200 3750</a>
+      </div>
+      <div class="ocard">
+        <div class="ring">TH</div>
+        <h3>Thomas Hinzelmann</h3>
+        <div class="role">Inhaber</div>
+        <a href="tel:+491716374604">0171 637 4604</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Lernen wir uns kennen.</h2>
+    <p>Ob Modernisierung, Smart Home oder Photovoltaik · wir freuen uns auf Ihr Projekt in Raesfeld und der Region.</p>
+    <div class="row">
+      <a href="index.html#kontakt" class="btn btn-primary">Kontakt aufnehmen</a>
+      <a href="leistungen.html" class="btn btn-ghost">Leistungen ansehen</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">Elektro <span>Hinzelmann</span></div>
+        <p>Elektro-Meisterbetrieb<br>Für Raesfeld und die Region · seit 1949</p>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <a href="leistungen.html">Leistungen</a>
+        <a href="ueber-uns.html">Über uns</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </div>
+      <div class="foot-col">
+        <h4>Kontakt</h4>
+        <a href="tel:+49286510555">02865 10555</a>
+        <a href="mailto:info@elektro-hinzelmann.de">info@elektro-hinzelmann.de</a>
+        <p>Dorstener Straße 5, 46348 Raesfeld</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Elektro Hinzelmann · Dorstener Straße 5, 46348 Raesfeld</span>
+      <span><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="sales" id="sales">
+  <button class="sales-close" id="salesClose" aria-label="Schließen">&times;</button>
+  <div class="akira">Black Rabbit Studio</div>
+  <strong>Für Elektro Hinzelmann</strong>
+  <p>Gefällt Ihnen dieser Entwurf?</p>
+  <div class="s-actions">
+    <a class="s-btn" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20Elektro%20Hinzelmann%20(Variante%20C)">Angebot anfordern</a>
+    <a class="s-link" href="https://bbaltes0-ops.github.io/vorschau/praesentation-eh/">Zur Übersicht</a>
+  </div>
+</div>
+
+<script>
+  const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+  burger.addEventListener('click',()=>{const o=navLinks.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');burger.setAttribute('aria-expanded',false)}));
+  document.getElementById('salesClose').addEventListener('click',()=>{document.getElementById('sales').style.display='none'});
+</script>
+</body>
+</html>

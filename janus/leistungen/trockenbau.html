@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Trockenbau · STEFAN JANUS Duisburg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--gruen:#14A146;--gruen-dunkel:#026938;--salbei:#318F62;--tinte:#18211C;--stein:#6B716D;
+--silber:#A4A5A6;--nebel:#E6E9E7;--papier:#F5F6F4;--weiss:#fff;--sand:#DCD2BD;
+--disp:'Archivo','Helvetica Neue',Arial,sans-serif;--sans:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--weiss);color:var(--tinte);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.65;overflow-x:hidden}
+h1,h2,h3,.disp{font-family:var(--disp)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+a{color:inherit}.grn{color:var(--gruen)}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--nebel)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo svg{height:38px;width:auto;display:block}
+nav.menu{display:flex;align-items:center;gap:30px}
+nav.menu a{text-decoration:none;font-size:14px;font-weight:500;color:var(--tinte);opacity:.8;transition:.2s}
+nav.menu a:hover{opacity:1;color:var(--gruen-dunkel)}
+.has-drop{position:relative}
+.has-drop>.lbl{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;font-weight:500;opacity:.8}
+.has-drop:hover>.lbl{opacity:1;color:var(--gruen-dunkel)}
+.dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(8px);
+ background:#fff;border:1px solid var(--nebel);border-radius:8px;box-shadow:0 24px 50px -24px rgba(20,40,28,.35);
+ padding:10px;min-width:340px;display:grid;grid-template-columns:1fr 1fr;gap:2px;opacity:0;visibility:hidden;transition:.18s;z-index:60}
+.has-drop:hover .dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.dropdown a{padding:9px 12px;border-radius:5px;font-size:13.5px;opacity:.9}
+.dropdown a:hover{background:var(--papier);color:var(--gruen-dunkel)}
+.cta-call{display:inline-flex;align-items:center;gap:8px;background:var(--gruen-dunkel);color:#fff !important;
+ text-decoration:none;font-weight:600;font-size:14px;padding:11px 20px;border-radius:3px;transition:.2s;opacity:1 !important}
+.cta-call:hover{background:#01512c}
+.legal{display:none}
+.navtoggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:46px;height:44px;background:none;border:0;cursor:pointer;padding:0;margin-left:auto;-webkit-tap-highlight-color:transparent}
+.navtoggle span{display:block;width:25px;height:2px;background:var(--tinte);border-radius:2px;transition:transform .28s,opacity .2s}
+.navtoggle.x span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.navtoggle.x span:nth-child(2){opacity:0}
+.navtoggle.x span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:980px){
+ .navtoggle{display:flex}
+ header{background:#fff;backdrop-filter:none}
+ nav.menu{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-top:1px solid var(--nebel);box-shadow:0 24px 44px -24px rgba(20,40,28,.4);padding:6px 22px 24px;max-height:calc(100vh - 74px);overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s ease,transform .22s ease,visibility .22s}
+ nav.menu.open{opacity:1;visibility:visible;transform:none}
+ nav.menu .nl{display:block;padding:16px 2px;border-top:1px solid var(--nebel);font-size:16.5px;opacity:1}
+ .legal{display:block}
+ .has-drop{display:block;position:static;padding:0}
+ .has-drop>.lbl{display:flex;justify-content:space-between;align-items:center;padding:16px 2px;font-size:16.5px;opacity:1;border-top:1px solid var(--nebel)}
+ .dropdown{position:static;transform:none;opacity:1;visibility:visible;display:block;box-shadow:none;border:0;padding:2px 0 8px;min-width:0;background:transparent}
+ .dropdown a{display:block;padding:13px 14px;font-size:15.5px}
+ nav.menu .cta-call{margin-top:16px;justify-content:center;padding:15px}
+}
+@media(max-width:680px){.tgrid{grid-template-columns:1fr}.lgrid{grid-template-columns:1fr}.opts{grid-template-columns:repeat(2,1fr)}}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:15px 26px;border-radius:3px;font-family:var(--sans);
+ font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:.2s}
+.btn.primary{background:var(--gruen);color:#06210f}.btn.primary:hover{background:#119a40;transform:translateY(-1px)}
+.btn.ghost{border-color:var(--nebel);color:var(--tinte)}.btn.ghost:hover{border-color:var(--gruen);color:var(--gruen-dunkel)}
+section{padding:clamp(52px,7vw,92px) 0}.alt{background:var(--papier)}
+.sec-head{max-width:660px;margin-bottom:40px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gruen-dunkel);font-weight:600;margin-bottom:15px}
+.eyebrow::before{content:"";width:24px;height:2px;background:var(--gruen)}
+h2{font-weight:800;font-size:clamp(28px,3.6vw,44px);line-height:1.05;letter-spacing:-.015em}
+.sec-head p{color:var(--stein);font-size:16px;margin-top:13px}
+.stagelabel{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--stein);margin-bottom:12px;display:block;font-weight:600}
+.ba{position:relative;width:100%;aspect-ratio:16/9;border-radius:4px;overflow:hidden;box-shadow:0 26px 60px -34px rgba(20,40,28,.5);
+ border:1px solid var(--nebel);user-select:none;touch-action:pan-y;background:#eee;cursor:ew-resize}
+.ba .layer{position:absolute;inset:0;overflow:hidden}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);display:block}
+.ba .after-layer{clip-path:inset(0 0 0 50%)}
+.ba .cap{position:absolute;bottom:0;left:0;right:0;height:24%;z-index:4;pointer-events:none;background:linear-gradient(to top,rgba(15,25,18,.5),rgba(15,25,18,0))}
+.tagpill{position:absolute;bottom:14px;z-index:6;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:6px 11px;border-radius:2px;color:#fff;background:rgba(20,26,22,.55);backdrop-filter:blur(4px)}
+.tagpill.l{left:14px}.tagpill.r{right:14px;background:var(--gruen);color:#06210f}
+.ba .handle{position:absolute;top:0;bottom:0;left:50%;width:2px;z-index:5;background:#fff;transform:translateX(-1px)}
+.ba .knob{position:absolute;top:50%;left:50%;z-index:6;width:42px;height:42px;transform:translate(-50%,-50%);border-radius:50%;
+ background:#fff;display:flex;align-items:center;justify-content:center;color:var(--gruen-dunkel);box-shadow:0 5px 16px rgba(0,0,0,.28)}
+.ba .knob svg{width:19px;height:19px}
+.ggrid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.gitem .stagelabel{margin-top:0}
+.claimcard{aspect-ratio:16/9;border-radius:4px;border:1px solid var(--nebel);background:var(--papier);
+ display:flex;flex-direction:column;justify-content:center;gap:12px;padding:clamp(22px,3vw,38px)}
+.claimcard .ce{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gruen-dunkel);font-weight:600}
+.claimcard .cq{font-family:var(--disp);font-size:clamp(19px,2.1vw,26px);font-weight:700;line-height:1.25;color:var(--tinte)}
+@media(max-width:760px){.ggrid{grid-template-columns:1fr}.claimcard{aspect-ratio:auto;min-height:200px}}
+footer{background:var(--tinte);color:#cdd3cf;padding:52px 0 28px}
+footer .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+footer .logo svg{height:40px}
+footer a{color:#cdd3cf;text-decoration:none;font-size:14px;opacity:.8}footer a:hover{opacity:1;color:#fff}
+.fcol h4{color:#fff;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.fcol .col{display:flex;flex-direction:column;gap:9px}
+.fbar{border-top:1px solid #2c3630;margin-top:38px;padding-top:20px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#8b938d}
+.note{background:#fff8e6;border:1px solid #f0e2b0;color:#7a6a2e;font-size:12.5px;padding:9px 14px;border-radius:4px;margin-top:10px}
+.partner{display:flex;flex-direction:column;gap:8px;margin-top:18px;text-decoration:none;align-items:flex-start}
+.partner span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#9aa39d}
+.partner img{height:38px;width:auto;border-radius:4px;display:block;transition:transform .2s}
+.partner:hover img{transform:translateY(-1px)}
+/* hero */
+.hero{padding:60px 0 16px}
+.hgrid{display:grid;grid-template-columns:1.02fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:start}
+.copy{position:relative;padding-left:24px;border-left:3px solid var(--gruen);padding-top:8px}
+.kicker{display:inline-flex;align-items:center;gap:12px;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gruen-dunkel);font-weight:600;margin-bottom:18px}
+.hero h1{font-weight:800;font-size:clamp(38px,5vw,62px);line-height:1.0;letter-spacing:-.02em}
+.lead{color:var(--stein);font-size:clamp(15.5px,1.4vw,18px);margin-top:20px;max-width:28em}
+.cta{display:flex;gap:16px;margin-top:28px;flex-wrap:wrap;align-items:center}
+.meta{display:flex;gap:32px;margin-top:36px;flex-wrap:wrap}
+.meta .n{font-family:var(--disp);font-weight:800;font-size:24px;line-height:1}
+.meta .l{font-size:11px;letter-spacing:.08em;color:var(--stein);text-transform:uppercase;margin-top:6px}
+.stage{position:relative}
+/* compact calculator */
+.calc{background:var(--weiss);border:1px solid var(--nebel);border-radius:8px;overflow:hidden;box-shadow:0 24px 56px -38px rgba(20,40,28,.5)}
+.calc.compact{margin-top:16px}
+.calc-head{background:var(--gruen-dunkel);color:#fff;padding:15px 20px}
+.calc-head h3{font-size:16px;font-weight:700}.calc-head p{font-size:12.5px;opacity:.85;margin-top:2px}
+.calc-body{padding:18px 20px}
+.steps{display:flex;gap:7px;margin-bottom:16px}.steps .s{flex:1;height:4px;border-radius:3px;background:var(--nebel)}.steps .s.on{background:var(--gruen)}
+.qlabel{font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--stein);margin-bottom:11px}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.opt{border:1px solid var(--nebel);border-radius:5px;padding:12px 8px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;transition:.15s}
+.opt:hover{border-color:var(--gruen)}.opt.sel{border-color:var(--gruen);background:rgba(20,161,70,.08);color:var(--gruen-dunkel)}
+.field{margin-bottom:10px}.field label{display:block;font-size:12px;font-weight:600;color:var(--stein);margin-bottom:5px}
+.field input,.field textarea{width:100%;border:1px solid var(--nebel);border-radius:4px;padding:10px 12px;font-family:var(--sans);font-size:14px;color:var(--tinte);background:var(--papier)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--gruen);background:#fff}
+.calc-nav{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.link-back{background:none;border:none;color:var(--stein);font-size:13px;cursor:pointer;font-family:var(--sans)}
+.summary{background:var(--papier);border-radius:6px;padding:13px 15px;font-size:13px;margin-bottom:13px;display:none;line-height:1.5}
+.summary b{color:var(--gruen-dunkel)}.summary .sl{display:block;padding:2px 0}
+.qsub{margin-top:15px}.hint{font-size:11px;color:var(--stein);margin-top:8px}
+.fld2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:760px){.hgrid{grid-template-columns:1fr;gap:26px}}
+/* warum / stimme / kontakt */
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.titem{padding:24px 22px;background:var(--weiss);border:1px solid var(--nebel);border-radius:6px}
+.titem .ic{width:30px;height:30px;color:var(--gruen);margin-bottom:13px}
+.titem h3{font-size:16px;font-weight:700;margin-bottom:6px}.titem p{font-size:13.5px;color:var(--stein)}
+@media(max-width:860px){.tgrid{grid-template-columns:repeat(2,1fr)}}
+.quote{max-width:780px;margin:0 auto;text-align:center}
+.quote .q{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3vw,32px);line-height:1.3}
+.quote .a{margin-top:18px;color:var(--stein);font-size:14px}.stars{color:var(--gruen);letter-spacing:3px;font-size:18px;margin-bottom:20px}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.kinfo .row{display:flex;gap:14px;padding:15px 0;border-bottom:1px solid var(--nebel)}
+.kinfo .row .ic{width:22px;height:22px;color:var(--gruen-dunkel);flex:none;margin-top:2px}
+.kinfo .row .t b{display:block;font-size:15px;font-weight:700}.kinfo .row .t span{font-size:14px;color:var(--stein)}
+@media(max-width:760px){.kgrid{grid-template-columns:1fr}}
+/* subpage */
+.lphead{padding:60px 0 8px}
+.crumb{font-size:12.5px;color:var(--stein);margin-bottom:16px}.crumb a{color:var(--gruen-dunkel);text-decoration:none}
+.lphead h1{font-weight:800;font-size:clamp(34px,4.6vw,54px);line-height:1.03;letter-spacing:-.02em}
+.lphead .lead{max-width:40em;font-size:clamp(16px,1.5vw,19px);color:var(--tinte);opacity:.85}
+.kwrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.kwrow span{font-size:12.5px;color:var(--gruen-dunkel);background:rgba(20,161,70,.07);border:1px solid #cdebd6;padding:5px 12px;border-radius:20px;font-weight:600}
+.detail{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:start}
+.detail p{color:var(--stein);font-size:15.5px;margin-bottom:14px}
+.detail .blist{list-style:none;background:var(--papier);border:1px solid var(--nebel);border-radius:8px;padding:22px 24px}
+.detail .blist li{display:flex;gap:11px;padding:9px 0;font-size:14.5px;border-bottom:1px solid var(--nebel)}
+.detail .blist li:last-child{border-bottom:none}
+.detail .blist svg{width:18px;height:18px;color:var(--gruen);flex:none;margin-top:3px}
+@media(max-width:760px){.detail{grid-template-columns:1fr;gap:22px}}
+.ctaband{background:var(--gruen-dunkel);color:#fff;border-radius:10px;padding:40px;text-align:center}
+.ctaband h2{color:#fff;font-size:clamp(24px,3vw,34px)}.ctaband p{color:#d7ece0;margin:10px 0 22px}
+.ctaband .btn.primary{background:var(--gruen);color:#06210f}
+</style></head><body><header><div class="wrap nav">
+<a class="logo" href="../index_A.html" aria-label="STEFAN JANUS"><svg viewBox="0 0 650 150" role="img" aria-label="STEFAN JANUS Logo"><g transform="translate(6,16) scale(1.18)"><circle cx="50" cy="52" r="31" fill="#14A146"></circle><circle cx="50" cy="52" r="31" fill="none" stroke="#B9BDBA" stroke-width="4.5"></circle><g transform="rotate(-30 50 52)"><rect x="13" y="45.5" width="23" height="13" rx="3.5" fill="#026938" stroke="#FFFFFF" stroke-width="2.6"></rect><rect x="35" y="44.5" width="7.5" height="15" rx="1" fill="#B9BDBA" stroke="#FFFFFF" stroke-width="2.6"></rect><rect x="41" y="47" width="41" height="10" rx="5" fill="#20262A" stroke="#FFFFFF" stroke-width="2.6"></rect></g></g><text x="144" y="80" font-family="Archivo, sans-serif" font-weight="800" font-size="60" letter-spacing="-2"><tspan fill="#14A146">STEFAN</tspan><tspan fill="#026938">JANUS</tspan></text><text x="146" y="112" font-family="Hanken Grotesk, sans-serif" font-weight="600" font-size="16" letter-spacing="4.5" fill="#8A908C">MALER UND BODENLEGERBETRIEB</text></svg></a>
+<button class="navtoggle" id="navtoggle" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav class="menu" id="navmenu">
+<div class="has-drop"><span class="lbl">Leistungen <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></span><div class="dropdown"><a href="../leistungen/anstrich.html">Anstrich &amp; Lackieren</a><a href="../leistungen/tapezier.html">Tapezierarbeiten</a><a href="../leistungen/boden.html">Bodenbeläge</a><a href="../leistungen/fassade.html">Fassadensanierung</a><a href="../leistungen/waermedaemmung.html">Wärmedämmung</a><a href="../leistungen/trockenbau.html">Trockenbau</a><a href="../leistungen/stuck.html">Stuckarbeiten</a><a href="../leistungen/altbausanierung.html">Altbausanierung</a><a href="../leistungen/balkon.html">Balkonsanierung</a><a href="../leistungen/schimmel.html">Schimmel &amp; Wasserschäden</a><a href="../leistungen/baeder.html">Bäder ohne Fliesen</a><a href="../leistungen/weitere.html">Weitere Leistungen</a></div></div>
+<a class="nl" href="../index_A.html#angebot">Angebot</a>
+<a class="nl" href="../index_A.html#galerie">Vorher Nachher</a>
+<a class="nl" href="../index_A.html#kontakt">Kontakt</a>
+<a class="nl legal" href="../impressum.html">Impressum</a>
+<a class="nl legal" href="../datenschutz.html">Datenschutz</a>
+<a class="cta-call" href="tel:+4920398571147">0203 98571147</a>
+</nav></div></header><section class="lphead"><div class="wrap">
+<div class="crumb"><a href="../index_A.html">Start</a> · <a href="../index_A.html#galerie">Leistungen</a> · Trockenbau</div>
+<h1>Trockenbau</h1><p class="lead">Schnell, sauber und flexibel: neue Räume in Leichtbauweise, inklusive Schall-, Brand- und Feuchteschutz.</p><div class="kwrow"><span>Wände &amp; Decken</span><span>Schallschutz</span><span>Brandschutz</span><span>Innenputz</span></div></div></section><section style="padding-top:18px"><div class="wrap detail">
+<div><div class="eyebrow">Das bieten wir</div><p>Für raumbegrenzende und bauteilbekleidende Konstruktionen empfehlen wir die schnelle und meist günstigere Methode des Trockenausbaus. In dieser Montage- und Leichtbauweise erfüllen wir selbst bauphysikalische Anforderungen wie Wärme-, Kälte-, Schall-, Brand-, Feuchte- und Strahlenschutz. Ergänzend verputzen wir Ihre Wände, ob Neuverputzung im Neubau oder Putzsanierung im Bestand, mit Gips-, Kalk-, Lehm-, Silikon- oder Silikatputz und bereiten sie optimal zum Streichen oder Tapezieren vor. Glatte Oberflächen und passgenaue Aussparungen sind dabei selbstverständlich.</p></div>
+<ul class="blist"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Wände, Decken und Vorsatzschalen</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Schall-, Brand- und Feuchteschutz</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Innenputz (Gips, Kalk, Lehm, Silikat)</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Glatte Oberflächen, passgenaue Anschlüsse</span></li></ul></div></section><section class="alt"><div class="wrap"><div class="sec-head"><div class="eyebrow">Vorher · Nachher</div>
+<h2>Beispiele aus der Praxis.</h2><p>Ziehen Sie den Regler, oder lassen Sie ihn laufen.</p></div>
+<div class="ggrid"><div class="gitem"><div class="ba" data-before="../assets_web/trockenbau_b_vorher.jpg" data-after="../assets_web/trockenbau_b_nachher.jpg" data-alt="Trockenbau"></div></div><div class="gitem"><div class="ba" data-before="../assets_web/trockenbau_c_vorher.jpg" data-after="../assets_web/trockenbau_c_nachher.jpg" data-alt="Trockenbau"></div></div><div class="gitem"><div class="ba" data-before="../assets_web/trockenbau_vorher.jpg" data-after="../assets_web/trockenbau_nachher.jpg" data-alt="Trockenbau"></div></div><div class="claimcard"><div class="ce">Unser Anspruch</div><div class="cq">Neue Räume, schnell, sauber und flexibel.</div></div></div></div></section><section><div class="wrap"><div class="ctaband"><h2>Planen Sie etwas in diese Richtung?</h2>
+<p>Beschreiben Sie uns kurz Ihr Projekt. Wir melden uns innerhalb von 24 Stunden mit einem unverbindlichen Angebot.</p>
+<a class="btn primary" href="../index_A.html#angebot">Kostenloses Angebot</a></div></div></section><footer><div class="wrap"><div class="fgrid">
+<div class="fcol" style="max-width:300px"><div class="logo" style="margin-bottom:14px"><svg viewBox="0 0 650 150" role="img" aria-label="STEFAN JANUS Logo"><g transform="translate(6,16) scale(1.18)"><circle cx="50" cy="52" r="31" fill="#14A146"></circle><circle cx="50" cy="52" r="31" fill="none" stroke="#B9BDBA" stroke-width="4.5"></circle><g transform="rotate(-30 50 52)"><rect x="13" y="45.5" width="23" height="13" rx="3.5" fill="#026938" stroke="#FFFFFF" stroke-width="2.6"></rect><rect x="35" y="44.5" width="7.5" height="15" rx="1" fill="#B9BDBA" stroke="#FFFFFF" stroke-width="2.6"></rect><rect x="41" y="47" width="41" height="10" rx="5" fill="#20262A" stroke="#FFFFFF" stroke-width="2.6"></rect></g></g><text x="144" y="80" font-family="Archivo, sans-serif" font-weight="800" font-size="60" letter-spacing="-2"><tspan fill="#14A146">STEFAN</tspan><tspan fill="#ffffff">JANUS</tspan></text><text x="146" y="112" font-family="Hanken Grotesk, sans-serif" font-weight="600" font-size="16" letter-spacing="4.5" fill="#8A908C">MALER UND BODENLEGERBETRIEB</text></svg></div>
+<p style="font-size:13.5px;opacity:.75">Ihr Malerfachbetrieb in Duisburg seit 2015. Alles rund ums Haus, aus einer Hand.</p>
+<a class="partner" href="https://www.farbdesigner.io/" target="_blank" rel="noopener"><span>Partner</span><img src="../assets_web/brillux_farbdesigner.png" alt="Brillux Farbdesigner"></a></div>
+<div class="fcol"><h4>Leistungen</h4><div class="col">
+<a href="../leistungen/anstrich.html">Anstrich &amp; Lackieren</a><a href="../leistungen/tapezier.html">Tapezieren</a>
+<a href="../leistungen/fassade.html">Fassadensanierung</a><a href="../leistungen/baeder.html">Bäder ohne Fliesen</a></div></div>
+<div class="fcol"><h4>Betrieb</h4><div class="col"><a href="../index_A.html#warum">Über uns</a>
+<a href="../index_A.html#angebot">Angebot</a><a href="../index_A.html#kontakt">Kontakt</a></div></div>
+<div class="fcol"><h4>Kontakt</h4><div class="col"><a href="tel:+4920398571147">0203 98571147</a>
+<a href="mailto:info@mb-janus.de">info@mb-janus.de</a><span style="font-size:14px;opacity:.8">Hedwigstr. 30-32<br>47058 Duisburg</span></div></div>
+</div><div class="fbar"><div>© 2026 Stefan Janus Malerfachbetrieb</div>
+<div><a href="../impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="../datenschutz.html">Datenschutz</a></div></div></div></footer><script>
+document.querySelectorAll('.ba').forEach(function(ba){
+ var before=ba.dataset.before,after=ba.dataset.after,alt=ba.dataset.alt||'';
+ ba.innerHTML='<div class="layer"><img loading="lazy" src="'+before+'" alt="Vorher '+alt+'"></div>'+
+ '<div class="layer after-layer"><img loading="lazy" src="'+after+'" alt="Nachher '+alt+'"></div>'+
+ '<div class="cap"></div><div class="tagpill l">Vorher</div><div class="tagpill r">Nachher</div>'+
+ '<div class="handle"></div><div class="knob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 3 12 9 18"></polyline><polyline points="15 6 21 12 15 18"></polyline></svg></div>';
+ var aL=ba.querySelector('.after-layer'),h=ba.querySelector('.handle'),k=ba.querySelector('.knob');
+ var split=50,auto=true,drag=false,t0=performance.now()+Math.random()*2000;
+ function ap(v){split=Math.max(2,Math.min(98,v));var p=split.toFixed(2)+'%';aL.style.clipPath='inset(0 0 0 '+p+')';h.style.left=p;k.style.left=p;}
+ ap(50);
+ function vis(){var r=ba.getBoundingClientRect();return r.top<innerHeight&&r.bottom>0;}
+ function loop(n){if(auto&&!drag&&vis()){var t=(n-t0)/4400,e=0.5-0.5*Math.cos(t*Math.PI);ap(28+44*e);if(e>=0.999||e<=0.001)t0=n;}requestAnimationFrame(loop);}
+ requestAnimationFrame(loop);
+ function sx(x){var r=ba.getBoundingClientRect();ap(((x-r.left)/r.width)*100);}
+ function st(e){drag=true;auto=false;ba.style.cursor='grabbing';sx(e.touches?e.touches[0].clientX:e.clientX);e.preventDefault();}
+ function mv(e){if(!drag)return;sx(e.touches?e.touches[0].clientX:e.clientX);}
+ function en(){if(!drag)return;drag=false;ba.style.cursor='ew-resize';clearTimeout(ba._i);ba._i=setTimeout(function(){auto=true;t0=performance.now();},4000);}
+ ba.addEventListener('mousedown',st);ba.addEventListener('touchstart',st,{passive:false});
+ window.addEventListener('mousemove',mv);window.addEventListener('touchmove',mv,{passive:false});
+ window.addEventListener('mouseup',en);window.addEventListener('touchend',en);
+});</script><script>
+(function(){var b=document.getElementById('navtoggle'),m=document.getElementById('navmenu');if(!b||!m)return;
+function set(o){m.classList.toggle('open',o);b.classList.toggle('x',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Menü schließen':'Menü öffnen');}
+b.addEventListener('click',function(e){e.stopPropagation();set(!m.classList.contains('open'));});
+m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+})();</script></body></html>

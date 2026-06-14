@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auto-Service LOITSCH · Der Film</title>
+<meta name="description" content="Auto-Service Loitsch, Görlitz – ein kurzer Film über eine Werkstatt, die noch repariert statt auszutauschen. Ehrlich, fair, für alle Marken. Gute Laune inklusive.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,800;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#142441; --navy2:#1d3157; --paper:#f6f1e7; --paper2:#fbf8f1; --ink:#142441;
+    --body-c:#3c4a63; --muted:#7d869a; --honey:#e7a52b; --honey-d:#cf9015; --line:#e7ddca;
+    --disp:'Fraunces',Georgia,serif; --body:'Hanken Grotesk',system-ui,sans-serif;
+    --r:18px; --shadow:0 28px 60px -28px rgba(20,36,65,.42);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--body-c);background:var(--paper);line-height:1.66;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+  .eyebrow{font-family:var(--body);font-weight:700;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--honey-d)}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:16px 30px;border-radius:999px;font-weight:700;font-size:15px;border:0;cursor:pointer;transition:.2s;line-height:1;font-family:var(--body)}
+  .btn-ho{background:var(--honey);color:var(--navy)}.btn-ho:hover{background:var(--honey-d);transform:translateY(-2px)}
+  .btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:var(--navy2);transform:translateY(-2px)}
+  .btn-line{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.6)}.btn-line:hover{background:rgba(255,255,255,.12)}
+
+  /* NAV */
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:.3s}
+  header.nav.solid{background:rgba(246,241,231,.94);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px}
+  .nav .logo{height:46px;filter:brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,.5));transition:.3s}
+  .nav.solid .logo{filter:none}
+  .nav .links{display:flex;gap:30px;align-items:center;font-weight:600;font-size:15px;color:#fff}
+  .nav.solid .links{color:var(--ink)}
+  .nav .links a:hover{color:var(--honey)}
+  @media(max-width:900px){.nav .links a:not(.cta){display:none}}
+
+  /* CINEMATIC HERO */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;color:#fff}
+  .hero .hvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;will-change:transform}
+  .hero .scrim{position:absolute;inset:0;z-index:1;background:
+     linear-gradient(180deg,rgba(10,18,33,.55) 0%,rgba(10,18,33,0) 26%,rgba(10,18,33,.12) 55%,rgba(10,18,33,.86) 100%)}
+  .hero .grain{position:absolute;inset:0;z-index:2;opacity:.07;pointer-events:none;mix-blend-mode:overlay;
+     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .hero .bars{position:absolute;left:0;right:0;z-index:2;height:7vh;background:#0a1221;pointer-events:none}
+  .hero .bars.t{top:0}.hero .bars.b{bottom:0}
+  .hero .wrap{position:relative;z-index:3;padding:0 28px calc(7vh + 54px)}
+  .hero .tag{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-weight:700;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:#fff;opacity:.92}
+  .hero .tag .dotlive{width:9px;height:9px;border-radius:50%;background:var(--honey);box-shadow:0 0 0 0 rgba(231,165,43,.7);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(231,165,43,.6)}70%{box-shadow:0 0 0 12px rgba(231,165,43,0)}100%{box-shadow:0 0 0 0 rgba(231,165,43,0)}}
+  .hero h1{font-family:var(--disp);font-weight:900;font-size:clamp(46px,9.4vw,116px);line-height:.92;letter-spacing:-.018em;margin:16px 0 18px;max-width:13ch;text-shadow:0 6px 40px rgba(0,0,0,.4)}
+  .hero h1 em{font-style:italic;font-weight:500;color:var(--honey)}
+  .hero .sub{font-size:clamp(17px,2.1vw,21px);max-width:46ch;color:#eef1f6;font-weight:500}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+  /* staged load */
+  .js .hero .anim{opacity:0;transform:translateY(26px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+  .js .hero .a1{animation-delay:.15s}.js .hero .a2{animation-delay:.32s}.js .hero .a3{animation-delay:.5s}.js .hero .a4{animation-delay:.66s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .scrolltip{position:absolute;left:50%;bottom:calc(7vh + 16px);transform:translateX(-50%);z-index:3;color:#fff;opacity:.7;font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scrolltip .ln{width:1px;height:34px;background:linear-gradient(#fff,transparent);animation:drop 1.8s infinite}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+  @media(max-width:620px){.scrolltip{display:none}}
+
+  /* TITLE CARD strip */
+  .titlecard{background:var(--navy);color:#fff;text-align:center;padding:26px 22px}
+  .titlecard p{font-family:var(--disp);font-style:italic;font-weight:500;font-size:clamp(17px,2.4vw,26px);letter-spacing:.01em;color:#e9eef6}
+  .titlecard p b{font-style:normal;font-weight:700;color:var(--honey)}
+
+  .reveal{opacity:1}.js .reveal{opacity:0;transform:translateY(30px);transition:.85s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}
+
+  section{padding:104px 0}
+  .center{text-align:center}
+  .eyebrow.c{display:block;text-align:center}
+  .h2{font-family:var(--disp);font-weight:800;font-size:clamp(32px,5vw,62px);line-height:1.0;letter-spacing:-.02em;color:var(--ink)}
+  .h2 em{font-style:italic;font-weight:500;color:var(--honey-d)}
+  .lead{color:var(--body-c);max-width:58ch;font-size:18px;margin:14px auto 0}
+
+  /* MANIFEST */
+  .manifest{background:var(--paper)}
+  .manifest .wrap{max-width:1000px;text-align:center}
+  .manifest .big{font-family:var(--disp);font-weight:800;font-size:clamp(30px,4.8vw,58px);line-height:1.06;letter-spacing:-.02em;color:var(--ink)}
+  .manifest .big em{font-style:italic;font-weight:500;color:var(--honey-d)}
+  .manifest .by{margin-top:26px;color:var(--muted);font-size:15px;letter-spacing:.02em}
+  .manifest .by b{color:var(--ink);font-weight:700}
+
+  /* PROGRAMM (Leistungen) */
+  .prog{background:var(--paper2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:50px}
+  .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:30px 26px 28px;box-shadow:0 18px 44px -30px rgba(20,36,65,.4);transition:.24s;overflow:hidden}
+  .card:before{content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:var(--honey);transform:scaleX(0);transform-origin:left;transition:.3s}
+  .card:hover{transform:translateY(-7px);border-color:#ecd8a8}.card:hover:before{transform:scaleX(1)}
+  .card .ix{font-family:var(--disp);font-weight:800;font-size:30px;color:var(--honey-d);line-height:1}
+  .card h3{font-family:var(--disp);font-weight:700;font-size:22px;color:var(--ink);margin:10px 0 8px;letter-spacing:-.01em}
+  .card p{color:var(--body-c);font-size:15px}
+
+  /* BEHIND THE SCENES split */
+  .behind .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .behind .imgwrap{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+  .behind .imgwrap img{width:100%;height:480px;object-fit:cover;transition:.6s}
+  .behind .imgwrap:hover img{transform:scale(1.04)}
+  .behind .imgwrap .badge{position:absolute;left:18px;bottom:18px;background:rgba(20,36,65,.86);color:#fff;backdrop-filter:blur(4px);padding:10px 16px;border-radius:999px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+  .behind h2{font-family:var(--disp);font-weight:800;font-size:clamp(30px,4.2vw,52px);color:var(--ink);line-height:1.0;letter-spacing:-.02em;margin-bottom:18px}
+  .behind h2 em{font-style:italic;font-weight:500;color:var(--honey-d)}
+  .behind p{color:var(--body-c);font-size:17px;margin-bottom:14px}
+  .behind p b{color:var(--ink)}
+  .behind .sign{font-family:var(--disp);font-style:italic;font-size:21px;color:var(--ink);margin-top:18px}
+  @media(max-width:880px){.behind .wrap{grid-template-columns:1fr;gap:30px}.behind .imgwrap img{height:340px}}
+
+  /* QUOTE band */
+  .quote{position:relative;background:var(--navy);color:#fff;text-align:center;overflow:hidden}
+  .quote .wrap{padding:108px 22px;position:relative;z-index:2;max-width:980px}
+  .quote .mark{display:block;font-family:var(--disp);font-weight:900;font-size:clamp(72px,9vw,120px);line-height:.7;color:var(--honey);opacity:.9;margin-bottom:10px}
+  .quote h2{font-family:var(--disp);font-weight:500;font-style:italic;font-size:clamp(28px,4.4vw,52px);line-height:1.12;letter-spacing:-.01em;margin-top:0}
+  .quote h2 b{font-style:normal;font-weight:800;color:var(--honey)}
+  .quote .src{margin-top:26px;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:#9fb0cd}
+
+  /* STATS */
+  .stats{background:var(--paper2);border-bottom:1px solid var(--line)}
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+  .stat .n{font-family:var(--disp);font-weight:800;font-size:clamp(34px,4.6vw,56px);color:var(--ink);line-height:1}
+  .stat .n em{font-style:normal;color:var(--honey-d)}
+  .stat .l{margin-top:6px;font-size:14px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+  @media(max-width:720px){.stats .wrap{grid-template-columns:1fr 1fr;gap:34px 20px}}
+
+  /* KONTAKT */
+  .kontakt .wrap{display:grid;grid-template-columns:1fr 1fr;gap:54px}
+  @media(max-width:880px){.kontakt .wrap{grid-template-columns:1fr;gap:34px}}
+  .form{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:36px;box-shadow:var(--shadow)}
+  .form label{font-family:var(--body);font-weight:600;font-size:13px;color:var(--ink);display:block;margin:16px 0 6px}
+  .form input,.form textarea{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;font-family:inherit;background:#fcfaf5;color:var(--ink)}
+  .form input:focus,.form textarea:focus{outline:0;border-color:var(--honey)}
+  .form .btn{width:100%;justify-content:center;margin-top:22px}
+  .ok{display:none;background:#eaf5ec;border:1px solid #b6e0c2;color:#1c6b34;padding:14px;border-radius:12px;margin-top:14px;font-weight:600}
+  .info h3{font-family:var(--disp);font-weight:700;font-size:24px;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em}
+  .info .row{display:flex;gap:14px;align-items:flex-start;margin:18px 0;font-size:16px;color:var(--body-c)}
+  .info .row .lab{font-family:var(--body);font-weight:700;color:var(--honey-d);font-size:12px;letter-spacing:.12em;text-transform:uppercase;min-width:78px;padding-top:3px}
+  .info .quick{display:flex;flex-direction:column;gap:12px;margin-top:26px}
+
+  /* ANGEBOT */
+  .offer{background:var(--navy);color:#fff;text-align:center}
+  .offer .wrap{padding:128px 22px;max-width:900px}
+  .offer h2{font-family:var(--disp);font-weight:800;font-size:clamp(38px,6.2vw,74px);margin-bottom:20px;letter-spacing:-.02em;line-height:1.0}
+  .offer h2 em{font-style:italic;font-weight:500;color:var(--honey)}
+  .offer p{margin:0 auto 32px;color:#cdd7e8;font-size:clamp(18px,2.1vw,21px);max-width:56ch}
+  .offer .btn{padding:18px 36px;font-size:16px}
+  .offer .cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  /* Pop-in beim Erreichen */
+  .js .offer .reveal{opacity:0;transform:translateY(26px) scale(.9);transition:.7s cubic-bezier(.18,.9,.25,1.1)}
+  .offer .reveal.in{opacity:1;transform:none}
+
+  footer{background:#0e1a30;color:#8294b3;font-size:14px;padding:40px 0}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px}footer a{color:#cdd7e8}
+
+  /* MODAL + POP */
+  .modal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(10,18,33,.7);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:.35s}
+  .modal.show{opacity:1;visibility:visible}
+  .modal .card2{background:var(--paper2);max-width:480px;width:100%;border-radius:20px;padding:42px 38px;box-shadow:0 44px 100px -24px rgba(0,0,0,.55);transform:translateY(16px) scale(.98);transition:.4s cubic-bezier(.2,.8,.2,1);position:relative;border-top:5px solid var(--honey)}
+  .modal.show .card2{transform:none}
+  .modal .x{position:absolute;top:14px;right:16px;background:none;border:0;font-size:22px;color:var(--muted);cursor:pointer;line-height:1}
+  .modal .mlogo{height:42px;margin-bottom:18px}
+  .modal h3{font-family:var(--disp);font-weight:800;font-size:25px;color:var(--ink);margin-bottom:12px;letter-spacing:-.01em}
+  .modal p{color:var(--body-c);font-size:16px;margin-bottom:24px}
+  .modal .btn{width:100%;justify-content:center}.modal .msmall{display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--muted);cursor:pointer}
+  .pop{position:fixed;right:22px;bottom:22px;z-index:90;max-width:340px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--honey);border-radius:14px;box-shadow:var(--shadow);padding:20px 22px 22px;transform:translateY(160%);transition:.5s cubic-bezier(.2,.8,.2,1)}
+  .pop.show{transform:none}.pop .x{position:absolute;top:8px;right:12px;background:none;border:0;font-size:18px;color:var(--muted);cursor:pointer}
+  .pop b{font-family:var(--disp);font-weight:700;color:var(--ink);display:block;margin-bottom:4px;font-size:17px}.pop p{font-size:13.5px;color:var(--body-c);margin-bottom:14px}
+  .pop .bb{display:flex;gap:8px}.pop .btn{flex:1;justify-content:center;padding:11px 14px;font-size:13.5px}
+  @media(max-width:520px){.pop{left:14px;right:14px;max-width:none}}
+</style>
+  <!--BRS-ANALYTICS-->
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['disableCookies']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function(){ var u='https://analytics.black-rabbit.studio/';
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!--/BRS-ANALYTICS-->
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <img class="logo" src="img/logo.png" alt="Auto-Service Loitsch">
+    <nav class="links">
+      <a href="#programm">Leistungen</a>
+      <a href="#behind">Werkstatt</a>
+      <a href="#kontakt">Kontakt</a>
+      <a class="btn btn-ho cta" href="#kontakt" style="padding:11px 22px;font-size:14px">Termin anfragen</a>
+    </nav>
+  </div>
+</header>
+
+<!-- CINEMATIC FILM HERO -->
+<section class="hero">
+  <video class="hvid" autoplay muted loop playsinline poster="img/film-poster.jpg"><source src="img/film.mp4" type="video/mp4"></video>
+  <div class="scrim"></div>
+  <div class="grain"></div>
+  <div class="bars t"></div><div class="bars b"></div>
+  <div class="wrap">
+    <span class="tag anim a1"><span class="dotlive"></span>Auto-Service Loitsch · Görlitz</span>
+    <h1 class="anim a2">Gute Laune <em>inklusive.</em></h1>
+    <p class="sub anim a3">Ein kurzer Film über eine Werkstatt, die Ihr Auto noch mit Freude repariert – ehrlich, fair und für alle Marken.</p>
+    <div class="cta anim a4">
+      <a class="btn btn-ho" href="#kontakt">Termin anfragen</a>
+      <a class="btn btn-line" href="tel:+49358185230">Anrufen · 03581 85230</a>
+    </div>
+  </div>
+  <div class="scrolltip"><span>Weiter</span><span class="ln"></span></div>
+</section>
+
+<!-- TITLE CARD -->
+<div class="titlecard">
+  <p>Eine Werkstatt mit Herz, mitten in Görlitz. <b>Wir reparieren noch – statt einfach auszutauschen.</b></p>
+</div>
+
+<!-- MANIFEST -->
+<section class="manifest">
+  <div class="wrap">
+    <span class="eyebrow c reveal">Worum es uns geht</span>
+    <p class="big reveal" style="margin-top:18px">Ein Auto ist Vertrauenssache. Darum bekommen Sie bei uns <em>Klartext</em>, einen fairen Preis – und ein <em>Lächeln</em> obendrauf.</p>
+    <p class="by reveal">Werkstattmeister <b>Gunnar Loitsch</b> · inhabergeführt seit 2019</p>
+  </div>
+</section>
+
+<!-- PROGRAMM / LEISTUNGEN -->
+<section id="programm" class="prog">
+  <div class="wrap center">
+    <span class="eyebrow c reveal">Im Programm</span>
+    <h2 class="h2 reveal" style="margin-top:10px">Alles fürs Auto – <em>aus einer Hand.</em></h2>
+    <p class="lead reveal" style="text-align:center">Von der kleinen Inspektion bis zur Unfallinstandsetzung. Herstellerunabhängig, gründlich, mit ehrlicher Beratung.</p>
+    <div class="cards" style="text-align:left">
+      <div class="card reveal"><div class="ix">01</div><h3>Reparatur aller Marken</h3><p>Wartung, Verschleiß und Diagnose für jedes Fabrikat – mit Originalteilen oder geprüfter Qualität.</p></div>
+      <div class="card reveal"><div class="ix">02</div><h3>Unfallinstandsetzung</h3><p>Karosserie und Lack aus einer Hand, inklusive Hilfe bei der Versicherungsabwicklung.</p></div>
+      <div class="card reveal"><div class="ix">03</div><h3>HU / AU bei der GTÜ</h3><p>Wir bereiten vor und stellen direkt vor Ort vor – kleine Mängel beheben wir gleich mit.</p></div>
+      <div class="card reveal"><div class="ix">04</div><h3>Lackierarbeiten</h3><p>Kratzer und Schäden farbgenau aufbereitet – Ihr Auto sieht wieder aus wie neu.</p></div>
+      <div class="card reveal"><div class="ix">05</div><h3>Wartung &amp; Service</h3><p>Inspektion nach Herstellervorgabe, Ölwechsel, Reifenservice und Klimaanlage.</p></div>
+      <div class="card reveal"><div class="ix">06</div><h3>Ehrliche Beratung</h3><p>Transparenter Kostenvoranschlag, bevor wir loslegen – ohne böse Überraschungen.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BEHIND THE SCENES -->
+<section id="behind" class="behind">
+  <div class="wrap">
+    <div class="imgwrap reveal">
+      <img src="img/werkstatt.jpg" alt="Werkstatt von Auto-Service Loitsch in Görlitz">
+      <span class="badge">Hinter den Kulissen</span>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Der Meister persönlich</span>
+      <h2 style="margin-top:10px">Hier schraubt der Chef <em>noch selbst.</em></h2>
+      <p>Bei Auto-Service Loitsch kümmern sich Werkstattmeister Gunnar Loitsch und sein Team persönlich um Ihr Auto. Gründlich, ehrlich und gut gelaunt – so, wie man es sich für sein Fahrzeug wünscht.</p>
+      <p><b>Unser Versprechen:</b> Wir reparieren noch, statt einfach auszutauschen. Das spart Ihnen Geld und schont nebenbei die Umwelt.</p>
+      <p class="sign">„Ihr Auto ist bei uns in guten Händen.“</p>
+      <a class="btn btn-navy" href="#kontakt" style="margin-top:8px">Termin vereinbaren</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stat reveal"><div class="n">2019</div><div class="l">inhabergeführt seit</div></div>
+    <div class="stat reveal"><div class="n"><em>Alle</em></div><div class="l">Marken &amp; Fabrikate</div></div>
+    <div class="stat reveal"><div class="n">100<em>%</em></div><div class="l">ehrliche Beratung</div></div>
+    <div class="stat reveal"><div class="n">Görlitz</div><div class="l">mitten in der Stadt</div></div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote">
+  <div class="wrap">
+    <div class="mark reveal">“</div>
+    <h2 class="reveal">So fahren unsere Kunden wieder los: <b>zufrieden.</b></h2>
+    <div class="src reveal">Auto-Service Loitsch · Görlitz</div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Kontakt</span>
+      <h2 class="h2" style="margin-top:10px">Auf ein gutes <em>Kennenlernen.</em></h2>
+      <form class="form" style="margin-top:26px" onsubmit="event.preventDefault();this.style.display='none';document.getElementById('ok').style.display='block';">
+        <label>Ihr Name</label><input type="text" required placeholder="Max Mustermann">
+        <label>Telefon</label><input type="tel" required placeholder="0151 …">
+        <label>Worum geht es?</label><textarea rows="4" placeholder="z. B. HU fällig, Inspektion, Geräusch beim Bremsen …"></textarea>
+        <button class="btn btn-ho" type="submit">Anfrage senden</button>
+      </form>
+      <div id="ok" class="ok">Danke! Ihre Anfrage ist eingegangen – wir melden uns zeitnah bei Ihnen.</div>
+    </div>
+    <div class="info reveal" style="align-self:center">
+      <h3>So erreichen Sie uns</h3>
+      <div class="row"><span class="lab">Adresse</span><div>Friedrich-Engels-Str. 31<br>02827 Görlitz</div></div>
+      <div class="row"><span class="lab">Telefon</span><div><a href="tel:+49358185230"><b>03581 – 85230</b></a></div></div>
+      <div class="row"><span class="lab">Zeiten</span><div>Mo – Fr: 8:00 – 17:00 Uhr</div></div>
+      <div class="quick">
+        <a class="btn btn-ho" href="tel:+49358185230">Jetzt anrufen</a>
+        <a class="btn btn-navy" href="https://wa.me/49358185230" target="_blank" rel="noopener">Per WhatsApp schreiben</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANGEBOT (für Herrn Loitsch) -->
+<section id="angebot" class="offer">
+  <div class="wrap reveal">
+    <span class="eyebrow" style="color:var(--honey)">Für Herrn Loitsch</span>
+    <h2 style="margin-top:14px">Gefällt Ihnen <em>dieser Film?</em></h2>
+    <p>Dieser Auftritt – inklusive eigens gestaltetem Werkstatt-Film – ist ein unverbindlicher Vorschlag, fertig zum Loslegen. Ein Klick genügt für Ihr Festpreis-Angebot.</p>
+    <div class="cta">
+      <a class="btn btn-ho" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20Auto-Service%20Loitsch" target="_blank" rel="noopener">Angebot per E-Mail</a>
+      <a class="btn btn-line" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20Auto-Service%20Loitsch%20(Variante%20C)" style="border-color:rgba(255,255,255,.5)">Angebot per E-Mail</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Auto-Service Loitsch · Inh. Gunnar Loitsch · Friedrich-Engels-Str. 31, 02827 Görlitz</div>
+    <div><a href="#">Impressum</a> · <a href="#">Datenschutz</a></div>
+  </div>
+</footer>
+
+<!-- GREETING -->
+<div class="modal" id="greet">
+  <div class="card2">
+    <button class="x" onclick="closeGreet()" aria-label="schließen">×</button>
+    <img class="mlogo" src="img/logo.png" alt="Auto-Service Loitsch">
+    <h3>Sehr geehrter Herr Loitsch,</h3>
+    <p>wir haben Ihrer Werkstatt einen kleinen Film gewidmet und drumherum eine moderne Website gebaut – unverbindlich und mit einem Augenzwinkern. Viel Freude beim Anschauen!</p>
+    <button class="btn btn-ho" onclick="closeGreet()">Seite ansehen</button>
+    <span class="msmall" onclick="closeGreet()">schließen</span>
+  </div>
+</div>
+
+<!-- OFFER POP -->
+<div class="pop" id="pop">
+  <button class="x" onclick="document.getElementById('pop').classList.remove('show')" aria-label="schließen">×</button>
+  <b>Gefällt Ihnen Ihr Auftritt?</b>
+  <p>Unverbindlich – fordern Sie Ihr Festpreis-Angebot an.</p>
+  <div class="bb">
+    <a class="btn btn-ho" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20Auto-Service%20Loitsch" target="_blank" rel="noopener">Per E-Mail</a>
+    <a class="btn btn-navy" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20Auto-Service%20Loitsch%20(C)">E-Mail</a>
+  </div>
+</div>
+
+<script>
+  var nav=document.getElementById('nav'),hv=document.querySelector('.hero .hvid');
+  function onS(){var y=scrollY;nav.classList.toggle('solid',y>60);if(hv&&y<1100)hv.style.transform='translateY('+(y*0.14)+'px) scale(1.07)';}
+  addEventListener('scroll',onS,{passive:true});onS();
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(e){e.classList.add('in')})},2600);
+  var greet=document.getElementById('greet'),pop=document.getElementById('pop'),popShown=false;
+  setTimeout(function(){greet.classList.add('show')},700);
+  function closeGreet(){greet.classList.remove('show');armPop();}
+  function armPop(){if(popShown)return;var t=setTimeout(showPop,9000);addEventListener('scroll',function o(){if(scrollY>1100){showPop();removeEventListener('scroll',o);clearTimeout(t);}},{passive:true});}
+  function showPop(){if(popShown)return;popShown=true;pop.classList.add('show');}
+</script>
+</body>
+</html>

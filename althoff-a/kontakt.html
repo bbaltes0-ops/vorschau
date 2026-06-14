@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kontakt · Elektro Althoff · Recklinghausen</title>
+<meta name="description" content="Kontakt zu Elektro Althoff in Recklinghausen: Spiekeroogstr. 33, 45665 Recklinghausen. Telefon 0160 97045985. Ansprechpartner das Team von Elektro Althoff.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+  <!--BRS-ANALYTICS-->
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['disableCookies']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function(){ var u='https://analytics.black-rabbit.studio/';
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!--/BRS-ANALYTICS-->
+</head>
+<body>
+
+<div class="welcome-overlay open" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+  <div class="welcome-card">
+    <div class="wm">Elektro Althoff</div>
+    <div class="wsub">Elektrotechnik. Lokal. Sicher.</div>
+    <h2 id="welcome-title">Willkommen</h2>
+    <p>Moderne Elektrotechnik für Recklinghausen und die Region · Smart Home, Photovoltaik, E-Check und mehr.</p>
+    <button class="btn btn--primary" id="welcome-close">Seite ansehen</button>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <span class="brand-name">Elektro Althoff</span>
+      <span class="brand-sub">Elektrotechnik. Lokal. Sicher.</span>
+    </a>
+    <nav>
+      <ul class="nav-links" id="navlinks">
+        <li><a href="index.html">Start</a></li>
+        <li><a href="leistungen.html">Leistungen</a></li>
+        <li><a href="ueber-uns.html">Über uns</a></li>
+        <li><a href="kontakt.html" class="active">Kontakt</a></li>
+        <li class="nav-cta"><a href="kontakt.html" class="btn btn--gold">Termin anfragen</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" id="navtoggle" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Start</a> / Kontakt</div>
+    <h1>Kontakt</h1>
+    <p>Schreiben Sie uns oder rufen Sie direkt an · wir melden uns persönlich bei Ihnen.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="contact-grid">
+      <form class="form" onsubmit="event.preventDefault();alert('Dies ist eine Vorschau · das Formular versendet keine Daten.');">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Ihr Name" required>
+        </div>
+        <div class="field">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email" placeholder="ihre@email.de" required>
+        </div>
+        <div class="field">
+          <label for="tel">Telefon (optional)</label>
+          <input type="tel" id="tel" name="tel" placeholder="Ihre Rufnummer">
+        </div>
+        <div class="field">
+          <label for="thema">Thema</label>
+          <select id="thema" name="thema">
+            <option>Elektroinstallation</option>
+            <option>Smart Home / KNX</option>
+            <option>Photovoltaik / Solar</option>
+            <option>E-Check</option>
+            <option>Lichtgestaltung</option>
+            <option>TV / SAT / Netzwerk</option>
+            <option>Sonstiges</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="nachricht">Nachricht</label>
+          <textarea id="nachricht" name="nachricht" rows="5" placeholder="Wie können wir helfen?"></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary">Anfrage senden</button>
+        <p class="hint">Demo-Vorschau · es werden keine Daten übertragen.</p>
+      </form>
+
+      <aside class="infocard">
+        <h3>So erreichen Sie uns</h3>
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/></svg>
+          <div><span class="lbl">Web</span><br><a href="https://elektro-althoff.de">https://elektro-althoff.de</a></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="brand-name">© 2026 Elektro Althoff</span>
+    <span>Spiekeroogstr. 33, 45665 Recklinghausen</span>
+    <div class="footer-links">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<div class="sales-overlay" id="sales">
+  <button class="so-close" id="sales-close" aria-label="Schließen">×</button>
+  <div class="akira">Black Rabbit Studio</div>
+  <strong>Für Elektro Althoff</strong>
+  <p>Gefällt Ihnen dieser Entwurf?</p>
+  <div class="so-actions">
+    <a class="btn btn--primary" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20Elektro Althoff%20(AK-1038)">Angebot anfordern</a>
+    <a class="so-link" href="https://bbaltes0-ops.github.io/vorschau/praesentation-althoff/">Zur Übersicht</a>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var w=document.getElementById('welcome'),c=document.getElementById('welcome-close');
+    if(c)c.addEventListener('click',function(){w.classList.remove('open');});
+    if(w)w.addEventListener('click',function(e){if(e.target===w)w.classList.remove('open');});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&w)w.classList.remove('open');});
+    var s=document.getElementById('sales'),sc=document.getElementById('sales-close');
+    if(sc)sc.addEventListener('click',function(){s.style.display='none';});
+    var t=document.getElementById('navtoggle'),nl=document.getElementById('navlinks');
+    if(t)t.addEventListener('click',function(){var o=nl.classList.toggle('open');t.setAttribute('aria-expanded',o);});
+  })();
+</script>
+</body>
+</html>

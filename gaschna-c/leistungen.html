@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leistungen · GASCHNA · Sanitär · Heizung · Solar | Meisterbetrieb Augsburg</title>
+<meta name="description" content="Leistungen von GASCHNA Augsburg: Wärmepumpe, Heizung, Bad & Sanitär, Solarthermie, Klima & Lüftung sowie Notdienst 24/7. SHK-Meisterbetrieb für Augsburg und die Region.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--night:#0c2a26;--night-2:#10342e;--night-3:#072019;--cream:#f3efe6;--cream-2:#ece5d6;--honey:#f0b429;--energy:#3bbf8f;--ink:#13201d;--ink-soft:#3c4b46;--white:#fff;--line:rgba(243,239,230,.16);--shadow:0 24px 60px -28px rgba(0,0,0,.55);--radius:22px;--serif:'Fraunces',Georgia,serif;--sans:'Hanken Grotesk',system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.1;letter-spacing:-.01em}
+.serif-it{font-style:italic;font-weight:400}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+.eyebrow{font-family:var(--sans);font-weight:600;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:6px}
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:120;transition:all .3s ease}
+.nav{display:flex;align-items:center;justify-content:space-between;height:78px;background:rgba(7,28,22,.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:0 28px;transition:all .3s ease}
+header.scrolled .nav{height:66px}
+.nav__logo img{height:34px;width:auto}
+.nav__links{display:flex;align-items:center;gap:34px}
+.nav__links a{color:var(--cream);font-weight:500;font-size:.96rem;position:relative;transition:color .2s ease}
+.nav__links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--honey);transition:width .25s ease}
+.nav__links a:hover{color:var(--white)}.nav__links a:hover::after{width:100%}
+.nav__cta{background:var(--honey);color:var(--night-3);padding:11px 22px;border-radius:100px;font-weight:700;font-size:.92rem;transition:transform .2s ease,box-shadow .2s ease}
+.nav__cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px -10px rgba(240,180,41,.7)}.nav__cta::after{display:none}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{width:26px;height:2px;background:var(--cream);transition:all .3s ease}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:1rem;padding:15px 30px;border-radius:100px;transition:transform .2s ease,box-shadow .2s ease,background .2s ease;cursor:pointer;border:0}
+.btn--honey{background:var(--honey);color:var(--night-3)}.btn--honey:hover{transform:translateY(-3px);box-shadow:0 16px 34px -12px rgba(240,180,41,.7)}
+.btn--ghost{background:transparent;color:var(--cream);border:1.6px solid rgba(243,239,230,.4)}.btn--ghost:hover{border-color:var(--energy);color:var(--white);transform:translateY(-3px)}
+.btn--dark{background:var(--night-2);color:var(--cream)}.btn--dark:hover{background:var(--night-3);transform:translateY(-3px)}
+/* page hero */
+.phero{background:radial-gradient(140% 130% at 80% -10%,#15433a 0%,var(--night-2) 45%,var(--night-3) 100%);color:var(--cream);padding:150px 0 90px;position:relative;overflow:hidden}
+.phero::after{content:"";position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(59,191,143,.16),transparent 70%);top:-160px;right:-120px}
+.phero .wrap{position:relative;z-index:2;max-width:760px}
+.phero .eyebrow{color:var(--energy);margin-bottom:18px}
+.phero h1{font-size:clamp(2.5rem,5.5vw,4.2rem);color:var(--white);margin-bottom:20px}
+.phero h1 .serif-it{color:var(--honey)}
+.phero p{color:rgba(243,239,230,.82);font-size:1.15rem;max-width:560px}
+.crumb{font-size:.85rem;color:rgba(243,239,230,.6);margin-bottom:22px}
+.crumb a{color:var(--energy)}.crumb a:hover{color:var(--honey)}
+/* quick nav */
+.qnav{background:var(--night-2);border-bottom:1px solid var(--line);position:sticky;top:78px;z-index:90}
+header.scrolled ~ .qnav{top:66px}
+.qnav .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:14px;padding-bottom:14px}
+.qnav a{white-space:nowrap;color:rgba(243,239,230,.82);font-weight:600;font-size:.9rem;padding:8px 16px;border-radius:100px;border:1px solid var(--line);transition:all .2s ease}
+.qnav a:hover{background:rgba(59,191,143,.15);color:var(--white);border-color:rgba(59,191,143,.4)}
+/* service blocks */
+.svc{padding:96px 0;border-bottom:1px solid rgba(19,32,29,.08)}
+.svc:nth-child(even){background:var(--cream-2)}
+.svc__grid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+.svc:nth-child(even) .svc__grid{direction:rtl}.svc:nth-child(even) .svc__grid>*{direction:ltr}
+.svc__img{border-radius:24px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/3}
+.svc__img img{width:100%;height:100%;object-fit:cover}
+.svc .eyebrow{color:#0c6b4f;margin-bottom:14px}
+.svc h2{font-size:clamp(1.9rem,3.4vw,2.8rem);color:var(--ink);margin-bottom:16px}
+.svc h2 .serif-it{color:#0c6b4f}
+.svc p{color:var(--ink-soft);margin-bottom:16px;font-size:1.06rem}
+.svc ul{list-style:none;margin:18px 0 26px}
+.svc ul li{display:flex;gap:12px;align-items:flex-start;margin-bottom:11px;color:var(--ink)}
+.svc ul .tick{color:var(--energy);font-weight:800;flex-shrink:0}
+.tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.tag{background:#fff;border:1px solid rgba(19,32,29,.12);padding:7px 14px;border-radius:100px;font-size:.85rem;font-weight:600;color:var(--ink-soft)}
+.svc__link{display:inline-flex;align-items:center;gap:9px;color:#0c6b4f;font-weight:700;transition:gap .2s ease}.svc__link:hover{gap:14px}
+/* notdienst block dark */
+.svc--note{background:var(--night-3)!important;color:var(--cream);border-bottom:0}
+.svc--note .eyebrow{color:var(--honey)}
+.svc--note h2{color:var(--white)}.svc--note h2 .serif-it{color:var(--honey)}
+.svc--note p{color:rgba(243,239,230,.82)}
+.svc--note ul li{color:rgba(243,239,230,.88)}
+.svc--note .svc__img{box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+.note-call{display:inline-flex;align-items:center;gap:12px;background:var(--honey);color:var(--night-3);padding:16px 30px;border-radius:100px;font-weight:800;font-size:1.15rem;transition:transform .2s ease,box-shadow .2s ease}
+.note-call:hover{transform:translateY(-3px);box-shadow:0 16px 38px -14px rgba(240,180,41,.6)}
+/* cta */
+.cta{padding:100px 0;background:radial-gradient(120% 140% at 80% 0%,#15433a,var(--night-3));color:var(--cream);text-align:center;position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(240,180,41,.15),transparent 70%);top:-180px;left:-100px}
+.cta .wrap{position:relative;z-index:2;max-width:640px}
+.cta .eyebrow{color:var(--energy);margin-bottom:16px}
+.cta h2{font-size:clamp(2rem,3.6vw,3rem);color:var(--white);margin-bottom:16px}
+.cta h2 .serif-it{color:var(--honey)}
+.cta p{color:rgba(243,239,230,.82);margin-bottom:30px}
+.cta__actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+/* footer */
+footer{background:var(--night-3);color:rgba(243,239,230,.72);padding:64px 0 30px}
+.footer__top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+.footer__brand img{height:38px;margin-bottom:18px}.footer__brand p{font-size:.95rem;max-width:320px}
+.footer__col h4{font-family:var(--sans);font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);margin-bottom:18px}
+.footer__col a,.footer__col p{display:block;color:rgba(243,239,230,.72);font-size:.96rem;margin-bottom:11px;transition:color .2s ease}.footer__col a:hover{color:var(--honey)}
+.footer__bottom{padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.85rem;color:rgba(243,239,230,.55)}
+.footer__bottom a{color:rgba(243,239,230,.55)}.footer__bottom a:hover{color:var(--honey)}
+/* sales overlay */
+.sales{position:fixed;bottom:20px;left:20px;z-index:200;background:rgba(7,24,20,.92);backdrop-filter:blur(12px);border:1px solid rgba(240,180,41,.35);border-radius:18px;padding:18px 20px;max-width:300px;box-shadow:0 20px 50px -20px rgba(0,0,0,.6);color:var(--cream);transition:transform .3s ease,opacity .3s ease}
+.sales.hidden{transform:translateY(140%);opacity:0;pointer-events:none}
+.sales__label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--honey);font-weight:700;margin-bottom:6px}
+.sales__title{font-family:var(--serif);font-size:1.18rem;color:var(--white);margin-bottom:14px;line-height:1.2}
+.sales__actions{display:flex;flex-direction:column;gap:9px}
+.sales__btn{background:var(--honey);color:var(--night-3);text-align:center;padding:11px;border-radius:100px;font-weight:700;font-size:.92rem;transition:transform .2s ease}.sales__btn:hover{transform:translateY(-2px)}
+.sales__link{text-align:center;font-size:.88rem;color:rgba(243,239,230,.78);text-decoration:underline;text-underline-offset:3px}.sales__link:hover{color:var(--honey)}
+.sales__close{position:absolute;top:8px;right:11px;background:none;border:0;color:rgba(243,239,230,.55);font-size:1.2rem;cursor:pointer;line-height:1}.sales__close:hover{color:var(--cream)}
+/* mobile menu */
+.mobile-menu{position:fixed;inset:0;z-index:130;background:var(--night-3);transform:translateX(100%);transition:transform .35s ease;display:flex;flex-direction:column;padding:100px 32px 40px;gap:8px}
+.mobile-menu.open{transform:translateX(0)}
+.mobile-menu a{color:var(--cream);font-family:var(--serif);font-size:1.6rem;padding:14px 0;border-bottom:1px solid var(--line)}.mobile-menu a:hover{color:var(--honey)}
+.mobile-menu .btn{margin-top:24px;justify-content:center}
+.mobile-close{position:absolute;top:26px;right:26px;background:none;border:0;color:var(--cream);font-size:2rem;cursor:pointer;line-height:1}
+@media(max-width:980px){.nav__links{display:none}.burger{display:flex}.svc__grid{grid-template-columns:1fr;direction:ltr!important}.svc:nth-child(even) .svc__grid{direction:ltr}.footer__top{grid-template-columns:1fr}.qnav{top:78px}}
+@media(max-width:640px){.wrap{padding:0 20px}.nav{padding:0 20px}.sales{left:14px;right:14px;bottom:14px;max-width:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+  <!--BRS-ANALYTICS-->
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['disableCookies']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function(){ var u='https://analytics.black-rabbit.studio/';
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!--/BRS-ANALYTICS-->
+</head>
+<body>
+<header id="header">
+  <nav class="nav">
+    <a href="index.html" class="nav__logo" aria-label="GASCHNA Startseite"><img src="img/logo-white.png" alt="GASCHNA"></a>
+    <div class="nav__links">
+      <a href="leistungen.html">Leistungen</a>
+      <a href="leistungen.html#waermepumpe">Wärmepumpe</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="leistungen.html#notdienst">Notdienst</a>
+      <a href="index.html#kontakt">Kontakt</a>
+      <a href="tel:+4982174822874" class="nav__cta">0821 / 74 82 28 74</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Menü schließen">&times;</button>
+  <a href="leistungen.html">Leistungen</a>
+  <a href="leistungen.html#waermepumpe">Wärmepumpe</a>
+  <a href="ueber-uns.html">Über uns</a>
+  <a href="leistungen.html#notdienst">Notdienst</a>
+  <a href="index.html#kontakt">Kontakt</a>
+  <a href="tel:+4982174822874" class="btn btn--honey">Anrufen</a>
+</div>
+
+<section class="phero">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Start</a> &nbsp;/&nbsp; Leistungen</div>
+    <div class="eyebrow">Was wir können</div>
+    <h1>Leistungen für Ihre <span class="serif-it">Energiewende.</span></h1>
+    <p>Von der modernen Wärmepumpe bis zum Notdienst rund um die Uhr · alles aus einer Hand, vom Meisterbetrieb für Augsburg und die Region.</p>
+  </div>
+</section>
+
+<nav class="qnav" aria-label="Leistungen Schnellnavigation">
+  <div class="wrap">
+    <a href="#waermepumpe">Wärmepumpe</a>
+    <a href="#heizung">Heizung</a>
+    <a href="#bad">Bad & Sanitär</a>
+    <a href="#solar">Solarthermie</a>
+    <a href="#klima">Klima & Lüftung</a>
+    <a href="#notdienst">Notdienst</a>
+  </div>
+</nav>
+
+<!-- Wärmepumpe -->
+<section class="svc" id="waermepumpe">
+  <div class="wrap svc__grid">
+    <div>
+      <div class="eyebrow">Leitthema 2026</div>
+      <h2>Wärmepumpe & <span class="serif-it">Energiewende</span></h2>
+      <p>Heizen mit Umweltenergie ist die Zukunft · und wir machen sie für Ihr Zuhause praktisch. Ob Neubau oder Modernisierung: Wir beraten, planen und installieren die passende Wärmepumpe vom Einfamilienhaus bis zur Wohnanlage.</p>
+      <ul>
+        <li><span class="tick">+</span> Luft-Wasser, Wasser-Wasser, Sole-Wasser & Luft-Luft</li>
+        <li><span class="tick">+</span> Umstellung bestehender Anlagen auf Umweltenergie</li>
+        <li><span class="tick">+</span> Beratung zu Förderung und Heizungsgesetz (GEG)</li>
+        <li><span class="tick">+</span> Energieausweis über Partner</li>
+      </ul>
+      <div class="tags"><span class="tag">Bosch</span><span class="tag">Buderus</span><span class="tag">Vaillant</span><span class="tag">Viessmann</span><span class="tag">Weishaupt</span></div>
+      <a href="index.html#kontakt" class="svc__link">Beratung anfragen &rarr;</a>
+    </div>
+    <div class="svc__img"><img src="img/waermepumpe.jpg" alt="Techniker installiert eine Wärmepumpen-Außeneinheit"></div>
+  </div>
+</section>
+
+<!-- Heizung -->
+<section class="svc" id="heizung">
+  <div class="wrap svc__grid">
+    <div>
+      <div class="eyebrow">Wärme, die bleibt</div>
+      <h2>Heizung & <span class="serif-it">Modernisierung</span></h2>
+      <p>Neuanlagen und Modernisierung für jeden Bedarf · effizient, sauber und mit langlebiger Markentechnik. Wir finden das richtige System für Ihr Gebäude und Ihr Budget.</p>
+      <ul>
+        <li><span class="tick">+</span> Gas-, Pellet-, Scheitholz- & Hackschnitzelheizung</li>
+        <li><span class="tick">+</span> Solarthermie zur Heizungsunterstützung</li>
+        <li><span class="tick">+</span> Planung von Neuanlagen · EFH bis Wohnanlage</li>
+        <li><span class="tick">+</span> Wartung, Instandhaltung & Wartungsvertrag</li>
+      </ul>
+      <div class="tags"><span class="tag">Junkers</span><span class="tag">Viessmann</span><span class="tag">Buderus</span><span class="tag">Weishaupt</span></div>
+      <a href="index.html#kontakt" class="svc__link">Heizung planen &rarr;</a>
+    </div>
+    <div class="svc__img"><img src="img/heizung.jpg" alt="Techniker an einer modernen Heizungsanlage"></div>
+  </div>
+</section>
+
+<!-- Bad & Sanitär -->
+<section class="svc" id="bad">
+  <div class="wrap svc__grid">
+    <div>
+      <div class="eyebrow">Wohlfühlen zu Hause</div>
+      <h2>Bad & <span class="serif-it">Sanitär</span></h2>
+      <p>Ihr Bad ist mehr als Technik · es ist Lebensqualität. Wir gestalten und installieren komplette Bäder und kümmern uns um alles rund um Wasser im Haus.</p>
+      <ul>
+        <li><span class="tick">+</span> Komplette Bäder & Badmodernisierung</li>
+        <li><span class="tick">+</span> Armaturen, Toiletten & Sanitärobjekte</li>
+        <li><span class="tick">+</span> Heizkörper im Wunschdesign</li>
+        <li><span class="tick">+</span> Rohre & Leitungen · fachgerecht verlegt</li>
+      </ul>
+      <a href="index.html#kontakt" class="svc__link">Bad anfragen &rarr;</a>
+    </div>
+    <div class="svc__img"><img src="img/bad.jpg" alt="Modernes Badezimmer"></div>
+  </div>
+</section>
+
+<!-- Solarthermie -->
+<section class="svc" id="solar">
+  <div class="wrap svc__grid">
+    <div>
+      <div class="eyebrow">Energie vom Himmel</div>
+      <h2>Solarthermie & <span class="serif-it">nachhaltige Systeme</span></h2>
+      <p>Die Sonne liefert kostenlose Energie · wir machen sie nutzbar. Solarthermie für Warmwasser und Heizungsunterstützung, ideal kombiniert mit Ihrer Wärmepumpe.</p>
+      <ul>
+        <li><span class="tick">+</span> Solarthermie für Warmwasser & Heizung</li>
+        <li><span class="tick">+</span> Nachhaltige Systeme zur Kostensenkung</li>
+        <li><span class="tick">+</span> Perfekt kombinierbar mit der Wärmepumpe</li>
+        <li><span class="tick">+</span> Planung, Installation & Wartung aus einer Hand</li>
+      </ul>
+      <a href="index.html#kontakt" class="svc__link">Solar anfragen &rarr;</a>
+    </div>
+    <div class="svc__img"><img src="img/solar.jpg" alt="Solaranlage auf einem Hausdach"></div>
+  </div>
+</section>
+
+<!-- Klima & Lüftung -->
+<section class="svc" id="klima">
+  <div class="wrap svc__grid">
+    <div>
+      <div class="eyebrow">Gesundes Raumklima</div>
+      <h2>Klima & <span class="serif-it">Lüftung</span></h2>
+      <p>Frische Luft und angenehme Temperaturen · das ganze Jahr. Klima- und Lüftungstechnik sorgt für ein gesundes Raumklima in Ihren Räumen.</p>
+      <ul>
+        <li><span class="tick">+</span> Klimatechnik für angenehme Temperaturen</li>
+        <li><span class="tick">+</span> Lüftungstechnik für frische, gesunde Luft</li>
+        <li><span class="tick">+</span> Beratung, Installation & Wartung</li>
+      </ul>
+      <a href="index.html#kontakt" class="svc__link">Beratung anfragen &rarr;</a>
+    </div>
+    <div class="svc__img"><img src="img/sanitaer.jpg" alt="Installateur an Rohren und Armaturen"></div>
+  </div>
+</section>
+
+<!-- Notdienst -->
+<section class="svc svc--note" id="notdienst">
+  <div class="wrap svc__grid">
+    <div>
+      <div class="eyebrow">Rund um die Uhr</div>
+      <h2>Notdienst <span class="serif-it">24/7</span></h2>
+      <p>Wenn es schnell gehen muss, sind wir für Sie da · auch am Wochenende und an Feiertagen. Ein Anruf genügt.</p>
+      <ul>
+        <li><span class="tick">+</span> Störungen an Heizung, Solarthermie & Durchlauferhitzer</li>
+        <li><span class="tick">+</span> Rohrbrüche und Wasserschäden</li>
+        <li><span class="tick">+</span> Defekte Armaturen, Toiletten & Heizkörper</li>
+        <li><span class="tick">+</span> Defekte Gasleitungen</li>
+      </ul>
+      <a href="tel:+4915121284969" class="note-call">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+        Notdienst: 0151 / 21 28 49 69
+      </a>
+    </div>
+    <div class="svc__img"><img src="img/heizung.jpg" alt="Techniker im Einsatz an einer Heizungsanlage"></div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="eyebrow">Noch Fragen?</div>
+    <h2>Sprechen wir über Ihr <span class="serif-it">Projekt.</span></h2>
+    <p>Ob Wärmepumpe, neues Bad oder Wartung · wir beraten Sie ehrlich und persönlich.</p>
+    <div class="cta__actions">
+      <a href="tel:+4982174822874" class="btn btn--honey">0821 / 74 82 28 74</a>
+      <a href="index.html#kontakt" class="btn btn--ghost">Zum Kontaktformular</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="img/logo-white.png" alt="GASCHNA">
+        <p>Sanitär · Heizung · Solar · SHK-Meisterbetrieb in Augsburg. Für Augsburg und die Region.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Leistungen</h4>
+        <a href="leistungen.html#waermepumpe">Wärmepumpe</a>
+        <a href="leistungen.html#heizung">Heizung</a>
+        <a href="leistungen.html#bad">Bad & Sanitär</a>
+        <a href="leistungen.html#solar">Solarthermie</a>
+        <a href="leistungen.html#klima">Klima & Lüftung</a>
+        <a href="leistungen.html#notdienst">Notdienst</a>
+      </div>
+      <div class="footer__col">
+        <h4>Kontakt</h4>
+        <p>Sonnenbachweg 51<br>86169 Augsburg</p>
+        <a href="tel:+4982174822874">0821 / 74 82 28 74</a>
+        <a href="tel:+4915121284969">Notdienst: 0151 / 21 28 49 69</a>
+        <a href="mailto:gaschna@web.de">gaschna@web.de</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div>© 2026 GASCHNA · Sanitär · Heizung · Solar · Sonnenbachweg 51, 86169 Augsburg</div>
+      <div><a href="#">Impressum</a> · <a href="#">Datenschutz</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="sales" id="sales">
+  <button class="sales__close" id="salesClose" aria-label="Hinweis schließen">&times;</button>
+  <div class="sales__label">Für GASCHNA</div>
+  <div class="sales__title">Gefällt Ihnen dieser Entwurf?</div>
+  <div class="sales__actions">
+    <a class="sales__btn" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20GASCHNA%20(Variante%20C)">Angebot anfordern</a>
+    <a class="sales__link" href="https://bbaltes0-ops.github.io/vorschau/praesentation-gaschna/">Zur Übersicht</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var header=document.getElementById('header');
+  window.addEventListener('scroll',function(){header.classList.toggle('scrolled',window.scrollY>40);});
+  var burger=document.getElementById('burger'),mm=document.getElementById('mobileMenu');
+  function toggleMenu(open){mm.classList.toggle('open',open);burger.setAttribute('aria-expanded',open);}
+  burger.addEventListener('click',function(){toggleMenu(!mm.classList.contains('open'));});
+  document.getElementById('mobileClose').addEventListener('click',function(){toggleMenu(false);});
+  mm.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){toggleMenu(false);});});
+  document.getElementById('salesClose').addEventListener('click',function(){document.getElementById('sales').classList.add('hidden');});
+})();
+</script>
+</body>
+</html>
