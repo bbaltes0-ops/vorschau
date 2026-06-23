@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Riemer KFZ-Service · Markenoffene Werkstatt in Kissing</title>
+<meta name="description" content="Riemer KFZ-Service Kissing – meisterhaft, motiviert, markenoffen. Seit 1968. KFZ-Service, Reifen, Klima, Autoglas, Diagnose, HU/AU.">
+<meta name="robots" content="noindex">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --bg2:#15181e; --panel:#1b1f27; --red:#e22730; --red-d:#bf1820; --red-l:#ff5a62;
+    --white:#f4f5f7; --mut:#9aa1ad; --line:rgba(255,255,255,.1);
+    --disp:'Archivo',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--bg);color:#c7cdd6;line-height:1.6;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+  h1,h2,h3{font-family:var(--disp);color:var(--white);line-height:1;letter-spacing:-.01em}
+  .kick{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--red-l)}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:16px 30px;font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:.04em;text-transform:uppercase;border:0;cursor:pointer;transition:.2s var(--ease)}
+  .btn:focus-visible{outline:3px solid var(--red-l);outline-offset:2px}
+  .btn-red{background:var(--red);color:#fff}.btn-red:hover{background:var(--red-d);transform:translateY(-2px)}
+  .btn-gho{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4)}.btn-gho:hover{border-color:var(--red-l);color:var(--red-l)}
+
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:80;background:rgba(15,17,21,.7);backdrop-filter:blur(12px);transition:.3s;border-bottom:1px solid transparent}
+  header.nav.solid{background:rgba(15,17,21,.97);border-bottom-color:var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
+  .nav .logo img{height:42px}
+  .nav .links{display:flex;gap:4px;align-items:center}
+  .nav .links>a,.dd>button{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#d3d8e0;background:none;border:0;cursor:pointer;padding:10px 14px;transition:.18s;display:inline-flex;gap:6px;align-items:center}
+  .nav .links>a:hover,.dd>button:hover,.act{color:var(--red-l)}
+  .dd{position:relative}
+  .dd .menu{position:absolute;top:100%;left:0;min-width:220px;background:var(--panel);border:1px solid var(--line);padding:8px;opacity:0;visibility:hidden;transform:translateY(8px);transition:.2s var(--ease)}
+  .dd:hover .menu,.dd:focus-within .menu{opacity:1;visibility:visible;transform:none}
+  .dd .menu a{display:block;padding:10px 13px;font-size:13px;font-weight:600;color:#d3d8e0;text-transform:uppercase;letter-spacing:.06em}
+  .dd .menu a:hover{background:var(--bg2);color:var(--red-l)}
+  .nav .cta{background:var(--red);color:#fff;padding:11px 18px}.nav .cta:hover{background:var(--red-d)}
+  @media(max-width:960px){.nav .links{display:none}}
+
+  .hero{position:relative;overflow:hidden;color:#fff;min-height:90vh;display:flex;align-items:center;padding:120px 0 80px}
+  .hero .bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(15,17,21,.95) 0%,rgba(15,17,21,.72) 52%,rgba(226,39,48,.3) 100%)}
+  .hero .bar{position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--red);z-index:2}
+  .hero .wrap{position:relative;z-index:3;max-width:1200px}
+  .hero .since{display:inline-block;border:1px solid rgba(255,255,255,.22);padding:6px 14px;font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#cfd5dd;margin-bottom:22px}
+  .hero h1{font-size:clamp(46px,8.6vw,110px);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;text-shadow:0 4px 30px rgba(0,0,0,.4)}
+  .hero h1 .r{color:var(--red);display:block}
+  .hero p{font-size:clamp(16px,1.9vw,20px);color:#d3d8e0;max-width:46ch;margin:22px 0 0}
+  .hero .cta{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px}
+
+  .brands{background:var(--red);color:#fff;overflow:hidden;padding:13px 0}
+  .brands .track{display:flex;gap:36px;white-space:nowrap;font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:.1em;text-transform:uppercase;animation:scroll 30s linear infinite}
+  .brands .track span{display:inline-flex;gap:36px}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  section{padding:96px 0}
+  .sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:10px}
+  .sec-h h2{font-size:clamp(30px,5vw,62px);font-weight:900;text-transform:uppercase}
+  .sec-h h2 em{font-style:normal;color:var(--red)}
+  .sec-h p{color:var(--mut);max-width:40ch}
+
+  .idx{margin-top:30px;border-top:1px solid var(--line)}
+  .idx a{display:grid;grid-template-columns:88px 1fr auto;gap:24px;align-items:center;padding:26px 14px;border-bottom:1px solid var(--line);transition:.25s var(--ease)}
+  .idx a .no{font-family:var(--disp);font-weight:800;font-size:30px;color:var(--red)}
+  .idx a h3{font-family:var(--disp);font-weight:800;font-size:clamp(20px,2.6vw,30px);text-transform:uppercase;color:var(--white);transition:.25s}
+  .idx a .ds{color:var(--mut);font-size:14.5px;max-width:48ch;margin-top:2px}
+  .idx a .ar{font-family:var(--disp);font-weight:800;color:var(--mut);font-size:22px;transition:.25s}
+  .idx a:hover{background:var(--bg2);padding-left:24px}
+  .idx a:hover h3{color:var(--red-l)}.idx a:hover .ar{color:var(--red-l);transform:translateX(6px)}
+
+  .about{background:var(--bg2)}
+  .about .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:center}
+  .about .tx h2{font-size:clamp(28px,4vw,48px);font-weight:900;text-transform:uppercase;margin-bottom:16px}
+  .about .tx h2 em{font-style:normal;color:var(--red)}
+  .about .tx p{font-size:17px;margin-bottom:12px}.about .tx p b{color:var(--white)}
+  .about .quote{border-left:3px solid var(--red);padding-left:16px;font-family:var(--disp);font-style:italic;font-size:19px;color:var(--white);margin:16px 0}
+  .about .pic{position:relative}
+  .about .pic img{width:100%;height:480px;object-fit:cover;filter:grayscale(.15)}
+  .about .pic:after{content:"SEIT 1968";position:absolute;right:-10px;bottom:24px;background:var(--red);color:#fff;font-family:var(--disp);font-weight:900;font-size:15px;letter-spacing:.1em;padding:12px 20px}
+  @media(max-width:880px){.about .wrap{grid-template-columns:1fr}.about .pic img{height:320px}}
+
+  .team{background:var(--bg)}
+  .trow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:40px;background:var(--line);border:1px solid var(--line)}
+  .tm{background:var(--bg2);padding:0 16px 20px;text-align:center;transition:.25s var(--ease)}
+  .tm .ph{height:248px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+  .tm .ph img{height:100%;width:auto;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 10px 16px rgba(0,0,0,.5));transition:.3s}
+  .tm:hover{background:var(--panel)}.tm:hover .ph img{transform:scale(1.05)}
+  .tm .nm{font-family:var(--disp);font-weight:800;font-size:15px;text-transform:uppercase;color:var(--white);margin-top:10px}
+  .tm .ro{font-size:12.5px;color:var(--red-l);font-weight:600;letter-spacing:.04em;margin-top:3px}
+  @media(max-width:860px){.trow{grid-template-columns:repeat(2,1fr)}}
+
+  .stats{background:var(--red);color:#fff}
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+  .stat .n{font-family:var(--disp);font-weight:900;font-size:clamp(30px,4vw,52px)}
+  .stat .l{margin-top:4px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#ffe0e2}
+  @media(max-width:720px){.stats .wrap{grid-template-columns:1fr 1fr;gap:28px 16px}}
+
+  .kontakt .wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px}
+  @media(max-width:860px){.kontakt .wrap{grid-template-columns:1fr;gap:30px}}
+  .form{background:var(--panel);border:1px solid var(--line);padding:32px}
+  .form label{font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);display:block;margin:14px 0 6px}
+  .form input,.form textarea{width:100%;padding:13px 15px;border:1px solid var(--line);background:var(--bg);color:var(--white);font-size:15px;font-family:inherit}
+  .form input:focus,.form textarea:focus{outline:0;border-color:var(--red)}
+  .form .btn{width:100%;justify-content:center;margin-top:20px}
+  .ok{display:none;background:#13371f;border:1px solid #1f6b3a;color:#7ee5b2;padding:14px;margin-top:14px;font-weight:600}
+  .info h3{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:20px;color:var(--white);margin-bottom:12px}
+  .info .row{display:flex;gap:13px;margin:14px 0;font-size:16px}
+  .info .lab{font-family:var(--disp);font-weight:700;color:var(--red-l);font-size:12px;letter-spacing:.1em;text-transform:uppercase;min-width:74px;padding-top:3px}
+  .info .quick{display:flex;flex-direction:column;gap:11px;margin-top:22px}
+
+  .offer{background:var(--bg2);border-top:3px solid var(--red);text-align:center}
+  .offer .wrap{padding:90px 22px;max-width:780px}
+  .offer h2{font-size:clamp(28px,4.4vw,52px);font-weight:900;text-transform:uppercase;margin-bottom:14px}
+  .offer h2 em{font-style:normal;color:var(--red)}
+  .offer p{color:#aeb5c0;font-size:18px;margin:0 auto 26px}
+  .offer .cta{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
+
+  footer{background:#0a0c0f;color:#7e8794;font-size:14px;padding:40px 0}
+  footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px}
+  footer img{height:38px;margin-bottom:12px}
+  footer h4{font-family:var(--disp);color:#e9edf2;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+  footer a{color:#aeb5c0;display:block;padding:3px 0}footer a:hover{color:var(--red-l)}
+  footer .copy{grid-column:1/-1;border-top:1px solid var(--line);padding-top:16px;margin-top:8px;font-size:13px}
+  @media(max-width:760px){footer .wrap{grid-template-columns:1fr 1fr}}
+
+  .modal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(8,9,12,.8);backdrop-filter:blur(5px);opacity:0;visibility:hidden;transition:.35s}
+  .modal.show{opacity:1;visibility:visible}
+  .modal .c2{background:var(--panel);max-width:470px;width:100%;padding:38px;border-top:5px solid var(--red);transform:translateY(16px);transition:.4s var(--ease);position:relative}
+  .modal.show .c2{transform:none}
+  .modal .x{position:absolute;top:14px;right:16px;background:none;border:0;font-size:22px;color:var(--mut);cursor:pointer}
+  .modal img{height:38px;margin-bottom:14px}
+  .modal h3{font-family:var(--disp);text-transform:uppercase;font-size:22px;color:var(--white);margin-bottom:12px}
+  .modal p{font-size:16px;margin-bottom:22px}
+  .modal .btn{width:100%;justify-content:center}.modal .ms{display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--mut);cursor:pointer}
+  .pop{position:fixed;right:22px;bottom:22px;z-index:90;max-width:330px;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--red);padding:18px 20px;transform:translateY(180%);transition:.5s var(--ease)}
+  .pop.show{transform:none}.pop .x{position:absolute;top:8px;right:12px;background:none;border:0;font-size:18px;color:var(--mut);cursor:pointer}
+  .pop b{font-family:var(--disp);text-transform:uppercase;color:var(--white);display:block;margin-bottom:4px}.pop p{font-size:13.5px;color:var(--mut);margin-bottom:13px}
+  .pop .btn{width:100%;justify-content:center;padding:11px 13px;font-size:13px}
+  @media(max-width:520px){.pop{left:14px;right:14px;max-width:none}}
+  .reveal{opacity:1}.js .reveal{opacity:0;transform:translateY(26px);transition:.8s var(--ease)}.reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+</style>
+  <!--BRS-ANALYTICS-->
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['disableCookies']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function(){ var u='https://analytics.black-rabbit.studio/';
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!--/BRS-ANALYTICS-->
+</head>
+<body>
+
+<header class="nav" id="nav"><div class="wrap">
+  <a class="logo" href="index.html"><img src="img/logo.jpg?v=20260623094325" alt="Riemer KFZ-Service Kissing"></a>
+  <button class="navtoggle" aria-label="Menue" aria-expanded="false" onclick="var m=this.parentNode.querySelector('nav.links');var o=m.classList.toggle('open');this.setAttribute('aria-expanded',o);this.innerHTML=o?'&#10005;':'&#9776;';">&#9776;</button><nav class="links">
+    <a href="index.html" class="act">Start</a>
+    <div class="dd"><button>Über uns ▾</button><div class="menu"><a href="ueber-uns.html#team">Unser Team</a><a href="ueber-uns.html#historie">Firmenhistorie</a></div></div>
+    <div class="dd"><button>Leistungen ▾</button><div class="menu"><a href="leistungen.html#kfz">KFZ-Service</a><a href="leistungen.html#reifen">Reifen</a><a href="leistungen.html#klima">Klima</a><a href="leistungen.html#autoglas">Autoglas</a><a href="leistungen.html#diagnose">Diagnose</a><a href="leistungen.html#hu">HU / AU</a></div></div>
+    <a href="#kontakt">Kontakt</a>
+    <a class="cta" href="#kontakt">Termin</a>
+  </nav>
+</div></header>
+
+<section class="hero">
+  <video class="bgvid" autoplay muted loop playsinline poster="img/hero-poster.jpg?v=20260623094325" preload="auto"><source src="img/hero.mp4?v=20260623094325" type="video/mp4"></video>
+  <div class="scrim"></div><div class="bar"></div>
+  <div class="wrap">
+    <div class="lt">
+      <span class="since">Familienbetrieb · seit 1968 · Kissing</span>
+      <h1>Meisterhaft.<br>Motiviert.<span class="r">Markenoffen.</span></h1>
+      <p>Wir kümmern uns um Ihr Auto, als wäre es unser eigenes – ehrlich, fair und für alle Marken. Über 45 Jahre Erfahrung in Kissing und der Region Augsburg.</p>
+      <div class="cta">
+        <a class="btn btn-red" href="#kontakt">Termin anfragen</a>
+        <a class="btn btn-gho" href="tel:+49823375818">08233 75818</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="brands"><div class="track">
+  <span><span>VW</span><span>BMW</span><span>Audi</span><span>Mercedes</span><span>Porsche</span><span>Opel</span><span>Ford</span><span>Škoda</span><span>Seat</span><span>Toyota</span><span>Mazda</span><span>Kia</span></span>
+  <span><span>VW</span><span>BMW</span><span>Audi</span><span>Mercedes</span><span>Porsche</span><span>Opel</span><span>Ford</span><span>Škoda</span><span>Seat</span><span>Toyota</span><span>Mazda</span><span>Kia</span></span>
+</div></div>
+
+<section id="leistungen">
+  <div class="wrap">
+    <div class="sec-h reveal">
+      <h2>Unsere <em>Leistungen</em></h2>
+      <p>Komplettes Spektrum – markenoffen, mit moderner Diagnosetechnik und Originalteilen.</p>
+    </div>
+    <div class="idx">
+      <a href="leistungen.html#kfz"><span class="no">01</span><div><h3>KFZ-Service &amp; Inspektion</h3><p class="ds">Wartung und Inspektion nach Herstellervorgaben für alle Marken.</p></div><span class="ar">→</span></a>
+      <a href="leistungen.html#reifen"><span class="no">02</span><div><h3>Reifen-Service</h3><p class="ds">Montage, Auswuchten, Einlagerung – auch Breit- und Run-Flat-Reifen.</p></div><span class="ar">→</span></a>
+      <a href="leistungen.html#klima"><span class="no">03</span><div><h3>Klimaanlagen-Service</h3><p class="ds">Wartung und Befüllung – für frische Luft und volle Leistung.</p></div><span class="ar">→</span></a>
+      <a href="leistungen.html#autoglas"><span class="no">04</span><div><h3>Autoglas &amp; Steinschlag</h3><p class="ds">Reparatur und Scheibentausch – direkt mit Ihrer Versicherung.</p></div><span class="ar">→</span></a>
+      <a href="leistungen.html#diagnose"><span class="no">05</span><div><h3>Diagnose &amp; Karosserie</h3><p class="ds">Fehlerauslese, Karosserie, Dellen &amp; Scheinwerferaufbereitung.</p></div><span class="ar">→</span></a>
+      <a href="leistungen.html#hu"><span class="no">06</span><div><h3>HU/AU &amp; Gasprüfung</h3><p class="ds">Hauptuntersuchung direkt im Haus – täglich Prüforganisation vor Ort.</p></div><span class="ar">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="wrap">
+    <div class="tx reveal">
+      <span class="kick">Über uns</span>
+      <h2 style="margin-top:10px">Werkstatt mit <em>Gesicht.</em></h2>
+      <p class="quote">„Autos sind meine Leidenschaft – und zufriedene Kunden mein Antrieb." · Oliver Riemer</p>
+      <p>Ein ausgewogenes Team aus erfahrenen Fachkräften und jungen Gesellen verbindet bewährtes Handwerk mit moderner Technik. <b>Transparenz, Vertrauen, offener Austausch.</b></p>
+      <p>Aus einem Traditionsbetrieb von 1968 wurde Ihre moderne Werkstatt von heute.</p>
+      <a class="btn btn-red" href="ueber-uns.html" style="margin-top:8px">Über uns &amp; Team</a>
+    </div>
+    <div class="pic reveal"><img src="img/riemer-neu.jpg?v=20260623094325" alt="Riemer KFZ-Service Werkstatt in Kissing"></div>
+  </div>
+</section>
+
+<section class="team">
+  <div class="wrap">
+    <div class="sec-h reveal"><h2>Das <em>Team</em></h2><p>Echte Menschen hinter Ihrem Auto – persönlich und kompetent.</p></div>
+    <div class="trow">
+      <div class="tm reveal"><div class="ph"><img src="img/team/oliver-riemer.png?v=20260623094325" alt="Oliver Riemer"></div><div class="nm">Oliver Riemer</div><div class="ro">Geschäftsführer</div></div>
+      <div class="tm reveal"><div class="ph"><img src="img/team/uter.png?v=20260623094325" alt="Patrick Uter"></div><div class="nm">Patrick Uter</div><div class="ro">KFZ-Meister</div></div>
+      <div class="tm reveal"><div class="ph"><img src="img/team/sedelmair.png?v=20260623094325" alt="Matthias Sedelmaier"></div><div class="nm">M. Sedelmaier</div><div class="ro">Mechatroniker</div></div>
+      <div class="tm reveal"><div class="ph"><img src="img/team/mrkalj.png?v=20260623094325" alt="Dajana Mrkalj"></div><div class="nm">Dajana Mrkalj</div><div class="ro">Serviceassistentin</div></div>
+    </div>
+    <div style="margin-top:30px"><a class="btn btn-gho reveal" href="ueber-uns.html#team">Ganzes Team</a></div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stat reveal"><div class="n">1968</div><div class="l">gegründet</div></div>
+    <div class="stat reveal"><div class="n">45+</div><div class="l">Jahre Erfahrung</div></div>
+    <div class="stat reveal"><div class="n">Alle</div><div class="l">Marken</div></div>
+    <div class="stat reveal"><div class="n">HU/AU</div><div class="l">im Haus</div></div>
+  </div>
+</section>
+
+<section id="kontakt" class="kontakt">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="kick">Kontakt</span>
+      <h2 style="font-size:clamp(28px,4vw,48px);font-weight:900;text-transform:uppercase;margin:10px 0 0">Termin <em style="font-style:normal;color:var(--red)">anfragen</em></h2>
+      <form class="form" style="margin-top:24px" onsubmit="event.preventDefault();this.style.display='none';document.getElementById('ok').style.display='block';">
+        <label>Ihr Name</label><input type="text" required placeholder="Max Mustermann">
+        <label>Telefon</label><input type="tel" required placeholder="0151 …">
+        <label>Worum geht es?</label><textarea rows="4" placeholder="z. B. Inspektion, HU, Reifen, Klima …"></textarea>
+        <button class="btn btn-red" type="submit">Anfrage senden</button>
+      </form>
+      <div id="ok" class="ok">Danke! Ihre Anfrage ist eingegangen – wir melden uns zeitnah.</div>
+    </div>
+    <div class="info reveal" style="align-self:center">
+      <h3>So erreichen Sie uns</h3>
+      <div class="row"><span class="lab">Adresse</span><div>Lechauenstraße 4<br>86438 Kissing</div></div>
+      <div class="row"><span class="lab">Telefon</span><div><a href="tel:+49823375818"><b style="color:#fff">08233 – 75818</b></a></div></div>
+      <div class="row"><span class="lab">Termine</span><div>Mo – Fr · nach Vereinbarung</div></div>
+      <div class="quick">
+        <a class="btn btn-red" href="tel:+49823375818">Jetzt anrufen</a>
+        <a class="btn btn-gho" href="https://wa.me/49823375818" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="offer">
+  <div class="wrap reveal">
+    <span class="kick">Für Herrn Riemer</span>
+    <h2 style="margin-top:14px">Gefällt Ihnen <em>diese Variante?</em></h2>
+    <p>Variante B – ein eigenständiger, markanter Auftritt. Ein unverbindlicher Vorschlag, fertig zum Loslegen.</p>
+    <div class="cta">
+      <a class="btn btn-red" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20Riemer%20KFZ-Service%20(Variante%20B)">Angebot anfordern</a>
+      <a class="btn btn-gho" href="https://vorschau.black-rabbit.studio/praesentation-riemer/">Zur Übersicht</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <div><img src="img/logo.jpg?v=20260623094325" alt="Riemer KFZ-Service"><p>Meisterhaft. Motiviert. Markenoffen.<br>Markenoffene Werkstatt in Kissing – seit 1968.</p></div>
+  <div><h4>Leistungen</h4><a href="leistungen.html#kfz">KFZ-Service</a><a href="leistungen.html#reifen">Reifen</a><a href="leistungen.html#klima">Klima</a><a href="leistungen.html#hu">HU / AU</a></div>
+  <div><h4>Kontakt</h4><a href="#">Lechauenstraße 4, 86438 Kissing</a><a href="tel:+49823375818">08233 – 75818</a><a href="ueber-uns.html#team">Team</a><a href="ueber-uns.html#historie">Historie</a></div>
+  <div class="copy">© 2026 Riemer KFZ Service GmbH · Inh. Oliver Riemer · Lechauenstraße 4, 86438 Kissing · Impressum · Datenschutz</div>
+</div></footer>
+
+<div class="modal" id="greet"><div class="c2">
+  <button class="x" onclick="closeGreet()" aria-label="schließen">×</button>
+  <img src="img/logo.jpg?v=20260623094325" alt="Riemer KFZ-Service">
+  <h3>Sehr geehrter Herr Riemer,</h3>
+  <p>das ist Variante B – ein bewusst anderer, markanter Design-Ansatz für Ihre Werkstatt. Schauen Sie sich in Ruhe um.</p>
+  <button class="btn btn-red" onclick="closeGreet()">Seite ansehen</button>
+  <span class="ms" onclick="closeGreet()">schließen</span>
+</div></div>
+
+<div class="pop" id="pop">
+  <button class="x" onclick="document.getElementById('pop').classList.remove('show')" aria-label="schließen">×</button>
+  <b>Gefällt Ihnen Variante B?</b>
+  <p>Unverbindlich – fordern Sie Ihr Festpreis-Angebot an.</p>
+  <a class="btn btn-red" href="mailto:info@black-rabbit.studio?subject=Angebot%20anfordern%20-%20Riemer%20KFZ-Service%20(B)">Angebot anfordern</a>
+</div>
+
+<script>
+  var nav=document.getElementById('nav');
+  addEventListener('scroll',function(){nav.classList.toggle('solid',scrollY>40)},{passive:true});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(e){e.classList.add('in')})},2600);
+  var greet=document.getElementById('greet'),pop=document.getElementById('pop'),ps=false;
+  setTimeout(function(){greet.classList.add('show')},650);
+  function closeGreet(){greet.classList.remove('show');arm();}
+  function arm(){if(ps)return;var t=setTimeout(sp,9000);addEventListener('scroll',function o(){if(scrollY>1100){sp();removeEventListener('scroll',o);clearTimeout(t);}},{passive:true});}
+  function sp(){if(ps)return;ps=true;pop.classList.add('show');}
+</script>
+</body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ==========================================================
+       BESTATTUNGS-TEMPLATE · STARTSEITE
+       Tokens wie Alemannia Bestattungs-GmbH werden über js/config.js gefüllt.
+       Für die Produktion: config.js pflegen ODER Tokens per
+       Suchen-und-Ersetzen direkt im HTML austauschen.
+       ========================================================== -->
+  <title>Alemannia Bestattungs-GmbH · Bestattungen in Konstanz · Tag und Nacht erreichbar</title>
+  <meta name="description" content="Alemannia Bestattungs-GmbH in Konstanz · Begleitung im Trauerfall und Bestattungsvorsorge. Jederzeit erreichbar unter 07531 23 100.">
+
+  <!-- Schriften: Newsreader (Überschriften) + Hanken Grotesk (Fließtext).
+       Schriften werden lokal eingebunden (fonts/fonts.css) · kein Abruf bei Google. -->
+  <link rel="stylesheet" href="fonts/fonts.css?v=20260623094325">
+
+  <link rel="stylesheet" href="css/style.css?v=20260623094325">
+  <!--BRS-ANALYTICS-->
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['disableCookies']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function(){ var u='https://analytics.black-rabbit.studio/';
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!--/BRS-ANALYTICS-->
+</head>
+<body data-screen-label="Startseite">
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="shell site-header__inner">
+      <a class="brand" href="index.html">Alemannia Bestattungs-GmbH<small>Bestattungen · Konstanz</small></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="hauptnavigation">Menü</button>
+      <nav class="site-nav" id="hauptnavigation" aria-label="Hauptnavigation">
+        <a href="index.html" aria-current="page">Startseite</a>
+        <a href="trauerfall.html">Im Trauerfall</a>
+        <a href="vorsorge.html">Vorsorge</a>
+        <a href="faq.html">Fragen</a>
+        <a href="#anfrage">Anfrage</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </nav>
+      <a class="header-tel" href="tel:+49753123100">
+        <strong>07531 23 100</strong>
+        <span>24 Stunden erreichbar</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= HERO =================
+         Bildslot img/hero.jpg · Motiv: ruhige Lichtung, Allee oder
+         Licht durch Bäume. Warm, entsättigt, ohne Personen. -->
+    <section class="hero" data-screen-label="Hero" aria-label="Begrüßung">
+      <div class="hero__media">
+        <video class="hero-video" src="img/hero.mp4?v=20260623094325" poster="img/hero-poster.jpg?v=20260623094325" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover" preload="auto"></video>
+      </div>
+      <div class="hero__content">
+        <h1 class="hero__brand">
+          <span class="hero-line l1 hero__brand-sub">Bestattungs-GmbH · Konstanz</span>
+          <span class="hero-line l2 hero__brand-name">Alemannia</span>
+        </h1>
+        <p class="hero__since hero-line l3">„Das Leben ist eine Reise, die heimwärts führt." · Herman Melville</p>
+        <p class="hero__claim hero-line l4">Familiengeführt in dritter Generation · über 60 Jahre Erfahrung in Konstanz.</p>
+        <a class="call-block hero-line l5" href="tel:+49753123100">
+          <strong>07531 23 100</strong>
+          <span>Tag und Nacht persönlich für Sie da</span>
+        </a>
+        <p class="hero__note hero-line l6">Auch nachts, an Wochenenden und Feiertagen. Wir kümmern uns um alles Weitere.</p>
+      </div>
+    </section>
+
+    <!-- ============ SOFORT-HILFE-STREIFEN ============ -->
+    <section class="urgent-strip" data-screen-label="Soforthilfe" aria-label="Soforthilfe im Sterbefall">
+      <div class="shell">
+        <p><strong>Sterbefall eingetreten?</strong> Rufen Sie uns an · wir übernehmen alles Weitere.</p>
+        <a href="tel:+49753123100">07531 23 100</a>
+      </div>
+    </section>
+
+    <section class="request-assistant" id="anfrage" data-screen-label="Anfrage-Assistent" aria-labelledby="anfrage-title" data-request-email="info@alemannia-bestattung.de" data-request-firm="Alemannia Bestattungs-GmbH">
+      <div class="shell request-assistant__grid">
+        <div class="request-assistant__intro reveal">
+          <span class="eyebrow">Anfrage vorbereiten</span>
+          <h2 id="anfrage-title">Wir sortieren gemeinsam, was gerade wichtig ist.</h2>
+          <p class="lead">Ein paar ruhige Angaben reichen, damit wir Ihre Anfrage richtig einordnen und uns passend bei Ihnen melden können.</p>
+          <div class="request-assistant__note">
+            <strong>Bei einem akuten Sterbefall:</strong>
+            <span>Bitte rufen Sie uns zusätzlich direkt über die angegebene Notfallnummer an.</span>
+          </div>
+        </div>
+
+        <div class="request-panel reveal" data-request-assistant>
+          <div class="request-panel__top">
+            <span class="request-kicker" data-request-counter>Schritt 1 von 5</span>
+            <div class="request-progress" aria-hidden="true"><span data-request-progress></span></div>
+          </div>
+
+          <form class="request-form">
+            <fieldset class="request-step is-active" data-step="0">
+              <legend>Was ist Ihre Situation?</legend>
+              <div class="request-group">
+                <p class="request-group-title">Anlass</p>
+                <div class="request-options">
+                  <button type="button" data-field="situation" data-value="Sterbefall ist eingetreten">Sterbefall eingetreten</button>
+                  <button type="button" data-field="situation" data-value="Bestattungsvorsorge planen">Vorsorge planen</button>
+                  <button type="button" data-field="situation" data-value="Beratung für Angehörige">Für Angehörige</button>
+                  <button type="button" data-field="situation" data-value="Ich bin noch unsicher">Noch unsicher</button>
+                </div>
+              </div>
+              <div class="request-group">
+                <p class="request-group-title">Dringlichkeit</p>
+                <div class="request-options">
+                  <button type="button" data-field="urgency" data-value="Sofort / heute">Sofort / heute</button>
+                  <button type="button" data-field="urgency" data-value="In den nächsten Tagen">Nächste Tage</button>
+                  <button type="button" data-field="urgency" data-value="Kein Zeitdruck">Kein Zeitdruck</button>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="request-step" data-step="1" hidden>
+              <legend>Was wissen Sie schon?</legend>
+              <div class="request-fields">
+                <label>Sterbe-, Wohn- oder Wunschort<input type="text" name="place" autocomplete="address-level2" placeholder="z. B. Meerbusch-Lank"></label>
+              </div>
+              <p class="request-group-title">Bestattungsart</p>
+              <div class="request-options">
+                <button type="button" data-field="type" data-value="Erdbestattung">Erdbestattung</button>
+                <button type="button" data-field="type" data-value="Feuer- oder Urnenbestattung">Feuer-/Urnenbestattung</button>
+                <button type="button" data-field="type" data-value="Seebestattung">Seebestattung</button>
+                <button type="button" data-field="type" data-value="Natur- oder Baumbestattung">Natur-/Baumbestattung</button>
+                <button type="button" data-field="type" data-value="Noch offen">Noch offen</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="request-step" data-step="2" hidden>
+              <legend>Wobei dürfen wir helfen?</legend>
+              <div class="request-options request-options--multi">
+                <button type="button" data-field="services" data-value="Überführung">Überführung</button>
+                <button type="button" data-field="services" data-value="Formalitäten">Formalitäten</button>
+                <button type="button" data-field="services" data-value="Abschiednahme / Aufbahrung">Abschiednahme</button>
+                <button type="button" data-field="services" data-value="Trauerfeier">Trauerfeier</button>
+                <button type="button" data-field="services" data-value="Trauerdruck">Trauerdruck</button>
+                <button type="button" data-field="services" data-value="Blumen / Grabgestaltung">Blumen / Grab</button>
+                <button type="button" data-field="services" data-value="Musik oder Redner">Musik oder Redner</button>
+                <button type="button" data-field="services" data-value="Alles aus einer Hand">Alles aus einer Hand</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="request-step" data-step="3" hidden>
+              <legend>Gibt es schon etwas Vorbereitetes?</legend>
+              <div class="request-options request-options--multi">
+                <button type="button" data-field="prepared" data-value="Todesbescheinigung liegt vor">Todesbescheinigung</button>
+                <button type="button" data-field="prepared" data-value="Bestattungsverfügung oder Vorsorgevertrag vorhanden">Vorsorge / Verfügung</button>
+                <button type="button" data-field="prepared" data-value="Friedhof oder Grab ist bekannt">Friedhof / Grab bekannt</button>
+                <button type="button" data-field="prepared" data-value="Wunschtermin für Trauerfeier vorhanden">Terminwunsch</button>
+                <button type="button" data-field="prepared" data-value="Noch nichts vorbereitet">Noch nichts vorbereitet</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="request-step" data-step="4" hidden>
+              <legend>Wie erreichen wir Sie?</legend>
+              <div class="request-options request-options--contact">
+                <button type="button" data-field="contactWay" data-value="Telefon">Telefon</button>
+                <button type="button" data-field="contactWay" data-value="E-Mail">E-Mail</button>
+                <button type="button" data-field="contactWay" data-value="Beides möglich">Beides möglich</button>
+              </div>
+              <div class="request-fields request-fields--two">
+                <label>Name<input type="text" name="name" autocomplete="name" required></label>
+                <label>Telefon<input type="tel" name="phone" autocomplete="tel"></label>
+                <label>E-Mail<input type="email" name="email" autocomplete="email"></label>
+                <label>Nachricht<textarea name="message" rows="4" placeholder="Was sollten wir vorab wissen?"></textarea></label>
+              </div>
+              <div class="request-summary" data-request-summary aria-live="polite"></div>
+              <a class="btn request-mail" href="mailto:info@alemannia-bestattung.de" data-request-mail>Anfrage per E-Mail vorbereiten</a>
+            </fieldset>
+
+            <p class="request-alert" data-request-alert role="status" aria-live="polite"></p>
+
+            <div class="request-nav">
+              <button type="button" class="request-back" data-request-back>Zurück</button>
+              <button type="button" class="btn" data-request-next>Weiter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WIR KÜMMERN UNS ============ -->
+    <section data-screen-label="Wir kümmern uns">
+      <div class="shell editorial">
+        <div class="editorial__head reveal">
+          <span class="eyebrow">Im Trauerfall</span>
+          <h2>Sie müssen jetzt nichts organisieren. Das ist unsere Aufgabe.</h2>
+          <p class="lead">Ein Anruf genügt. Alles Weitere besprechen wir in Ruhe · bei Ihnen zu Hause oder bei uns in Konstanz.</p>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <span class="step__num">1</span>
+            <div>
+              <h3>Wir kommen zu jeder Zeit</h3>
+              <p>Nach Ihrem Anruf sind wir innerhalb kurzer Zeit bei Ihnen · ob mitten in der Nacht oder am Feiertag. Wir holen Ihren Angehörigen würdevoll ab und überführen ihn in unsere Räume. Sie müssen dafür nichts vorbereiten.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">2</span>
+            <div>
+              <h3>Wir erledigen die Behördengänge</h3>
+              <p>Sterbeurkunde, Abmeldungen bei Krankenkasse und Rentenstelle, Benachrichtigung der Versicherungen: Wir übernehmen den gesamten Papierweg und sagen Ihnen klar, welche Unterlagen wir dafür brauchen.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">3</span>
+            <div>
+              <h3>Wir gestalten den Abschied mit Ihnen</h3>
+              <p>Trauerfeier, Musik, Blumen, Traueranzeige: Gemeinsam finden wir die Form, die zu dem Menschen passt, von dem Sie sich verabschieden. In Ihrem Tempo, ohne Druck und mit klaren Kosten von Anfang an.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LEISTUNGEN ============ -->
+    <section class="teaser" data-screen-label="Leistungen">
+      <div class="shell editorial">
+        <div class="editorial__head reveal">
+          <span class="eyebrow">Bestattungsarten</span>
+          <h2>Jeder Abschied ist anders. Wir kennen alle Wege.</h2>
+          <p class="lead">Wir beraten Sie offen zu jeder Form der Bestattung · auch zu Kosten und Friedhöfen in der Bodenseeregion.</p>
+        </div>
+        <div class="services">
+          <div class="reveal">
+            <h3>Erdbestattung</h3>
+            <p>Die klassische Beisetzung im Sarg · auf einem Friedhof Ihrer Wahl, mit oder ohne Trauerfeier am Grab.</p>
+          </div>
+          <div class="reveal">
+            <h3>Feuerbestattung</h3>
+            <p>Einäscherung mit anschließender Urnenbeisetzung · im Familiengrab, Urnenfeld oder Kolumbarium.</p>
+          </div>
+          <div class="reveal">
+            <h3>FriedWald-Bestattung</h3>
+            <p>Die letzte Ruhe unter einem Baum · wir beraten Sie zu den Möglichkeiten der Beisetzung im Bestattungswald.</p>
+          </div>
+          <div class="reveal">
+            <h3>Überführung</h3>
+            <p>Wir organisieren und übernehmen den Transport der Verstorbenen von und zu jedem gewünschten Ort.</p>
+          </div>
+          <div class="reveal">
+            <h3>Blumen &amp; Trauerdruck</h3>
+            <p>Wir beraten Sie bei der Blumenauswahl, schmücken die Trauerhalle und gestalten Todesanzeige, Trauer- und Danksagungskarten.</p>
+          </div>
+          <div class="reveal">
+            <h3>Formalitäten &amp; Abwicklung</h3>
+            <p>Krankenkasse, Renten- und Pensionskasse, Versicherungen, Rechnungsverkehr: Wir übernehmen die gesamte Abwicklung rund um den Trauerfall · und beantragen für hinterbliebene Ehepartner die dreimonatige Rentenvorauszahlung.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ÜBER UNS ============
+         Bildslot img/team.jpg · Motiv: Inhaber/in und Team oder
+         Geschäftsräume. Natürliches Licht, zugewandt, keine Posen. -->
+    <section data-screen-label="Über uns">
+      <div class="shell split">
+        <figure class="reveal">
+          <img src="img/raum.jpg?v=20260623094325" alt="Ruhiger, hell eingerichteter Beratungsraum">
+          <figcaption>Beratung in der Gartenstraße 27 · oder bei Ihnen zu Hause</figcaption>
+        </figure>
+        <div class="reveal">
+          <span class="eyebrow">Über uns</span>
+          <h2>In Konstanz zu Hause. In dritter Generation.</h2>
+          <p>In unsere Gespräche fließt die Erfahrung aus über 60 Jahren Beratungs- und Bestattungstätigkeit ein. Wir arbeiten in dritter Generation als familiengeführtes Unternehmen in Konstanz.</p>
+          <p>Geschäftsführer Markus Schnell und unser Team beraten Sie zu allen Fragen der Beisetzung · transparent und einfühlsam, zu allen Möglichkeiten der Abschiednahme und den verschiedenen Bestattungsarten.</p>
+          <p>Bitte haben Sie Verständnis, dass wir konkrete Preisangebote nur nach individueller Beratung unterbreiten können · dafür nehmen wir uns gern die Zeit, die es braucht.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VORSORGE-TEASER ============ -->
+    <section class="teaser" data-screen-label="Vorsorge-Teaser">
+      <div class="shell reveal">
+        <span class="eyebrow">Bestattungsvorsorge</span>
+        <h2>An morgen denken, heute entlasten.</h2>
+        <p class="lead">Wer die eigene Bestattung zu Lebzeiten regelt, nimmt seinen Angehörigen später viele schwere Entscheidungen ab · von der Bestattungsart über die Trauerfeier bis zur musikalischen Untermalung. Mit einer privaten Sterbegeldversicherung können Sie auch finanziell vorsorgen. Wir informieren Sie dazu in Ruhe und unverbindlich.</p>
+        <a class="text-link" href="vorsorge.html">Mehr zur Bestattungsvorsorge</a>
+      </div>
+    </section>
+
+    <!-- ============ GESCHICHTE ============ -->
+    <section data-screen-label="Geschichte">
+      <div class="shell editorial">
+        <div class="editorial__head reveal">
+          <span class="eyebrow">Unsere Geschichte</span>
+          <h2>Aus einem Konstanzer Handwerksbetrieb gewachsen.</h2>
+          <p class="lead">Unser Unternehmen hat sich aus einem Handwerksbetrieb entwickelt · und ist bis heute fest in Konstanz verwurzelt.</p>
+        </div>
+        <div class="steps chronik">
+          <div class="step reveal">
+            <span class="step__num">Anfang</span>
+            <div>
+              <h3>Die Schreinerei unseres Großvaters</h3>
+              <p>Am Anfang stand ein Konstanzer Handwerksbetrieb: Die Schreinerei unseres Großvaters wandelte sich über das Sarglager Schritt für Schritt zum Bestattungshaus.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">Wandel</span>
+            <div>
+              <h3>Constanzer Bestattung</h3>
+              <p>Aus dem Handwerksbetrieb wurde ein Dienstleistungsservice, der sich zunächst Constanzer Bestattung nannte und Familien in der Stadt im Trauerfall begleitete.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">Heute</span>
+            <div>
+              <h3>Alemannia Bestattungs-GmbH</h3>
+              <p>Heute firmieren wir als Alemannia Bestattungs-GmbH und bieten Ihnen in dritter Generation verschiedene Formen der Beisetzung und Abschiednahme sowie Service- und Vorsorgeleistungen an.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KONTAKT ============ -->
+    <!-- BRS-FAQ-START -->
+    <section class="faq-preview" id="fragen">
+      <div class="container faq-preview__grid">
+        <div>
+          <p class="eyebrow">Häufige Fragen</p>
+          <h2>Kurze Antworten, wenn gerade vieles unklar ist.</h2>
+          <p class="lead">In einem Trauerfall tauchen oft sehr konkrete Fragen auf. Dieser Bereich gibt erste Orientierung - ruhig, verständlich und ohne Druck.</p>
+          <div class="faq-actions">
+            <a class="btn" href="faq.html">Alle Fragen ansehen</a>
+          </div>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Was ist im Trauerfall zuerst zu tun?</summary>
+            <p>Wenn der Sterbefall zu Hause eingetreten ist, sollte zuerst ein Arzt gerufen werden. Danach koordiniert das Bestattungshaus die naechsten Schritte und entlastet die Angehoerigen.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Welche Unterlagen werden benoetigt?</summary>
+            <p>Hilfreich sind Personalausweis, Geburts- oder Heiratsurkunde, Sterbeurkunde des Ehepartners, Renten- und Versicherungsunterlagen sowie vorhandene Vorsorgevertraege.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Kann die Trauerfeier individuell gestaltet werden?</summary>
+            <p>Ja. Musik, Dekoration, Rituale, Fotos und persoenliche Worte koennen so abgestimmt werden, dass die Abschiednahme zum Menschen und zur Familie passt.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Welche Bestattungsarten sind moeglich?</summary>
+            <p>Je nach Wunsch und Friedhofsangebot kommen Erd-, Feuer-, See-, Baum- oder Naturbestattungen infrage. Das Bestattungshaus erklaert die passenden Moeglichkeiten vor Ort.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Wie transparent sind die Kosten?</summary>
+            <p>Die Kosten haengen von Bestattungsart, Friedhofsgebuehren, Trauerfeier und individuellen Wuenschen ab. Eine serioese Beratung erklaert alle Positionen nachvollziehbar.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Kann man eine Bestattung vorsorglich planen?</summary>
+            <p>Ja. Mit einer Bestattungsvorsorge koennen Wuensche, organisatorische Fragen und finanzielle Absicherung fruehzeitig festgehalten werden.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+    <!-- BRS-FAQ-END -->
+    <section class="contact" id="kontakt" data-screen-label="Kontakt">
+      <div class="shell">
+        <div class="contact__grid">
+          <div class="reveal">
+            <span class="eyebrow">Kontakt</span>
+            <h2>Jederzeit erreichbar · auch an Sonn- und Feiertagen.</h2>
+            <a class="contact-tel" href="tel:+49753123100"><strong>07531 23 100</strong></a>
+            <p class="lead">Rufen Sie an, wann immer Sie uns brauchen. Nachts erreichen Sie keine Bandansage, sondern uns.</p>
+            <ul class="contact-list">
+              <li>
+                <span class="label">Adresse</span>
+                <span>Alemannia Bestattungs-GmbH · Gartenstraße 27 · 78462 Konstanz</span>
+              </li>
+              <li>
+                <span class="label">E-Mail</span>
+                <a href="mailto:info@alemannia-bestattung.de">info@alemannia-bestattung.de</a>
+              </li>
+              <li>
+                <span class="label">Telefax</span>
+                <span>07531 17 837</span>
+              </li>
+            </ul>
+            <div class="map-note">
+              <p><strong>Anfahrt:</strong> Sie finden uns in der Gartenstraße 27, zentral in Konstanz.</p>
+              <!-- Bewusst keine eingebettete Karte (kein Tracking, kein Cookie-Banner nötig).
+                   Der Link öffnet Google Maps erst auf Wunsch des Besuchers. -->
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=Gartenstraße 27 · 78462 Konstanz" rel="noopener">Route mit Google Maps planen</a>
+            </div>
+          </div>
+          <div class="reveal">
+            <h3>Schreiben Sie uns</h3>
+            <p>Wir melden uns zeitnah bei Ihnen · in dringenden Fällen rufen Sie bitte direkt an.</p>
+            <!-- PRODUKTION: action durch Formspree/Web3Forms ersetzen und
+                 data-placeholder-action entfernen. Details in js/main.js. -->
+            <form class="form" action="" method="POST" data-placeholder-action="true">
+              <label>
+                Ihr Name
+                <input type="text" name="name" autocomplete="name" required>
+              </label>
+              <label>
+                Ihre Telefonnummer
+                <input type="tel" name="telefon" autocomplete="tel" required>
+              </label>
+              <label>
+                Ihre Nachricht
+                <textarea name="nachricht" required></textarea>
+              </label>
+              <p class="form__hint">Mit dem Absenden stimmen Sie zu, dass wir Ihre Angaben zur Beantwortung Ihrer Anfrage verwenden. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+              <button class="btn" type="submit">Nachricht senden</button>
+              <p class="form__success" role="status" tabindex="-1">Vielen Dank für Ihre Nachricht. Wir melden uns so schnell wie möglich bei Ihnen.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-brand">Alemannia Bestattungs-GmbH</p>
+          <p>Einfühlsame und kompetente Hilfe im Trauerfall. Seit über 60 Jahren begleiten wir Familien in Konstanz und der Bodenseeregion · im Trauerfall und in der Vorsorge.</p>
+        </div>
+        <div>
+          <span class="label">Kontakt</span>
+          <ul>
+            <li><a class="footer-tel" href="tel:+49753123100">07531 23 100</a></li>
+            <li><a href="mailto:info@alemannia-bestattung.de">info@alemannia-bestattung.de</a></li>
+            <li>Gartenstraße 27 · 78462 Konstanz</li>
+          </ul>
+        </div>
+        <div>
+          <span class="label">Seiten</span>
+          <ul>
+            <li><a href="trauerfall.html">Was tun im Trauerfall</a></li>
+            <li><a href="vorsorge.html">Bestattungsvorsorge</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <p>© <span data-year>2026</span> Alemannia Bestattungs-GmbH · Alle Rechte vorbehalten</p>
+        <p>Tag und Nacht erreichbar: <a href="tel:+49753123100">07531 23 100</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Fixierter Anruf-Button · nur auf Mobilgeräten sichtbar -->
+  <a class="mobile-call" href="tel:+49753123100">07531 23 100<small>· 24 Std. erreichbar</small></a>
+
+  <script src="js/config.js?v=20260623094325"></script>
+  <script src="js/main.js?v=20260623094325"></script>
+</body>
+</html>
