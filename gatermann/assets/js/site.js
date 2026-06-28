@@ -154,6 +154,25 @@
     document.addEventListener('dragstart',function(e){ if(document.body.classList.contains('editing') && e.target.closest('[data-edit]')) e.preventDefault(); },true);
   })();
 
+  /* ---------- Mini-Porträts im Anwälte-Dropdown: auf jeder Seite das gesetzte
+       Porträt-/Team-Foto des jeweiligen Anwalts spiegeln (läuft unabhängig vom Editor) ---------- */
+  (function(){
+    var minis=[].slice.call(document.querySelectorAll('[data-navmini]'));
+    if(!minis.length) return;
+    function applyFrom(store){
+      function srcFor(k){ var st=(store&&store[k])||(window.GM_MEDIA&&window.GM_MEDIA[k]); return st&&st.src?st.src:null; }
+      ['manfred','gabriele'].forEach(function(who){
+        var src=srcFor('gm_media_'+who+'-gatermann_portrait')||srcFor('gm_media_index_'+who);
+        if(src){ minis.forEach(function(img){ if(img.getAttribute('data-navmini')===who) img.src=src; }); }
+      });
+    }
+    applyFrom({}); // sofort aus committeter Basis (Kundenansicht)
+    try{ if(window.indexedDB){ var rq=indexedDB.open('gm_media_db',1);
+      rq.onupgradeneeded=function(e){ try{e.target.result.createObjectStore('m');}catch(_){} };
+      rq.onsuccess=function(e){ var db=e.target.result; try{ var out={}; var cur=db.transaction('m','readonly').objectStore('m').openCursor();
+        cur.onsuccess=function(ev){ var c=ev.target.result; if(c){ out[c.key]=c.value; c.continue(); } else { applyFrom(out); } }; }catch(_){} }; } }catch(_){}
+  })();
+
   /* ---------- Kontaktformular ---------- */
   var form=document.getElementById('contactForm');
   if(form){
