@@ -211,9 +211,9 @@
         <div class="done">
           <div class="seal"></div>
           <h2>Ihre Anfrage ist vorbereitet</h2>
-          <p>Mit einem Klick öffnet sich Ihre fertig zusammengestellte Anfrage als Mail an die Kanzlei. Wir melden uns kurzfristig bei Ihnen.</p>
+          <p>Mit einem Klick senden Sie Ihre Anfrage direkt an die Kanzlei. Sie erhalten umgehend eine Eingangsbestätigung per E-Mail, und wir melden uns schnellstmöglich persönlich bei Ihnen.</p>
           <div class="summary" id="summary"></div>
-          <button type="button" class="btn-next" id="sendmail" style="margin:0 auto">Anfrage als Mail öffnen</button>
+          <button type="button" class="btn-next" id="sendmail" style="margin:0 auto">Anfrage absenden</button>
           <p class="footnote">Lieber direkt? <a href="tel:+49280171510">02801 7151 0</a> &nbsp;·&nbsp; <a href="mailto:info@gg-xanten.de">info@gg-xanten.de</a></p>
         </div>
       </section>
@@ -375,12 +375,23 @@ function buildSummary(){
     summaryRows().map(r=>`<div class="row"><span class="k">${r[0]}</span><span class="v">${escapeHtml(r[1])}</span></div>`).join('');
 }
 function escapeHtml(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
-document.getElementById('sendmail').addEventListener('click',()=>{
+const sendBtn=document.getElementById('sendmail');
+sendBtn.addEventListener('click',()=>{
   const a=AREAS.find(x=>x.id===state.area);
   const subject=`Mandatsanfrage, ${a.t}, ${state.first} ${state.last}`;
-  const body=summaryRows().map(r=>`${r[0]}: ${r[1]}`).join('\n')+
+  const inhalt=summaryRows().map(r=>`${r[0]}: ${r[1]}`).join('\n')+
     `\n\nÜbermittelt über das Anfrageformular der Website.`;
-  window.location.href=`mailto:info@gg-xanten.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const done=document.querySelector('section[data-step="5"] .done');
+  const fallback=()=>{ window.location.href=`mailto:info@gg-xanten.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(inhalt)}`; };
+  const showThanks=()=>{ done.innerHTML='<div class="seal"></div><h2>Vielen Dank, Ihre Anfrage ist eingegangen</h2>'+
+    '<p>Wir haben Ihnen eine Bestätigung an <strong>'+escapeHtml(state.email)+'</strong> gesendet und melden uns schnellstmöglich persönlich bei Ihnen.</p>'+
+    '<p class="footnote">Dringend? <a href="tel:+49280171510">02801 7151 0</a></p>'; };
+  sendBtn.disabled=true; sendBtn.textContent='Wird gesendet …';
+  const data=new URLSearchParams({type:'anfrage',name:`${state.first} ${state.last}`,email:state.email,phone:state.phone||'',area:a.t,inhalt,firma:''});
+  fetch('sendmail.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString()})
+    .then(r=>r.ok?r.json():Promise.reject()).then(j=>{ if(j&&j.ok){ showThanks(); } else { fallback(); } })
+    .catch(()=>{ fallback(); })
+    .then(()=>{ sendBtn.disabled=false; sendBtn.textContent='Anfrage absenden'; });
 });
 
 show(1);

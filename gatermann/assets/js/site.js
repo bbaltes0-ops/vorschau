@@ -183,11 +183,17 @@
       var err=document.getElementById('cf-err');
       if(!ok){ err.classList.add('show'); return; }
       err.classList.remove('show');
+      var phone=val('cf-phone');
       var subject='Kontaktanfrage von '+first+' '+last;
-      var body='Name: '+first+' '+last+'\nE-Mail: '+mail+'\nTelefon: '+val('cf-phone')+'\n\nNachricht:\n'+msg+'\n\nÜbermittelt über das Kontaktformular der Website.';
-      document.getElementById('cf-ok').classList.add('show');
-      form.style.display='none';
-      window.location.href='mailto:info@gg-xanten.de?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+      var inhalt='Name: '+first+' '+last+'\nE-Mail: '+mail+'\nTelefon: '+phone+'\n\nNachricht:\n'+msg+'\n\nÜbermittelt über das Kontaktformular der Website.';
+      function done(){ document.getElementById('cf-ok').classList.add('show'); form.style.display='none'; }
+      function fallback(){ window.location.href='mailto:info@gg-xanten.de?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(inhalt); done(); }
+      var btn=form.querySelector('button[type="submit"],button:not([type])'); if(btn){ btn.disabled=true; }
+      var data=new URLSearchParams({type:'kontakt',name:first+' '+last,email:mail,phone:phone,area:'',inhalt:inhalt,firma:''});
+      fetch('sendmail.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString()})
+        .then(function(r){return r.ok?r.json():Promise.reject();})
+        .then(function(j){ if(j&&j.ok){ done(); } else { fallback(); } })
+        .catch(function(){ fallback(); });
     });
     function val(id){var n=document.getElementById(id);return n?n.value.trim():'';}
   }
