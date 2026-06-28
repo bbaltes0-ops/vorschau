@@ -190,13 +190,14 @@
       var phone=val('cf-phone');
       var subject='Kontaktanfrage von '+first+' '+last;
       var inhalt='Name: '+first+' '+last+'\nE-Mail: '+mail+'\nTelefon: '+phone+'\n\nNachricht:\n'+msg+'\n\nÜbermittelt über das Kontaktformular der Website.';
-      function done(){ document.getElementById('cf-ok').classList.add('show'); form.style.display='none'; }
-      function fallback(){ window.location.href='mailto:info@gg-xanten.de?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(inhalt); done(); }
+      var okBox=document.getElementById('cf-ok');
+      function done(confirmed){ if(okBox){ okBox.innerHTML='Vielen Dank, Ihre Nachricht ist bei uns eingegangen. Wir melden uns kurzfristig bei Ihnen.'+(confirmed?' Eine Eingangsbestätigung haben wir Ihnen per E-Mail gesendet.':''); okBox.classList.add('show'); } form.style.display='none'; }
+      function fallback(){ if(okBox){ okBox.innerHTML='Ihre Nachricht wurde in Ihrem E-Mail-Programm geöffnet. Bitte senden Sie sie ab, dann meldet sich die Kanzlei kurzfristig.'; okBox.classList.add('show'); } form.style.display='none'; window.location.href='mailto:info@gg-xanten.de?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(inhalt); }
       var btn=form.querySelector('button[type="submit"],button:not([type])'); if(btn){ btn.disabled=true; }
-      var data=new URLSearchParams({type:'kontakt',name:first+' '+last,email:mail,phone:phone,area:'',inhalt:inhalt,firma:''});
+      var data=new URLSearchParams({type:'kontakt',name:first+' '+last,email:mail,phone:phone,area:'',inhalt:inhalt,firma:val('cf-firma')});
       fetch('sendmail.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString()})
         .then(function(r){return r.ok?r.json():Promise.reject();})
-        .then(function(j){ if(j&&j.ok){ done(); } else { fallback(); } })
+        .then(function(j){ if(j&&j.ok){ done(j.confirm); } else { fallback(); } })
         .catch(function(){ fallback(); });
     });
     function val(id){var n=document.getElementById(id);return n?n.value.trim():'';}

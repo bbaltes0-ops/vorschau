@@ -200,6 +200,7 @@
           </div>
         </label>
         <p class="err" id="err4">Bitte geben Sie Vorname, Nachname und eine gültige Mailadresse an.</p>
+        <input type="text" id="firma" name="firma" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;overflow:hidden">
         <div class="consent">
           <input type="checkbox" id="consent">
           <label for="consent">Ich bin damit einverstanden, dass die Kanzlei GATERMANN meine übermittelten Angaben zur Bearbeitung meiner Anfrage speichert und verarbeitet. Näheres in der <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutzerklärung</a>. <span class="req">*</span></label>
@@ -382,14 +383,18 @@ sendBtn.addEventListener('click',()=>{
   const inhalt=summaryRows().map(r=>`${r[0]}: ${r[1]}`).join('\n')+
     `\n\nÜbermittelt über das Anfrageformular der Website.`;
   const done=document.querySelector('section[data-step="5"] .done');
-  const fallback=()=>{ window.location.href=`mailto:info@gg-xanten.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(inhalt)}`; };
-  const showThanks=()=>{ done.innerHTML='<div class="seal"></div><h2>Vielen Dank, Ihre Anfrage ist eingegangen</h2>'+
-    '<p>Wir haben Ihnen eine Bestätigung an <strong>'+escapeHtml(state.email)+'</strong> gesendet und melden uns schnellstmöglich persönlich bei Ihnen.</p>'+
+  const firma=(document.getElementById('firma')||{}).value||'';
+  const fallback=()=>{ done.innerHTML='<div class="seal"></div><h2>Ihre Anfrage ist vorbereitet</h2>'+
+    '<p>Wir haben Ihre Anfrage in Ihrem E-Mail-Programm geöffnet. Bitte senden Sie sie ab, dann melden wir uns schnellstmöglich persönlich bei Ihnen.</p>'+
+    '<p class="footnote">Dringend? <a href="tel:+49280171510">02801 7151 0</a></p>';
+    window.location.href=`mailto:info@gg-xanten.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(inhalt)}`; };
+  const showThanks=(confirmed)=>{ done.innerHTML='<div class="seal"></div><h2>Vielen Dank, Ihre Anfrage ist eingegangen</h2>'+
+    '<p>Wir melden uns schnellstmöglich persönlich bei Ihnen.'+(confirmed?(' Eine Eingangsbestätigung haben wir an <strong>'+escapeHtml(state.email)+'</strong> gesendet.'):'')+'</p>'+
     '<p class="footnote">Dringend? <a href="tel:+49280171510">02801 7151 0</a></p>'; };
   sendBtn.disabled=true; sendBtn.textContent='Wird gesendet …';
-  const data=new URLSearchParams({type:'anfrage',name:`${state.first} ${state.last}`,email:state.email,phone:state.phone||'',area:a.t,inhalt,firma:''});
+  const data=new URLSearchParams({type:'anfrage',name:`${state.first} ${state.last}`,email:state.email,phone:state.phone||'',area:a.t,inhalt,firma});
   fetch('sendmail.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString()})
-    .then(r=>r.ok?r.json():Promise.reject()).then(j=>{ if(j&&j.ok){ showThanks(); } else { fallback(); } })
+    .then(r=>r.ok?r.json():Promise.reject()).then(j=>{ if(j&&j.ok){ showThanks(j.confirm); } else { fallback(); } })
     .catch(()=>{ fallback(); })
     .then(()=>{ sendBtn.disabled=false; sendBtn.textContent='Anfrage absenden'; });
 });
