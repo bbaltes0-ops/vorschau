@@ -357,3 +357,15 @@ html.js .reveal:not(.in){opacity:0;transform:translateY(26px)}
   .reveal{opacity:1!important;transform:none!important}
   #intro .btn-enter::after{display:none}
 }
+
+/* ---------- Mandantenstimmen (dezent) ---------- */
+.voices{position:relative;overflow:hidden;padding:18px 0 4px}
+.voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+.voice{position:relative;margin:0;background:var(--karte);border:1px solid var(--linie);border-radius:8px;padding:30px 26px 22px}
+.voice::before{content:"„";position:absolute;top:2px;left:18px;font-family:var(--serif);font-size:3.4rem;line-height:1;color:var(--messing);opacity:.4}
+.voice blockquote{margin:16px 0 18px;font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.5;color:#3f4a42}
+.voice figcaption{display:flex;flex-direction:column;gap:3px}
+.voice .vstars{color:var(--messing);font-size:.82rem;letter-spacing:3px}
+.voice .vname{font-family:var(--sans);font-weight:600;font-size:.92rem;color:var(--gruen-tief)}
+.voice .vsrc{font-family:var(--sans);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--grau-warm)}
+@media(max-width:760px){ .voice-grid{grid-template-columns:1fr;gap:16px} }
