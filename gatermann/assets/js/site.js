@@ -26,7 +26,7 @@
     if(backdrop) backdrop.addEventListener('click',closeMenu);
   }
   document.querySelectorAll('.nav-item>a.top').forEach(function(t){
-    t.addEventListener('click',function(e){ if(window.matchMedia('(max-width:760px)').matches){ e.preventDefault(); t.parentNode.classList.toggle('open'); } });
+    t.addEventListener('click',function(e){ if(window.matchMedia('(max-width:1080px)').matches){ e.preventDefault(); t.parentNode.classList.toggle('open'); } });
   });
 
   /* ---------- Reveal ---------- */
@@ -62,6 +62,8 @@
 
   /* ---------- Medien-Editor: Datei wählen, Drag&Drop, Zoom, Pan, Video ---------- */
   (function(){
+    // Editor nur mit geheimem Schalter (?edit oder #edit). Kunden sehen NUR die fertigen Bilder.
+    var EDIT=/[?&]edit\b/.test(location.search)||location.hash.replace('#','')==='edit';
     var hosts=[].slice.call(document.querySelectorAll('[data-edit]'));
     var tog=document.getElementById('editToggle');
     if(!hosts.length){ if(tog) tog.style.display='none'; return; }
@@ -101,6 +103,8 @@
     hosts.forEach(function(h){ applyT(h); });
     function loadSaved(){ dbGetAll(function(saved){ hosts.forEach(function(h){ var k=key(h); var st=saved[k]||(window.GM_MEDIA&&window.GM_MEDIA[k])||null; if(st){ state[k]={x:st.x||0,y:st.y||0,s:st.s||1,src:st.src,type:st.type}; } }); hosts.forEach(function(h){ var s=state[key(h)]; if(s.src){ setSrc(h,s.src,s.type||'image'); } else { applyT(h); } }); }); }
     loadSaved();
+    // Ab hier: nur im Editor-Modus. Ohne ?edit wird KEIN Bearbeiten-Button, keine Steuerung, kein Export erzeugt.
+    if(!EDIT){ if(tog) tog.style.display='none'; return; }
     var picker=document.createElement('input'); picker.type='file'; picker.accept='image/*,video/*'; picker.style.display='none'; document.body.appendChild(picker);
     var target=null;
     picker.addEventListener('change',function(){ if(target&&picker.files[0]) handleFile(target,picker.files[0]); picker.value=''; });
@@ -130,7 +134,7 @@
       c.addEventListener('dragleave',function(){ c.classList.remove('dragover'); });
       c.addEventListener('drop',function(e){ if(!document.body.classList.contains('editing'))return; e.preventDefault(); c.classList.remove('dragover'); var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; if(f)handleFile(h,f); });
     });
-    if(tog){ tog.textContent='Bilder bearbeiten'; tog.addEventListener('click',function(){ var on=document.body.classList.toggle('editing'); tog.classList.toggle('on',on); tog.textContent=on?'Bearbeiten beenden':'Bilder bearbeiten'; }); }
+    if(tog){ tog.classList.add('show'); tog.textContent='Bilder bearbeiten'; tog.addEventListener('click',function(){ var on=document.body.classList.toggle('editing'); tog.classList.toggle('on',on); tog.textContent=on?'Bearbeiten beenden':'Bilder bearbeiten'; }); }
     // Speichern: alle Platzierungen als medien-data.js exportieren (dauerhaft)
     var saveBtn=document.createElement('button'); saveBtn.id='editSave'; saveBtn.type='button'; saveBtn.textContent='⤓ Sicherung exportieren'; saveBtn.title='Optional: alle Platzierungen als Datei sichern (für Server/anderes Gerät). Im Browser ist alles automatisch gespeichert.'; document.body.appendChild(saveBtn);
     saveBtn.addEventListener('click',function(){

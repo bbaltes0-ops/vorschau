@@ -151,10 +151,15 @@ section{padding:100px 0;overflow:hidden}
 /* Alt-Klasse (nicht mehr genutzt) bleibt harmlos */
 .heimat-copy{margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
 @media(max-width:760px){
-  .heimat-media{aspect-ratio:1/1}
-  .heimat-overlay{max-width:none;padding:22px}
-  .heimat-overlay p{font-size:.94rem}
-  .heimat-scrim{background:linear-gradient(to top,rgba(15,30,22,.88) 0%,rgba(15,30,22,.55) 48%,rgba(15,30,22,.12) 78%)}
+  /* Mobil: Text NICHT als Overlay aufs Video, sondern lesbar darunter im dunklen Block */
+  .heimat-media{aspect-ratio:auto!important;height:auto!important;overflow:visible;background:#11241b}
+  .heimat-media video,.heimat-media img{height:200px!important}
+  .heimat-scrim{display:none}
+  .heimat-overlay{position:static;max-width:none;padding:20px 18px 22px;color:#fff}
+  .heimat-overlay .kicker{text-shadow:none}
+  .heimat-overlay h2{font-size:1.55rem;line-height:1.16;margin:8px 0 10px;text-shadow:none}
+  .heimat-overlay p{font-size:.98rem;line-height:1.6;text-shadow:none;color:#e9f0ea}
+  .values{grid-template-columns:1fr;gap:12px}
 }
 .value{background:var(--karte);border:1px solid var(--linie);border-radius:6px;padding:22px 20px}
 .value h4{font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.25rem;color:var(--gruen-tief);margin:0 0 8px}
@@ -243,9 +248,15 @@ section{padding:100px 0;overflow:hidden}
 .gallery .media-slot{aspect-ratio:1/1}
 
 /* Editor-Modus: wählen, Drag&Drop, Zoom, Pan */
-#editToggle{position:fixed;right:18px;bottom:18px;z-index:200;background:var(--gruen-tief);color:#fff;border:none;border-radius:999px;padding:12px 20px;font-family:var(--sans);font-weight:600;font-size:.82rem;letter-spacing:.06em;cursor:pointer;box-shadow:0 12px 30px rgba(30,66,51,.3);opacity:.6;transition:.2s}
+#editToggle{display:none;position:fixed;right:18px;bottom:18px;z-index:200;background:var(--gruen-tief);color:#fff;border:none;border-radius:999px;padding:12px 20px;font-family:var(--sans);font-weight:600;font-size:.82rem;letter-spacing:.06em;cursor:pointer;box-shadow:0 12px 30px rgba(30,66,51,.3);opacity:.6;transition:.2s}
+#editToggle.show{display:inline-block}
 #editToggle:hover{opacity:1}
 #editToggle.on{background:var(--messing);opacity:1}
+/* Editor-Hinweise und leere Bild-Slots NUR im Bearbeiten-Modus, niemals für Kunden */
+.edit-only{display:none}
+.media-slot.empty{display:none}
+body.editing .edit-only{display:block}
+body.editing .media-slot.empty{display:block}
 #editSave{position:fixed;right:18px;bottom:64px;z-index:200;display:none;background:var(--gruen-flasche);color:#fff;border:none;border-radius:999px;padding:11px 18px;font-family:var(--sans);font-weight:600;font-size:.8rem;letter-spacing:.05em;cursor:pointer;box-shadow:0 10px 26px rgba(30,66,51,.3)}
 #editSave:hover{background:var(--gruen-tief)}
 body.editing #editSave{display:block}
