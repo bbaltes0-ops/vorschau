@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ==========================================================
+       BESTATTUNGS-TEMPLATE · STARTSEITE
+       Tokens wie Bamberg Bestattungen werden über js/config.js gefüllt.
+       Für die Produktion: config.js pflegen ODER Tokens per
+       Suchen-und-Ersetzen direkt im HTML austauschen.
+       ========================================================== -->
+  <title>Bamberg Bestattungen · Bestattungen in Konz · Tag und Nacht erreichbar</title>
+  <meta name="description" content="Bamberg Bestattungen in Konz · Begleitung im Trauerfall und Bestattungsvorsorge. Jederzeit erreichbar unter 06501 991 40.">
+
+  <!-- Schriften: Newsreader (Überschriften) + Hanken Grotesk (Fließtext).
+       Hinweis Datenschutz: für strikte DSGVO-Konformität die beiden
+       Schriften selbst hosten (z. B. via google-webfonts-helper). -->
+  <link rel="stylesheet" href="fonts/fonts.css?v=20260716135221">
+
+  <link rel="stylesheet" href="css/style.css?v=20260716135221">
+  <!--BRS-ANALYTICS-->
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['disableCookies']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function(){ var u='https://analytics.black-rabbit.studio/';
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!--/BRS-ANALYTICS-->
+</head>
+<body data-screen-label="Startseite">
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="shell site-header__inner">
+      <a class="brand" href="index.html">Bamberg Bestattungen<small>Bestattungen · Konz</small></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="hauptnavigation">Menü</button>
+      <nav class="site-nav" id="hauptnavigation" aria-label="Hauptnavigation">
+        <a href="index.html" aria-current="page">Startseite</a>
+        <a href="unternehmen.html">Unternehmen</a>
+        <a href="leistungen.html">Leistungen</a>
+        <a href="sterbefall.html">Sterbefall</a>
+        <a href="vorsorge.html">Vorsorge</a>
+        <a href="trauer.html">Trauer</a>
+        <a href="faq.html">Fragen</a>
+        <a href="#anfrage">Anfrage</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+      <a class="header-tel" href="tel:+49650199140">
+        <strong>06501 991 40</strong>
+        <span>24 Stunden erreichbar</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= HERO =================
+         Bildslot img/hero.jpg · Motiv: ruhige Lichtung, Allee oder
+         Licht durch Bäume. Warm, entsättigt, ohne Personen. -->
+    <section class="hero" data-screen-label="Hero" aria-label="Begrüßung">
+      <div class="hero__media">
+        <video class="hero-video" src="img/hero.mp4?v=20260716135221" poster="img/hero-poster.jpg?v=20260716135221" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover" preload="auto"></video>
+      </div>
+      <div class="hero__content">
+        <h1 class="hero__brand">
+          <span class="hero-line l1 hero__brand-sub">Bestattungsinstitut · Konz an der Mosel</span>
+          <span class="hero-line l2 hero__brand-name">Bamberg Bestattungen</span>
+        </h1>
+        <p class="hero__since hero-line l3">Konzer Familientradition seit 1930.</p>
+        <p class="hero__claim hero-line l4">Rat und Hilfe im Trauerfall · in der vierten Generation.</p>
+        <a class="call-block hero-line l5" href="tel:+49650199140">
+          <strong>06501 991 40</strong>
+          <span>Soforthilfe · Tag und Nacht erreichbar</span>
+        </a>
+        <p class="hero__note hero-line l6">Auch nachts, an Wochenenden und Feiertagen. Wir kümmern uns um alles Weitere.</p>
+      </div>
+    </section>
+
+    <!-- ============ SOFORT-HILFE-STREIFEN ============ -->
+    <section class="urgent-strip" data-screen-label="Soforthilfe" aria-label="Soforthilfe im Sterbefall">
+      <div class="shell">
+        <p><strong>Sterbefall eingetreten?</strong> Rufen Sie uns an · wir übernehmen alles Weitere.</p>
+        <a href="tel:+49650199140">06501 991 40</a>
+      </div>
+    </section>
+
+    <section class="request-assistant" id="anfrage" data-screen-label="Anfrage-Assistent" aria-labelledby="anfrage-title" data-request-email="info@bamberg-bestattungen.de" data-request-firm="Bamberg Bestattungen">
+      <div class="shell request-assistant__grid">
+        <div class="request-assistant__intro reveal">
+          <span class="eyebrow">Anfrage vorbereiten</span>
+          <h2 id="anfrage-title">Wir sortieren gemeinsam, was gerade wichtig ist.</h2>
+          <p class="lead">Ein paar ruhige Angaben reichen, damit wir Ihre Anfrage richtig einordnen und uns passend bei Ihnen melden können.</p>
+          <div class="request-assistant__note">
+            <strong>Bei einem akuten Sterbefall:</strong>
+            <span>Bitte rufen Sie uns zusätzlich direkt über die angegebene Notfallnummer an.</span>
+          </div>
+        </div>
+
+        <div class="request-panel reveal" data-request-assistant>
+          <div class="request-panel__top">
+            <span class="request-kicker" data-request-counter>Schritt 1 von 5</span>
+            <div class="request-progress" aria-hidden="true"><span data-request-progress></span></div>
+          </div>
+
+          <form class="request-form">
+            <fieldset class="request-step is-active" data-step="0">
+              <legend>Was ist Ihre Situation?</legend>
+              <div class="request-group">
+                <p class="request-group-title">Anlass</p>
+                <div class="request-options">
+                  <button type="button" data-field="situation" data-value="Sterbefall ist eingetreten">Sterbefall eingetreten</button>
+                  <button type="button" data-field="situation" data-value="Bestattungsvorsorge planen">Vorsorge planen</button>
+                  <button type="button" data-field="situation" data-value="Beratung für Angehörige">Für Angehörige</button>
+                  <button type="button" data-field="situation" data-value="Ich bin noch unsicher">Noch unsicher</button>
+                </div>
+              </div>
+              <div class="request-group">
+                <p class="request-group-title">Dringlichkeit</p>
+                <div class="request-options">
+                  <button type="button" data-field="urgency" data-value="Sofort / heute">Sofort / heute</button>
+                  <button type="button" data-field="urgency" data-value="In den nächsten Tagen">Nächste Tage</button>
+                  <button type="button" data-field="urgency" data-value="Kein Zeitdruck">Kein Zeitdruck</button>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="request-step" data-step="1" hidden>
+              <legend>Was wissen Sie schon?</legend>
+              <div class="request-fields">
+                <label>Sterbe-, Wohn- oder Wunschort<input type="text" name="place" autocomplete="address-level2" placeholder="z. B. Meerbusch-Lank"></label>
+              </div>
+              <p class="request-group-title">Bestattungsart</p>
+              <div class="request-options">
+                <button type="button" data-field="type" data-value="Erdbestattung">Erdbestattung</button>
+                <button type="button" data-field="type" data-value="Feuer- oder Urnenbestattung">Feuer-/Urnenbestattung</button>
+                <button type="button" data-field="type" data-value="Seebestattung">Seebestattung</button>
+                <button type="button" data-field="type" data-value="Natur- oder Baumbestattung">Natur-/Baumbestattung</button>
+                <button type="button" data-field="type" data-value="Noch offen">Noch offen</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="request-step" data-step="2" hidden>
+              <legend>Wobei dürfen wir helfen?</legend>
+              <div class="request-options request-options--multi">
+                <button type="button" data-field="services" data-value="Überführung">Überführung</button>
+                <button type="button" data-field="services" data-value="Formalitäten">Formalitäten</button>
+                <button type="button" data-field="services" data-value="Abschiednahme / Aufbahrung">Abschiednahme</button>
+                <button type="button" data-field="services" data-value="Trauerfeier">Trauerfeier</button>
+                <button type="button" data-field="services" data-value="Trauerdruck">Trauerdruck</button>
+                <button type="button" data-field="services" data-value="Blumen / Grabgestaltung">Blumen / Grab</button>
+                <button type="button" data-field="services" data-value="Musik oder Redner">Musik oder Redner</button>
+                <button type="button" data-field="services" data-value="Alles aus einer Hand">Alles aus einer Hand</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="request-step" data-step="3" hidden>
+              <legend>Gibt es schon etwas Vorbereitetes?</legend>
+              <div class="request-options request-options--multi">
+                <button type="button" data-field="prepared" data-value="Todesbescheinigung liegt vor">Todesbescheinigung</button>
+                <button type="button" data-field="prepared" data-value="Bestattungsverfügung oder Vorsorgevertrag vorhanden">Vorsorge / Verfügung</button>
+                <button type="button" data-field="prepared" data-value="Friedhof oder Grab ist bekannt">Friedhof / Grab bekannt</button>
+                <button type="button" data-field="prepared" data-value="Wunschtermin für Trauerfeier vorhanden">Terminwunsch</button>
+                <button type="button" data-field="prepared" data-value="Noch nichts vorbereitet">Noch nichts vorbereitet</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="request-step" data-step="4" hidden>
+              <legend>Wie erreichen wir Sie?</legend>
+              <div class="request-options request-options--contact">
+                <button type="button" data-field="contactWay" data-value="Telefon">Telefon</button>
+                <button type="button" data-field="contactWay" data-value="E-Mail">E-Mail</button>
+                <button type="button" data-field="contactWay" data-value="Beides möglich">Beides möglich</button>
+              </div>
+              <div class="request-fields request-fields--two">
+                <label>Name<input type="text" name="name" autocomplete="name" required></label>
+                <label>Telefon<input type="tel" name="phone" autocomplete="tel"></label>
+                <label>E-Mail<input type="email" name="email" autocomplete="email"></label>
+                <label>Nachricht<textarea name="message" rows="4" placeholder="Was sollten wir vorab wissen?"></textarea></label>
+              </div>
+              <div class="request-summary" data-request-summary aria-live="polite"></div>
+              <a class="btn request-mail" href="mailto:info@bamberg-bestattungen.de" data-request-mail>Anfrage per E-Mail vorbereiten</a>
+            </fieldset>
+
+            <p class="request-alert" data-request-alert role="status" aria-live="polite"></p>
+
+            <div class="request-nav">
+              <button type="button" class="request-back" data-request-back>Zurück</button>
+              <button type="button" class="btn" data-request-next>Weiter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WIR KÜMMERN UNS ============ -->
+    <section data-screen-label="Wir kümmern uns">
+      <div class="shell editorial">
+        <div class="editorial__head reveal">
+          <span class="eyebrow">Im Trauerfall</span>
+          <h2>Sie müssen jetzt nichts organisieren. Das ist unsere Aufgabe.</h2>
+          <p class="lead">Ein Anruf genügt. Alles Weitere besprechen wir in Ruhe · bei Ihnen zu Hause oder bei uns in Konz.</p>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <span class="step__num">1</span>
+            <div>
+              <h3>Wir kommen zu jeder Zeit</h3>
+              <p>Nach Ihrem Anruf sind wir innerhalb kurzer Zeit bei Ihnen · ob mitten in der Nacht oder am Feiertag. Wir holen Ihren Angehörigen würdevoll ab und überführen ihn in unsere Räume. Sie müssen dafür nichts vorbereiten.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">2</span>
+            <div>
+              <h3>Wir erledigen die Behördengänge</h3>
+              <p>Sterbeurkunde, Abmeldungen bei Krankenkasse und Rentenstelle, Benachrichtigung der Versicherungen: Wir übernehmen den gesamten Papierweg und sagen Ihnen klar, welche Unterlagen wir dafür brauchen.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">3</span>
+            <div>
+              <h3>Wir gestalten den Abschied mit Ihnen</h3>
+              <p>Trauerfeier, Musik, Blumen, Traueranzeige: Gemeinsam finden wir die Form, die zu dem Menschen passt, von dem Sie sich verabschieden. In Ihrem Tempo, ohne Druck und mit klaren Kosten von Anfang an.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LEISTUNGEN ============ -->
+    <section class="teaser" data-screen-label="Leistungen">
+      <div class="shell editorial">
+        <div class="editorial__head reveal">
+          <span class="eyebrow">Unsere Leistungen</span>
+          <h2>Jeder Abschied ist anders. Wir kennen alle Wege.</h2>
+          <p class="lead">Wir beraten Sie offen zu jeder Form der Bestattung · von der Erdbestattung über die Feuerbestattung bis zur Seebestattung · auch zu Kosten und Friedhöfen in der Region Trier.</p>
+        </div>
+        <div class="services">
+          <div class="reveal">
+            <h3>Erdbestattung</h3>
+            <p>Die klassische Beisetzung im Sarg · auf einem Friedhof Ihrer Wahl, mit oder ohne Trauerfeier am Grab.</p>
+          </div>
+          <div class="reveal">
+            <h3>Feuer- und Urnenbestattung</h3>
+            <p>Einäscherung mit anschließender Urnenbeisetzung · im Familiengrab, Urnenfeld oder Kolumbarium.</p>
+          </div>
+          <div class="reveal">
+            <h3>Waldbestattung</h3>
+            <p>Die letzte Ruhe in der Natur · im Bestattungswald „Waldfrieden Konz", im RuheForst Losheim-Britten oder als Aschenstreuung in Luxemburg.</p>
+          </div>
+          <div class="reveal">
+            <h3>Trauerfloristik</h3>
+            <p>Sargschmuck, Urnenschmuck, Kränze, Gestecke und Trauerherzen · dazu Grabeinfassungen und Erinnerungsschmuck als bleibendes Andenken.</p>
+          </div>
+          <div class="reveal">
+            <h3>Trauerdruck und Trauerreden</h3>
+            <p>Traueranzeigen, Trauerbriefe und Danksagungen · auf Wunsch mit einer einfühlsamen Trauerrednerin für die weltliche Feier.</p>
+          </div>
+          <div class="reveal">
+            <h3>Vorsorge und Formalitäten</h3>
+            <p>Bestattungsvorsorge, Sterbegeldversicherung und Treuhandkonto · dazu unser Formalitätenservice für alle Behördengänge.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ÜBER UNS · INHABER ============ -->
+    <section data-screen-label="Über uns">
+      <div class="shell split">
+        <figure class="reveal">
+          <!-- Platzhalter · wird durch generiertes Bild ersetzt (Prompts-Google-Flow-Bamberg.md, CB-01) -->
+          <img src="img/inhaber-portrait.jpg?v=20260716135221" alt="Christoph Bamberg, Geprüfter Bestatter und Inhaber von Bamberg Bestattungen in Konz">
+          <figcaption>Christoph Bamberg · Geprüfter Bestatter · Inhaber</figcaption>
+        </figure>
+        <div class="reveal">
+          <span class="eyebrow">Ihr Ansprechpartner</span>
+          <h2>Christoph Bamberg. Bestatter in der vierten Generation.</h2>
+          <p>Unser Haus wurde 1930 von Schreinermeister Nikolaus Bamberg in der Karthäuser Straße in Konz gegründet · dort sind wir bis heute zu Hause. Nach seiner kaufmännischen Ausbildung trat Christoph Bamberg in das Familienunternehmen ein und legte 2005 die Prüfung zum Geprüften Bestatter vor der Handwerkskammer ab.</p>
+          <p>Der Tod ist ein Thema, das viele lieber nicht ansprechen. Wir sehen es als unsere Aufgabe, die Angehörigen auf der schweren Wegstrecke bis zum Tag der Bestattung zu entlasten · mit der gebotenen Sensibilität kümmern wir uns um Formales und Organisatorisches, damit Trauer und Erinnerung im Vordergrund stehen können.</p>
+          <p>Wir beraten Sie gern. Sagen Sie uns einfach, was Ihnen wichtig ist.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BERATUNG ============ -->
+    <section class="teaser" data-screen-label="Beratung">
+      <div class="shell split">
+        <div class="reveal">
+          <span class="eyebrow">Beratung auf Augenhöhe</span>
+          <h2>Zeit, Ruhe und ein offenes Ohr.</h2>
+          <p>Ob im Trauerfall oder bei der Vorsorge: Stellen Sie Ihre Fragen oder vereinbaren Sie einen unverbindlichen Termin · in unserem Büro in der Karthäuser Straße oder gerne bei Ihnen zu Hause.</p>
+          <p>In unserem Haus stehen Ihnen Büro und Empfang, eine Ausstellung mit Särgen und Urnen sowie ein eigener Abschiedsraum zur Verfügung. Seit 2013 verfügen wir über hauseigene Verabschiedungs-, Klima- und Hygieneräume.</p>
+        </div>
+        <figure class="reveal">
+          <!-- Platzhalter · wird durch generiertes Bild ersetzt (CB-02/CB-05) -->
+          <img src="img/gf-beratung.jpg?v=20260716135221" alt="Beratungsgespräch bei Bamberg Bestattungen in Konz" loading="lazy">
+          <figcaption>Beratung bei uns im Haus · oder bei Ihnen zu Hause</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ SENIORCHEF ============ -->
+    <section data-screen-label="Seniorchef">
+      <div class="shell split">
+        <figure class="reveal">
+          <!-- Platzhalter · wird durch generiertes Bild ersetzt (KH-01) -->
+          <img src="img/seniorchef-portrait.jpg?v=20260716135221" alt="Karl-Heinz Bamberg, Tischlermeister und Seniorchef von Bamberg Bestattungen" loading="lazy">
+          <figcaption>Karl-Heinz Bamberg · Tischlermeister</figcaption>
+        </figure>
+        <div class="reveal">
+          <span class="eyebrow">Familie Bamberg</span>
+          <h2>Handwerk und Erfahrung. Seit Jahrzehnten.</h2>
+          <p>Karl-Heinz Bamberg legte die Prüfung zum Tischlermeister ab und baute das Beerdigungsinstitut zu einem modernen Dienstleistungsunternehmen aus. In der damaligen Schreinerei wurden neben Möbeln auch Särge selbst hergestellt · dieses Handwerk prägt unser Haus bis heute.</p>
+          <p>Gemeinsam mit ihrem Team · Andrea Reusch-Bamberg, Natalie Kaldunski, Markus Reichertz und Rolf Schneider · begleiten Christoph und Karl-Heinz Bamberg Familien in Konz und der Region Trier · einfühlsam, verlässlich und mit der Erfahrung von vier Generationen.</p>
+          <p>Für Trauerreden und Seelsorge arbeitet unser Haus zudem mit Dr. Nicole Hennecke zusammen · Theologin, Seelsorgerin und Trauerrednerin.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TEAM-TEASER ============
+         Verweist auf die eigene Team-Seite (team.html).
+         Drei angeschnittene, versetzte Portraets als Vorgeschmack. -->
+    <section data-screen-label="Team">
+      <div class="shell team-teaser">
+        <div class="reveal">
+          <span class="eyebrow">Unser Team</span>
+          <h2>Sieben Menschen sind für Sie da.</h2>
+          <p class="lead">Familie Bamberg und ihr Team begleiten Sie persönlich · vom ersten Anruf bis zum Tag des Abschieds und darüber hinaus.</p>
+          <a class="text-link" href="team.html">Unser Team kennenlernen</a>
+        </div>
+        <div class="team-teaser__media reveal" aria-hidden="true">
+          <img src="img/inhaber-portrait.jpg?v=20260716135221" alt="" loading="lazy">
+          <img src="img/reusch-bamberg-portrait.jpg?v=20260716135221" alt="" loading="lazy">
+          <img src="img/kaldunski-portrait.jpg?v=20260716135221" alt="" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VORSORGE-TEASER ============ -->
+    <section class="teaser" data-screen-label="Vorsorge-Teaser">
+      <div class="shell reveal">
+        <span class="eyebrow">Bestattungsvorsorge</span>
+        <h2>An morgen denken, heute entlasten.</h2>
+        <p class="lead">Wer die eigene Bestattung zu Lebzeiten regelt, nimmt seinen Angehörigen später viele schwere Entscheidungen ab. Wir beraten Sie dazu in Ruhe und unverbindlich · bei uns oder bei Ihnen zu Hause.</p>
+        <a class="text-link" href="vorsorge.html">Mehr zur Bestattungsvorsorge</a>
+      </div>
+    </section>
+
+    <!-- ============ GESCHICHTE / CHRONIK ============ -->
+    <section data-screen-label="Geschichte">
+      <div class="shell editorial">
+        <div class="editorial__head reveal">
+          <span class="eyebrow">Firmenchronik</span>
+          <h2>Vier Generationen. Eine Aufgabe.</h2>
+          <p class="lead">Seit 1930 begleitet unsere Familie die Menschen in Konz und der Region Trier · von Nikolaus über Viktor und Karl-Heinz bis zu Christoph Bamberg.</p>
+        </div>
+        <div class="services">
+          <div class="reveal">
+            <h3>1930 · Gründung</h3>
+            <p>Schreinermeister Nikolaus Bamberg gründet das Unternehmen in der Karthäuser Straße in Konz. In der Schreinerei werden neben Möbeln auch Särge selbst hergestellt.</p>
+          </div>
+          <div class="reveal">
+            <h3>Nachkriegsjahre · Viktor Bamberg</h3>
+            <p>Viktor Bamberg führt den Betrieb nach den Kriegsjahren fort und erhält die Konzer Bestattungstradition über schwierige Zeiten hinweg.</p>
+          </div>
+          <div class="reveal">
+            <h3>Ausbau · Karl-Heinz Bamberg</h3>
+            <p>Als Tischlermeister baut Karl-Heinz Bamberg das Beerdigungsinstitut zu einem modernen Dienstleistungsunternehmen aus.</p>
+          </div>
+          <div class="reveal">
+            <h3>Heute · Christoph Bamberg</h3>
+            <p>2005 legt Christoph Bamberg die Prüfung zum Geprüften Bestatter ab. Seit 2013 verfügt das Haus über eigene Verabschiedungs-, Klima- und Hygieneräume.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KONTAKT ============ -->
+    <!-- BRS-FAQ-START -->
+    <section class="faq-preview" id="fragen">
+      <div class="container faq-preview__grid">
+        <div>
+          <p class="eyebrow">Häufige Fragen</p>
+          <h2>Kurze Antworten, wenn gerade vieles unklar ist.</h2>
+          <p class="lead">In einem Trauerfall tauchen oft sehr konkrete Fragen auf. Dieser Bereich gibt erste Orientierung - ruhig, verständlich und ohne Druck.</p>
+          <div class="faq-actions">
+            <a class="btn" href="faq.html">Alle Fragen ansehen</a>
+          </div>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Was ist im Trauerfall zuerst zu tun?</summary>
+            <p>Wenn der Sterbefall zu Hause eingetreten ist, sollte zuerst ein Arzt gerufen werden. Danach koordiniert das Bestattungshaus die naechsten Schritte und entlastet die Angehoerigen.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Welche Unterlagen werden benoetigt?</summary>
+            <p>Hilfreich sind Personalausweis, Geburts- oder Heiratsurkunde, Sterbeurkunde des Ehepartners, Renten- und Versicherungsunterlagen sowie vorhandene Vorsorgevertraege.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Kann die Trauerfeier individuell gestaltet werden?</summary>
+            <p>Ja. Musik, Dekoration, Rituale, Fotos und persoenliche Worte koennen so abgestimmt werden, dass die Abschiednahme zum Menschen und zur Familie passt.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Welche Bestattungsarten sind moeglich?</summary>
+            <p>Je nach Wunsch und Friedhofsangebot kommen Erd-, Feuer-, See-, Baum- oder Naturbestattungen infrage. Das Bestattungshaus erklaert die passenden Moeglichkeiten vor Ort.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Wie transparent sind die Kosten?</summary>
+            <p>Die Kosten haengen von Bestattungsart, Friedhofsgebuehren, Trauerfeier und individuellen Wuenschen ab. Eine serioese Beratung erklaert alle Positionen nachvollziehbar.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Kann man eine Bestattung vorsorglich planen?</summary>
+            <p>Ja. Mit einer Bestattungsvorsorge koennen Wuensche, organisatorische Fragen und finanzielle Absicherung fruehzeitig festgehalten werden.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+    <!-- BRS-FAQ-END -->
+    <section class="contact" id="kontakt" data-screen-label="Kontakt">
+      <div class="shell">
+        <div class="contact__grid">
+          <div class="reveal">
+            <span class="eyebrow">Kontakt</span>
+            <h2>Jederzeit erreichbar · auch an Sonn- und Feiertagen.</h2>
+            <a class="contact-tel" href="tel:+49650199140"><strong>06501 991 40</strong></a>
+            <p class="lead">Rufen Sie an, wann immer Sie uns brauchen. Nachts erreichen Sie keine Bandansage, sondern uns.</p>
+            <ul class="contact-list">
+              <li>
+                <span class="label">Adresse</span>
+                <span>Bamberg Bestattungen · Karthäuser Straße 83 · 54329 Konz</span>
+              </li>
+              <li>
+                <span class="label">E-Mail</span>
+                <a href="mailto:info@bamberg-bestattungen.de">info@bamberg-bestattungen.de</a>
+              </li>
+              <li>
+                <span class="label">Telefax</span>
+                <span>06501 991 41</span>
+              </li>
+              <li>
+                <span class="label">Ihr Ansprechpartner</span>
+                <span>Christoph Bamberg · Geprüfter Bestatter</span>
+              </li>
+            </ul>
+            <div class="map-note">
+              <p><strong>Anfahrt:</strong> Sie finden uns in der Karthäuser Straße 83, Ecke Moselstraße, in Konz.</p>
+              <!-- Bewusst keine eingebettete Karte (kein Tracking, kein Cookie-Banner nötig).
+                   Der Link öffnet Google Maps erst auf Wunsch des Besuchers. -->
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=Karthäuser Straße 83 · 54329 Konz" rel="noopener">Route mit Google Maps planen</a>
+            </div>
+          </div>
+          <div class="reveal">
+            <h3>Schreiben Sie uns</h3>
+            <p>Wir melden uns zeitnah bei Ihnen · in dringenden Fällen rufen Sie bitte direkt an.</p>
+            <!-- PRODUKTION: action durch Formspree/Web3Forms ersetzen und
+                 data-placeholder-action entfernen. Details in js/main.js. -->
+            <form class="form" action="" method="POST" data-placeholder-action="true">
+              <label>
+                Ihr Name
+                <input type="text" name="name" autocomplete="name" required>
+              </label>
+              <label>
+                Ihre Telefonnummer
+                <input type="tel" name="telefon" autocomplete="tel" required>
+              </label>
+              <label>
+                Ihre Nachricht
+                <textarea name="nachricht" required></textarea>
+              </label>
+              <p class="form__hint">Mit dem Absenden stimmen Sie zu, dass wir Ihre Angaben zur Beantwortung Ihrer Anfrage verwenden. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+              <button class="btn" type="submit">Nachricht senden</button>
+              <p class="form__success" role="status" tabindex="-1">Vielen Dank für Ihre Nachricht. Wir melden uns so schnell wie möglich bei Ihnen.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-brand">Bamberg Bestattungen</p>
+          <p>Rat und Hilfe im Trauerfall. Seit 1930 begleiten wir Familien in Konz und der Region Trier · im Trauerfall und in der Vorsorge.</p>
+        </div>
+        <div>
+          <span class="label">Kontakt</span>
+          <ul>
+            <li><a class="footer-tel" href="tel:+49650199140">06501 991 40</a></li>
+            <li><a href="mailto:info@bamberg-bestattungen.de">info@bamberg-bestattungen.de</a></li>
+            <li>Telefax: 06501 991 41</li>
+            <li>Karthäuser Straße 83 · 54329 Konz</li>
+          </ul>
+        </div>
+        <div>
+          <span class="label">Seiten</span>
+          <ul>
+            <li><a href="trauerfall.html">Was tun im Trauerfall</a></li>
+            <li><a href="team.html">Unser Team</a></li>
+            <li><a href="vorsorge.html">Bestattungsvorsorge</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <p>© <span data-year>2026</span> Bamberg Bestattungen · Alle Rechte vorbehalten</p>
+        <p>Tag und Nacht erreichbar: <a href="tel:+49650199140">06501 991 40</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Fixierter Anruf-Button · nur auf Mobilgeräten sichtbar -->
+  <a class="mobile-call" href="tel:+49650199140">06501 991 40<small>· 24 Std. erreichbar</small></a>
+
+  <script src="js/config.js?v=20260716135221"></script>
+  <script src="js/main.js?v=20260716135221"></script>
+</body>
+</html>

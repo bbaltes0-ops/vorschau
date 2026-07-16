@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anfrage stellen · Kanzlei GATERMANN, Xanten</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png?v=20260716135221">
+<link rel="stylesheet" href="assets/fonts/fonts.css?v=20260716135221">
+<style>
+  :root{
+    --green:#2F5D4A;
+    --green-dark:#244736;
+    --green-deep:#1E4233;
+    --green-tint:#eef3f0;
+    --green-tint2:#dde8e1;
+    --ink:#2C3A32;
+    --muted:#6b7a73;
+    --line:#d9e2dc;
+    --paper:#FBF8F1;
+    --bg:#F6F3EC;
+    --gold:#B08D57;
+    --shadow:0 14px 50px rgba(30,66,51,.10);
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --mark:'Cinzel',Georgia,serif;
+    --sans:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{overflow-x:clip}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .topbar{position:sticky;top:0;z-index:50;background:rgba(246,243,236,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .topbar .row{max-width:980px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .topbar .brand img{height:32px;width:auto;display:block}
+  .topbar .back{font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--green-deep);letter-spacing:.02em;display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:1px solid var(--line);border-radius:99px;background:#fff;transition:.18s;text-decoration:none;white-space:nowrap}
+  .topbar .back:hover{border-color:var(--green);color:var(--green)}
+  .wrap{max-width:660px;margin:0 auto;padding:16px 18px 48px}
+
+  header.tool{text-align:center;margin-bottom:4px}
+  header.tool .kicker{font-family:var(--mark);text-transform:uppercase;letter-spacing:.24em;font-size:.66rem;color:var(--green);font-weight:600}
+  header.tool h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.35rem,3vw,1.8rem);margin:.2em 0 .2em;color:var(--green-deep);line-height:1.12}
+  header.tool p.sub{margin:0 auto;max-width:44ch;color:var(--muted);font-size:.88rem}
+  @media(max-width:520px){.topbar .row{padding:10px 14px}.topbar .brand img{height:27px}.topbar .back{padding:8px 12px;font-size:.76rem}.wrap{padding:22px 14px 48px}}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:clamp(16px,2.6vw,26px);margin-top:16px}
+
+  .progress{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .progress .bar{flex:1;height:4px;background:var(--green-tint2);border-radius:99px;overflow:hidden}
+  .progress .bar span{display:block;height:100%;width:25%;background:var(--green);border-radius:99px;transition:width .4s ease}
+  .progress .lbl{font-size:.74rem;letter-spacing:.04em;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  .step{display:none;animation:fade .35s ease}
+  .step.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .step h2{font-family:var(--serif);font-weight:600;color:var(--green-deep);font-size:1.22rem;margin:0 0 4px}
+  .step .hint{color:var(--muted);font-size:.88rem;margin:0 0 14px}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  .opt{position:relative;border:1px solid var(--line);border-radius:11px;padding:12px 15px;cursor:pointer;background:#fff;transition:border-color .18s,background .18s,box-shadow .18s;display:block}
+  .opt:hover{border-color:var(--green);background:var(--green-tint)}
+  .opt.sel{border-color:var(--green);background:var(--green-tint);box-shadow:inset 3px 0 0 var(--green),0 0 0 3px rgba(61,107,82,.10)}
+  .opt .t{display:block;font-family:var(--serif);font-weight:600;color:var(--green-deep);font-size:1.02rem;letter-spacing:.005em}
+  .opt .d{display:block;font-size:.85rem;color:var(--muted);margin-top:6px;line-height:1.45}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+
+  label.fld{display:block;margin:0 0 18px}
+  label.fld>.q{display:block;font-weight:600;font-size:.95rem;margin-bottom:8px;color:var(--ink)}
+  label.fld .req{color:var(--gold)}
+  input[type=text],input[type=email],input[type=tel],select,textarea{
+    width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:1rem;font-family:inherit;color:var(--ink);background:#fff;transition:border-color .18s,box-shadow .18s}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(61,107,82,.12)}
+  textarea{min-height:128px;resize:vertical}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:520px){.two{grid-template-columns:1fr}}
+
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:2px}
+  .chip{border:1px solid var(--line);border-radius:99px;padding:9px 16px;font-size:.9rem;cursor:pointer;background:#fff;transition:.16s;user-select:none}
+  .chip:hover{border-color:var(--green);background:var(--green-tint)}
+  .chip.sel{background:var(--green);color:#fff;border-color:var(--green)}
+
+  .consent{display:flex;gap:12px;align-items:flex-start;background:var(--green-tint);border:1px solid var(--green-tint2);border-radius:12px;padding:15px;margin:8px 0 4px}
+  .consent input{margin-top:3px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .consent label{font-size:.86rem;color:var(--ink);line-height:1.55}
+  .consent a{color:var(--green)}
+
+  .reco{display:block;background:var(--green-tint);border:1px solid var(--green-tint2);border-radius:12px;padding:15px 18px;margin-top:20px;font-size:.95rem}
+  .reco .lbl2{display:block;text-transform:uppercase;letter-spacing:.2em;font-size:.64rem;color:var(--green);font-weight:600;margin-bottom:4px}
+  .reco b{color:var(--green-deep)}
+
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:30px}
+  button{font-family:inherit;font-size:1rem;font-weight:600;border-radius:99px;cursor:pointer;border:1px solid transparent;padding:13px 28px;transition:.18s}
+  .btn-prev{background:#fff;color:var(--green-deep);border-color:var(--line)}
+  .btn-prev:hover{border-color:var(--green);color:var(--green)}
+  .btn-next{background:var(--green);color:#fff;margin-left:auto;letter-spacing:.01em}
+  .btn-next:hover{background:var(--green-dark)}
+  .err{color:#9c3b34;font-size:.85rem;margin-top:-10px;margin-bottom:14px;display:none}
+  .err.show{display:block}
+
+  .done{text-align:center;padding:14px 6px}
+  .done .seal{width:64px;height:64px;border-radius:50%;border:1.5px solid var(--green);margin:0 auto 22px;position:relative}
+  .done .seal::after{content:"";position:absolute;left:50%;top:48%;width:11px;height:21px;border:solid var(--green);border-width:0 2px 2px 0;transform:translate(-50%,-58%) rotate(45deg)}
+  .done h2{font-family:var(--serif);color:var(--green-deep);font-size:1.65rem;margin:0 0 10px}
+  .done p{color:var(--muted);max-width:48ch;margin:0 auto 12px}
+  .summary{text-align:left;background:var(--green-tint);border:1px solid var(--green-tint2);border-radius:14px;padding:20px 22px;margin:24px 0;font-size:.92rem}
+  .summary h3{margin:0 0 12px;font-family:var(--serif);color:var(--green-deep);font-size:1.05rem;font-weight:600}
+  .summary .row{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--green-tint2)}
+  .summary .row:last-child{border-bottom:none}
+  .summary .row .k{flex:0 0 40%;color:var(--muted)}
+  .summary .row .v{flex:1;color:var(--ink);font-weight:500}
+  .footnote{text-align:center;color:var(--muted);font-size:.8rem;margin-top:28px;line-height:1.7}
+  .footnote a{color:var(--green);text-decoration:none}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="row"><a class="brand" href="index.html" aria-label="Zur Startseite"><img src="assets/logo/lockup-gruen.png?v=20260716135221" alt="GATERMANN Rechtsanwälte"></a><a class="back" href="index.html">← Zur Startseite</a></div></header>
+<div class="wrap">
+  <header class="tool">
+    <div class="kicker">Mandatsanfrage</div>
+    <h1>Schildern Sie uns Ihr Anliegen</h1>
+    <p class="sub">In wenigen Schritten zu Ihrer Anfrage. Wir melden uns persönlich aus Xanten mit einer ersten Einschätzung bei Ihnen.</p>
+  </header>
+
+  <div class="card">
+    <div class="progress">
+      <div class="bar"><span id="pbar"></span></div>
+      <div class="lbl" id="plbl">Schritt 1 von 4</div>
+    </div>
+
+    <form id="form" novalidate>
+
+      <section class="step active" data-step="1">
+        <h2>Worum geht es?</h2>
+        <p class="hint">Wählen Sie das passende Rechtsgebiet.</p>
+        <div class="grid" id="areaGrid"></div>
+        <p class="err" id="err1">Bitte wählen Sie ein Rechtsgebiet aus.</p>
+        <div class="reco" id="reco" style="display:none"></div>
+      </section>
+
+      <section class="step" data-step="2">
+        <h2 id="d2title">Ihr Anliegen genauer</h2>
+        <p class="hint">Beantworten Sie kurz, was zutrifft. Das hilft uns bei der Einschätzung.</p>
+        <div id="detailHost"></div>
+      </section>
+
+      <section class="step" data-step="3">
+        <h2>Beschreibung und Rahmen</h2>
+        <p class="hint">Je konkreter Sie schildern, desto besser können wir vorbereiten.</p>
+        <label class="fld">
+          <span class="q">Schildern Sie Ihr Anliegen <span class="req">*</span></span>
+          <textarea id="message" placeholder="Was ist geschehen, und was möchten Sie erreichen?"></textarea>
+        </label>
+        <p class="err" id="err3">Bitte beschreiben Sie Ihr Anliegen kurz.</p>
+        <label class="fld">
+          <span class="q">Wie dringend ist es?</span>
+          <div class="chips" data-single id="urgency">
+            <span class="chip" data-v="Es eilt, es laufen Fristen">Es eilt, Fristen laufen</span>
+            <span class="chip" data-v="Zeitnah, aber ohne akute Frist">Zeitnah</span>
+            <span class="chip" data-v="Allgemeine Erstberatung">Erstberatung</span>
+          </div>
+        </label>
+        <div class="two">
+          <label class="fld">
+            <span class="q">Rechtsschutzversicherung?</span>
+            <select id="insurance">
+              <option value="">Bitte wählen</option>
+              <option>Ja, vorhanden</option>
+              <option>Nein</option>
+              <option>Weiß ich nicht</option>
+            </select>
+          </label>
+          <label class="fld">
+            <span class="q">Läuft bereits ein Verfahren?</span>
+            <select id="pending">
+              <option value="">Bitte wählen</option>
+              <option>Nein</option>
+              <option>Außergerichtlich, Schriftwechsel läuft</option>
+              <option>Ja, bei Gericht anhängig</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="step" data-step="4">
+        <h2>Ihre Kontaktdaten</h2>
+        <p class="hint">Damit wir uns bei Ihnen zurückmelden können.</p>
+        <div class="two">
+          <label class="fld"><span class="q">Vorname <span class="req">*</span></span><input type="text" id="first" autocomplete="given-name"></label>
+          <label class="fld"><span class="q">Nachname <span class="req">*</span></span><input type="text" id="last" autocomplete="family-name"></label>
+        </div>
+        <div class="two">
+          <label class="fld"><span class="q">Mailadresse <span class="req">*</span></span><input type="email" id="email" autocomplete="email" placeholder="name@beispiel.de"></label>
+          <label class="fld"><span class="q">Telefon</span><input type="tel" id="phone" autocomplete="tel" placeholder="optional"></label>
+        </div>
+        <label class="fld">
+          <span class="q">Bevorzugter Kontakt</span>
+          <div class="chips" data-single id="prefcontact">
+            <span class="chip" data-v="Mail">Mail</span>
+            <span class="chip" data-v="Telefon">Telefon</span>
+            <span class="chip" data-v="Keine Präferenz">Egal</span>
+          </div>
+        </label>
+        <p class="err" id="err4">Bitte geben Sie Vorname, Nachname und eine gültige Mailadresse an.</p>
+        <div class="consent">
+          <input type="checkbox" id="consent">
+          <label for="consent">Ich bin damit einverstanden, dass die Kanzlei GATERMANN meine übermittelten Angaben zur Bearbeitung meiner Anfrage speichert und verarbeitet. Näheres in der <a href="#" onclick="return false">Datenschutzerklärung</a>. <span class="req">*</span></label>
+        </div>
+        <p class="err" id="err4c">Bitte stimmen Sie der Verarbeitung zu, damit wir Ihre Anfrage bearbeiten dürfen.</p>
+      </section>
+
+      <section class="step" data-step="5">
+        <div class="done">
+          <div class="seal"></div>
+          <h2>Ihre Anfrage ist vorbereitet</h2>
+          <p>Mit einem Klick öffnet sich Ihre fertig zusammengestellte Anfrage als Mail an die Kanzlei. Wir melden uns kurzfristig bei Ihnen.</p>
+          <div class="summary" id="summary"></div>
+          <button type="button" class="btn-next" id="sendmail" style="margin:0 auto">Anfrage als Mail öffnen</button>
+          <p class="footnote">Lieber direkt? <a href="tel:+49280171510">02801 7151 0</a> &nbsp;·&nbsp; <a href="mailto:info@gg-xanten.de">info@gg-xanten.de</a></p>
+        </div>
+      </section>
+
+      <div class="nav" id="nav">
+        <button type="button" class="btn-prev" id="prev" style="visibility:hidden">Zurück</button>
+        <button type="button" class="btn-next" id="next">Weiter</button>
+      </div>
+    </form>
+  </div>
+
+  <p class="footnote">Kanzlei GATERMANN &nbsp;·&nbsp; Boxtelstraße 13a &nbsp;·&nbsp; 46509 Xanten &nbsp;·&nbsp; Termine nach Vereinbarung</p>
+</div>
+
+<script>
+const AREAS = [
+  {id:'baurecht', t:'Baurecht', d:'Bauvertrag, Werklohn, Mängel, Verzögerung', anwalt:'Manfred und Gabriele Gatermann', anrede:'Ihre Ansprechpartner',
+   details:[
+     {q:'In welcher Rolle sind Sie?', opts:['Bauherr','Unternehmen oder Bauträger','Handwerksbetrieb','Architekt oder Planer','Sonstiges']},
+     {q:'Worum geht es konkret?', opts:['Vertragsgestaltung','Werklohn oder Honorar','Baumängel','Bauverzögerung','Streit mit Nachunternehmer','Abnahme oder Kündigung']},
+     {q:'Ungefährer Streitwert?', opts:['bis 5.000 Euro','5.000 bis 25.000 Euro','25.000 bis 100.000 Euro','über 100.000 Euro','noch unklar']}
+   ]},
+  {id:'kaufrecht', t:'Kaufrecht', d:'Mangel, Gewährleistung, Rücktritt', anwalt:'Manfred Gatermann', anrede:'Ihr Ansprechpartner',
+   details:[
+     {q:'Was wurde gekauft?', opts:['Fahrzeug','Immobilie','Technisches Gerät','Ware oder Sonstiges']},
+     {q:'Worum geht es?', opts:['Mangel oder Gewährleistung','Rücktritt oder Rückabwicklung','Vertragsauflösung','Schadensersatz','Offene Zahlung']},
+     {q:'Der Kauf erfolgte', opts:['privat','gewerblich']}
+   ]},
+  {id:'schadensersatz', t:'Schadensersatz und Vertragsrecht', d:'Pflichtverletzung, Versicherung, Forderung', anwalt:'Manfred und Gabriele Gatermann', anrede:'Ihre Ansprechpartner',
+   details:[
+     {q:'Wodurch ist der Schaden entstanden?', opts:['Vertragsverletzung','Fehlerhaftes Produkt','Verkehrsunfall','Sonstige Pflichtverletzung']},
+     {q:'Wer ist die Gegenseite?', opts:['Privatperson','Unternehmen','Versicherung','Noch unklar']},
+     {q:'Ungefähre Schadenshöhe?', opts:['bis 5.000 Euro','5.000 bis 25.000 Euro','über 25.000 Euro','noch unklar']}
+   ]},
+  {id:'pferderecht', t:'Pferderecht', d:'Pferdekauf, Reitunfall, Haftung', anwalt:'Gabriele und Manfred Gatermann', anrede:'Ihre Ansprechpartner',
+   details:[
+     {q:'Um welches Thema geht es?', opts:['Pferdekauf oder Mängel','Reitunfall oder Haftung','Tierärztliche Behandlung','Reitbeteiligung oder Pension','Sonstiges']},
+     {q:'In welcher Rolle sind Sie?', opts:['Käufer','Verkäufer','Pferdebesitzer','Stallbetreiber','Züchter']}
+   ]},
+  {id:'mietrecht', t:'Mietrecht', d:'Kündigung, Mängel, Nebenkosten', anwalt:'Gabriele Gatermann', anrede:'Ihre Ansprechpartnerin',
+   details:[
+     {q:'Sie sind', opts:['Mieter','Vermieter']},
+     {q:'Worum geht es?', opts:['Kündigung','Mängel oder Mietminderung','Nebenkostenabrechnung','Mietrückstand','Kaution','Räumung']},
+     {q:'Art des Objekts?', opts:['Wohnraum','Gewerbe']}
+   ]},
+  {id:'verkehrsrecht', t:'Verkehrsrecht', d:'Unfall, Bußgeld, Führerschein, Diesel', anwalt:'Gabriele Gatermann', anrede:'Ihre Ansprechpartnerin',
+   details:[
+     {q:'Worum geht es?', opts:['Unfall und Schadensregulierung','Bußgeld oder Punkte','Führerscheinentzug','Ordnungswidrigkeit','Verkehrsstraftat','Dieselabgasskandal']},
+     {q:'Schuldfrage, falls es ein Unfall war?', opts:['Unverschuldet','Selbst verursacht','Noch unklar','Trifft nicht zu']},
+     {q:'Art des Schadens?', opts:['Nur Sachschaden','Personenschaden','Beides','Trifft nicht zu']}
+   ]},
+  {id:'sonstiges', t:'Anderes Anliegen', d:'Schildern Sie es uns mit eigenen Worten.', anwalt:'Kanzlei GATERMANN', anrede:'Ihre Ansprechpartner',
+   details:[
+     {q:'Bereich, falls bekannt?', opts:['Zivilrecht','Wirtschaftsrecht','Vertragsrecht','Noch unklar']}
+   ]}
+];
+
+const state={area:null, details:{}, urgency:'', insurance:'', pending:'', message:'',
+  first:'',last:'',email:'',phone:'',prefcontact:'',consent:false};
+let step=1; const LAST=5;
+
+const grid=document.getElementById('areaGrid');
+AREAS.forEach(a=>{
+  const el=document.createElement('label'); el.className='opt'; el.dataset.id=a.id;
+  el.innerHTML=`<span class="t">${a.t}</span><span class="d">${a.d}</span><input type="radio" name="area" value="${a.id}">`;
+  el.addEventListener('click',()=>selectArea(a.id));
+  grid.appendChild(el);
+});
+const reco=document.getElementById('reco');
+function selectArea(id){
+  state.area=id; state.details={};
+  document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('sel',o.dataset.id===id));
+  const a=AREAS.find(x=>x.id===id);
+  reco.style.display='block';
+  reco.innerHTML=`<span class="lbl2">Zuständigkeit</span>${a.anrede}: <b>${a.anwalt}</b>`;
+  document.getElementById('err1').classList.remove('show');
+}
+
+function buildDetails(){
+  const a=AREAS.find(x=>x.id===state.area); const host=document.getElementById('detailHost');
+  document.getElementById('d2title').textContent=a.t+', Ihr Anliegen genauer';
+  host.innerHTML='';
+  a.details.forEach((d,i)=>{
+    const wrap=document.createElement('label'); wrap.className='fld';
+    const chips=d.opts.map(o=>`<span class="chip" data-v="${o}">${o}</span>`).join('');
+    wrap.innerHTML=`<span class="q">${d.q}</span><div class="chips" data-single data-key="d${i}">${chips}</div>`;
+    host.appendChild(wrap);
+  });
+  host.querySelectorAll('.chips[data-single]').forEach(c=>wireSingle(c,(v)=>{state.details[c.dataset.key]={q:AREAS.find(x=>x.id===state.area).details[+c.dataset.key.slice(1)].q,a:v};}));
+}
+
+function wireSingle(container,cb){
+  container.querySelectorAll('.chip').forEach(ch=>{
+    ch.addEventListener('click',()=>{
+      container.querySelectorAll('.chip').forEach(x=>x.classList.remove('sel'));
+      ch.classList.add('sel'); cb&&cb(ch.dataset.v);
+    });
+  });
+}
+wireSingle(document.getElementById('urgency'),v=>state.urgency=v);
+wireSingle(document.getElementById('prefcontact'),v=>state.prefcontact=v);
+
+const steps=[...document.querySelectorAll('.step')];
+const pbar=document.getElementById('pbar'),plbl=document.getElementById('plbl');
+const prev=document.getElementById('prev'),next=document.getElementById('next'),nav=document.getElementById('nav');
+function show(n){
+  step=n;
+  steps.forEach(s=>s.classList.toggle('active',+s.dataset.step===n));
+  pbar.style.width=(Math.min(n,4)/4*100)+'%';
+  plbl.textContent= n>=LAST? 'Abgeschlossen' : `Schritt ${n} von 4`;
+  prev.style.visibility=(n===1||n>=LAST)?'hidden':'visible';
+  nav.style.display=n>=LAST?'none':'flex';
+  next.textContent=n===4?'Anfrage zusammenstellen':'Weiter';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function validate(n){
+  if(n===1){ if(!state.area){document.getElementById('err1').classList.add('show');return false;} }
+  if(n===3){ state.message=document.getElementById('message').value.trim();
+    state.insurance=document.getElementById('insurance').value;
+    state.pending=document.getElementById('pending').value;
+    if(state.message.length<5){document.getElementById('err3').classList.add('show');return false;}
+    document.getElementById('err3').classList.remove('show'); }
+  if(n===4){
+    state.first=val('first');state.last=val('last');state.email=val('email');state.phone=val('phone');
+    state.consent=document.getElementById('consent').checked;
+    const okMail=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(state.email);
+    let ok=true;
+    if(!state.first||!state.last||!okMail){document.getElementById('err4').classList.add('show');ok=false;}else{document.getElementById('err4').classList.remove('show');}
+    if(!state.consent){document.getElementById('err4c').classList.add('show');ok=false;}else{document.getElementById('err4c').classList.remove('show');}
+    return ok;
+  }
+  return true;
+}
+function val(id){return document.getElementById(id).value.trim();}
+next.addEventListener('click',()=>{
+  if(!validate(step))return;
+  if(step===1) buildDetails();
+  if(step===4){ buildSummary(); show(LAST); return; }
+  show(step+1);
+});
+prev.addEventListener('click',()=>{ if(step>1) show(step-1); });
+
+function summaryRows(){
+  const a=AREAS.find(x=>x.id===state.area);
+  const rows=[['Rechtsgebiet',a.t],['Zuständigkeit',a.anwalt]];
+  Object.values(state.details).forEach(d=>rows.push([d.q,d.a]));
+  if(state.urgency)rows.push(['Dringlichkeit',state.urgency]);
+  if(state.insurance)rows.push(['Rechtsschutzversicherung',state.insurance]);
+  if(state.pending)rows.push(['Laufendes Verfahren',state.pending]);
+  rows.push(['Anliegen',state.message]);
+  rows.push(['Name',state.first+' '+state.last]);
+  rows.push(['Mailadresse',state.email]);
+  if(state.phone)rows.push(['Telefon',state.phone]);
+  if(state.prefcontact)rows.push(['Kontaktwunsch',state.prefcontact]);
+  return rows;
+}
+function buildSummary(){
+  document.getElementById('summary').innerHTML='<h3>Zusammenfassung</h3>'+
+    summaryRows().map(r=>`<div class="row"><span class="k">${r[0]}</span><span class="v">${escapeHtml(r[1])}</span></div>`).join('');
+}
+function escapeHtml(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+document.getElementById('sendmail').addEventListener('click',()=>{
+  const a=AREAS.find(x=>x.id===state.area);
+  const subject=`Mandatsanfrage, ${a.t}, ${state.first} ${state.last}`;
+  const body=summaryRows().map(r=>`${r[0]}: ${r[1]}`).join('\n')+
+    `\n\nÜbermittelt über das Anfrageformular der Website.`;
+  window.location.href=`mailto:info@gg-xanten.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+});
+
+show(1);
+</script>
+</body>
+</html>
