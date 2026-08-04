@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="GATERMANN Signet">
+  
+  <text id="signet-letter" x="50" y="73" font-family="Cinzel, &#39;Times New Roman&#39;, serif" font-size="66" font-weight="600" fill="#1E4233" text-anchor="middle">G</text>
+  <line id="signet-bar" x1="16" y1="50" x2="84" y2="50" stroke="#B08D57" stroke-width="2.5"></line>
+</svg>

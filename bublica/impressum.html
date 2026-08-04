@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Impressum · Bublica Düsseldorf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--gruen:#14A146;--gruen-dunkel:#026938;--salbei:#318F62;--tinte:#18211C;--stein:#6B716D;
+--silber:#A4A5A6;--nebel:#E6E9E7;--papier:#F5F6F4;--weiss:#fff;--sand:#DCD2BD;
+--disp:'Archivo','Helvetica Neue',Arial,sans-serif;--sans:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;min-width:0}html{scroll-behavior:smooth;overflow-x:clip}
+html,body{width:100%;max-width:100%;overflow-x:clip;overscroll-behavior-x:none}
+body{background:var(--weiss);color:var(--tinte);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.65;position:relative}
+img,svg,video,iframe{max-width:100%}
+h1,h2,h3,.disp{font-family:var(--disp)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+a{color:inherit}.grn{color:var(--gruen)}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--nebel)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo svg{height:38px;width:auto;display:block}
+nav.menu{display:flex;align-items:center;gap:30px}
+nav.menu a{text-decoration:none;font-size:14px;font-weight:500;color:var(--tinte);opacity:.8;transition:.2s}
+nav.menu a:hover{opacity:1;color:var(--gruen-dunkel)}
+.has-drop{position:relative}
+.has-drop>.lbl{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;font-weight:500;opacity:.8}
+.has-drop:hover>.lbl{opacity:1;color:var(--gruen-dunkel)}
+.dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(8px);
+ background:#fff;border:1px solid var(--nebel);border-radius:8px;box-shadow:0 24px 50px -24px rgba(20,40,28,.35);
+ padding:10px;min-width:340px;display:grid;grid-template-columns:1fr 1fr;gap:2px;opacity:0;visibility:hidden;transition:.18s;z-index:60}
+.has-drop:hover .dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.dropdown a{padding:9px 12px;border-radius:5px;font-size:13.5px;opacity:.9}
+.dropdown a:hover{background:var(--papier);color:var(--gruen-dunkel)}
+.cta-call{display:inline-flex;align-items:center;gap:8px;background:var(--gruen-dunkel);color:#fff !important;
+ text-decoration:none;font-weight:600;font-size:14px;padding:11px 20px;border-radius:3px;transition:.2s;opacity:1 !important}
+.cta-call:hover{background:#01512c}
+.legal{display:none}
+.navtoggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:46px;height:44px;background:none;border:0;cursor:pointer;padding:0;margin-left:auto;-webkit-tap-highlight-color:transparent}
+.navtoggle span{display:block;width:25px;height:2px;background:var(--tinte);border-radius:2px;transition:transform .28s,opacity .2s}
+.navtoggle.x span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.navtoggle.x span:nth-child(2){opacity:0}
+.navtoggle.x span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:980px){
+ .navtoggle{display:flex}
+ header{background:#fff;backdrop-filter:none}
+ nav.menu{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-top:1px solid var(--nebel);box-shadow:0 24px 44px -24px rgba(20,40,28,.4);padding:6px 22px 24px;max-height:calc(100vh - 74px);overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s ease,transform .22s ease,visibility .22s}
+ nav.menu.open{opacity:1;visibility:visible;transform:none}
+ nav.menu .nl{display:block;padding:16px 2px;border-top:1px solid var(--nebel);font-size:16.5px;opacity:1}
+ .legal{display:block}
+ .has-drop{display:block;position:static;padding:0}
+ .has-drop>.lbl{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 2px;font-size:16.5px;opacity:1;border-top:1px solid var(--nebel);cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+ .has-drop>.lbl svg{flex:none;transition:transform .25s ease}
+ .has-drop.open>.lbl svg{transform:rotate(180deg)}
+ .dropdown{position:static !important;transform:none !important;left:auto !important;right:auto !important;top:auto !important;opacity:1 !important;visibility:visible !important;display:block;box-shadow:none;border:0;min-width:0;width:auto;background:transparent;max-height:0;overflow:hidden;padding:0;transition:max-height .3s ease}
+ .has-drop:hover .dropdown,.has-drop.open .dropdown{transform:none !important;left:auto !important;right:auto !important}
+ .has-drop.open .dropdown{max-height:760px;padding:0 0 6px}
+ .dropdown a{display:block;padding:13px 14px;font-size:15.5px;opacity:.82}
+ nav.menu .cta-call{margin-top:16px;justify-content:center;padding:15px}
+}
+@media(max-width:680px){.tgrid{grid-template-columns:1fr}.lgrid{grid-template-columns:1fr}.opts{grid-template-columns:repeat(2,1fr)}}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:15px 26px;border-radius:3px;font-family:var(--sans);
+ font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:.2s}
+.btn.primary{background:var(--gruen);color:#06210f}.btn.primary:hover{background:#119a40;transform:translateY(-1px)}
+.btn.ghost{border-color:var(--nebel);color:var(--tinte)}.btn.ghost:hover{border-color:var(--gruen);color:var(--gruen-dunkel)}
+section{padding:clamp(52px,7vw,92px) 0}.alt{background:var(--papier)}.faq{max-width:820px;margin:0 auto}.faq details{border:1px solid var(--nebel);border-radius:10px;margin-bottom:12px;background:#fff;overflow:hidden}.faq summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:600;font-size:16.5px;display:flex;justify-content:space-between;align-items:center;gap:14px;-webkit-tap-highlight-color:transparent}.faq summary::-webkit-details-marker{display:none}.faq summary::after{content:'+';font-size:22px;line-height:1;color:var(--gruen-dunkel);font-weight:700;flex:none}.faq details[open] summary::after{content:'3'}.faq .fa{padding:0 20px 18px;color:var(--stein);font-size:15px;line-height:1.62}
+.sec-head{max-width:660px;margin-bottom:40px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gruen-dunkel);font-weight:600;margin-bottom:15px}
+.eyebrow::before{content:"";width:24px;height:2px;background:var(--gruen)}
+h2{font-weight:800;font-size:clamp(28px,3.6vw,44px);line-height:1.05;letter-spacing:-.015em}
+.sec-head p{color:var(--stein);font-size:16px;margin-top:13px}
+.stagelabel{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--stein);margin-bottom:12px;display:block;font-weight:600}
+.ba{position:relative;width:100%;aspect-ratio:16/9;border-radius:4px;overflow:hidden;box-shadow:0 26px 60px -34px rgba(20,40,28,.5);
+ border:1px solid var(--nebel);user-select:none;touch-action:pan-y;background:#eee;cursor:ew-resize}
+.ba .layer{position:absolute;inset:0;overflow:hidden}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);display:block}
+.ba .after-layer{clip-path:inset(0 0 0 50%)}
+.ba .cap{position:absolute;bottom:0;left:0;right:0;height:24%;z-index:4;pointer-events:none;background:linear-gradient(to top,rgba(15,25,18,.5),rgba(15,25,18,0))}
+.tagpill{position:absolute;bottom:14px;z-index:6;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:6px 11px;border-radius:2px;color:#fff;background:rgba(20,26,22,.55);backdrop-filter:blur(4px)}
+.tagpill.l{left:14px}.tagpill.r{right:14px;background:var(--gruen);color:#06210f}
+.ba .handle{position:absolute;top:0;bottom:0;left:50%;width:2px;z-index:5;background:#fff;transform:translateX(-1px)}
+.ba .knob{position:absolute;top:50%;left:50%;z-index:6;width:42px;height:42px;transform:translate(-50%,-50%);border-radius:50%;
+ background:#fff;display:flex;align-items:center;justify-content:center;color:var(--gruen-dunkel);box-shadow:0 5px 16px rgba(0,0,0,.28)}
+.ba .knob svg{width:19px;height:19px}
+.ggrid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.gitem .stagelabel{margin-top:0}
+.claimcard{aspect-ratio:16/9;border-radius:4px;border:1px solid var(--nebel);background:var(--papier);
+ display:flex;flex-direction:column;justify-content:center;gap:12px;padding:clamp(22px,3vw,38px)}
+.claimcard .ce{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gruen-dunkel);font-weight:600}
+.claimcard .cq{font-family:var(--disp);font-size:clamp(19px,2.1vw,26px);font-weight:700;line-height:1.25;color:var(--tinte)}
+@media(max-width:760px){.ggrid{grid-template-columns:1fr}.claimcard{aspect-ratio:auto;min-height:200px}}
+footer{background:var(--tinte);color:#cdd3cf;padding:52px 0 28px}
+footer .fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+footer .logo svg{height:40px}
+footer a{color:#cdd3cf;text-decoration:none;font-size:14px;opacity:.8}footer a:hover{opacity:1;color:#fff}
+.fcol h4{color:#fff;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.fcol .col{display:flex;flex-direction:column;gap:9px}
+.fbar{border-top:1px solid #2c3630;margin-top:38px;padding-top:20px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#8b938d}
+.note{background:#fff8e6;border:1px solid #f0e2b0;color:#7a6a2e;font-size:12.5px;padding:9px 14px;border-radius:4px;margin-top:10px}
+.partner{display:flex;flex-direction:column;gap:8px;margin-top:18px;text-decoration:none;align-items:flex-start}
+.partner span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#9aa39d}
+.partner img{height:38px;width:auto;border-radius:4px;display:block;transition:transform .2s}
+.partner:hover img{transform:translateY(-1px)}
+/* hero */
+.hero{padding:60px 0 16px}
+.hgrid{display:grid;grid-template-columns:1.02fr 1.1fr;gap:clamp(28px,4vw,52px);align-items:start}
+.copy{position:relative;padding-left:24px;border-left:3px solid var(--gruen);padding-top:8px}
+.kicker{display:inline-flex;align-items:center;gap:12px;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gruen-dunkel);font-weight:600;margin-bottom:18px}
+.hero h1{font-weight:800;font-size:clamp(38px,5vw,62px);line-height:1.0;letter-spacing:-.02em}
+.lead{color:var(--stein);font-size:clamp(15.5px,1.4vw,18px);margin-top:20px;max-width:28em}
+.cta{display:flex;gap:16px;margin-top:28px;flex-wrap:wrap;align-items:center}
+.meta{display:flex;gap:32px;margin-top:36px;flex-wrap:wrap}
+.meta .n{font-family:var(--disp);font-weight:800;font-size:24px;line-height:1}
+.meta .l{font-size:11px;letter-spacing:.08em;color:var(--stein);text-transform:uppercase;margin-top:6px}
+.stage{position:relative}
+/* compact calculator */
+.calc{background:var(--weiss);border:1px solid var(--nebel);border-radius:8px;overflow:hidden;box-shadow:0 24px 56px -38px rgba(20,40,28,.5)}
+.calc.compact{margin-top:16px}
+.calc-head{background:var(--gruen-dunkel);color:#fff;padding:15px 20px}
+.calc-head h3{font-size:16px;font-weight:700}.calc-head p{font-size:12.5px;opacity:.85;margin-top:2px}
+.calc-body{padding:18px 20px}
+.steps{display:flex;gap:7px;margin-bottom:16px}.steps .s{flex:1;height:4px;border-radius:3px;background:var(--nebel)}.steps .s.on{background:var(--gruen)}
+.qlabel{font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--stein);margin-bottom:11px}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.opt{border:1px solid var(--nebel);border-radius:5px;padding:12px 6px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;line-height:1.25;min-width:0;overflow-wrap:break-word;word-break:break-word;hyphens:auto;transition:.15s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.opt:hover{border-color:var(--gruen)}.opt.sel{border-color:var(--gruen);background:rgba(20,161,70,.08);color:var(--gruen-dunkel)}
+.field{margin-bottom:10px}.field label{display:block;font-size:12px;font-weight:600;color:var(--stein);margin-bottom:5px}
+.field input,.field textarea{width:100%;border:1px solid var(--nebel);border-radius:4px;padding:10px 12px;font-family:var(--sans);font-size:14px;color:var(--tinte);background:var(--papier)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--gruen);background:#fff}
+.calc-nav{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.link-back{background:none;border:none;color:var(--stein);font-size:13px;cursor:pointer;font-family:var(--sans)}
+.summary{background:var(--papier);border-radius:6px;padding:13px 15px;font-size:13px;margin-bottom:13px;display:none;line-height:1.5}
+.summary b{color:var(--gruen-dunkel)}.summary .sl{display:block;padding:2px 0}
+.qsub{margin-top:15px}.hint{font-size:11px;color:var(--stein);margin-top:8px}
+.fld2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:760px){.hgrid{grid-template-columns:1fr;gap:26px}}
+/* warum / stimme / kontakt */
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.titem{padding:24px 22px;background:var(--weiss);border:1px solid var(--nebel);border-radius:6px}
+.titem .ic{width:30px;height:30px;color:var(--gruen);margin-bottom:13px}
+.titem h3{font-size:16px;font-weight:700;margin-bottom:6px}.titem p{font-size:13.5px;color:var(--stein)}
+@media(max-width:860px){.tgrid{grid-template-columns:repeat(2,1fr)}}
+.quote{max-width:780px;margin:0 auto;text-align:center}
+.quote .q{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3vw,32px);line-height:1.3}
+.quote .a{margin-top:18px;color:var(--stein);font-size:14px}.stars{color:var(--gruen);letter-spacing:3px;font-size:18px;margin-bottom:20px}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.kinfo .row{display:flex;gap:14px;padding:15px 0;border-bottom:1px solid var(--nebel)}
+.kinfo .row .ic{width:22px;height:22px;color:var(--gruen-dunkel);flex:none;margin-top:2px}
+.kinfo .row .t b{display:block;font-size:15px;font-weight:700}.kinfo .row .t span{font-size:14px;color:var(--stein)}
+@media(max-width:760px){.kgrid{grid-template-columns:1fr}}
+/* subpage */
+.lphead{padding:60px 0 8px}
+.crumb{font-size:12.5px;color:var(--stein);margin-bottom:16px}.crumb a{color:var(--gruen-dunkel);text-decoration:none}
+.lphead h1{font-weight:800;font-size:clamp(34px,4.6vw,54px);line-height:1.03;letter-spacing:-.02em}
+.lphead .lead{max-width:40em;font-size:clamp(16px,1.5vw,19px);color:var(--tinte);opacity:.85}
+.kwrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.kwrow span{font-size:12.5px;color:var(--gruen-dunkel);background:rgba(20,161,70,.07);border:1px solid #cdebd6;padding:5px 12px;border-radius:20px;font-weight:600}
+.detail{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:start}
+.detail p{color:var(--stein);font-size:15.5px;margin-bottom:14px}
+.detail .blist{list-style:none;background:var(--papier);border:1px solid var(--nebel);border-radius:8px;padding:22px 24px}
+.detail .blist li{display:flex;gap:11px;padding:9px 0;font-size:14.5px;border-bottom:1px solid var(--nebel)}
+.detail .blist li:last-child{border-bottom:none}
+.detail .blist svg{width:18px;height:18px;color:var(--gruen);flex:none;margin-top:3px}
+@media(max-width:760px){.detail{grid-template-columns:1fr;gap:22px}}
+.ctaband{background:var(--gruen-dunkel);color:#fff;border-radius:10px;padding:40px;text-align:center}
+.ctaband h2{color:#fff;font-size:clamp(24px,3vw,34px)}.ctaband p{color:#d7ece0;margin:10px 0 22px}
+.ctaband .btn.primary{background:var(--gruen);color:#06210f}
+</style><style>/* RESPONSIVE-STANDARD overflow-clip */html{overflow-x:clip}</style></head><body><header><div class="wrap nav">
+<a class="logo" href="index_A.html" aria-label="STEFAN JANUS"><svg viewBox="0 0 820 150" role="img" aria-label="Garten- und Landschaftsbau Bublica"><g transform="translate(8,18)"><circle cx="52" cy="56" r="34" fill="#2E8B3D"></circle><circle cx="52" cy="56" r="34" fill="none" stroke="#B9C6B2" stroke-width="4.5"></circle><path d="M52 78 C40 70 34 56 38 40 C56 42 68 56 64 74 C61 86 56 80 52 78 Z" fill="#0F5E27" stroke="#FFFFFF" stroke-width="2.4"></path><path d="M52 78 C58 64 58 50 52 38" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"></path></g><text x="150" y="78" font-family="Archivo, sans-serif" font-weight="800" font-size="52" letter-spacing="-1.5"><tspan fill="#2E8B3D">GARTENBAU</tspan> <tspan fill="#0F5E27">BUBLICA</tspan></text><text x="152" y="110" font-family="Hanken Grotesk, sans-serif" font-weight="600" font-size="15.5" letter-spacing="3.6" fill="#7E867C">GARTEN- UND LANDSCHAFTSBAU · DÜSSELDORF</text></svg></a>
+<button class="navtoggle" id="navtoggle" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav class="menu" id="navmenu">
+<div class="has-drop"><span class="lbl">Leistungen <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></span><div class="dropdown"><a href="leistungen/gartengestaltung.html">Gartengestaltung</a><a href="leistungen/rollrasen.html">Rollrasen &amp; Rasenpflege</a><a href="leistungen/pflaster.html">Pflaster &amp; Wege</a><a href="leistungen/terrasse.html">Terrassenbau</a><a href="leistungen/teich.html">Teichbau &amp; Wasser</a><a href="leistungen/zaun.html">Zaun &amp; Sichtschutz</a><a href="leistungen/naturstein.html">Naturstein &amp; Mauern</a><a href="leistungen/baumpflege.html">Baum- &amp; Heckenpflege</a><a href="leistungen/pergola.html">Pergola &amp; Überdachung</a><a href="leistungen/erdarbeiten.html">Erdarbeiten &amp; Boden</a><a href="leistungen/dachbegruenung.html">Dach- &amp; Fassadengrün</a><a href="leistungen/winterdienst.html">Winterdienst</a></div></div>
+<a class="nl" href="index_A.html#angebot">Angebot</a>
+<a class="nl" href="index_A.html#galerie">Vorher Nachher</a>
+<a class="nl" href="index_A.html#faq">FAQ</a>
+<a class="nl" href="index_A.html#kontakt">Kontakt</a>
+<a class="nl legal" href="impressum.html">Impressum</a>
+<a class="nl legal" href="datenschutz.html">Datenschutz</a>
+<a class="cta-call" href="tel:+4921143639340">0211 43639340</a>
+</nav></div></header><section class="lphead"><div class="wrap"><div class="crumb"><a href="index_A.html">Start</a> · Impressum</div><h1>Impressum</h1></div></section><section style="padding-top:6px"><div class="wrap" style="max-width:780px"><h2>Angaben gemäß § 5 TMG</h2>
+<p><b>Garten und Landschaftsbau Afrim Bublica</b><br>Inhaber: Afrim Bublica<br>Torfbruchstraße 185<br>40625 Düsseldorf</p>
+<h2>Kontakt</h2><p>Telefon: 0211 43639340<br>Mobil: 0157 83036500<br>Telefax: 0211 43639340<br>E-Mail: afrimbublica@web.de</p>
+<h2>Umsatzsteuer-ID</h2><p>Umsatzsteuer-Identifikationsnummer gemäß §27a UStG: DE133/5040/2969</p>
+<h2>Wirtschafts-ID</h2><p>19610701847</p>
+<h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2><p>Afrim Bublica, Anschrift wie oben.</p>
+<h2>EU-Streitschlichtung</h2><p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" style="color:var(--gruen-dunkel)">https://ec.europa.eu/consumers/odr</a>. Wir sind nicht verpflichtet und nicht bereit, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+<p style="font-size:13px;color:var(--stein);margin-top:14px">Hinweis: Diese Angaben werden vom Inhaber vor dem Live-Gang final geprüft und bestätigt.</p></div></section><footer><div class="wrap"><div class="fgrid">
+<div class="fcol" style="max-width:300px"><div class="logo" style="margin-bottom:14px"><svg viewBox="0 0 820 150" role="img" aria-label="Garten- und Landschaftsbau Bublica"><g transform="translate(8,18)"><circle cx="52" cy="56" r="34" fill="#2E8B3D"></circle><circle cx="52" cy="56" r="34" fill="none" stroke="#B9C6B2" stroke-width="4.5"></circle><path d="M52 78 C40 70 34 56 38 40 C56 42 68 56 64 74 C61 86 56 80 52 78 Z" fill="#0F5E27" stroke="#FFFFFF" stroke-width="2.4"></path><path d="M52 78 C58 64 58 50 52 38" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"></path></g><text x="150" y="78" font-family="Archivo, sans-serif" font-weight="800" font-size="52" letter-spacing="-1.5"><tspan fill="#2E8B3D">GARTENBAU</tspan> <tspan fill="#ffffff">BUBLICA</tspan></text><text x="152" y="110" font-family="Hanken Grotesk, sans-serif" font-weight="600" font-size="15.5" letter-spacing="3.6" fill="#7E867C">GARTEN- UND LANDSCHAFTSBAU · DÜSSELDORF</text></svg></div>
+<p style="font-size:13.5px;opacity:.75">Ihr Garten- und Landschaftsbau in Düsseldorf. Planung, Anlage und Pflege aus einer Hand – seit über 7 Jahren.</p>
+<a class="partner" href="https://www.facebook.com/gartenlandschaftbublica" target="_blank" rel="noopener"><span>Folgen</span><span style="font-weight:700;color:var(--gruen-dunkel)">Facebook &amp; Houzz</span></a></div>
+<div class="fcol"><h4>Leistungen</h4><div class="col">
+<a href="leistungen/gartengestaltung.html">Gartengestaltung</a><a href="leistungen/rollrasen.html">Rollrasen &amp; Rasen</a>
+<a href="leistungen/pflaster.html">Pflaster &amp; Wege</a><a href="leistungen/terrasse.html">Terrassenbau</a></div></div>
+<div class="fcol"><h4>Betrieb</h4><div class="col"><a href="index_A.html#warum">Über uns</a>
+<a href="index_A.html#angebot">Angebot</a><a href="index_A.html#kontakt">Kontakt</a></div></div>
+<div class="fcol"><h4>Kontakt</h4><div class="col"><a href="tel:+4921143639340">0211 43639340</a><a href="tel:+4915783036500">0157 83036500</a>
+<a href="mailto:afrimbublica@web.de">afrimbublica@web.de</a><span style="font-size:14px;opacity:.8">Torfbruchstr. 185<br>40625 Düsseldorf</span></div></div>
+</div><div class="fbar"><div>© 2026 Garten- und Landschaftsbau Bublica</div>
+<div><a href="impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="datenschutz.html">Datenschutz</a></div></div></div></footer><script>
+(function(){var b=document.getElementById('navtoggle'),m=document.getElementById('navmenu');if(!b||!m)return;
+var mq=window.matchMedia('(max-width:980px)');
+function set(o){m.classList.toggle('open',o);b.classList.toggle('x',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Menü schließen':'Menü öffnen');if(!o){m.querySelectorAll('.has-drop.open').forEach(function(d){d.classList.remove('open');});}}
+b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();set(!m.classList.contains('open'));});
+m.querySelectorAll('.has-drop>.lbl').forEach(function(l){l.addEventListener('click',function(e){if(!mq.matches)return;e.preventDefault();e.stopPropagation();l.parentNode.classList.toggle('open');});});
+m.querySelectorAll('a[href]').forEach(function(a){a.addEventListener('click',function(){setTimeout(function(){set(false);},40);});});
+})();</script></body></html>
