@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Verbindung Mac-Motor zum Strato-VPS: Der VPS erreicht den eigenen Motor
+  ueber diesen SSH-Rueckkanal auf seinem lokalen Port 8821. Es wird KEIN
+  Geheimnis uebertragen; der Motor beantwortet nur Anprobe-Anfragen.
+  Installation (einmalig):
+    cp com.anprobe.motorlink.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.anprobe.motorlink.plist
+  Auf dem VPS dann in /etc/anprobe-api.env:
+    OWN_ENGINE_URL=http://127.0.0.1:8821/generate
+  und: systemctl restart anprobe-api
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.anprobe.motorlink</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/ssh</string>
+    <string>-N</string>
+    <string>-i</string><string>/Users/bb/.ssh/dvs_vps_rsa</string>
+    <string>-o</string><string>ServerAliveInterval=30</string>
+    <string>-o</string><string>ServerAliveCountMax=3</string>
+    <string>-o</string><string>ExitOnForwardFailure=yes</string>
+    <string>-o</string><string>StrictHostKeyChecking=accept-new</string>
+    <string>-R</string><string>127.0.0.1:8821:127.0.0.1:8821</string>
+    <string>root@31.70.107.0</string>
+  </array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>15</integer>
+  <key>StandardOutPath</key><string>/Users/bb/Library/Logs/anprobe/motorlink.log</string>
+  <key>StandardErrorPath</key><string>/Users/bb/Library/Logs/anprobe/motorlink.log</string>
+</dict>
+</plist>

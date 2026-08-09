@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Eigener Motor der Digitalen Anprobe: Autostart auf dem Mac.
+  Installation (einmalig):
+    cp com.anprobe.motor.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.anprobe.motor.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.anprobe.motor</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Volumes/Crucial X9/anprobe-motor/venv/bin/python</string>
+    <string>/Users/bb/Desktop/Try on/vorschau/anprobe/backend/eigener-motor/motor_server.py</string>
+    <string>--weights</string>
+    <string>/Volumes/Crucial X9/anprobe-motor/fashn-vton-1.5/weights</string>
+    <string>--port</string>
+    <string>8821</string>
+  </array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>20</integer>
+  <key>StandardOutPath</key><string>/Users/bb/Library/Logs/anprobe/motor.log</string>
+  <key>StandardErrorPath</key><string>/Users/bb/Library/Logs/anprobe/motor.log</string>
+</dict>
+</plist>

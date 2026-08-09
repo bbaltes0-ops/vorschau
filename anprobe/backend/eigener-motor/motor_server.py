@@ -30,10 +30,21 @@ MAX_BODY = 12 * 1024 * 1024
 pipeline = None  # wird beim Start geladen
 
 
+def pick_device():
+    import torch
+    if torch.cuda.is_available():
+        return "cuda"
+    if getattr(torch.backends, "mps", None) and torch.backends.mps.is_available():
+        return "mps"   # Apple-Grafik (M-Serie)
+    return "cpu"
+
+
 def load_pipeline(weights_dir):
     global pipeline
     from fashn_vton import TryOnPipeline
-    pipeline = TryOnPipeline(weights_dir=weights_dir)
+    device = pick_device()
+    print("Rechengeraet:", device, flush=True)
+    pipeline = TryOnPipeline(weights_dir=weights_dir, device=device)
 
 
 def category_from_prompt(prompt):
