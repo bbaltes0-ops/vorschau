@@ -29,7 +29,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
-const ALLOWED_MODELS = ["gemini-3-pro-image", "gemini-2.5-flash-image"];
+const ALLOWED_MODELS = ["gemini-3.1-flash-lite-image", "gemini-3.1-flash-image", "gemini-3-pro-image", "gemini-2.5-flash-image"];
 const MAX_BODY_BYTES = 12 * 1024 * 1024;
 const RATE_LIMIT_MAX = 20;
 const RATE_LIMIT_WINDOW_S = 600;
