@@ -180,7 +180,7 @@ footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted
     <div class="brand">Black Rabbit <em>Studio</em></div>
     <span class="label">Digitale Anprobe · Demo</span>
     <div class="spacer"></div>
-    <a class="iconbtn" href="live.html" style="text-decoration:none" id="lnkLive">◉ Live-Spiegel</a>
+    <a class="iconbtn" href="live.html" style="text-decoration:none" id="lnkLive">Live-Spiegel</a>
     <a class="iconbtn" href="haendler.html" style="text-decoration:none" id="lnkDealer">Für Händler</a>
     <button class="iconbtn" id="btnSettings" title="KI-Einstellungen">⚙ KI-Setup</button>
   </div>
@@ -214,8 +214,8 @@ footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted
     <p class="hint">Das Foto wird nur für die Anprobe verwendet und nicht gespeichert.</p>
     <div class="panel">
       <div class="srcgrid" id="srcChoice">
-        <button class="srcbtn" id="btnCam"><span class="big">📷</span><span class="t">Kamera verwenden</span><span class="d">Front-Kamera von Handy oder Laptop</span></button>
-        <button class="srcbtn" id="btnUpload"><span class="big">🖼️</span><span class="t">Foto hochladen</span><span class="d">JPG oder PNG aus der Galerie</span></button>
+        <button class="srcbtn" id="btnCam"><span class="t">Kamera verwenden</span><span class="d">Front-Kamera von Handy oder Laptop</span></button>
+        <button class="srcbtn" id="btnUpload"><span class="t">Foto hochladen</span><span class="d">JPG oder PNG aus der Galerie</span></button>
         <input type="file" id="fileInput" accept="image/*" hidden>
       </div>
       <div class="camwrap" id="camWrap">
@@ -443,7 +443,7 @@ function renderProducts(){
       <div class="info">
         <div class="label">${p.category}</div>
         <div class="name">${p.name}</div>
-        <div class="meta">${p.color} · Größen: ${p.sizes.join(", ")}</div>
+        <div class="meta">${p.color}. Größen: ${p.sizes.join(", ")}</div>
         <div class="row">
           <div class="price">${fmtPrice(p.price)}</div>
           <button class="btn small">Anprobieren</button>
@@ -737,7 +737,7 @@ $("btnShare").addEventListener("click", async ()=>{
   const fname = "anprobe-" + (state.product ? state.product.id : "bild") + ".png";
   const p = state.product;
   const from = p && p.dealer ? (" (gesehen bei " + p.dealer + ")") : "";
-  const shareText = "Steht mir das? 🤔 Digital anprobiert – noch nicht gekauft. Was meint ihr: " +
+  const shareText = "Steht mir das? Digital anprobiert, noch nicht gekauft. Was meint ihr: " +
     (p ? p.name : "das Teil") + from + " – Ja oder Nein?";
   try{
     const blob = await (await fetch(state.resultDataUrl)).blob();
@@ -775,7 +775,7 @@ $("btnOrder").addEventListener("click", ()=>{
   if(!size && p.sizes.length>1){ showError("Größe wählen", "Bitte zuerst eine Größe auswählen."); return; }
   hideError();
   if(p.whatsapp){
-    const msg = "Hallo" + (p.dealer ? " " + p.dealer : "") + "! 👋\n\n" +
+    const msg = "Hallo" + (p.dealer ? " " + p.dealer : "") + ",\n\n" +
       "Ich habe den Artikel gerade digital anprobiert und möchte ihn kaufen:\n\n" +
       "Artikel: " + p.name + "\nGröße: " + size + "\nPreis: " + fmtPrice(p.price) +
       "\n\n(Bestellung über die Digitale Anprobe)";

@@ -27,7 +27,19 @@ if [[ -z "$KEY" ]]; then
 fi
 echo "1/3  Schluessel gefunden (${KEY:0:8}...)."
 
-ssh -i "$SSHKEY" "$VPS" "sed -i 's|^GEMINI_API_KEY=.*|GEMINI_API_KEY=$KEY|' /etc/anprobe-api.env && chmod 600 /etc/anprobe-api.env && systemctl restart anprobe-api"
+echo ""
+echo "Fuer die LIVE-Anprobe (Anprobe direkt im Kamerabild) brauchst du"
+echo "zusaetzlich einen Decart-Schluessel: Konto auf platform.decart.ai"
+echo "anlegen, API-Key kopieren und hier einfuegen."
+echo -n "Decart-Key (Enter = ueberspringen, Foto-Anprobe geht auch ohne): "
+read -r DKEY
+
+ssh -i "$SSHKEY" "$VPS" "sed -i 's|^GEMINI_API_KEY=.*|GEMINI_API_KEY=$KEY|' /etc/anprobe-api.env && chmod 600 /etc/anprobe-api.env"
+if [[ -n "$DKEY" ]]; then
+  ssh -i "$SSHKEY" "$VPS" "grep -q '^DECART_API_KEY=' /etc/anprobe-api.env && sed -i 's|^DECART_API_KEY=.*|DECART_API_KEY=$DKEY|' /etc/anprobe-api.env || echo 'DECART_API_KEY=$DKEY' >> /etc/anprobe-api.env"
+  echo "     Live-Anprobe wird mit freigeschaltet."
+fi
+ssh -i "$SSHKEY" "$VPS" "systemctl restart anprobe-api"
 echo "2/3  Schluessel eingetragen, Dienst neu gestartet."
 
 sleep 2

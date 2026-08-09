@@ -9,10 +9,16 @@
   "products": [
     {
       "id": "dvs-capri",
-      "name": "Capri · Kurzarm",
+      "name": "Capri Kurzarm",
       "category": "Oberteil",
       "price": 89.0,
-      "sizes": ["XS", "S", "M", "L", "XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Gelb gestreift, CAPRI-Schriftzug",
       "image": "img/dvs/capri.png",
       "promptHint": "a yellow and cream striped short-sleeve fine-knit top with the word CAPRI in red letters on the chest",
@@ -20,10 +26,16 @@
     },
     {
       "id": "dvs-breton",
-      "name": "Marine · Streifen",
+      "name": "Marine Streifen",
       "category": "Oberteil",
       "price": 99.0,
-      "sizes": ["XS", "S", "M", "L", "XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Marine/Creme gestreift",
       "image": "img/dvs/breton.png",
       "promptHint": "a navy and cream breton striped long-sleeve fine-knit top with a buttoned neckline",
@@ -31,10 +43,16 @@
     },
     {
       "id": "dvs-top-creme",
-      "name": "Top · Creme",
+      "name": "Top Creme",
       "category": "Oberteil",
       "price": 89.0,
-      "sizes": ["XS", "S", "M", "L", "XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Creme",
       "image": "img/dvs/top_creme.png",
       "promptHint": "a cream short-sleeve fine-knit top with a round neck",
@@ -42,10 +60,16 @@
     },
     {
       "id": "dvs-bordeaux",
-      "name": "Kurzarm-Cardigan · Bordeaux",
+      "name": "Kurzarm-Cardigan Bordeaux",
       "category": "Oberteil",
       "price": 119.0,
-      "sizes": ["XS", "S", "M", "L", "XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Bordeaux, Puffaermel",
       "image": "img/dvs/bordeaux.png",
       "promptHint": "a bordeaux red short-sleeve knitted cardigan with puff sleeves and small buttons down the front",
@@ -53,10 +77,16 @@
     },
     {
       "id": "dvs-hellblau",
-      "name": "Kurzarm-Cardigan · Hellblau",
+      "name": "Kurzarm-Cardigan Hellblau",
       "category": "Oberteil",
       "price": 119.0,
-      "sizes": ["XS", "S", "M", "L", "XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Hellblau, Puffaermel",
       "image": "img/dvs/hellblau.png",
       "promptHint": "a light blue short-sleeve knitted cardigan with puff sleeves and small buttons down the front",
@@ -64,10 +94,16 @@
     },
     {
       "id": "dvs-georgiana",
-      "name": "Georgiana · Cardigan",
+      "name": "Georgiana Cardigan",
       "category": "Jacke",
       "price": 149.0,
-      "sizes": ["XS", "S", "M", "L", "XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Creme/Beige",
       "image": "img/dvs/georgiana.png",
       "promptHint": "a cream ribbed knitted cardigan jacket with a v-neck, buttons and patch pockets",
@@ -75,10 +111,16 @@
     },
     {
       "id": "dvs-hose-altrosa",
-      "name": "Palazzo-Hose · Altrosa",
+      "name": "Palazzo-Hose Altrosa",
       "category": "Hose",
       "price": 129.0,
-      "sizes": ["XS", "S", "M", "L", "XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Altrosa",
       "image": "img/dvs/hose_altrosa.png",
       "promptHint": "wide-leg palazzo knit trousers in dusty rose with an elastic waistband",
@@ -86,10 +128,16 @@
     },
     {
       "id": "dvs-rock-creme",
-      "name": "Rock · Creme",
+      "name": "Rock Creme",
       "category": "Rock",
       "price": 99.0,
-      "sizes": ["XS", "S", "M", "L", "XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "color": "Creme",
       "image": "img/dvs/rock_creme.png",
       "promptHint": "a cream a-line knit mini skirt",

@@ -134,11 +134,11 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
     <h2>1 · Artikel fotografieren</h2>
     <div class="photos">
       <div class="pslot" id="slotFront">
-        <span class="big">📷</span><span><b>Vorderseite</b><br>fotografieren oder hochladen</span>
+        <span><b>Vorderseite</b><br>fotografieren oder hochladen</span>
         <button class="x" data-slot="front">✕</button>
       </div>
       <div class="pslot" id="slotBack">
-        <span class="big">📷</span><span><b>Rückseite</b> (optional)</span>
+        <span><b>Rückseite</b> (optional)</span>
         <button class="x" data-slot="back">✕</button>
       </div>
     </div>
@@ -402,14 +402,14 @@ function readDealer(){
 
 /* ---------- Nachrichten-Vorlagen (Empfehlung des Tages etc.) ---------- */
 const MSG_OPENERS = {
-  persoenlich: n => "Hey" + n + "! 👋 Ich musste eben an dich denken – das hier ist doch wie für dich gemacht:",
-  tag:         n => "Hey" + n + "! ☀️ Meine Empfehlung des Tages aus dem Laden:",
-  neu:         n => "Hey" + n + "! ✨ Gerade frisch reingekommen – ich finde, das könnte deins sein:"
+  persoenlich: n => "Hallo" + n + ", ich musste eben an dich denken. Das hier ist doch wie für dich gemacht:",
+  tag:         n => "Hallo" + n + ", meine Empfehlung des Tages aus dem Laden:",
+  neu:         n => "Hallo" + n + ", gerade frisch reingekommen. Ich finde, das könnte deins sein:"
 };
 const MSG_OPENERS_CAT = {
-  persoenlich: (n,c) => "Hey" + n + "! 👋 Ich habe dir " + c + " rausgesucht, die dir stehen dürften:",
-  tag:         (n,c) => "Hey" + n + "! ☀️ Meine Empfehlungen des Tages – " + c + " für dich:",
-  neu:         (n,c) => "Hey" + n + "! ✨ Gerade frisch reingekommen – " + c + ", die zu dir passen könnten:"
+  persoenlich: (n,c) => "Hallo" + n + ", ich habe dir " + c + " rausgesucht, die dir stehen dürften:",
+  tag:         (n,c) => "Hallo" + n + ", meine Empfehlungen des Tages, " + c + " für dich:",
+  neu:         (n,c) => "Hallo" + n + ", gerade frisch reingekommen: " + c + ", die zu dir passen könnten:"
 };
 const nameToken = v => { const t = (v||"").trim(); return t ? " " + t : ""; };
 function singleMsg(kind, name, art, link, dealer){
@@ -438,7 +438,8 @@ function buildSingleLink(art, dealer, wa){
     v: 1, n: art.n, p: art.p, c: art.c, s: art.s, de: art.de,
     d: dealer, w: wa, i: art.i
   };
-  return { link: linkBase() + "#a=" + enc(payload) };
+  /* Einzelartikel landen direkt im Live-Spiegel; die Foto-Anprobe ist dort verlinkt */
+  return { link: linkBase() + "live.html#a=" + enc(payload) };
 }
 function showSingleResult(art, dealer, wa){
   const { link } = buildSingleLink(art, dealer, wa);

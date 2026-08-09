@@ -191,7 +191,7 @@
         '<span class="tdot"></span>' +
         '<span class="ttitle">Digitale Anprobe</span>' +
         '<span class="tbrand"></span>' +
-        '<button class="x" aria-label="Schließen">✕</button>' +
+        '<button class="x" aria-label="Schließen">×</button>' +
       '</div>' +
       '<div class="pbody"></div>' +
       '<div class="pfoot">KI-Anprobe · powered by <b>Black Rabbit Studio</b></div>' +
@@ -496,8 +496,8 @@
       '<div class="steplabel">Schritt 2 von 2 · Dein Foto</div>' +
       prodlineHtml() +
       '<div class="choice">' +
-        '<button class="srcb cam"><span class="big">📷</span><span class="t">Kamera</span><span class="d">Direkt aufnehmen</span></button>' +
-        '<button class="srcb up"><span class="big">🖼</span><span class="t">Foto hochladen</span><span class="d">JPG oder PNG</span></button>' +
+        '<button class="srcb cam"><span class="big"></span><span class="t">Kamera</span><span class="d">Direkt aufnehmen</span></button>' +
+        '<button class="srcb up"><span class="big"></span><span class="t">Foto hochladen</span><span class="d">JPG oder PNG</span></button>' +
       '</div>' +
       '<div class="cambox" hidden>' +
         '<video class="camboxvideo" autoplay playsinline muted></video>' +
