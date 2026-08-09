@@ -40,7 +40,10 @@ dialog p{color:var(--muted);font-size:13.5px;line-height:1.6;margin-bottom:14px}
 dialog label{display:block;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:12px 0 6px}
 dialog input{width:100%;background:var(--ink);border:1px solid var(--line);color:var(--paper);border-radius:10px;padding:11px 13px;font:inherit;font-size:14px}
 dialog input:focus{outline:none;border-color:var(--lime)}
-.dlgactions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.dlgactions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.pruef{color:var(--muted);font-size:13px;line-height:1.6;margin-top:14px;min-height:20px}
+.pruef b{color:var(--lime)}
+.pruef .rot{color:var(--red)}
 main{max-width:820px;margin:0 auto;padding:0 20px 80px}
 .hero{padding:40px 0 8px}
 .hero h1{font-size:clamp(28px,6vw,50px);line-height:.98}
@@ -104,8 +107,10 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
   <p>Trag hier deinen eigenen Google-Schlüssel ein, dann rechnet der Spiegel sofort. Der Schlüssel bleibt nur auf diesem Gerät und wird an keinen Server übertragen. Sobald der eigene Grafikserver läuft, kannst du ihn wieder löschen.</p>
   <label>Google-Schlüssel</label>
   <input type="password" id="inpKey" placeholder="AIza...">
+  <p class="pruef" id="keyStatus"></p>
   <div class="dlgactions">
     <button class="btn ghost" id="btnKeyDel">Löschen</button>
+    <button class="btn ghost" id="btnKeyTest">Selbsttest</button>
     <button class="btn" id="btnKeySave">Speichern</button>
   </div>
 </dialog>
@@ -258,6 +263,18 @@ function blobToB64(blob){
     rd.readAsDataURL(blob);
   });
 }
+/* Wartet, bis das Video echte Masse hat (sonst kaeme ein leeres Bild) */
+function warteAufBild(maxMs){
+  const v = $("liveVideo");
+  const ende = Date.now() + (maxMs || 8000);
+  return new Promise(res=>{
+    (function pruefe(){
+      if(v.videoWidth > 0 && v.videoHeight > 0) return res(true);
+      if(Date.now() > ende) return res(false);
+      setTimeout(pruefe, 200);
+    })();
+  });
+}
 function captureFrameB64(){
   const v = $("liveVideo");
   const w = v.videoWidth, h = v.videoHeight;
@@ -277,8 +294,12 @@ function taktPrompt(){
     "Photorealistic output, same framing as the first image. Output only the final image.";
 }
 async function taktRound(garmentB64){
-  const frame = captureFrameB64();
-  if(!frame) throw new Error("Kein Kamerabild.");
+  let frame = captureFrameB64();
+  if(!frame){ await warteAufBild(4000); frame = captureFrameB64(); }
+  if(!frame) throw new Error("Kamera liefert noch kein Bild.");
+  return taktRoundMit(frame, garmentB64);
+}
+async function taktRoundMit(frame, garmentB64){
   const body = {
     contents: [{ parts: [
       { text: taktPrompt() },
@@ -300,7 +321,11 @@ async function taktRound(garmentB64){
   if(r.status === 503){ const e = new Error("einrichtung"); e.setup = true; throw e; }
   if(!r.ok){
     const j = await r.json().catch(()=> ({}));
-    throw new Error((j.error && j.error.message) || ("Fehler " + r.status));
+    const roh = (j.error && j.error.message) || ("Fehler " + r.status);
+    if(r.status === 400 && /API key/i.test(roh)) throw new Error("Der hinterlegte Schlüssel wird von Google abgelehnt. Bitte oben unter Setup prüfen.");
+    if(r.status === 429) throw new Error("Zu viele Anfragen in kurzer Zeit. Kurz warten, dann neu starten.");
+    if(r.status === 403) throw new Error("Der Schlüssel darf dieses Modell nicht nutzen (403).");
+    throw new Error(roh);
   }
   const j = await r.json();
   const parts = (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || [];
@@ -427,6 +452,8 @@ async function start(){
     $("btnStart").disabled = false; return;
   }
   $("liveVideo").srcObject = state.stream;   /* Vorschau, bis die KI übernimmt */
+  try{ await $("liveVideo").play(); }catch(_){}
+  await warteAufBild();                      /* iOS liefert erst nach kurzer Zeit Bildmasse */
 
   setOverlay("Live-KI wird verbunden …", true);
   let token;
@@ -508,10 +535,45 @@ $("btnKey").addEventListener("click", ()=>{
   $("inpKey").value = localStorage.getItem("brs_tryon_key") || "";
   $("dlgKey").showModal();
 });
+/* Nimmt auch eine ganze Zeile wie GOOGLE_AI_API_KEY="AIza..." und holt den Schlüssel heraus */
+function schluesselSaeubern(roh){
+  const t = String(roh || "").trim().replace(/^["']|["']$/g, "");
+  const treffer = t.match(/AIza[0-9A-Za-z_\-]{10,}/);
+  return treffer ? treffer[0] : t;
+}
 $("btnKeySave").addEventListener("click", ()=>{
-  const v = $("inpKey").value.trim();
+  const v = schluesselSaeubern($("inpKey").value);
   if(v) localStorage.setItem("brs_tryon_key", v); else localStorage.removeItem("brs_tryon_key");
-  $("dlgKey").close();
+  $("keyStatus").innerHTML = v ? "Gespeichert (endet auf " + v.slice(-6) + "). Jetzt Selbsttest drücken." : "Schlüssel gelöscht.";
+  setTimeout(()=> $("dlgKey").close(), 900);
+});
+/* Selbsttest: rechnet EIN Bild und sagt genau, was passiert ist */
+$("btnKeyTest").addEventListener("click", async ()=>{
+  const st = $("keyStatus");
+  const v = schluesselSaeubern($("inpKey").value);
+  if(v) localStorage.setItem("brs_tryon_key", v); else localStorage.removeItem("brs_tryon_key");
+  const key = localStorage.getItem("brs_tryon_key") || "";
+  st.innerHTML = key
+    ? "Schlüssel hinterlegt (endet auf " + key.slice(-6) + "). Testbild wird gerechnet …"
+    : "Kein eigener Schlüssel. Es wird der Server geprüft …";
+  const c = document.createElement("canvas"); c.width = 384; c.height = 512;
+  const g = c.getContext("2d");
+  g.fillStyle = "#8a8a8a"; g.fillRect(0,0,384,512);
+  g.fillStyle = "#c9a582"; g.beginPath(); g.arc(192,150,60,0,7); g.fill();
+  g.fillStyle = "#5a6a45"; g.fillRect(120,215,150,240);
+  const testPerson = c.toDataURL("image/jpeg",0.85).split(",")[1];
+  let garment = testPerson;
+  if(state.garmentBlob){ try{ garment = await blobToB64(state.garmentBlob); }catch(_){} }
+  const t0 = Date.now();
+  try{
+    const alt = $("liveVideo").srcObject;
+    const b64 = await taktRoundMit(testPerson, garment);
+    st.innerHTML = "<b>Alles in Ordnung.</b> Testbild in " + ((Date.now()-t0)/1000).toFixed(1) + " Sekunden gerechnet. Der Spiegel funktioniert.";
+  }catch(e){
+    st.innerHTML = e.setup
+      ? "<span class='rot'>Der Server rechnet noch nicht.</span> Trag hier deinen eigenen Schlüssel ein, dann läuft es sofort."
+      : "<span class='rot'>" + (e.message || e) + "</span>";
+  }
 });
 $("btnKeyDel").addEventListener("click", ()=>{
   localStorage.removeItem("brs_tryon_key"); $("inpKey").value = ""; $("dlgKey").close();
