@@ -57,6 +57,8 @@ main{max-width:820px;margin:0 auto;padding:0 20px 80px}
 .mirror video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}
 .mirror .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:30px;background:rgba(14,14,14,.55)}
 .mirror .overlay.hidden{display:none}
+.mirror .overlay.peek{justify-content:flex-end;background:linear-gradient(180deg,rgba(14,14,14,0) 35%,rgba(14,14,14,.88) 78%);padding-bottom:22px}
+.mirror .overlay.peek .serif{display:none}
 .mirror .overlay .serif{color:var(--lime);font-size:20px}
 .mirror .overlay p{color:var(--paper);font-size:14px;line-height:1.6;max-width:380px}
 .spin{width:46px;height:46px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--lime);animation:spin 1s linear infinite}
@@ -206,6 +208,7 @@ function readyCheck(){ $("btnStart").disabled = !state.garmentBlob; }
 /* ---------- Live-Sitzung ---------- */
 function setOverlay(msg, spinner){
   $("overlay").classList.remove("hidden");
+  $("overlay").classList.remove("peek");
   $("overlayMsg").textContent = msg;
   let sp = $("overlay").querySelector(".spin");
   if(spinner && !sp){ sp = document.createElement("div"); sp.className="spin"; $("overlay").prepend(sp); }
@@ -282,7 +285,7 @@ async function start(){
   }
   if(!state.stream){
     if(camErr && camErr.message === "Zeitueberschreitung"){ showBrowserHint(); return; }
-    setOverlay("Kamera-Zugriff nicht möglich. Bitte im Browser erlauben und erneut starten. Oder probier das Teil mit einem Foto an.", false);
+    setOverlay("Kamera-Zugriff nicht möglich. In Safari: Tipp auf aA in der Adressleiste, dann Einstellungen für diese Website, Kamera: Erlauben. Danach neu starten. Oder probier das Teil mit einem Foto an.", false);
     const fb = $("btnFotoFallback");
     fb.href = "./" + location.hash;
     fb.style.display = "";
@@ -296,15 +299,24 @@ async function start(){
     const r = await fetch(TOKEN_API, { method:"POST" });
     const j = await r.json().catch(()=> ({}));
     if(r.status === 501){
-      const err = new Error("Die Live-Anprobe wird gerade freigeschaltet. Bis dahin kannst du das Teil mit einem Foto anprobieren, das dauert nur eine Minute.");
+      const err = new Error("Dein Spiegel läuft. Die Live-KI, die dir das Teil anzieht, wird gerade freigeschaltet. Bis dahin kannst du das Teil mit einem Foto anprobieren.");
       err.showFallback = true;
+      err.keepCamera = true;   /* Kamera anlassen: der Kunde soll sich sehen */
       throw err;
     }
     if(!r.ok){ throw new Error((j.error && j.error.message) || ("Server-Fehler " + r.status)); }
     token = j.apiKey || j.token || j.clientToken || (j.data && (j.data.apiKey || j.data.token));
     if(!token) throw new Error("Token-Antwort unverständlich.");
   }catch(e){
-    stop(); setOverlay(e.message, false); $("btnStart").disabled = false;
+    if(e.keepCamera){
+      /* Spiegel-Vorschau weiterlaufen lassen, Meldung unten einblenden */
+      chip("Spiegel ohne KI", false);
+      setOverlay(e.message, false);
+      $("overlay").classList.add("peek");
+    }else{
+      stop(); setOverlay(e.message, false);
+    }
+    $("btnStart").disabled = false;
     if(e.showFallback){
       const fb = $("btnFotoFallback");
       fb.href = "./" + location.hash;
