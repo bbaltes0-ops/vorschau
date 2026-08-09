@@ -183,21 +183,34 @@ async function handleGenerate(req, res, cors) {
   delete body.model;
 
   const gKey = String(process.env.GEMINI_API_KEY || "").trim();
-  if (!gKey || gKey === "HIER_KEY_EINTRAGEN") {
-    return fail(res, 503, "Die Anprobe wird gerade eingerichtet. Bitte spaeter erneut versuchen.", cors);
-  }
+  const hasKey = gKey && gKey !== "HIER_KEY_EINTRAGEN";
 
   let upstream;
   try {
-    upstream = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent",
-      {
+    if (hasKey) {
+      upstream = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "x-goog-api-key": gKey },
+          body: JSON.stringify(body),
+        }
+      );
+    } else {
+      /* Kein Key auf dem Server: Anfrage durch den SSH-Rueckkanal zum Mac
+       * reichen (mac-key-proxy.py, Port 8811) — der Key bleibt auf dem Mac.
+       * Traegt Bernd den Key hier ein, hat der direkte Weg oben Vorrang. */
+      body.model = model;
+      upstream = await fetch("http://127.0.0.1:8811/generate", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": gKey },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-      }
-    );
+      });
+    }
   } catch (_) {
+    if (!hasKey) {
+      return fail(res, 503, "Die Anprobe wird gerade eingerichtet. Bitte spaeter erneut versuchen.", cors);
+    }
     return fail(res, 502, "Google-API nicht erreichbar. Bitte spaeter erneut versuchen.", cors);
   }
   bumpCounter("day:" + currentDay());

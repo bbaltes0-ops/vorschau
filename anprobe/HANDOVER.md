@@ -93,12 +93,24 @@ anprobe-backend, anprobe-vertrieb, anprobe-qa — für künftige Sessions.
 
 ## Offene Punkte / nächste Schritte
 
-1. **Bernds 1-Minuten-Handgriff (einziger Blocker für "KI für alle"):**
-   Gemini-Key auf den VPS eintragen — genaue Befehle in backend/README.md
-   ("Der eine offene Handgriff"). Der Sicherheits-Klassifikator verhindert
-   (zu Recht), dass die Session Secrets auf fremde Server kopiert.
-   Danach lief zuletzt noch der alte Serverstand ohne den Platzhalter-Check —
-   der Restart im selben Handgriff aktiviert die neue Fassung.
+0. **WICHTIG für die nächste Session — zwei Bernd-Entscheidungen offen:**
+   (a) KI freischalten: Doppelklick auf
+   `anprobe/backend/Anprobe-Freischalten.command` (traegt den vorhandenen
+   Google-Key sicher auf den VPS ein + Neustart + Funktionstest). Der
+   Sicherheits-Klassifikator verbietet der Session zu Recht, Secrets selbst
+   auf Server zu kopieren — auch per Tunnel; nicht erneut versuchen.
+   (b) Veröffentlichen: vorschau.black-rabbit.studio ist GitHub Pages und
+   liefert MAIN aus — anprobe/ existiert dort noch nicht. Erst nach Bernds
+   klarem Ja den Branch auf main mergen (Diff ist rein additiv + 1 Karte in
+   der Vorschau-Startseite). Alternativ statisches Hosting auf dem VPS
+   (rsync nach /opt/anprobe-web + Caddy handle /anprobe/* file_server) —
+   war in dieser Session ebenfalls klassifikator-blockiert.
+1. **Serverstand:** /opt/anprobe-api/server.mjs auf dem VPS ist aktuell
+   (inkl. /api/live-token und Mac-Tunnel-Fallback), aber der Dienst lief
+   zuletzt noch mit der vorigen Fassung — der Neustart steckt im
+   Freischalten-Command. mac-key-proxy.py (Tunnel-Variante) liegt im Repo,
+   ist aber NICHT installiert (Klassifikator) — nur nutzen, wenn Bernd es
+   ausdrücklich will.
 2. **Live-Spiegel freischalten (optional, Beta):** Decart-Account +
    DECART_API_KEY in /etc/anprobe-api.env → erster echter WebRTC-Test
    (SDK-Feldnamen der Token-Antwort und onRemoteStream-Callback sind
