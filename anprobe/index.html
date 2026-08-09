@@ -137,6 +137,7 @@ footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted
     <div class="brand">Black Rabbit <em>Studio</em></div>
     <span class="label">Digitale Anprobe · Demo</span>
     <div class="spacer"></div>
+    <a class="iconbtn" href="haendler.html" style="text-decoration:none" id="lnkDealer">Für Händler</a>
     <button class="iconbtn" id="btnSettings" title="KI-Einstellungen">⚙ KI-Setup</button>
   </div>
 </header>
@@ -261,10 +262,54 @@ const settings = {
 };
 
 /* ---------- init ---------- */
+const articleFromLink = parseArticleLink();
 fetch("products.json").then(r => r.json()).then(data => {
   state.products = data.products; state.config = data.config || {};
-  renderProducts();
+  if(!articleFromLink) renderProducts();
 });
+if(articleFromLink) enterArticleMode(articleFromLink);
+
+/* Händler-Link: #a=<base64url(JSON)> — vom Händler per WhatsApp verschickt */
+function parseArticleLink(){
+  const m = location.hash.match(/#a=([A-Za-z0-9_-]+)/);
+  if(!m) return null;
+  try{
+    const b64 = m[1].replace(/-/g,"+").replace(/_/g,"/");
+    const a = JSON.parse(decodeURIComponent(escape(atob(b64))));
+    if(!a.n || !a.i || !a.i.length) return null;
+    return a;
+  }catch(e){ return null; }
+}
+function enterArticleMode(a){
+  const p = {
+    id: "wa-artikel",
+    name: a.n,
+    category: a.c || "Oberteil",
+    price: a.p || 0,
+    sizes: (a.s && a.s.length) ? a.s : ["One Size"],
+    color: a.de || "",
+    image: "data:image/jpeg;base64," + a.i[0],
+    imagesB64: a.i,
+    promptHint: a.de || "",
+    dealer: a.d || "",
+    whatsapp: a.w || ""
+  };
+  document.querySelector(".hero h1").innerHTML =
+    "Probier es an.<br>Ohne <span class='lime'>Umkleide.</span>";
+  document.querySelector(".hero p.sub").innerHTML =
+    "<b>" + escapeHtml(p.dealer || "Dein Geschäft") + "</b> hat dir etwas zum Anprobieren geschickt: " +
+    "<b>" + escapeHtml(p.name) + "</b>. Mach ein Foto mit deiner Handy-Kamera – die KI zeigt dir, wie es an dir aussieht. Bestellen geht danach direkt per WhatsApp.";
+  $("secProducts").style.display = "none";
+  $("lnkDealer").style.display = "none";
+  state.product = p;
+  state.size = p.sizes.length === 1 ? p.sizes[0] : null;
+  fillTryCard(p);
+  $("btnOtherProduct").style.display = "none";
+  $("btnOrder").textContent = "Per WhatsApp bestellen →";
+  setStep(2);
+  $("secPhoto").style.display = "block";
+}
+function escapeHtml(s){ const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
 
 function renderProducts(){
   const grid = $("productGrid");
@@ -417,10 +462,12 @@ async function startTryOn(){
   let li = 0;
   const timer = setInterval(()=>{ li=(li+1)%LOADING_LINES.length; const m=$("loadMsg"); if(m) m.textContent = LOADING_LINES[li]; }, 3500);
   try{
-    const productB64 = await imageToBase64(state.product.image);
+    const productImgs = state.product.imagesB64
+      ? state.product.imagesB64.map(d => ({ mime: "image/jpeg", data: d }))
+      : [{ mime: "image/png", data: await imageToBase64(state.product.image) }];
     const personB64 = state.photoDataUrl.split(",")[1];
     const prompt = buildPrompt(state.product);
-    const b64 = await callGemini(prompt, personB64, productB64);
+    const b64 = await callGemini(prompt, personB64, productImgs);
     state.resultDataUrl = "data:image/png;base64," + b64;
     renderResult();
   }catch(e){
@@ -432,21 +479,29 @@ async function startTryOn(){
 }
 function buildPrompt(p){
   const item = p.promptHint || (p.name + ", " + p.color);
-  const region = p.category === "Kopfbedeckung"
-    ? "Place the product on the person's head. Do not change their clothing."
-    : "Replace the person's current upper body clothing with the product.";
-  return "Virtual try-on task. The first image shows a person. The second image shows a product: " + item + ". " +
+  const regions = {
+    "Kopfbedeckung": "Place the product on the person's head. Do not change their clothing.",
+    "Hose": "Replace the person's current lower body clothing (pants/skirt) with the product.",
+    "Kleid": "Replace the person's current outfit with the product dress.",
+    "Jacke": "Put the product jacket on the person, worn over their current outfit.",
+    "Accessoire": "Add the product accessory to the person naturally. Do not change their clothing."
+  };
+  const region = regions[p.category] || "Replace the person's current upper body clothing with the product.";
+  const extra = (p.imagesB64 && p.imagesB64.length > 1)
+    ? " The third image shows the back side of the same product for reference." : "";
+  return "Virtual try-on task. The first image shows a person. The second image shows a product: " + item + "." + extra + " " +
     region + " Keep the person's face, identity, hair, skin tone, body shape, pose and the photo background EXACTLY the same. " +
     "The product must fit naturally with realistic fabric drape, folds, lighting and shadows consistent with the original photo. " +
     "Photorealistic output, same framing and resolution as the first image. Output only the final image.";
 }
-async function callGemini(prompt, personB64, productB64){
+async function callGemini(prompt, personB64, productImgs){
+  const parts = [
+    { text: prompt },
+    { inline_data: { mime_type: "image/jpeg", data: personB64 } }
+  ];
+  for(const pi of productImgs) parts.push({ inline_data: { mime_type: pi.mime, data: pi.data } });
   const body = {
-    contents: [{ parts: [
-      { text: prompt },
-      { inline_data: { mime_type: "image/jpeg", data: personB64 } },
-      { inline_data: { mime_type: "image/png", data: productB64 } }
-    ]}],
+    contents: [{ parts }],
     generationConfig: { responseModalities: ["IMAGE","TEXT"] }
   };
   let url, headers = {"Content-Type":"application/json"};
@@ -466,8 +521,8 @@ async function callGemini(prompt, personB64, productB64){
     throw new Error(msg);
   }
   const j = await res.json();
-  const parts = j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts || [];
-  for(const part of parts){
+  const outParts = j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts || [];
+  for(const part of outParts){
     const d = part.inlineData || part.inline_data;
     if(d && d.data) return d.data;
   }
@@ -543,6 +598,14 @@ $("btnOrder").addEventListener("click", ()=>{
   const size = state.size || (p.sizes.length===1 ? p.sizes[0] : "");
   if(!size && p.sizes.length>1){ showError("Größe wählen", "Bitte zuerst eine Größe auswählen."); return; }
   hideError();
+  if(p.whatsapp){
+    const msg = "Hallo" + (p.dealer ? " " + p.dealer : "") + "! 👋\n\n" +
+      "Ich habe den Artikel gerade digital anprobiert und möchte ihn kaufen:\n\n" +
+      "Artikel: " + p.name + "\nGröße: " + size + "\nPreis: " + fmtPrice(p.price) +
+      "\n\n(Bestellung über die Digitale Anprobe)";
+    window.open("https://wa.me/" + p.whatsapp + "?text=" + encodeURIComponent(msg), "_blank");
+    return;
+  }
   const target = p.orderUrl || state.config.orderUrlBase;
   if(target){
     location.href = target + (target.includes("?") ? "&" : "?") + "product=" + encodeURIComponent(p.id) + "&size=" + encodeURIComponent(size);

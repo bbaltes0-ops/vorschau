@@ -98,8 +98,44 @@ Logging/Kostenüberwachung, evtl. Ergebnis-Caching pro (Foto-Hash, Produkt).
    (Übermittlung des Fotos an Google Gemini zur Bilderzeugung, keine
    Speicherung). Der Footer-Hinweis auf der Seite deckt die UI-Seite ab.
 
+## Händler-Flow: Verkaufen per WhatsApp (ohne eigenen Onlineshop)
+
+Zielgruppe: kleine Einzelhändler mit Stammkundschaft, die heute schon über
+WhatsApp(-Gruppen) verkaufen, aber keinen Onlineshop haben.
+
+**Ablauf** (`haendler.html`):
+
+1. Händler fotografiert den Artikel im Laden (Vorderseite, optional Rückseite),
+   trägt Name, Preis, Größen, Geschäftsname und WhatsApp-Nummer ein.
+2. Die App erzeugt einen Anprobe-Link und eine fertige WhatsApp-Nachricht
+   („Probier das mal an, das steht dir bestimmt") — teilbar an einzelne
+   Kund:innen oder Gruppen (Web Share API bzw. wa.me).
+3. Kund:in öffnet den Link, die Anprobe-Seite startet im **Artikelmodus**
+   (Katalog ausgeblendet, nur dieser Artikel), macht ein Foto mit der
+   Handy-Kamera und sieht die KI-Anprobe.
+4. „Per WhatsApp bestellen" öffnet einen vorbefüllten Chat an die Nummer des
+   Händlers mit Artikel, Größe und Preis — der Kauf wird da abgewickelt, wo
+   die Kundschaft ohnehin ist.
+
+**Technik im Prototyp:** Artikeldaten und komprimierte Fotos (384 px, JPEG)
+stecken base64url-codiert direkt im URL-Fragment (`#a=…`) — komplett
+serverlos, nichts wird gespeichert. Grenze: der Link wird ~20–60 KB lang.
+
+**Für die Verkaufsversion an Händler** braucht es ein kleines Backend:
+
+- Artikel-Upload → kurze Links (`anprobe.link/a/x7f3`) + QR-Code
+- Händler-Konten mit Logo/Farben (White-Label pro Geschäft)
+- Bestell-Eingang (Webhook/Dashboard) statt nur wa.me-Chat, optional
+  Bezahllink (PayPal.Me, Stripe Payment Link) direkt in der Bestell-Nachricht
+- Abrechnung pro Händler (monatlich oder pro Anprobe) — die KI-Kosten pro
+  Bild liegen im Cent-Bereich und lassen sich sauber ummünzen
+- Für „Live-Anprobe" wie bei [Decart Anywear](https://anywear.decart.ai/)
+  (Echtzeit-Video statt Einzelbild) gibt es eine öffentliche
+  Realtime-API: https://docs.platform.decart.ai/models/realtime/virtual-try-on
+
 ## Dateien
 
-- `index.html` — komplette App (UI, Kamera, Upload, KI-Aufruf, Vergleich, Bestellung)
+- `index.html` — Kunden-App (UI, Kamera, Upload, KI-Aufruf, Vergleich, Bestellung; Artikelmodus für Händler-Links)
+- `haendler.html` — Händler-App (Artikel fotografieren, Link erzeugen, WhatsApp-Teilen)
 - `products.json` — Sortiment + Konfiguration (Bestell-Mail/-URL, Währung)
 - `img/*.svg` — Platzhalter-Produktbilder im CI

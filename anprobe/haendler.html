@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Händler · Artikel teilen · Digitale Anprobe</title>
+<meta name="description" content="Artikel im Laden fotografieren, per WhatsApp an Kund:innen schicken – die probieren ihn digital an und bestellen direkt zurück.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0E0E0E; --ink:#161616; --card:#181818; --line:#2A2A2A;
+  --paper:#F3EFE6; --muted:#9C9890; --lime:#D8FF3E; --red:#FF3B2F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--black);color:var(--paper);font-family:Inter,system-ui,sans-serif;min-height:100vh}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:99;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1,h2{font-family:'Archivo Black',Inter,sans-serif;letter-spacing:-.01em;text-transform:uppercase}
+.serif{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:500;text-transform:none}
+.label{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+header{position:sticky;top:0;z-index:50;background:rgba(14,14,14,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{max-width:820px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px}
+.bar .brand{font-family:'Archivo Black';font-size:15px;text-transform:uppercase}
+.bar .brand em{font-family:'Bodoni Moda',serif;font-style:italic;text-transform:none;color:var(--lime);font-size:16px}
+.bar .spacer{flex:1}
+.bar a{font-size:13px;color:var(--muted);text-decoration:none}
+.bar a:hover{color:var(--lime)}
+main{max-width:820px;margin:0 auto;padding:0 20px 90px}
+.hero{padding:52px 0 10px}
+.hero h1{font-size:clamp(28px,6vw,52px);line-height:.98}
+.hero h1 .lime{color:var(--lime)}
+.hero p{margin-top:16px;color:var(--muted);font-size:15.5px;line-height:1.65;max-width:600px}
+.hero p b{color:var(--paper)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;margin-top:26px}
+.panel h2{font-size:16px;margin-bottom:16px}
+label{display:block;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+input,select,textarea{width:100%;background:var(--ink);border:1px solid var(--line);color:var(--paper);border-radius:10px;padding:11px 13px;font:inherit;font-size:14px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--lime)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+@media(max-width:560px){.cols{grid-template-columns:1fr}}
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pslot{background:var(--ink);border:1px dashed var(--line);border-radius:16px;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--muted);font-size:13px;cursor:pointer;overflow:hidden;position:relative;transition:.15s;text-align:center;padding:10px}
+.pslot:hover{border-color:var(--lime)}
+.pslot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pslot .big{font-size:26px}
+.pslot .x{position:absolute;top:8px;right:8px;background:rgba(14,14,14,.8);border:1px solid var(--line);color:var(--paper);border-radius:8px;padding:4px 9px;font-size:12px;display:none}
+.pslot.filled .x{display:block}
+.btn{background:var(--lime);color:var(--black);border:none;border-radius:10px;padding:12px 20px;font-weight:600;font-size:14.5px;transition:.15s}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--paper);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--lime)}
+.btn.wa{background:#25D366;color:#0b1a10}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.result{display:none}
+.result.open{display:block}
+.linkbox{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px;font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);word-break:break-all;max-height:110px;overflow:auto;margin-top:6px}
+.note{color:var(--muted);font-size:13px;line-height:1.65;margin-top:14px}
+.note b{color:var(--paper)}
+.warn{color:var(--red)}
+.steps{display:flex;gap:10px;margin:26px 0 0;flex-wrap:wrap}
+.step{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:13px;color:var(--muted)}
+.step b{font-family:'Archivo Black';font-size:12px;color:var(--lime);margin-right:6px}
+footer{border-top:1px solid var(--line);margin-top:70px}
+footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted);font-size:12.5px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="brand">Black Rabbit <em>Studio</em></div>
+    <span class="label">Anprobe · Händler</span>
+    <div class="spacer"></div>
+    <a href="./">→ Kunden-Ansicht</a>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Foto im Laden.<br>Anprobe beim <span class="lime">Kunden.</span></h1>
+    <p>Für Einzelhändler ohne eigenen Onlineshop: Artikel mit dem Handy fotografieren, Link per <b>WhatsApp</b> an Stammkunden oder in die Gruppe schicken · „Probier das mal an, das steht dir bestimmt." Die Kund:innen probieren digital an und bestellen direkt per WhatsApp zurück.</p>
+    <div class="steps">
+      <div class="step"><b>01</b> Artikel fotografieren</div>
+      <div class="step"><b>02</b> Link per WhatsApp teilen</div>
+      <div class="step"><b>03</b> Kunde probiert an und kauft</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>1 · Artikel fotografieren</h2>
+    <div class="photos">
+      <div class="pslot" id="slotFront">
+        <span class="big">📷</span><span><b>Vorderseite</b><br>fotografieren oder hochladen</span>
+        <button class="x" data-slot="front">✕</button>
+      </div>
+      <div class="pslot" id="slotBack">
+        <span class="big">📷</span><span><b>Rückseite</b> (optional)</span>
+        <button class="x" data-slot="back">✕</button>
+      </div>
+    </div>
+    <input type="file" id="fileFront" accept="image/*" capture="environment" hidden>
+    <input type="file" id="fileBack" accept="image/*" capture="environment" hidden>
+    <p class="note">Tipp: Artikel glatt auflegen oder an einen Bügel vor eine ruhige Fläche hängen, gutes Licht. Je klarer das Foto, desto besser sitzt die digitale Anprobe.</p>
+
+    <h2 style="margin-top:30px">2 · Artikel beschreiben</h2>
+    <div class="cols">
+      <div><label>Artikelname *</label><input id="inpName" placeholder="z. B. Strickpullover Merino"></div>
+      <div><label>Preis (€) *</label><input id="inpPrice" type="number" min="0" step="0.01" placeholder="49,90"></div>
+      <div><label>Kategorie</label>
+        <select id="inpCat">
+          <option>Oberteil</option><option>Jacke</option><option>Kleid</option>
+          <option>Hose</option><option>Kopfbedeckung</option><option>Accessoire</option>
+        </select></div>
+      <div><label>Größen (Komma-getrennt)</label><input id="inpSizes" placeholder="S, M, L, XL"></div>
+    </div>
+    <label>Kurzbeschreibung (Farbe, Material · hilft der KI)</label>
+    <input id="inpDesc" placeholder="z. B. dunkelgrüner Strickpullover mit Rundhalsausschnitt">
+
+    <h2 style="margin-top:30px">3 · Dein Geschäft</h2>
+    <div class="cols">
+      <div><label>Name des Geschäfts *</label><input id="inpDealer" placeholder="z. B. Boutique Anna, Krefeld"></div>
+      <div><label>WhatsApp-Nummer für Bestellungen *</label><input id="inpWa" placeholder="z. B. 4915712345678 (ohne + und Leerzeichen)"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="btnCreate">Anprobe-Link erstellen →</button>
+    </div>
+    <p class="note warn" id="formError" style="display:none"></p>
+  </div>
+
+  <div class="panel result" id="resultPanel">
+    <h2>Fertig · Link teilen</h2>
+    <p class="note">Dieser Link enthält Foto und Artikeldaten. Wer ihn öffnet, kann den Artikel direkt mit der eigenen Handy-Kamera anprobieren und per WhatsApp bei dir bestellen.</p>
+    <div class="linkbox" id="linkBox"></div>
+    <p class="note" id="linkLen"></p>
+    <div class="actions">
+      <button class="btn wa" id="btnShareWa">WhatsApp · an Kunden oder Gruppe senden</button>
+      <button class="btn ghost" id="btnCopy">Link kopieren</button>
+      <a class="btn ghost" id="btnPreview" target="_blank" style="text-decoration:none">Vorschau öffnen</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <b style="color:var(--paper)">Prototyp-Hinweis:</b> In dieser Demo stecken Foto und Artikeldaten komprimiert direkt im Link (kein Server nötig). In der Verkaufsversion bekommt jeder Händler kurze Links (z. B. anprobe.link/a/x7f3) über ein kleines Backend · siehe README.<br>
+    Black Rabbit Studio · Digitale Anprobe für den Einzelhandel.
+  </div>
+</footer>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const photos = { front: null, back: null };   // compressed base64 (no data: prefix)
+
+/* remember dealer data for repeat use */
+$("inpDealer").value = localStorage.getItem("brs_dealer_name") || "";
+$("inpWa").value = localStorage.getItem("brs_dealer_wa") || "";
+
+function bindSlot(slot, input){
+  $(slot).addEventListener("click", e=>{
+    if(e.target.classList.contains("x")) return;
+    $(input).click();
+  });
+  $(input).addEventListener("change", e=>{
+    const f = e.target.files[0]; if(!f) return;
+    const rd = new FileReader();
+    rd.onload = ()=> compress(rd.result, b64=>{
+      const key = slot === "slotFront" ? "front" : "back";
+      photos[key] = b64;
+      const el = $(slot);
+      el.classList.add("filled");
+      let img = el.querySelector("img");
+      if(!img){ img = document.createElement("img"); el.prepend(img); }
+      img.src = "data:image/jpeg;base64," + b64;
+    });
+    rd.readAsDataURL(f);
+    e.target.value = "";
+  });
+}
+bindSlot("slotFront","fileFront");
+bindSlot("slotBack","fileBack");
+document.querySelectorAll(".pslot .x").forEach(x=> x.addEventListener("click", e=>{
+  e.stopPropagation();
+  const key = x.dataset.slot;
+  photos[key] = null;
+  const el = x.closest(".pslot");
+  el.classList.remove("filled");
+  const img = el.querySelector("img"); if(img) img.remove();
+}));
+
+function compress(dataUrl, cb){
+  // small but usable for the AI: 384px long edge, jpeg q0.6 keeps the link shareable
+  const img = new Image();
+  img.onload = ()=>{
+    const max = 384;
+    let {width:w, height:h} = img;
+    if(Math.max(w,h) > max){ const s = max/Math.max(w,h); w = Math.round(w*s); h = Math.round(h*s); }
+    const c = document.createElement("canvas"); c.width = w; c.height = h;
+    c.getContext("2d").drawImage(img,0,0,w,h);
+    cb(c.toDataURL("image/jpeg",0.6).split(",")[1]);
+  };
+  img.src = dataUrl;
+}
+
+/* base64url helpers for the link payload */
+const enc = obj => btoa(unescape(encodeURIComponent(JSON.stringify(obj))))
+  .replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+
+let currentLink = "", currentMsg = "";
+
+$("btnCreate").addEventListener("click", ()=>{
+  const name = $("inpName").value.trim();
+  const price = parseFloat(($("inpPrice").value || "").replace(",","."));
+  const dealer = $("inpDealer").value.trim();
+  const wa = $("inpWa").value.replace(/[^\d]/g,"");
+  const err = $("formError");
+  const missing = [];
+  if(!photos.front) missing.push("Foto der Vorderseite");
+  if(!name) missing.push("Artikelname");
+  if(!(price > 0)) missing.push("Preis");
+  if(!dealer) missing.push("Name des Geschäfts");
+  if(!wa) missing.push("WhatsApp-Nummer");
+  if(missing.length){
+    err.textContent = "Bitte ergänzen: " + missing.join(", ") + ".";
+    err.style.display = "block";
+    return;
+  }
+  err.style.display = "none";
+  localStorage.setItem("brs_dealer_name", dealer);
+  localStorage.setItem("brs_dealer_wa", wa);
+
+  const sizes = $("inpSizes").value.split(",").map(s=>s.trim()).filter(Boolean);
+  const payload = {
+    v: 1,
+    n: name,
+    p: price,
+    c: $("inpCat").value,
+    s: sizes.length ? sizes : ["One Size"],
+    de: $("inpDesc").value.trim(),
+    d: dealer,
+    w: wa,
+    i: photos.back ? [photos.front, photos.back] : [photos.front]
+  };
+  const base = location.origin + location.pathname.replace(/haendler\.html$/,"");
+  currentLink = base + "#a=" + enc(payload);
+  currentMsg = "Hey! 👋 Probier das doch mal an, das steht dir bestimmt:\n\n" +
+    name + " · " + price.toLocaleString("de-DE",{style:"currency",currency:"EUR"}) +
+    "\n\nEinfach Link öffnen, Foto machen, anprobieren:\n" + currentLink +
+    "\n\n– " + dealer;
+
+  $("linkBox").textContent = currentLink;
+  const kb = Math.round(currentLink.length/1024);
+  $("linkLen").innerHTML = "Link-Größe: ~" + kb + " KB. " +
+    (currentLink.length > 60000
+      ? "<span class='warn'>Sehr lang · für WhatsApp besser nur ein Foto (Vorderseite) verwenden.</span>"
+      : "Funktioniert in WhatsApp, Signal, E-Mail und jedem Browser.");
+  $("btnPreview").href = currentLink;
+  $("resultPanel").classList.add("open");
+  $("resultPanel").scrollIntoView({behavior:"smooth"});
+});
+
+$("btnShareWa").addEventListener("click", ()=>{
+  if(navigator.share){
+    navigator.share({ text: currentMsg }).catch(()=>{});
+  }else{
+    window.open("https://wa.me/?text=" + encodeURIComponent(currentMsg), "_blank");
+  }
+});
+$("btnCopy").addEventListener("click", async ()=>{
+  await navigator.clipboard.writeText(currentLink);
+  $("btnCopy").textContent = "✓ Kopiert";
+  setTimeout(()=> $("btnCopy").textContent = "Link kopieren", 1600);
+});
+</script>
+</body>
+</html>
