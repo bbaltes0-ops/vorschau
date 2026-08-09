@@ -169,7 +169,7 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
 const $ = id => document.getElementById(id);
 const TOKEN_API = localStorage.getItem("brs_live_token_api")
   || "https://b2b.dagmarvonschmaus.com/anprobe-api/api/live-token";
-const VERSION = "2026-08-09 v8";   /* steht im Setup und in der Diagnose */
+const VERSION = "2026-08-09 v9";   /* steht im Setup und in der Diagnose */
 const SESSION_S = 90;          /* Kostenbremse: Echtzeit-KI wird pro Sekunde abgerechnet */
 
 const state = { garmentBlob:null, garmentName:"", article:null, stream:null, rt:null, timer:null, left:0 };
@@ -186,6 +186,7 @@ const state = { garmentBlob:null, garmentName:"", article:null, stream:null, rt:
     const bytes = atob(a.i[0]); const arr = new Uint8Array(bytes.length);
     for(let i=0;i<bytes.length;i++) arr[i] = bytes.charCodeAt(i);
     state.garmentBlob = new Blob([arr], {type:"image/jpeg"});
+    state.garmentB64 = a.i[0];      /* liegt schon fertig vor, spart die Umwandlung */
     state.garmentName = a.n;
     /* Kunden-Landung ueber Haendler-Link: alles vorbereitet, ein Knopf reicht */
     $("garmentPanel").style.display = "none";
@@ -221,7 +222,7 @@ function pickFile(){
 }
 function onFile(e){
   const f = e.target.files[0]; if(!f) return;
-  state.garmentBlob = f; state.garmentName = f.name.replace(/\.[a-z]+$/i,"");
+  state.garmentBlob = f; state.garmentB64 = null; state.garmentName = f.name.replace(/\.[a-z]+$/i,"");
   showGarment(URL.createObjectURL(f), state.garmentName, "eigenes Produktfoto");
   readyCheck();
   if(state.rt) setGarment();   /* laufende Sitzung: Outfit sofort wechseln */
@@ -347,10 +348,23 @@ async function taktRoundMit(frame, garmentB64){
 async function startTakt(){
   if(takt.on || !state.garmentBlob || !state.stream) return;
   takt.on = true; takt.fails = 0; takt.ersteFertig = false;
-  const garmentB64 = await blobToB64(state.garmentBlob);
   chip("Spiegel, Anprobe folgt", true);
   setOverlay("Dein Spiegel läuft. Das erste Anprobe-Bild braucht ein paar Sekunden, danach erneuert es sich immer wieder von selbst.", false);
   $("overlay").classList.add("peek");
+  let garmentB64 = state.garmentB64;
+  if(!garmentB64){
+    try{
+      garmentB64 = await Promise.race([
+        blobToB64(state.garmentBlob),
+        new Promise((_,rej)=>setTimeout(()=>rej(new Error("Artikelbild konnte nicht gelesen werden.")), 8000))
+      ]);
+      state.garmentB64 = garmentB64;
+    }catch(e){
+      takt.on = false;
+      zeigeProblem("Das Artikelbild konnte nicht gelesen werden. Bitte die Seite neu laden.", "blobToB64");
+      return;
+    }
+  }
   $("btnStop").style.display = "";
   $("btnCam").style.display = "";
   laufzeitStarten();   /* kein Abschalten, nur Anzeige, wie lange der Spiegel laeuft */
@@ -564,10 +578,20 @@ async function start(){
   ]);
   await warteAufBild();                      /* iOS liefert erst nach kurzer Zeit Bildmasse */
 
-  setOverlay("Live-KI wird verbunden …", true);
+  /* Eigener Schluessel oder eigener Motor vorhanden? Dann brauchen wir den
+   * Miet-Dienst gar nicht erst zu fragen: direkt in den Takt-Spiegel. */
+  if(localStorage.getItem("brs_tryon_key") || localStorage.getItem("brs_tryon_proxy")){
+    startTakt();
+    return;
+  }
+
+  setOverlay("Verbindung wird geprüft …", true);
   let token;
   try{
-    const r = await fetch(TOKEN_API, { method:"POST" });
+    const r = await Promise.race([
+      fetch(TOKEN_API, { method:"POST" }),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error("Server antwortet nicht.")), 8000))
+    ]);
     const j = await r.json().catch(()=> ({}));
     if(r.status === 501){
       const err = new Error("Dein Spiegel läuft. Die Live-KI, die dir das Teil anzieht, wird gerade freigeschaltet. Bis dahin kannst du das Teil mit einem Foto anprobieren.");
