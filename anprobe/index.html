@@ -351,7 +351,7 @@ function enterArticleMode(a){
   state.size = p.sizes.length === 1 ? p.sizes[0] : preferredSize(p.sizes);
   fillTryCard(p);
   $("btnOtherProduct").style.display = "none";
-  $("btnOrder").textContent = "Per WhatsApp bestellen →";
+  $("btnOrder").textContent = p.whatsapp ? "Per WhatsApp bestellen →" : "Jetzt bestellen →";
   setStep(2);
   $("secPhoto").style.display = "block";
 }
