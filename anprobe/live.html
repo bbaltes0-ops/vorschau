@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><rect width=%27100%27 height=%27100%27 rx=%2720%27 fill=%27%230E0E0E%27/><path d=%27M38 22c-5 0-8 4-7 9l2 8c-6 3-9 9-9 16 0 12 11 20 26 20s26-8 26-20c0-7-3-13-9-16l2-8c1-5-2-9-7-9-4 0-7 3-8 7l-1 5a34 34 0 0 0-6 0l-1-5c-1-4-4-7-8-7z%27 fill=%27%23D8FF3E%27/></svg>">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live-Spiegel · Digitale Anprobe · Black Rabbit Studio</title>
+<meta name="description" content="Anprobe live in der Kamera: Kleidung im Video anziehen wie vor einem Spiegel – KI-gestützt in Echtzeit.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0E0E0E; --ink:#161616; --card:#181818; --line:#2A2A2A;
+  --paper:#F3EFE6; --muted:#9C9890; --lime:#D8FF3E; --red:#FF3B2F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--black);color:var(--paper);font-family:Inter,system-ui,sans-serif;min-height:100vh}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:99;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1,h2{font-family:'Archivo Black',Inter,sans-serif;letter-spacing:-.01em;text-transform:uppercase}
+.serif{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:500;text-transform:none}
+.label{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+header{position:sticky;top:0;z-index:50;background:rgba(14,14,14,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{max-width:820px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px}
+.bar .brand{font-family:'Archivo Black';font-size:15px;text-transform:uppercase}
+.bar .brand em{font-family:'Bodoni Moda',serif;font-style:italic;text-transform:none;color:var(--lime);font-size:16px}
+.bar .spacer{flex:1}
+.bar a{font-size:13px;color:var(--muted);text-decoration:none}
+.bar a:hover{color:var(--lime)}
+main{max-width:820px;margin:0 auto;padding:0 20px 80px}
+.hero{padding:40px 0 8px}
+.hero h1{font-size:clamp(28px,6vw,50px);line-height:.98}
+.hero h1 .lime{color:var(--lime)}
+.hero p{margin-top:14px;color:var(--muted);font-size:15px;line-height:1.65;max-width:600px}
+.hero p b{color:var(--paper)}
+.beta{display:inline-block;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.15em;color:var(--black);background:var(--lime);border-radius:6px;padding:3px 8px;vertical-align:middle;margin-left:10px;text-transform:uppercase}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:22px}
+.panel h2{font-size:15px;margin-bottom:12px}
+.btn{background:var(--lime);color:var(--black);border:none;border-radius:10px;padding:12px 20px;font-weight:600;font-size:14.5px;transition:.15s}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--paper);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--lime)}
+.btn.wa{background:#25D366;color:#0b1a10}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.garment{display:flex;gap:14px;align-items:center}
+.garment img{width:72px;height:90px;object-fit:cover;border-radius:10px;background:var(--paper);border:1px solid var(--line)}
+.garment .g-name{font-weight:600}
+.garment .g-meta{color:var(--muted);font-size:13px;margin-top:2px}
+.gpick{background:var(--ink);border:1px dashed var(--line);border-radius:14px;padding:20px;text-align:center;color:var(--muted);font-size:13.5px;cursor:pointer;transition:.15s}
+.gpick:hover{border-color:var(--lime)}
+.mirror{position:relative;background:var(--ink);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:22px;aspect-ratio:9/13;max-height:72vh}
+.mirror video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}
+.mirror .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:30px;background:rgba(14,14,14,.55)}
+.mirror .overlay.hidden{display:none}
+.mirror .overlay .serif{color:var(--lime);font-size:20px}
+.mirror .overlay p{color:var(--paper);font-size:14px;line-height:1.6;max-width:380px}
+.spin{width:46px;height:46px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--lime);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hud{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;pointer-events:none}
+.chip{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;background:rgba(14,14,14,.75);padding:6px 10px;border-radius:8px}
+.chip.live::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);margin-right:7px;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.note{color:var(--muted);font-size:13px;line-height:1.65;margin-top:14px}
+.note b{color:var(--paper)}
+footer{border-top:1px solid var(--line);margin-top:60px}
+footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted);font-size:12.5px;line-height:1.7}
+@media(max-width:640px){ main{padding:0 14px 60px} .panel{padding:16px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="brand">Black Rabbit <em>Studio</em></div>
+    <span class="label">Live-Spiegel</span>
+    <div class="spacer"></div>
+    <a href="./">→ Foto-Anprobe</a>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Dein Spiegel.<br>Mit <span class="lime">neuem Outfit.</span><span class="beta">Beta</span></h1>
+    <p>Kein Foto nötig: Du siehst dich <b>live in der Kamera</b> – und trägst dabei schon das neue Teil. Beweg dich, dreh dich, schau es dir von allen Seiten an. Wie eine Umkleide, nur ohne Umziehen.</p>
+  </div>
+
+  <div class="panel">
+    <h2>1 · Das Teil</h2>
+    <div id="garmentBox">
+      <div class="gpick" id="gPick">Produktfoto wählen oder hierher ziehen<br><span style="font-size:12px">JPG oder PNG · am besten Freisteller oder Bügel-Foto</span></div>
+      <input type="file" id="gFile" accept="image/*" hidden>
+    </div>
+  </div>
+
+  <div class="mirror" id="mirror">
+    <video id="liveVideo" autoplay playsinline muted></video>
+    <div class="hud">
+      <span class="chip" id="chipState">Bereit</span>
+      <span class="chip" id="chipTimer" style="display:none"></span>
+    </div>
+    <div class="overlay" id="overlay">
+      <span class="serif">Live-Anprobe</span>
+      <p id="overlayMsg">Wähle oben ein Produktfoto und starte den Spiegel. Dein Video wird zur Anprobe an die Decart-KI übertragen und nicht gespeichert.</p>
+      <button class="btn" id="btnStart" disabled>Spiegel starten</button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn ghost" id="btnStop" style="display:none">■ Stoppen</button>
+    <button class="btn ghost" id="btnExtend" style="display:none">+60 Sekunden</button>
+    <button class="btn wa" id="btnOrder" style="display:none">Per WhatsApp bestellen</button>
+  </div>
+
+  <p class="note"><b>Beta-Hinweis:</b> Die Live-Anprobe läuft über die Echtzeit-KI „Lucy" von Decart. Jede Sitzung ist auf 90 Sekunden begrenzt und lässt sich verlängern. Wenn der Dienst noch nicht freigeschaltet ist, funktioniert die <a href="./" style="color:var(--lime)">Foto-Anprobe</a> immer.</p>
+</main>
+
+<footer>
+  <div class="inner">
+    <b style="color:var(--paper)">Datenschutz:</b> Das Kamerabild wird ausschließlich für die Live-Anprobe an die Decart-API übertragen und nicht gespeichert. Ohne Start bleibt die Kamera aus.<br>
+    Black Rabbit Studio · Digitale Anprobe · Live-Spiegel (Beta)
+  </div>
+</footer>
+
+<script type="module">
+"use strict";
+const $ = id => document.getElementById(id);
+const TOKEN_API = localStorage.getItem("brs_live_token_api")
+  || "https://b2b.dagmarvonschmaus.com/anprobe-api/api/live-token";
+const SESSION_S = 90;          /* Kostenbremse: Echtzeit-KI wird pro Sekunde abgerechnet */
+
+const state = { garmentBlob:null, garmentName:"", article:null, stream:null, rt:null, timer:null, left:0 };
+
+/* ---------- Artikel aus Händler-Link (#a=…) übernehmen ---------- */
+(function fromLink(){
+  const m = location.hash.match(/#a=([A-Za-z0-9_-]+)/);
+  if(!m) return;
+  try{
+    const b64 = m[1].replace(/-/g,"+").replace(/_/g,"/");
+    const a = JSON.parse(decodeURIComponent(escape(atob(b64))));
+    if(!a.n || !a.i || !a.i.length) return;
+    state.article = a;
+    const bytes = atob(a.i[0]); const arr = new Uint8Array(bytes.length);
+    for(let i=0;i<bytes.length;i++) arr[i] = bytes.charCodeAt(i);
+    state.garmentBlob = new Blob([arr], {type:"image/jpeg"});
+    state.garmentName = a.n;
+    showGarment(URL.createObjectURL(state.garmentBlob), a.n,
+      (a.d ? a.d + " · " : "") + (a.p ? a.p.toLocaleString("de-DE",{style:"currency",currency:"EUR"}) : ""));
+    if(a.w) $("btnOrder").style.display = "";
+    readyCheck();
+  }catch(e){ /* Link kaputt -> normale Auswahl */ }
+})();
+
+function showGarment(src, name, meta){
+  $("garmentBox").innerHTML = `
+    <div class="garment">
+      <img src="${src}" alt="">
+      <div><div class="g-name"></div><div class="g-meta"></div></div>
+      <div style="flex:1"></div>
+      <button class="btn ghost" id="gChange" style="padding:8px 14px;font-size:13px">ändern</button>
+    </div>`;
+  $("garmentBox").querySelector(".g-name").textContent = name;
+  $("garmentBox").querySelector(".g-meta").textContent = meta || "";
+  $("gChange").addEventListener("click", pickFile);
+}
+
+function pickFile(){
+  let inp = $("gFile");
+  if(!inp){ inp = document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.id="gFile"; inp.hidden=true; document.body.appendChild(inp); inp.addEventListener("change", onFile); }
+  inp.click();
+}
+function onFile(e){
+  const f = e.target.files[0]; if(!f) return;
+  state.garmentBlob = f; state.garmentName = f.name.replace(/\.[a-z]+$/i,"");
+  showGarment(URL.createObjectURL(f), state.garmentName, "eigenes Produktfoto");
+  readyCheck();
+  if(state.rt) setGarment();   /* laufende Sitzung: Outfit sofort wechseln */
+}
+if($("gPick")){
+  $("gPick").addEventListener("click", pickFile);
+  $("gPick").addEventListener("dragover", e=>{ e.preventDefault(); });
+  $("gPick").addEventListener("drop", e=>{
+    e.preventDefault();
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if(f){ state.garmentBlob=f; state.garmentName=f.name.replace(/\.[a-z]+$/i,"");
+      showGarment(URL.createObjectURL(f), state.garmentName, "eigenes Produktfoto"); readyCheck(); }
+  });
+}
+$("gFile") && $("gFile").addEventListener("change", onFile);
+
+function readyCheck(){ $("btnStart").disabled = !state.garmentBlob; }
+
+/* ---------- Live-Sitzung ---------- */
+function setOverlay(msg, spinner){
+  $("overlay").classList.remove("hidden");
+  $("overlayMsg").textContent = msg;
+  let sp = $("overlay").querySelector(".spin");
+  if(spinner && !sp){ sp = document.createElement("div"); sp.className="spin"; $("overlay").prepend(sp); }
+  if(!spinner && sp) sp.remove();
+}
+function chip(txt, live){
+  $("chipState").textContent = txt;
+  $("chipState").classList.toggle("live", !!live);
+}
+
+function garmentPrompt(){
+  const cat = state.article && state.article.c;
+  const map = {
+    "Hose":"Substitute the person's pants with the garment from the image.",
+    "Kleid":"Substitute the person's outfit with the dress from the image.",
+    "Jacke":"Put the jacket from the image on the person, over their current outfit.",
+    "Kopfbedeckung":"Put the headwear from the image on the person's head."
+  };
+  return map[cat] || "Substitute the person's current top with the garment from the image.";
+}
+async function setGarment(){
+  if(!state.rt || !state.garmentBlob) return;
+  await state.rt.setImage(state.garmentBlob, { prompt: garmentPrompt() });
+}
+
+async function start(){
+  $("btnStart").disabled = true;
+  setOverlay("Kamera wird gestartet …", true);
+  try{
+    state.stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:"user", width:{ideal:720}, height:{ideal:1280} }, audio:false });
+  }catch(e){
+    setOverlay("Kamera-Zugriff nicht möglich. Bitte im Browser erlauben und erneut starten. ("+e.name+")", false);
+    $("btnStart").disabled = false; return;
+  }
+  $("liveVideo").srcObject = state.stream;   /* Vorschau, bis die KI übernimmt */
+
+  setOverlay("Live-KI wird verbunden …", true);
+  let token;
+  try{
+    const r = await fetch(TOKEN_API, { method:"POST" });
+    const j = await r.json().catch(()=> ({}));
+    if(r.status === 501){ throw new Error("Die Live-Anprobe wird gerade freigeschaltet und ist in Kürze verfügbar. Die Foto-Anprobe funktioniert jetzt schon – ein Tipp: einfach zurück zur Startseite."); }
+    if(!r.ok){ throw new Error((j.error && j.error.message) || ("Server-Fehler " + r.status)); }
+    token = j.apiKey || j.token || j.clientToken || (j.data && (j.data.apiKey || j.data.token));
+    if(!token) throw new Error("Token-Antwort unverständlich.");
+  }catch(e){ stop(); setOverlay(e.message, false); $("btnStart").disabled = false; return; }
+
+  try{
+    const sdk = await import("https://esm.sh/@decartai/sdk");
+    const createDecartClient = sdk.createDecartClient || sdk.default?.createDecartClient;
+    const models = sdk.models || sdk.default?.models;
+    const client = createDecartClient({ apiKey: token });
+    state.rt = await client.realtime.connect(state.stream, {
+      model: models && models.realtime ? models.realtime("lucy-vton-latest") : "lucy-vton-latest",
+      onRemoteStream: (remote) => { $("liveVideo").srcObject = remote; }
+    });
+    if(state.rt && state.rt.remoteStream) $("liveVideo").srcObject = state.rt.remoteStream;
+    await setGarment();
+  }catch(e){
+    stop();
+    setOverlay("Live-Verbindung fehlgeschlagen: " + (e.message || e) + " – bitte erneut versuchen oder die Foto-Anprobe nutzen.", false);
+    $("btnStart").disabled = false; return;
+  }
+
+  $("overlay").classList.add("hidden");
+  chip("Live · Spiegel", true);
+  $("btnStop").style.display = ""; $("btnExtend").style.display = "";
+  startTimer(SESSION_S);
+}
+
+function startTimer(sec){
+  state.left = sec;
+  $("chipTimer").style.display = "";
+  clearInterval(state.timer);
+  state.timer = setInterval(()=>{
+    state.left--;
+    $("chipTimer").textContent = state.left + " s";
+    if(state.left <= 0){ stop(); setOverlay("Sitzung beendet. Noch einmal anschauen? Einfach neu starten.", false); }
+  }, 1000);
+}
+$("btnExtend").addEventListener("click", ()=> startTimer(state.left + 60));
+
+function stop(){
+  clearInterval(state.timer); state.timer = null;
+  $("chipTimer").style.display = "none";
+  chip("Bereit", false);
+  if(state.rt){ try{ state.rt.disconnect && state.rt.disconnect(); }catch(_){} state.rt = null; }
+  if(state.stream){ state.stream.getTracks().forEach(t=>t.stop()); state.stream = null; }
+  $("liveVideo").srcObject = null;
+  $("btnStop").style.display = "none"; $("btnExtend").style.display = "none";
+  $("btnStart").disabled = !state.garmentBlob;
+}
+$("btnStart").addEventListener("click", start);
+$("btnStop").addEventListener("click", ()=>{ stop(); setOverlay("Gestoppt. Jederzeit wieder startbar.", false); });
+
+$("btnOrder").addEventListener("click", ()=>{
+  const a = state.article; if(!a || !a.w) return;
+  const msg = "Hallo" + (a.d ? " " + a.d : "") + "! 👋\n\nIch habe den Artikel gerade im Live-Spiegel anprobiert und möchte ihn kaufen:\n\nArtikel: " + a.n +
+    (a.p ? "\nPreis: " + a.p.toLocaleString("de-DE",{style:"currency",currency:"EUR"}) : "") +
+    "\n\n(Bestellung über die Digitale Anprobe · Live)";
+  window.open("https://wa.me/" + a.w + "?text=" + encodeURIComponent(msg), "_blank");
+});
+window.addEventListener("beforeunload", stop);
+</script>
+</body>
+</html>

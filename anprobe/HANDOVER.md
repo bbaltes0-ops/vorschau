@@ -66,20 +66,48 @@ Verkaufsversion gebaut. Alle Flows im Browser end-to-end getestet
 anprobe-produkt (Orchestrator), anprobe-frontend, anprobe-haendler,
 anprobe-backend, anprobe-vertrieb, anprobe-qa — für künftige Sessions.
 
+## Update 09.08. abends: KI getestet, Backend LIVE, Live-Spiegel gebaut
+
+- **KI live getestet** mit dem vorhandenen Key aus
+  `/Users/bb/Desktop/DvS/DvS_API_Keys.env` (`GOOGLE_AI_API_KEY`, kann auch
+  gemini-3-pro-image): Oberteil + Hose mit echtem Model-Foto + Artikel-
+  Freisteller — Ergebnisse stark (Identität/Pose/Hintergrund erhalten,
+  3-pro ~20-28s, 2.5-flash ~10-13s, sporadisch IMAGE_OTHER → Retry).
+  WICHTIGE LEHRE: Prompt muss das Produkt-BILD für maßgeblich erklären,
+  sonst folgt 2.5-flash der Textbeschreibung (falsche Farbe). Umgesetzt in
+  index.html + Widget ("The product IMAGE is the authoritative reference").
+- **Backend läuft LIVE auf dem Strato-VPS** (nicht Cloudflare): `server-vps.mjs`
+  als systemd-Dienst `anprobe-api` auf 31.70.107.0, Caddy-Route
+  `https://b2b.dagmarvonschmaus.com/anprobe-api/*`. Kurzlinks + QR
+  funktionieren (getestet: POST /api/links → 302-Redirect). Standard-Proxy
+  und Kurzlink-API sind in index.html, Widget und haendler.html als Default
+  verdrahtet (eigener Key/Proxy in localStorage hat Vorrang).
+- **Live-Spiegel (live.html, Beta)** nach Bernds Wunsch "live in der Kamera":
+  Decart Lucy VTON (Realtime-WebRTC, Vorbild Anywear-App). Aufbau nach dem
+  offiziellen MIT-Beispielrepo DecartAI/tryon-examples: Server stellt
+  kurzlebige Client-Tokens aus (POST /api/live-token, 501 solange
+  DECART_API_KEY fehlt), Browser lädt @decartai/sdk via esm.sh, connect mit
+  Modell "lucy-vton-latest", setImage(garment) — Outfitwechsel ohne
+  Reconnect. Session-Timer 90s + Verlängern (Kosten ~0,02 USD/s!).
+  Übernimmt #a=-Händler-Links inkl. WhatsApp-Bestell-CTA.
+
 ## Offene Punkte / nächste Schritte
 
-1. **KI live testen (wichtigster Punkt):** Es gab noch KEINEN Test mit echtem
-   Gemini-Key. Key von aistudio.google.com/apikey unter "⚙ KI-Setup"
-   eintragen, Prompt-Qualität pro Kategorie prüfen (alle KI-Pfade wurden mit
-   gemockten Antworten verifiziert, inkl. Fehlerpfade).
-2. **Backend deployen:** Cloudflare-Account + wrangler, siehe
-   backend/README.md. Danach: Proxy-URL im KI-Setup, Kurzlink-API im
-   Händler-Cockpit eintragen → QR-Codes für lange Links funktionieren.
+1. **Bernds 1-Minuten-Handgriff (einziger Blocker für "KI für alle"):**
+   Gemini-Key auf den VPS eintragen — genaue Befehle in backend/README.md
+   ("Der eine offene Handgriff"). Der Sicherheits-Klassifikator verhindert
+   (zu Recht), dass die Session Secrets auf fremde Server kopiert.
+   Danach lief zuletzt noch der alte Serverstand ohne den Platzhalter-Check —
+   der Restart im selben Handgriff aktiviert die neue Fassung.
+2. **Live-Spiegel freischalten (optional, Beta):** Decart-Account +
+   DECART_API_KEY in /etc/anprobe-api.env → erster echter WebRTC-Test
+   (SDK-Feldnamen der Token-Antwort und onRemoteStream-Callback sind
+   defensiv gebaut, aber ungetestet gegen die echte API).
 3. **Ordertool-Integration:** echte Produkte/Bestell-URLs in products.json;
    im eigenen Shop das Widget einbinden.
-4. **Preise bestätigen:** 0/29/79 € sind gesetzt, aber Bernds Entscheidung.
-5. **Später:** Bezahllink in Bestell-Nachricht (PayPal.Me/Stripe),
-   White-Label pro Händler, Live-Video-Anprobe (Decart Realtime-API).
+4. **Preise bestätigen:** 0/29/79 € gesetzt; Live-Spiegel wegen
+   Sekundenabrechnung als Premium-Baustein kalkulieren (docs/VERTRIEB.md).
+5. **Später:** Bezahllink in Bestell-Nachricht, White-Label pro Händler.
 
 ## Arbeitsweise mit Bernd
 

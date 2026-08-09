@@ -240,3 +240,22 @@ immer ein anfassbarer Link oder ein Bild.
 Reihenfolge-Empfehlung: erst Kurzlinks/QR (macht den Laden-Alltag rund und
 ist Voraussetzung für gedruckte Materialien), dann Bezahllink (Umsatzhebel),
 dann White-Label (skaliert auf größere Kunden und Wiederverkäufer).
+
+---
+
+## Nachtrag 09.08.2026: Live-Spiegel (Echtzeit-Video-Anprobe)
+
+Die Live-Anprobe (live.html, Decart Lucy VTON) wird pro Sekunde Live-Video
+abgerechnet (~0,02 USD/s = ~1,10 EUR pro Minute). Das ist eine ANDERE
+Kostenklasse als die Foto-Anprobe (Cent-Bereich pro Bild). Konsequenz fuer
+das Preismodell:
+
+- Foto-Anprobe: in allen Paketen enthalten (Marge bleibt gross).
+- Live-Spiegel: Premium-Baustein, z. B. +49 EUR/Monat mit 60 Live-Minuten
+  inklusive, danach Minutenpakete — ODER nur im Laden des Haendlers als
+  "Spiegel-Terminal" (iPad am Eingang, fester Minutenvorrat).
+- Verkaufsargument: "Der Spiegel, der Ihrer Kundin das neue Teil anzieht,
+  waehrend sie davorsteht" — als Erlebnis im Laden und als Premium-Feature
+  fuer die besten Kunden per Link.
+- Jede Live-Sitzung ist technisch auf 90 Sekunden begrenzt (verlaengerbar),
+  damit Kosten planbar bleiben; Limit liegt in live.html (SESSION_S).

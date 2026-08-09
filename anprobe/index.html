@@ -180,6 +180,7 @@ footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted
     <div class="brand">Black Rabbit <em>Studio</em></div>
     <span class="label">Digitale Anprobe · Demo</span>
     <div class="spacer"></div>
+    <a class="iconbtn" href="live.html" style="text-decoration:none" id="lnkLive">◉ Live-Spiegel</a>
     <a class="iconbtn" href="haendler.html" style="text-decoration:none" id="lnkDealer">Für Händler</a>
     <button class="iconbtn" id="btnSettings" title="KI-Einstellungen">⚙ KI-Setup</button>
   </div>
@@ -304,6 +305,8 @@ const state = {
   resultDataUrl: null,
   stream: null, busy: false
 };
+/* Standard-Proxy: Anprobe-API auf dem Black-Rabbit-Server (Key liegt NUR dort) */
+const DEFAULT_PROXY = "https://b2b.dagmarvonschmaus.com/anprobe-api/api/generate";
 const settings = {
   get key(){ return localStorage.getItem("brs_tryon_key") || ""; },
   set key(v){ localStorage.setItem("brs_tryon_key", v); },
@@ -343,6 +346,7 @@ function enterArticleMode(a){
     "<b>" + escapeHtml(p.name) + "</b>. Mach ein Foto mit deiner Handy-Kamera – die KI zeigt dir, wie es an dir aussieht. Bestellen geht danach direkt per WhatsApp.";
   $("secProducts").style.display = "none";
   $("lnkDealer").style.display = "none";
+  $("lnkLive").href = "live.html" + location.hash;   /* Artikel in den Live-Spiegel mitnehmen */
   state.product = p;
   state.size = p.sizes.length === 1 ? p.sizes[0] : preferredSize(p.sizes);
   fillTryCard(p);
@@ -389,6 +393,7 @@ function enterCatalogMode(k){
     "</b> zum Anprobieren geschickt. Wähle eines aus und mach ein Foto – die KI zeigt dir, wie es an dir aussieht. Bestellen geht danach direkt per WhatsApp.";
   $("secProducts").style.display = "none";
   $("lnkDealer").style.display = "none";
+  $("lnkLive").href = "live.html" + location.hash;   /* Artikel in den Live-Spiegel mitnehmen */
   $("btnOtherProduct").style.display = "none";
   $("secItems").style.display = "block";
   renderItemBar(state.catalogItems);
@@ -565,12 +570,6 @@ const LOADING_LINES = [
 ];
 async function startTryOn(){
   if(state.busy || !state.product || !state.photoDataUrl) return;
-  if(!settings.proxy && !settings.key){
-    showError("KI noch nicht verbunden",
-      "Für die Demo oben rechts unter <b>⚙ KI-Setup</b> einen Gemini API-Key eintragen (kostenlos unter aistudio.google.com/apikey) – oder die Proxy-URL des Ordertools hinterlegen.");
-    openSettings();
-    return;
-  }
   state.busy = true; hideError();
   $("resultActions").style.display = "none";
   const stage = $("stage");
@@ -631,7 +630,9 @@ function buildPrompt(p){
   const region = regions[p.category] || "Replace the person's current upper body clothing with the product.";
   const extra = (p.imagesB64 && p.imagesB64.length > 1)
     ? " The third image shows the back side of the same product for reference." : "";
-  return "Virtual try-on task. The first image shows a person. The second image shows a product: " + item + "." + extra + " " +
+  return "Virtual try-on task. The first image shows a person. The second image shows the exact product to try on (" + item + ")." + extra + " " +
+    "The product IMAGE is the authoritative reference: reproduce exactly THIS garment – its true color, pattern, cut, fabric and details as shown in the product image. " +
+    "If the text description conflicts with the product image, always follow the image. " +
     region + " Keep the person's face, identity, hair, skin tone, body shape, pose and the photo background EXACTLY the same. " +
     "The product must fit naturally with realistic fabric drape, folds, lighting and shadows consistent with the original photo. " +
     "Photorealistic output, same framing and resolution as the first image. Output only the final image.";
@@ -646,13 +647,17 @@ async function callGemini(prompt, personB64, productImgs){
     contents: [{ parts }],
     generationConfig: { responseModalities: ["IMAGE","TEXT"] }
   };
+  /* Reihenfolge: eigener Proxy-Eintrag > eigener Key (Demo) > Standard-Proxy (Black-Rabbit-Server) */
   let url, headers = {"Content-Type":"application/json"};
   if(settings.proxy){
     url = settings.proxy;
     body.model = settings.model;
-  }else{
+  }else if(settings.key){
     url = "https://generativelanguage.googleapis.com/v1beta/models/" + settings.model + ":generateContent";
     headers["x-goog-api-key"] = settings.key;
+  }else{
+    url = DEFAULT_PROXY;
+    body.model = settings.model;
   }
   const res = await fetch(url, {method:"POST", headers, body: JSON.stringify(body)});
   if(!res.ok){

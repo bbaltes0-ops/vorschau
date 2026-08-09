@@ -1,4 +1,53 @@
-# Anprobe-API · Backend einrichten (Cloudflare Worker, kostenlos)
+# Anprobe-API · Backend
+
+> **STAND 09.08.2026: Das Backend LAEUFT bereits live** — als Node-Dienst auf dem
+> Strato-VPS (31.70.107.0, derselbe Server wie das DvS-Kundenportal), erreichbar
+> unter `https://b2b.dagmarvonschmaus.com/anprobe-api/`. Datei: `server-vps.mjs`
+> (systemd-Unit `anprobe-api`, Konfiguration `/etc/anprobe-api.env`,
+> Caddy-Route `/anprobe-api/*` in `/etc/caddy/Caddyfile`).
+> Kurzlinks + QR funktionieren sofort. Die Cloudflare-Variante unten
+> (`worker.js`) bleibt als Alternative dokumentiert.
+
+## Der eine offene Handgriff (macht Bernd, 1 Minute)
+
+Der Gemini-Key darf aus Sicherheitsgruenden nicht automatisch uebertragen
+werden. Einmalig am Mac im Terminal:
+
+```bash
+ssh -i ~/.ssh/dvs_vps_rsa root@31.70.107.0
+```
+
+Dann auf dem Server (Key steht in `/Users/bb/Desktop/DvS/DvS_API_Keys.env`
+unter `GOOGLE_AI_API_KEY`):
+
+```bash
+nano /etc/anprobe-api.env    # Zeile GEMINI_API_KEY=HIER_KEY_EINTRAGEN ersetzen
+systemctl restart anprobe-api
+```
+
+Danach ist die KI-Anprobe fuer alle Besucher live — die Apps zeigen ohne
+weitere Einstellungen echte Ergebnisse (Standard-Proxy ist verdrahtet).
+
+**Optional, fuer die Live-Video-Anprobe (live.html):** zusaetzlich eine Zeile
+`DECART_API_KEY=...` in dieselbe Datei (Key von https://platform.decart.ai,
+Abrechnung ~0,02 USD pro Sekunde Live-Video), wieder `systemctl restart anprobe-api`.
+
+## Endpunkte (live)
+
+| Endpunkt | Zweck |
+|---|---|
+| `POST /anprobe-api/api/generate` | Gemini-Proxy (Key nur auf dem Server) |
+| `POST /anprobe-api/api/links` | Kurzlink anlegen `{url}` -> `{url}` |
+| `GET  /anprobe-api/a/<id>` | Kurzlink-Weiterleitung (QR-Ziel) |
+| `POST /anprobe-api/api/live-token` | kurzlebiger Decart-Token fuer den Live-Spiegel |
+| `GET  /anprobe-api/api/stats?key=` | Anproben-Zaehler pro Haendler/Monat |
+
+Haendler-Schluessel anlegen (auf dem Server): Eintrag in
+`/var/lib/anprobe-api/keys.json`, Form `{"<schluessel>": {"name": "Boutique X"}}`.
+
+---
+
+# Alternative: Cloudflare Worker (kostenlos, worker.js)
 
 Dieses Backend ist der Server-Teil der digitalen Anprobe. Es uebernimmt vier Aufgaben:
 

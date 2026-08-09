@@ -34,7 +34,10 @@
     cta: attr("data-cta") || "Jetzt kaufen",
     brand: attr("data-brand") || ""
   };
-  function proxyUrl() { return cfg.proxy || lsGet("brs_tryon_proxy"); }
+  /* Standard-Proxy: Anprobe-API auf dem Black-Rabbit-Server (Key liegt NUR dort).
+   * Reihenfolge: data-proxy des Shops > eigener Proxy-Eintrag > eigener Key > Standard-Proxy. */
+  var DEFAULT_PROXY = "https://b2b.dagmarvonschmaus.com/anprobe-api/api/generate";
+  function proxyUrl() { return cfg.proxy || lsGet("brs_tryon_proxy") || (lsGet("brs_tryon_key") ? "" : DEFAULT_PROXY); }
   function apiKey() { return lsGet("brs_tryon_key"); }
   function modelName() { return cfg.model || lsGet("brs_tryon_model") || "gemini-3-pro-image"; }
 
@@ -754,7 +757,9 @@
   /* ---------- Gemini-Aufruf (Muster wie index.html) ---------- */
   function buildPrompt() {
     var item = S.productName ? (S.productName + ". ") : "";
-    return "Virtual try-on task. The first image shows a person. The second image shows a clothing product: " + item +
+    return "Virtual try-on task. The first image shows a person. The second image shows the exact clothing product to try on: " + item +
+      "The product IMAGE is the authoritative reference: reproduce exactly THIS garment - its true color, pattern, cut, fabric and details as shown in the product image. " +
+      "If any text conflicts with the product image, always follow the image. " +
       "Put the product on the person, replacing the corresponding piece of their current outfit " +
       "(top, bottom, dress, jacket, headwear or accessory - whichever matches the product). " +
       "Keep the person's face, identity, hair, skin tone, body shape, pose and the photo background EXACTLY the same. " +

@@ -936,11 +936,8 @@ async function setupQr(zone, link){
     render(link, "Kund:innen scannen den Code mit der Handy-Kamera und landen direkt bei der Anprobe.");
     return;
   }
-  const api = (localStorage.getItem("brs_shortlink_api") || "").trim();
-  if(!api){
-    status.textContent = "QR-Code braucht die Live-Version mit Kurzlinks – der WhatsApp-Versand funktioniert jetzt schon.";
-    return;
-  }
+  /* Standard: Kurzlink-Dienst auf dem Black-Rabbit-Server; eigener Eintrag hat Vorrang */
+  const api = (localStorage.getItem("brs_shortlink_api") || "https://b2b.dagmarvonschmaus.com/anprobe-api/api/links").trim();
   status.textContent = "Kurzlink wird erstellt …";
   try{
     const res = await fetch(api, {
