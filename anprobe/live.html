@@ -255,7 +255,7 @@ function chip(txt, live){
  * automatisch im Takt. Rechnet auf dem eigenen Motor (Grafikserver) oder
  * uebergangsweise ueber den Google-Weg. Braucht KEIN Decart. ---------- */
 const DEFAULT_PROXY = "https://b2b.dagmarvonschmaus.com/anprobe-api/api/generate";
-const takt = { on:false, fails:0 };
+const takt = { on:false, fails:0, ersteFertig:false };
 
 function blobToB64(blob){
   return new Promise((res,rej)=>{
@@ -339,26 +339,34 @@ async function taktRoundMit(frame, garmentB64){
 }
 async function startTakt(){
   if(takt.on || !state.garmentBlob || !state.stream) return;
-  takt.on = true; takt.fails = 0;
+  takt.on = true; takt.fails = 0; takt.ersteFertig = false;
   const garmentB64 = await blobToB64(state.garmentBlob);
   chip("Spiegel, Anprobe folgt", true);
-  setOverlay("Dein Spiegel läuft. Das erste Anprobe-Bild wird gerechnet, es erscheint hier automatisch.", false);
+  setOverlay("Dein Spiegel läuft. Das erste Anprobe-Bild braucht etwa 15 Sekunden, danach erneuert es sich immer wieder von selbst.", false);
   $("overlay").classList.add("peek");
   $("btnStop").style.display = "";
   $("btnCam").style.display = "";
   laufzeitStarten();   /* kein Abschalten, nur Anzeige, wie lange der Spiegel laeuft */
   while(takt.on && state.stream){
+    let sek = 0;
+    const ticker = setInterval(()=>{
+      sek++;
+      chip(takt.ersteFertig ? "Neues Bild " + sek + " s" : "Bild wird gerechnet " + sek + " s", true);
+    }, 1000);
     try{
       const b64 = await taktRound(garmentB64);
+      clearInterval(ticker);
       if(!takt.on) break;
       $("taktImg").src = "data:image/png;base64," + b64;
       $("taktImg").style.display = "block";
       $("liveVideo").classList.add("pip");
       $("overlay").classList.add("hidden");
-      chip("Takt-Spiegel, erneuert sich", true);
+      chip("Spiegel läuft", true);
+      takt.ersteFertig = true;
       takt.fails = 0;
       await new Promise(res => setTimeout(res, 2000));
     }catch(e){
+      clearInterval(ticker);
       /* Aussetzer sind normal: der Spiegel laeuft weiter und versucht es erneut.
        * Nur ein abgelehnter Schluessel ist ein echter Stopp-Grund. */
       const abgelehnt = /Schlüssel|403/i.test(e.message || "");
