@@ -60,11 +60,25 @@ alle Links bleiben unveraendert, Google wird nicht mehr angefragt.
 ein SSH-Tunnel vom VPS zum Grafikserver oder eine Firewall-Freigabe nur
 fuer die VPS-Adresse 31.70.107.0.)
 
-## Status und naechster Schritt
+## Status: GETESTET am 09.08.2026 (auf Bernds Mac, Apple M4)
 
-- motor_server.py liegt bereit (Entwurf, beim ersten Start auf echter
-  GPU gemeinsam testen).
-- Die Weiche im VPS-Backend (OWN_ENGINE_URL) ist eingebaut.
-- ENTSCHEIDUNG BERND: welcher der drei Grafikserver-Wege. Danach richte
-  ich alles ein und teste die Qualitaet gegen die bisherigen Ergebnisse
-  mit echten DvS-Artikeln.
+Der Motor LAEUFT und die Qualitaet ueberzeugt:
+- Testumgebung: /Volumes/Crucial X9/anprobe-motor/ (venv Python 3.12,
+  Gewichte in fashn-vton-1.5/weights, 2,1 GB)
+- Capri-Top auf Model-Foto: Streifen, CAPRI-Schriftzug, Halstuch, Pose,
+  Hintergrund alles korrekt - in der Ware-Treue besser als der
+  Gemini-Vergleich. Hosen-Test ebenso sauber (Oberteil unveraendert).
+- motor_server.py ist im exakten App-Format getestet (Kategorie-Erkennung
+  aus dem Prompt funktioniert). Der Entwurfs-Hinweis kann weg.
+- Apple-Grafik (MPS): float64-Stelle in tryon_mmdit.py Zeile 35 muss auf
+  float32 gepatcht werden (im lokalen Klon erledigt; bei NVIDIA nicht noetig).
+- Mac-Ordner mit ._-Begleitdateien: nach dem Gewichte-Download
+  `find . -name "._*" -delete` (exFAT-Platte), sonst stolpert das Skript.
+
+ABER: ~7 Minuten pro Anprobe auf dem M4 (16 GB, float32). Fuer wartende
+Kunden ungeeignet (Browser-Timeout ~5 Minuten). Der Mac ist damit der
+Beweis- und Qualitaets-Testmotor. Fuer den Kundenbetrieb braucht es die
+Grafikserver-Entscheidung (oben, drei Wege) - dort rechnet dasselbe Modell
+in 5-10 Sekunden, und EINE Zeile OWN_ENGINE_URL auf dem VPS schaltet alle
+Anproben auf den eigenen Motor um. anprobe-motor.service (systemd) und
+com.anprobe.motor*.plist (macOS) liegen bereit.

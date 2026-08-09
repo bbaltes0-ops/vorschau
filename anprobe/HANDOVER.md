@@ -66,6 +66,17 @@ Verkaufsversion gebaut. Alle Flows im Browser end-to-end getestet
 anprobe-produkt (Orchestrator), anprobe-frontend, anprobe-haendler,
 anprobe-backend, anprobe-vertrieb, anprobe-qa — für künftige Sessions.
 
+## EIGENER MOTOR: ERSTER LAUF ERFOLGREICH (09.08. nachts)
+
+FASHN VTON 1.5 laeuft auf Bernds Mac (M4, MPS): Capri-Top und Palazzo-Hose
+auf Model-Foto in ueberzeugender Qualitaet (Ware-Treue besser als Gemini),
+motor_server.py im App-Format getestet. ~7 Min/Bild auf dem M4 = nur
+Testmotor; Kundenbetrieb braucht GPU-Server (5-10s). Details, Patches und
+Fallen: backend/eigener-motor/README-EIGENER-MOTOR.md. Vergleichsbild:
+Scratchpad motor_vergleich.jpg der Session. NICHT in den oeffentlichen
+Kundenweg verdrahtet (Timeout-Gefahr) - das passiert erst mit Bernds
+Grafikserver-Entscheidung.
+
 ## STRATEGIEWECHSEL (Bernd, 09.08. nachts): EIGENER MOTOR statt Miet-KI
 
 Bernd will die KI besitzen, nicht mieten. Ergebnis der Recherche:

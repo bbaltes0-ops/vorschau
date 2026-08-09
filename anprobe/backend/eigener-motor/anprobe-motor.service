@@ -1,0 +1,15 @@
+# Eigener Motor der Digitalen Anprobe: systemd-Unit fuer den Grafikserver (Linux)
+# Installation:
+#   cp anprobe-motor.service /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now anprobe-motor
+[Unit]
+Description=Anprobe Eigener Motor (FASHN VTON 1.5)
+After=network.target
+
+[Service]
+ExecStart=/opt/anprobe-motor/venv/bin/python /opt/anprobe-motor/motor_server.py --weights /opt/anprobe-motor/fashn-vton-1.5/weights --port 8821
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
