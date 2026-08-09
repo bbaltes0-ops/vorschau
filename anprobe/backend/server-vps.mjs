@@ -190,7 +190,8 @@ async function handleGenerate(req, res, cors) {
   try {
     if (ownEngine) {
       /* EIGENER MOTOR (FASHN VTON auf eigenem Grafikserver) hat Vorrang:
-       * gleiches Anfrage- und Antwortformat, kein Google noetig. */
+       * gleiches Anfrage- und Antwortformat, kein Google noetig.
+       * Das Feld "takt" bleibt hier drin: es schaltet den Schnellmodus. */
       delete body.model;
       upstream = await fetch(ownEngine, {
         method: "POST",
@@ -198,6 +199,8 @@ async function handleGenerate(req, res, cors) {
         body: JSON.stringify(body),
       });
     } else if (hasKey) {
+      /* Google kennt das Feld "takt" nicht und wuerde die Anfrage ablehnen */
+      delete body.takt;
       upstream = await fetch(
         "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent",
         {
@@ -211,6 +214,7 @@ async function handleGenerate(req, res, cors) {
        * reichen (mac-key-proxy.py, Port 8811) — der Key bleibt auf dem Mac.
        * Traegt Bernd den Key hier ein, hat der direkte Weg oben Vorrang. */
       body.model = model;
+      delete body.takt;
       upstream = await fetch("http://127.0.0.1:8811/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

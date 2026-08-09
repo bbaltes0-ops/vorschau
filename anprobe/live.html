@@ -31,6 +31,16 @@ header{position:sticky;top:0;z-index:50;background:rgba(14,14,14,.88);backdrop-f
 .bar .spacer{flex:1}
 .bar a{font-size:13px;color:var(--muted);text-decoration:none}
 .bar a:hover{color:var(--lime)}
+.iconbtn{background:none;border:1px solid var(--line);color:var(--paper);border-radius:10px;padding:7px 11px;font-size:12.5px}
+.iconbtn:hover{border-color:var(--lime)}
+dialog{background:var(--card);color:var(--paper);border:1px solid var(--line);border-radius:20px;padding:26px;max-width:480px;width:92%}
+dialog::backdrop{background:rgba(0,0,0,.7)}
+dialog h2{font-size:17px;margin-bottom:8px}
+dialog p{color:var(--muted);font-size:13.5px;line-height:1.6;margin-bottom:14px}
+dialog label{display:block;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:12px 0 6px}
+dialog input{width:100%;background:var(--ink);border:1px solid var(--line);color:var(--paper);border-radius:10px;padding:11px 13px;font:inherit;font-size:14px}
+dialog input:focus{outline:none;border-color:var(--lime)}
+.dlgactions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
 main{max-width:820px;margin:0 auto;padding:0 20px 80px}
 .hero{padding:40px 0 8px}
 .hero h1{font-size:clamp(28px,6vw,50px);line-height:.98}
@@ -85,8 +95,20 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
     <span class="label">Live-Spiegel</span>
     <div class="spacer"></div>
     <a href="./">→ Foto-Anprobe</a>
+    <button class="iconbtn" id="btnKey" title="Eigenen Schlüssel eintragen">Setup</button>
   </div>
 </header>
+
+<dialog id="dlgKey">
+  <h2>Spiegel sofort testen</h2>
+  <p>Trag hier deinen eigenen Google-Schlüssel ein, dann rechnet der Spiegel sofort. Der Schlüssel bleibt nur auf diesem Gerät und wird an keinen Server übertragen. Sobald der eigene Grafikserver läuft, kannst du ihn wieder löschen.</p>
+  <label>Google-Schlüssel</label>
+  <input type="password" id="inpKey" placeholder="AIza...">
+  <div class="dlgactions">
+    <button class="btn ghost" id="btnKeyDel">Löschen</button>
+    <button class="btn" id="btnKeySave">Speichern</button>
+  </div>
+</dialog>
 
 <main>
   <div class="hero" id="hero">
@@ -258,7 +280,6 @@ async function taktRound(garmentB64){
   const frame = captureFrameB64();
   if(!frame) throw new Error("Kein Kamerabild.");
   const body = {
-    takt: true,   /* Spiegel-Modus: eigener Motor rechnet schnell statt maximal fein */
     contents: [{ parts: [
       { text: taktPrompt() },
       { inline_data: { mime_type: "image/jpeg", data: frame } },
@@ -269,11 +290,12 @@ async function taktRound(garmentB64){
   const ownKey = localStorage.getItem("brs_tryon_key") || "";
   const ownProxy = localStorage.getItem("brs_tryon_proxy") || "";
   let url, headers = { "Content-Type": "application/json" };
-  if(ownProxy){ url = ownProxy; body.model = "gemini-2.5-flash-image"; }
+  if(ownProxy){ url = ownProxy; body.model = "gemini-2.5-flash-image"; body.takt = true; }
   else if(ownKey){
+    /* Direkt zu Google: KEINE Zusatzfelder, sonst weist Google die Anfrage ab */
     url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent";
     headers["x-goog-api-key"] = ownKey;
-  } else { url = DEFAULT_PROXY; body.model = "gemini-2.5-flash-image"; }
+  } else { url = DEFAULT_PROXY; body.model = "gemini-2.5-flash-image"; body.takt = true; }
   const r = await fetch(url, { method:"POST", headers, body: JSON.stringify(body) });
   if(r.status === 503){ const e = new Error("einrichtung"); e.setup = true; throw e; }
   if(!r.ok){
@@ -482,6 +504,18 @@ function stop(){
   $("btnStop").style.display = "none"; $("btnExtend").style.display = "none";
   $("btnStart").disabled = !state.garmentBlob;
 }
+$("btnKey").addEventListener("click", ()=>{
+  $("inpKey").value = localStorage.getItem("brs_tryon_key") || "";
+  $("dlgKey").showModal();
+});
+$("btnKeySave").addEventListener("click", ()=>{
+  const v = $("inpKey").value.trim();
+  if(v) localStorage.setItem("brs_tryon_key", v); else localStorage.removeItem("brs_tryon_key");
+  $("dlgKey").close();
+});
+$("btnKeyDel").addEventListener("click", ()=>{
+  localStorage.removeItem("brs_tryon_key"); $("inpKey").value = ""; $("dlgKey").close();
+});
 $("btnStart").addEventListener("click", start);
 /* Schon beim Laden warnen, wenn der Link in einer App steckt statt im Browser */
 if(inAppBrowser()) showBrowserHint();
