@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><rect width=%27100%27 height=%27100%27 rx=%2720%27 fill=%27%230E0E0E%27/><path d=%27M38 22c-5 0-8 4-7 9l2 8c-6 3-9 9-9 16 0 12 11 20 26 20s26-8 26-20c0-7-3-13-9-16l2-8c1-5-2-9-7-9-4 0-7 3-8 7l-1 5a34 34 0 0 0-6 0l-1-5c-1-4-4-7-8-7z%27 fill=%27%23D8FF3E%27/></svg>">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ATELIER NORD · Wollmantel „Ostsee“ — Widget-Demo</title>
+<meta name="description" content="Fiktive Shop-Produktseite zur Demonstration des Anprobe-Widgets von Black Rabbit Studio.">
+<meta name="robots" content="noindex">
+<style>
+/* Bewusst NICHT Black-Rabbit-CI: neutraler, heller Beispiel-Shop.
+   So sieht man, dass sich das dunkle Widget in fremde Shops einfügt. */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;background:#fbfaf8;color:#2b2b2b;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+
+/* Erklär-Balken (gehört zur Demo, nicht zum Shop) */
+.demobar{background:#1f2733;color:#e8ecf1;font-size:13px;padding:9px 16px;text-align:center}
+.demobar b{color:#d8ff3e;font-weight:600}
+
+/* Shop-Header */
+header.shop{border-bottom:1px solid #e6e1d8;background:#fff}
+.shopbar{max-width:1040px;margin:0 auto;padding:22px 20px;display:flex;align-items:baseline;gap:28px;flex-wrap:wrap}
+.logo{font-family:Georgia,"Times New Roman",serif;font-size:22px;letter-spacing:.28em;font-weight:400}
+nav{display:flex;gap:20px;font-size:13.5px;color:#6b6b6b;flex-wrap:wrap}
+nav a:hover{color:#2b2b2b}
+.cart{margin-left:auto;font-size:13.5px;color:#6b6b6b;border:1px solid #e6e1d8;border-radius:999px;padding:6px 14px;background:#fff}
+.cart b{color:#2b2b2b}
+
+main{max-width:1040px;margin:0 auto;padding:34px 20px 90px}
+.crumbs{font-size:12.5px;color:#9a948a;margin-bottom:22px}
+
+/* Hauptprodukt */
+.pgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:start}
+@media(max-width:760px){.pgrid{grid-template-columns:1fr;gap:26px}}
+.pimg{background:#fff;border:1px solid #e6e1d8;border-radius:6px;overflow:hidden;position:relative}
+.pimg img{width:100%;display:block}
+.pimg .try-tag{position:absolute;left:12px;bottom:12px;background:rgba(31,39,51,.85);color:#fff;font-size:11.5px;padding:6px 11px;border-radius:999px;pointer-events:none}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:30px;line-height:1.2}
+.subtitle{color:#8a8378;font-size:14px;margin-top:6px}
+.price{font-size:22px;margin:18px 0 4px}
+.taxnote{font-size:12px;color:#9a948a;margin-bottom:20px}
+.desc{font-size:14.5px;color:#4a4a4a;margin-bottom:22px;max-width:46ch}
+.sizes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.sz{border:1px solid #d8d2c6;background:#fff;border-radius:4px;padding:9px 15px;font-size:13.5px;color:#4a4a4a}
+.sz.on{border-color:#2b2b2b;color:#2b2b2b;font-weight:600}
+.addcart{display:block;width:100%;max-width:340px;background:#2b2b2b;color:#fff;border:none;border-radius:4px;padding:15px 20px;font-size:14.5px;letter-spacing:.04em}
+.addcart:hover{background:#111}
+.trynote{margin-top:14px;font-size:13px;color:#6b6b6b}
+.trynote b{color:#2b2b2b}
+.facts{margin-top:26px;border-top:1px solid #e6e1d8;padding-top:16px;font-size:13px;color:#6b6b6b}
+.facts li{list-style:none;padding:4px 0}
+
+/* Weitere Produkte */
+.more{margin-top:64px}
+.more h2{font-family:Georgia,serif;font-weight:400;font-size:21px;margin-bottom:18px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.card{background:#fff;border:1px solid #e6e1d8;border-radius:6px;overflow:hidden}
+.card img{width:100%;display:block}
+.card .ci{padding:13px 15px 16px}
+.card .cn{font-size:14.5px}
+.card .cp{font-size:14px;color:#6b6b6b;margin-top:4px}
+
+footer.shop{border-top:1px solid #e6e1d8;background:#fff}
+.finner{max-width:1040px;margin:0 auto;padding:26px 20px;font-size:12.5px;color:#9a948a;line-height:1.8}
+
+/* Demo-Toast für das Bestell-Event */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#1f2733;color:#fff;font-size:13.5px;padding:12px 20px;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:.25s;z-index:2147483001;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="demobar">So sieht das Widget in Ihrem Shop aus — <b>Klick aufs Produkt oder den runden Button unten rechts.</b></div>
+
+<header class="shop">
+  <div class="shopbar">
+    <a class="logo" href="#">ATELIER NORD</a>
+    <nav>
+      <a href="#">Neuheiten</a>
+      <a href="#">Damen</a>
+      <a href="#">Herren</a>
+      <a href="#">Sale</a>
+    </nav>
+    <button class="cart" id="cartBtn">Warenkorb · <b id="cartCount">0</b></button>
+  </div>
+</header>
+
+<main>
+  <div class="crumbs">Startseite / Damen / Mäntel</div>
+
+  <div class="pgrid">
+    <div class="pimg">
+      <img id="heroImg" alt="Wollmantel Ostsee in Camel"
+        data-anprobe="Wollmantel „Ostsee“|249"
+        src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='750' viewBox='0 0 600 750'><rect width='600' height='750' fill='%23efe9df'/><line x1='300' y1='58' x2='300' y2='96' stroke='%23b9b0a2' stroke-width='5'/><path d='M300 44c-14 0-22 10-18 20' fill='none' stroke='%23b9b0a2' stroke-width='5' stroke-linecap='round'/><path d='M132 128 H468 v10 H132 z' fill='%23b9b0a2'/><path d='M232 168 Q300 148 368 168 L402 188 L436 636 Q300 664 164 636 L198 188 Z' fill='%23c9a26f' stroke='%23a07f4f' stroke-width='5'/><path d='M198 188 L150 206 L128 470 L176 462 Z' fill='%23bd955f' stroke='%23a07f4f' stroke-width='5'/><path d='M402 188 L450 206 L472 470 L424 462 Z' fill='%23bd955f' stroke='%23a07f4f' stroke-width='5'/><path d='M268 172 L300 320 L300 172 Z' fill='%23b58d5b'/><path d='M332 172 L300 320 L300 172 Z' fill='%23a8814e'/><rect x='214' y='396' width='172' height='30' rx='6' fill='%23a8814e'/><rect x='276' y='400' width='48' height='22' rx='4' fill='%23efe9df'/><line x1='300' y1='330' x2='300' y2='394' stroke='%23a07f4f' stroke-width='4'/><line x1='298' y1='430' x2='292' y2='632' stroke='%23a07f4f' stroke-width='4'/><circle cx='316' cy='352' r='5' fill='%23806038'/><circle cx='316' cy='380' r='5' fill='%23806038'/></svg>">
+      <span class="try-tag">Zum Anprobieren anklicken</span>
+    </div>
+
+    <div>
+      <h1>Wollmantel „Ostsee“</h1>
+      <div class="subtitle">Camel · Schurwoll-Mix · gerader Schnitt</div>
+      <div class="price">249,00&nbsp;€</div>
+      <div class="taxnote">inkl. MwSt., zzgl. Versand</div>
+      <p class="desc">Klassischer Mantel mit Reverskragen, Bindegürtel und leicht verlängerter Silhouette. Wärmt ohne aufzutragen — der Begleiter für Küste und Stadt.</p>
+      <div class="sizes" id="sizes">
+        <button class="sz">XS</button>
+        <button class="sz on">S</button>
+        <button class="sz">M</button>
+        <button class="sz">L</button>
+        <button class="sz">XL</button>
+      </div>
+      <button class="addcart" id="addCart">In den Warenkorb</button>
+      <p class="trynote">Unsicher? <b>Klicken Sie auf das Produktbild</b> — die digitale Anprobe zeigt den Mantel an Ihnen, direkt hier auf der Seite.</p>
+      <ul class="facts">
+        <li>— 70 % Schurwolle, 30 % Polyamid</li>
+        <li>— Zwei Eingrifftaschen, innen eine Brusttasche</li>
+        <li>— Kostenloser Versand ab 100 €, Rückgabe innerhalb 30 Tagen</li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="more">
+    <h2>Passt dazu</h2>
+    <div class="mgrid">
+      <div class="card">
+        <img alt="Bluse Marais in Weiß"
+          data-anprobe="Bluse „Marais“|89"
+          src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='750' viewBox='0 0 600 750'><rect width='600' height='750' fill='%23e8edf1'/><line x1='300' y1='70' x2='300' y2='108' stroke='%23aeb6bd' stroke-width='5'/><path d='M300 56c-14 0-22 10-18 20' fill='none' stroke='%23aeb6bd' stroke-width='5' stroke-linecap='round'/><path d='M140 140 H460 v10 H140 z' fill='%23aeb6bd'/><path d='M240 190 Q300 172 360 190 L398 214 L412 560 Q300 588 188 560 L202 214 Z' fill='%23fdfdfc' stroke='%23c4c9ce' stroke-width='5'/><path d='M202 214 L162 236 L172 400 L212 388 Z' fill='%23f2f3f4' stroke='%23c4c9ce' stroke-width='5'/><path d='M398 214 L438 236 L428 400 L388 388 Z' fill='%23f2f3f4' stroke='%23c4c9ce' stroke-width='5'/><path d='M272 192 L300 246 L328 192 L300 204 Z' fill='%23e3e6e9' stroke='%23c4c9ce' stroke-width='4'/><line x1='300' y1='246' x2='300' y2='556' stroke='%23c4c9ce' stroke-width='4'/><circle cx='300' cy='286' r='5' fill='%23aeb6bd'/><circle cx='300' cy='340' r='5' fill='%23aeb6bd'/><circle cx='300' cy='394' r='5' fill='%23aeb6bd'/><circle cx='300' cy='448' r='5' fill='%23aeb6bd'/><circle cx='300' cy='502' r='5' fill='%23aeb6bd'/></svg>">
+        <div class="ci">
+          <div class="cn">Bluse „Marais“</div>
+          <div class="cp">89,00&nbsp;€</div>
+        </div>
+      </div>
+      <div class="card">
+        <img alt="Pullover Fjord in Rauchblau"
+          data-anprobe="Pullover „Fjord“|119"
+          src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='750' viewBox='0 0 600 750'><rect width='600' height='750' fill='%23f1ede6'/><line x1='300' y1='70' x2='300' y2='108' stroke='%23bcb4a6' stroke-width='5'/><path d='M300 56c-14 0-22 10-18 20' fill='none' stroke='%23bcb4a6' stroke-width='5' stroke-linecap='round'/><path d='M140 140 H460 v10 H140 z' fill='%23bcb4a6'/><path d='M238 196 Q300 178 362 196 L404 222 L416 548 Q300 576 184 548 L196 222 Z' fill='%237a8ba6' stroke='%235d6e8a' stroke-width='5'/><path d='M196 222 L152 248 L166 430 L208 416 Z' fill='%236e7f9b' stroke='%235d6e8a' stroke-width='5'/><path d='M404 222 L448 248 L434 430 L392 416 Z' fill='%236e7f9b' stroke='%235d6e8a' stroke-width='5'/><path d='M262 196 Q300 226 338 196 Q300 214 262 196 Z' fill='%235d6e8a'/><path d='M188 522 Q300 550 412 522 L410 548 Q300 576 190 548 Z' fill='%236e7f9b'/><line x1='214' y1='534' x2='214' y2='556' stroke='%235d6e8a' stroke-width='3'/><line x1='244' y1='540' x2='244' y2='562' stroke='%235d6e8a' stroke-width='3'/><line x1='274' y1='544' x2='274' y2='566' stroke='%235d6e8a' stroke-width='3'/><line x1='304' y1='545' x2='304' y2='567' stroke='%235d6e8a' stroke-width='3'/><line x1='334' y1='543' x2='334' y2='565' stroke='%235d6e8a' stroke-width='3'/><line x1='364' y1='539' x2='364' y2='561' stroke='%235d6e8a' stroke-width='3'/><line x1='394' y1='532' x2='394' y2='554' stroke='%235d6e8a' stroke-width='3'/></svg>">
+        <div class="ci">
+          <div class="cn">Pullover „Fjord“</div>
+          <div class="cp">119,00&nbsp;€</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="shop">
+  <div class="finner">
+    ATELIER NORD ist ein fiktiver Beispiel-Shop. Diese Seite demonstriert das Anprobe-Widget von Black Rabbit Studio:
+    Eingebunden mit einem einzigen Script-Tag, Produktbilder per <code>data-anprobe</code>-Attribut markiert.
+    Das Widget bringt sein eigenes Design mit (Shadow DOM) und lässt den Shop unangetastet.
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+(function(){
+  // Shop-Demo-Logik: Größenwahl, Warenkorb-Zähler, Bestell-Event des Widgets.
+  var count = 0;
+  var cartCount = document.getElementById("cartCount");
+  var toast = document.getElementById("toast");
+  var toastTimer = null;
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 4200);
+  }
+  function addToCart(name){
+    count++;
+    cartCount.textContent = String(count);
+    showToast("In den Warenkorb gelegt: " + name);
+  }
+
+  document.getElementById("sizes").addEventListener("click", function(e){
+    var b = e.target.closest(".sz");
+    if(!b) return;
+    this.querySelectorAll(".sz").forEach(function(x){ x.classList.remove("on"); });
+    b.classList.add("on");
+  });
+
+  document.getElementById("addCart").addEventListener("click", function(){
+    addToCart("Wollmantel „Ostsee“");
+  });
+  document.getElementById("cartBtn").addEventListener("click", function(){
+    showToast("Warenkorb: " + count + " Artikel (Demo)");
+  });
+
+  // Der Kauf-Button im Widget löst dieses Event aus — der Shop entscheidet, was passiert.
+  document.addEventListener("anprobe:order", function(e){
+    addToCart(e.detail.product + (e.detail.priceFormatted ? " · " + e.detail.priceFormatted : ""));
+  });
+})();
+</script>
+
+<!-- Das Anprobe-Widget: EIN Script-Tag, fertig.
+     Ohne data-proxy läuft es im Demo-Modus (Gemini-Key aus localStorage "brs_tryon_key"). -->
+<script src="anprobe-widget.js"
+        data-brand="ATELIER NORD"
+        data-cta="In den Warenkorb"></script>
+
+</body>
+</html>

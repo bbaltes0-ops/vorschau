@@ -2,9 +2,10 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><rect width=%27100%27 height=%27100%27 rx=%2720%27 fill=%27%230E0E0E%27/><path d=%27M38 22c-5 0-8 4-7 9l2 8c-6 3-9 9-9 16 0 12 11 20 26 20s26-8 26-20c0-7-3-13-9-16l2-8c1-5-2-9-7-9-4 0-7 3-8 7l-1 5a34 34 0 0 0-6 0l-1-5c-1-4-4-7-8-7z%27 fill=%27%23D8FF3E%27/></svg>">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Händler · Artikel teilen · Digitale Anprobe</title>
-<meta name="description" content="Artikel im Laden fotografieren, per WhatsApp an Kund:innen schicken – die probieren ihn digital an und bestellen direkt zurück.">
+<title>Händler-Cockpit · Digitale Anprobe</title>
+<meta name="description" content="Artikel im Laden fotografieren, per WhatsApp oder QR-Code an Kund:innen schicken – die probieren digital an und bestellen direkt zurück.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,7 +57,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--lime)}
 .btn.ghost{background:none;color:var(--paper);border:1px solid var(--line)}
 .btn.ghost:hover{border-color:var(--lime)}
 .btn.wa{background:#25D366;color:#0b1a10}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;align-items:center}
 .result{display:none}
 .result.open{display:block}
 .linkbox{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px;font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);word-break:break-all;max-height:110px;overflow:auto;margin-top:6px}
@@ -66,6 +67,33 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--lime)}
 .steps{display:flex;gap:10px;margin:26px 0 0;flex-wrap:wrap}
 .step{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:13px;color:var(--muted)}
 .step b{font-family:'Archivo Black';font-size:12px;color:var(--lime);margin-right:6px}
+.editflag{display:none;background:rgba(216,255,62,.07);border:1px solid var(--lime);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.6;margin-bottom:18px;color:var(--paper)}
+.editflag.on{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.editflag .grow{flex:1;min-width:180px}
+/* Meine Artikel */
+.arow{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.arow:last-child{border-bottom:none}
+.arow input[type=checkbox]{width:18px;height:18px;flex:none;accent-color:var(--lime);cursor:pointer}
+.thumb{width:52px;height:64px;border-radius:8px;object-fit:cover;background:var(--ink);border:1px solid var(--line);flex:none}
+.thumb.empty{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;text-align:center;line-height:1.3;padding:4px}
+.ameta{flex:1;min-width:150px}
+.ameta .an{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.ameta .ad{color:var(--muted);font-size:12px;margin-top:3px}
+.abtns{display:flex;gap:6px;flex:none;margin-left:auto}
+.abtn{background:none;border:1px solid var(--line);color:var(--paper);border-radius:8px;padding:6px 11px;font-size:12px;transition:.15s}
+.abtn:hover{border-color:var(--lime)}
+.abtn.del:hover{border-color:var(--red);color:var(--red)}
+.abtn:disabled{opacity:.35;cursor:not-allowed}
+/* QR */
+.qrzone{margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+.qrcanvas{display:none;width:min(240px,70vw);height:auto;border-radius:12px;border:1px solid var(--line);background:#fff;margin-top:12px}
+/* Einstellungen */
+details.settings{margin-top:26px;border:1px solid var(--line);border-radius:14px;background:none}
+details.settings summary{list-style:none;cursor:pointer;padding:14px 18px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+details.settings summary::-webkit-details-marker{display:none}
+details.settings summary::before{content:"▸ ";color:var(--lime)}
+details.settings[open] summary::before{content:"▾ "}
+details.settings .inner{padding:0 18px 18px}
 footer{border-top:1px solid var(--line);margin-top:70px}
 footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted);font-size:12.5px;line-height:1.7}
 </style>
@@ -84,15 +112,20 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
 <main>
   <div class="hero">
     <h1>Foto im Laden.<br>Anprobe beim <span class="lime">Kunden.</span></h1>
-    <p>Für Einzelhändler ohne eigenen Onlineshop: Artikel mit dem Handy fotografieren, Link per <b>WhatsApp</b> an Stammkunden oder in die Gruppe schicken · „Probier das mal an, das steht dir bestimmt." Die Kund:innen probieren digital an und bestellen direkt per WhatsApp zurück.</p>
+    <p>Für Einzelhändler ohne eigenen Onlineshop: Artikel mit dem Handy fotografieren, Link per <b>WhatsApp</b> an Stammkunden oder in die Gruppe schicken · „Probier das mal an, das steht dir bestimmt." Die Kund:innen probieren digital an und bestellen direkt per WhatsApp zurück. Jeder Artikel wird hier gespeichert – so schickst du ihn morgen mit zwei Fingertipps an die nächste Kundin.</p>
     <div class="steps">
       <div class="step"><b>01</b> Artikel fotografieren</div>
-      <div class="step"><b>02</b> Link per WhatsApp teilen</div>
+      <div class="step"><b>02</b> Link per WhatsApp oder QR teilen</div>
       <div class="step"><b>03</b> Kunde probiert an und kauft</div>
     </div>
   </div>
 
-  <div class="panel">
+  <div class="panel" id="formPanel">
+    <div class="editflag" id="editFlag">
+      <span class="grow">Du bearbeitest <b id="editName"></b>. Speichern über „Anprobe-Link erstellen".</span>
+      <button class="abtn" id="btnEditCancel">Abbrechen</button>
+    </div>
+
     <h2>1 · Artikel fotografieren</h2>
     <div class="photos">
       <div class="pslot" id="slotFront">
@@ -144,13 +177,66 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
       <button class="btn ghost" id="btnCopy">Link kopieren</button>
       <a class="btn ghost" id="btnPreview" target="_blank" style="text-decoration:none">Vorschau öffnen</a>
     </div>
+    <div class="qrzone" id="qrZoneSingle">
+      <span class="label">QR-Code für den Laden</span>
+      <p class="note qrstatus"></p>
+      <canvas class="qrcanvas"></canvas>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn ghost qrdl" style="display:none">QR für den Ladentresen (PNG)</button>
+      </div>
+    </div>
   </div>
+
+  <div class="panel" id="articlesPanel">
+    <h2>Meine Artikel</h2>
+    <p class="note" style="margin-top:0">Alles, was du hier erstellst, bleibt auf diesem Gerät gespeichert. Einzelne Artikel kannst du jederzeit erneut teilen oder anpassen. Hake mehrere an, um einen kleinen Katalog zu verschicken.</p>
+    <p class="note warn" id="quotaNote" style="display:none"></p>
+    <div id="artList"></div>
+    <div class="actions">
+      <button class="btn" id="btnCatalog" disabled>Katalog-Link erstellen →</button>
+      <span class="note" id="selCount" style="margin-top:0"></span>
+    </div>
+    <p class="note warn" id="catError" style="display:none"></p>
+  </div>
+
+  <div class="panel result" id="catalogPanel">
+    <h2>Fertig · Katalog teilen</h2>
+    <p class="note">Ein Link, mehrere Teile: Deine Kund:innen blättern durch die Auswahl, probieren jedes Teil digital an und bestellen per WhatsApp bei dir.</p>
+    <div class="linkbox" id="catLinkBox"></div>
+    <p class="note" id="catLinkLen"></p>
+    <div class="actions">
+      <button class="btn wa" id="btnCatShareWa">WhatsApp · Auswahl senden</button>
+      <button class="btn ghost" id="btnCatCopy">Link kopieren</button>
+      <a class="btn ghost" id="btnCatPreview" target="_blank" style="text-decoration:none">Vorschau öffnen</a>
+    </div>
+    <div class="qrzone" id="qrZoneCatalog">
+      <span class="label">QR-Code für den Laden</span>
+      <p class="note qrstatus"></p>
+      <canvas class="qrcanvas"></canvas>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn ghost qrdl" style="display:none">QR für den Ladentresen (PNG)</button>
+      </div>
+    </div>
+  </div>
+
+  <details class="settings">
+    <summary>Einstellungen</summary>
+    <div class="inner">
+      <label>Kurzlink-API-URL</label>
+      <input id="inpShortApi" placeholder="kommt mit der Live-Version">
+      <p class="note">Wenn hier eine Adresse steht, werden lange Anprobe-Links automatisch gekürzt – erst dann passen sie in einen QR-Code. Ohne Eintrag funktioniert der Versand per WhatsApp ganz normal.</p>
+      <div class="actions">
+        <button class="btn ghost" id="btnSaveApi">Speichern</button>
+        <span class="note" id="apiSaved" style="margin-top:0;display:none">✓ Gespeichert</span>
+      </div>
+    </div>
+  </details>
 </main>
 
 <footer>
   <div class="inner">
-    <b style="color:var(--paper)">Prototyp-Hinweis:</b> In dieser Demo stecken Foto und Artikeldaten komprimiert direkt im Link (kein Server nötig). In der Verkaufsversion bekommt jeder Händler kurze Links (z. B. anprobe.link/a/x7f3) über ein kleines Backend · siehe README.<br>
-    Black Rabbit Studio · Digitale Anprobe für den Einzelhandel.
+    <b style="color:var(--paper)">Prototyp-Hinweis:</b> In dieser Demo stecken Foto und Artikeldaten komprimiert direkt im Link (kein Server nötig). In der Verkaufsversion bekommt jeder Händler kurze Links (z. B. anprobe.link/a/x7f3) über ein kleines Backend – die Adresse dafür trägst du oben in den Einstellungen ein.<br>
+    Black Rabbit Studio · Digitale Anprobe für den Einzelhandel · <a href="verkauf.html" style="color:var(--lime)">Preise und Pakete →</a>
   </div>
 </footer>
 
@@ -158,11 +244,26 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
 "use strict";
 const $ = id => document.getElementById(id);
 const photos = { front: null, back: null };   // compressed base64 (no data: prefix)
+let editingId = null;
 
 /* remember dealer data for repeat use */
 $("inpDealer").value = localStorage.getItem("brs_dealer_name") || "";
 $("inpWa").value = localStorage.getItem("brs_dealer_wa") || "";
+$("inpShortApi").value = localStorage.getItem("brs_shortlink_api") || "";
 
+/* ---------- photo slots ---------- */
+function setSlotImage(slotId, b64){
+  const el = $(slotId);
+  let img = el.querySelector("img");
+  if(b64){
+    el.classList.add("filled");
+    if(!img){ img = document.createElement("img"); el.prepend(img); }
+    img.src = "data:image/jpeg;base64," + b64;
+  }else{
+    el.classList.remove("filled");
+    if(img) img.remove();
+  }
+}
 function bindSlot(slot, input){
   $(slot).addEventListener("click", e=>{
     if(e.target.classList.contains("x")) return;
@@ -174,11 +275,7 @@ function bindSlot(slot, input){
     rd.onload = ()=> compress(rd.result, b64=>{
       const key = slot === "slotFront" ? "front" : "back";
       photos[key] = b64;
-      const el = $(slot);
-      el.classList.add("filled");
-      let img = el.querySelector("img");
-      if(!img){ img = document.createElement("img"); el.prepend(img); }
-      img.src = "data:image/jpeg;base64," + b64;
+      setSlotImage(slot, b64);
     });
     rd.readAsDataURL(f);
     e.target.value = "";
@@ -190,9 +287,7 @@ document.querySelectorAll(".pslot .x").forEach(x=> x.addEventListener("click", e
   e.stopPropagation();
   const key = x.dataset.slot;
   photos[key] = null;
-  const el = x.closest(".pslot");
-  el.classList.remove("filled");
-  const img = el.querySelector("img"); if(img) img.remove();
+  setSlotImage(key === "front" ? "slotFront" : "slotBack", null);
 }));
 
 function compress(dataUrl, cb){
@@ -209,17 +304,103 @@ function compress(dataUrl, cb){
   img.src = dataUrl;
 }
 
-/* base64url helpers for the link payload */
+/* ---------- link payload helpers ---------- */
 const enc = obj => btoa(unescape(encodeURIComponent(JSON.stringify(obj))))
   .replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const linkBase = ()=> location.origin + location.pathname.replace(/haendler\.html$/,"");
+const fmtPrice = p => p.toLocaleString("de-DE",{style:"currency",currency:"EUR"});
 
+/* ---------- article store (localStorage "brs_articles") ---------- */
+function loadArticles(){
+  try{ const a = JSON.parse(localStorage.getItem("brs_articles") || "[]"); return Array.isArray(a) ? a : []; }
+  catch(_){ return []; }
+}
+function isQuota(e){
+  return !!e && (e.name === "QuotaExceededError" || e.name === "NS_ERROR_DOM_QUOTA_REACHED" || e.code === 22 || e.code === 1014);
+}
+function persistArticles(list){
+  let stripped = false, removed = false;
+  for(;;){
+    try{
+      localStorage.setItem("brs_articles", JSON.stringify(list));
+      return { ok:true, stripped, removed };
+    }catch(e){
+      if(!isQuota(e)) return { ok:false, stripped, removed };
+      const asc = [...list].sort((a,b)=> a.ts - b.ts);
+      const newestTs = list.length ? Math.max(...list.map(a=>a.ts)) : 0;
+      // free space: drop photos of the oldest articles first (keep the newest intact as long as possible)
+      const victim = asc.find(a=> a.i && a.i.length && a.ts !== newestTs) || asc.find(a=> a.i && a.i.length);
+      if(victim){ victim.i = []; stripped = true; continue; }
+      if(list.length){ list.splice(list.indexOf(asc[0]), 1); removed = true; continue; }
+      return { ok:false, stripped, removed };
+    }
+  }
+}
+function saveArticle(art){
+  const list = loadArticles();
+  const idx = list.findIndex(a=> a.id === art.id);
+  if(idx >= 0) list[idx] = art; else list.push(art);
+  const res = persistArticles(list);
+  const note = $("quotaNote");
+  if(res.stripped || res.removed){
+    note.textContent = "Der Speicher deines Browsers war voll. " +
+      (res.removed
+        ? "Die ältesten Artikel wurden entfernt, damit der neue Platz hat."
+        : "Bei den ältesten Artikeln wurden die Fotos entfernt – zum erneuten Teilen einfach neu fotografieren.");
+    note.style.display = "block";
+  }else if(res.ok){
+    note.style.display = "none";
+  }
+  if(!res.ok){
+    note.textContent = "Der Artikel konnte nicht gespeichert werden – der Speicher deines Browsers ist voll. Der Link oben funktioniert trotzdem.";
+    note.style.display = "block";
+  }
+  return res.ok;
+}
+const uid = ()=> Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+
+/* ---------- dealer data ---------- */
+function readDealer(){
+  return {
+    dealer: $("inpDealer").value.trim(),
+    wa: $("inpWa").value.replace(/[^\d]/g,"")
+  };
+}
+
+/* ---------- single-article link ---------- */
 let currentLink = "", currentMsg = "";
+function buildSingleLink(art, dealer, wa){
+  const payload = {
+    v: 1, n: art.n, p: art.p, c: art.c, s: art.s, de: art.de,
+    d: dealer, w: wa, i: art.i
+  };
+  const link = linkBase() + "#a=" + enc(payload);
+  const msg = "Hey! 👋 Probier das doch mal an, das steht dir bestimmt:\n\n" +
+    art.n + " · " + fmtPrice(art.p) +
+    "\n\nEinfach Link öffnen, Foto machen, anprobieren:\n" + link +
+    "\n\n– " + dealer;
+  return { link, msg };
+}
+function showSingleResult(art, dealer, wa){
+  const { link, msg } = buildSingleLink(art, dealer, wa);
+  currentLink = link; currentMsg = msg;
+  $("linkBox").textContent = link;
+  const kb = Math.round(link.length/1024);
+  $("linkLen").innerHTML = "Link-Größe: ~" + kb + " KB. " +
+    (link.length > 60000
+      ? "<span class='warn'>Sehr lang · für WhatsApp besser nur ein Foto (Vorderseite) verwenden.</span>"
+      : "Funktioniert in WhatsApp, Signal, E-Mail und jedem Browser.");
+  $("btnPreview").href = link;
+  $("catalogPanel").classList.remove("open");
+  $("resultPanel").classList.add("open");
+  $("resultPanel").scrollIntoView({behavior:"smooth"});
+  setupQr($("qrZoneSingle"), link);
+}
 
 $("btnCreate").addEventListener("click", ()=>{
   const name = $("inpName").value.trim();
   const price = parseFloat(($("inpPrice").value || "").replace(",","."));
-  const dealer = $("inpDealer").value.trim();
-  const wa = $("inpWa").value.replace(/[^\d]/g,"");
+  const { dealer, wa } = readDealer();
   const err = $("formError");
   const missing = [];
   if(!photos.front) missing.push("Foto der Vorderseite");
@@ -237,33 +418,21 @@ $("btnCreate").addEventListener("click", ()=>{
   localStorage.setItem("brs_dealer_wa", wa);
 
   const sizes = $("inpSizes").value.split(",").map(s=>s.trim()).filter(Boolean);
-  const payload = {
-    v: 1,
+  const existing = editingId ? loadArticles().find(a=> a.id === editingId) : null;
+  const art = {
+    id: existing ? existing.id : uid(),
+    ts: existing ? existing.ts : Date.now(),
     n: name,
     p: price,
     c: $("inpCat").value,
     s: sizes.length ? sizes : ["One Size"],
     de: $("inpDesc").value.trim(),
-    d: dealer,
-    w: wa,
     i: photos.back ? [photos.front, photos.back] : [photos.front]
   };
-  const base = location.origin + location.pathname.replace(/haendler\.html$/,"");
-  currentLink = base + "#a=" + enc(payload);
-  currentMsg = "Hey! 👋 Probier das doch mal an, das steht dir bestimmt:\n\n" +
-    name + " · " + price.toLocaleString("de-DE",{style:"currency",currency:"EUR"}) +
-    "\n\nEinfach Link öffnen, Foto machen, anprobieren:\n" + currentLink +
-    "\n\n– " + dealer;
-
-  $("linkBox").textContent = currentLink;
-  const kb = Math.round(currentLink.length/1024);
-  $("linkLen").innerHTML = "Link-Größe: ~" + kb + " KB. " +
-    (currentLink.length > 60000
-      ? "<span class='warn'>Sehr lang · für WhatsApp besser nur ein Foto (Vorderseite) verwenden.</span>"
-      : "Funktioniert in WhatsApp, Signal, E-Mail und jedem Browser.");
-  $("btnPreview").href = currentLink;
-  $("resultPanel").classList.add("open");
-  $("resultPanel").scrollIntoView({behavior:"smooth"});
+  saveArticle(art);
+  stopEditing();
+  renderArticles();
+  showSingleResult(art, dealer, wa);
 });
 
 $("btnShareWa").addEventListener("click", ()=>{
@@ -278,6 +447,520 @@ $("btnCopy").addEventListener("click", async ()=>{
   $("btnCopy").textContent = "✓ Kopiert";
   setTimeout(()=> $("btnCopy").textContent = "Link kopieren", 1600);
 });
+
+/* ---------- editing ---------- */
+function startEditing(art){
+  editingId = art.id;
+  $("inpName").value = art.n;
+  $("inpPrice").value = art.p;
+  $("inpCat").value = art.c;
+  $("inpSizes").value = (art.s || []).join(", ");
+  $("inpDesc").value = art.de || "";
+  photos.front = art.i && art.i[0] ? art.i[0] : null;
+  photos.back = art.i && art.i[1] ? art.i[1] : null;
+  setSlotImage("slotFront", photos.front);
+  setSlotImage("slotBack", photos.back);
+  $("editName").textContent = "„" + art.n + "“";
+  $("editFlag").classList.add("on");
+  $("formPanel").scrollIntoView({behavior:"smooth"});
+}
+function stopEditing(){
+  editingId = null;
+  $("editFlag").classList.remove("on");
+}
+$("btnEditCancel").addEventListener("click", ()=>{
+  stopEditing();
+  photos.front = photos.back = null;
+  setSlotImage("slotFront", null);
+  setSlotImage("slotBack", null);
+  ["inpName","inpPrice","inpSizes","inpDesc"].forEach(id=> $(id).value = "");
+});
+
+/* ---------- Meine Artikel ---------- */
+const selected = new Set();
+function updateCatalogBtn(){
+  const n = selected.size;
+  $("btnCatalog").disabled = n === 0;
+  $("selCount").textContent = n === 0 ? "" : (n === 1 ? "1 Artikel ausgewählt" : n + " Artikel ausgewählt");
+}
+function renderArticles(){
+  const list = loadArticles().sort((a,b)=> b.ts - a.ts);
+  const ids = new Set(list.map(a=>a.id));
+  [...selected].forEach(id=>{ if(!ids.has(id)) selected.delete(id); });
+  const wrap = $("artList");
+  wrap.textContent = "";
+  if(!list.length){
+    const p = document.createElement("p");
+    p.className = "note";
+    p.textContent = "Noch keine Artikel gespeichert. Sobald du oben einen Anprobe-Link erstellst, taucht der Artikel hier auf.";
+    wrap.appendChild(p);
+    updateCatalogBtn();
+    return;
+  }
+  for(const art of list){
+    const row = document.createElement("div");
+    row.className = "arow";
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = selected.has(art.id);
+    cb.disabled = !(art.i && art.i.length);
+    cb.title = cb.disabled ? "Ohne Foto nicht teilbar" : "Für Katalog auswählen";
+    cb.addEventListener("change", ()=>{
+      if(cb.checked) selected.add(art.id); else selected.delete(art.id);
+      updateCatalogBtn();
+    });
+    row.appendChild(cb);
+
+    if(art.i && art.i.length){
+      const img = document.createElement("img");
+      img.className = "thumb";
+      img.alt = art.n;
+      img.src = "data:image/jpeg;base64," + art.i[0];
+      row.appendChild(img);
+    }else{
+      const ph = document.createElement("div");
+      ph.className = "thumb empty";
+      ph.textContent = "kein Foto";
+      row.appendChild(ph);
+    }
+
+    const meta = document.createElement("div");
+    meta.className = "ameta";
+    const an = document.createElement("div");
+    an.className = "an";
+    an.textContent = art.n;
+    const ad = document.createElement("div");
+    ad.className = "ad";
+    ad.textContent = fmtPrice(art.p) + " · " + new Date(art.ts).toLocaleDateString("de-DE") +
+      (art.i && art.i.length ? "" : " · Foto nicht mehr gespeichert – zum Teilen neu fotografieren");
+    meta.appendChild(an); meta.appendChild(ad);
+    row.appendChild(meta);
+
+    const btns = document.createElement("div");
+    btns.className = "abtns";
+
+    const bShare = document.createElement("button");
+    bShare.className = "abtn";
+    bShare.textContent = "Teilen";
+    bShare.disabled = !(art.i && art.i.length);
+    bShare.addEventListener("click", ()=> shareArticleAgain(art));
+    btns.appendChild(bShare);
+
+    const bEdit = document.createElement("button");
+    bEdit.className = "abtn";
+    bEdit.textContent = "Bearbeiten";
+    bEdit.addEventListener("click", ()=> startEditing(art));
+    btns.appendChild(bEdit);
+
+    const bDel = document.createElement("button");
+    bDel.className = "abtn del";
+    bDel.textContent = "Löschen";
+    bDel.addEventListener("click", ()=>{
+      if(!confirm("„" + art.n + "“ wirklich löschen?")) return;
+      const rest = loadArticles().filter(a=> a.id !== art.id);
+      persistArticles(rest);
+      selected.delete(art.id);
+      if(editingId === art.id) stopEditing();
+      renderArticles();
+    });
+    btns.appendChild(bDel);
+
+    row.appendChild(btns);
+    wrap.appendChild(row);
+  }
+  updateCatalogBtn();
+}
+function needDealer(errEl){
+  const { dealer, wa } = readDealer();
+  if(!dealer || !wa){
+    errEl.textContent = "Trag oben unter „Dein Geschäft“ noch Name und WhatsApp-Nummer ein.";
+    errEl.style.display = "block";
+    $("formPanel").scrollIntoView({behavior:"smooth"});
+    return null;
+  }
+  errEl.style.display = "none";
+  localStorage.setItem("brs_dealer_name", dealer);
+  localStorage.setItem("brs_dealer_wa", wa);
+  return { dealer, wa };
+}
+function shareArticleAgain(art){
+  const d = needDealer($("catError"));
+  if(!d) return;
+  showSingleResult(art, d.dealer, d.wa);
+}
+
+/* ---------- Mini-Katalog ---------- */
+let catLink = "", catMsg = "";
+$("btnCatalog").addEventListener("click", ()=>{
+  const list = loadArticles().sort((a,b)=> b.ts - a.ts);
+  const items = list.filter(a=> selected.has(a.id) && a.i && a.i.length);
+  if(!items.length) return;
+  const d = needDealer($("catError"));
+  if(!d) return;
+
+  const payload = {
+    v: 2, d: d.dealer, w: d.wa,
+    items: items.map(a=> ({ n:a.n, p:a.p, c:a.c, s:a.s, de:a.de, i:a.i }))
+  };
+  catLink = linkBase() + "#k=" + enc(payload);
+  const count = items.length === 1 ? "ein Teil" : items.length + " Teile";
+  catMsg = "Hey! 👋 Ich habe dir " + count + " zum Anprobieren rausgesucht:\n\n" +
+    items.map(a=> "· " + a.n + " – " + fmtPrice(a.p)).join("\n") +
+    "\n\nEinfach Link öffnen, Foto machen, alles anprobieren:\n" + catLink +
+    "\n\n– " + d.dealer;
+
+  $("catLinkBox").textContent = catLink;
+  const kb = Math.round(catLink.length/1024);
+  $("catLinkLen").innerHTML = "Link-Größe: ~" + kb + " KB. " +
+    (catLink.length > 60000
+      ? "<span class='warn'>Sehr lang · für WhatsApp besser weniger Artikel auswählen.</span>"
+      : "Funktioniert in WhatsApp, Signal, E-Mail und jedem Browser.");
+  $("btnCatPreview").href = catLink;
+  $("catalogPanel").classList.add("open");
+  $("catalogPanel").scrollIntoView({behavior:"smooth"});
+  setupQr($("qrZoneCatalog"), catLink);
+});
+$("btnCatShareWa").addEventListener("click", ()=>{
+  if(navigator.share){
+    navigator.share({ text: catMsg }).catch(()=>{});
+  }else{
+    window.open("https://wa.me/?text=" + encodeURIComponent(catMsg), "_blank");
+  }
+});
+$("btnCatCopy").addEventListener("click", async ()=>{
+  await navigator.clipboard.writeText(catLink);
+  $("btnCatCopy").textContent = "✓ Kopiert";
+  setTimeout(()=> $("btnCatCopy").textContent = "Link kopieren", 1600);
+});
+
+/* ---------- Einstellungen ---------- */
+$("btnSaveApi").addEventListener("click", ()=>{
+  const v = $("inpShortApi").value.trim();
+  if(v) localStorage.setItem("brs_shortlink_api", v);
+  else localStorage.removeItem("brs_shortlink_api");
+  $("apiSaved").style.display = "inline";
+  setTimeout(()=> $("apiSaved").style.display = "none", 1600);
+});
+
+/* ---------- QR-Code (Byte-Modus, ECC M, qrcodegen-Ansatz) ---------- */
+const QR = (()=>{
+  // ECC level M, versions 1..40
+  const ECC_PER_BLOCK = [10,16,26,18,24,16,18,22,22,26,30,22,22,24,24,28,28,26,26,26,26,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28];
+  const NUM_BLOCKS    = [1,1,1,2,2,4,4,4,5,5,5,8,9,9,10,10,11,13,14,16,17,17,18,20,21,23,25,26,28,29,31,33,35,37,38,40,43,45,47,49];
+
+  function rawDataModules(ver){
+    let r = (16*ver + 128)*ver + 64;
+    if(ver >= 2){
+      const na = Math.floor(ver/7) + 2;
+      r -= (25*na - 10)*na - 55;
+      if(ver >= 7) r -= 36;
+    }
+    return r;
+  }
+  const dataCodewords = ver => Math.floor(rawDataModules(ver)/8) - ECC_PER_BLOCK[ver-1]*NUM_BLOCKS[ver-1];
+
+  /* GF(256) with reducing polynomial 0x11D */
+  function gfMul(x,y){
+    let z = 0;
+    for(let i=7;i>=0;i--){
+      z = (z << 1) ^ ((z >>> 7) * 0x11D);
+      z ^= ((y >>> i) & 1) * x;
+    }
+    return z;
+  }
+  function rsDivisor(degree){
+    const result = [];
+    for(let i=0;i<degree-1;i++) result.push(0);
+    result.push(1);
+    let root = 1;
+    for(let i=0;i<degree;i++){
+      for(let j=0;j<result.length;j++){
+        result[j] = gfMul(result[j], root);
+        if(j+1 < result.length) result[j] ^= result[j+1];
+      }
+      root = gfMul(root, 2);
+    }
+    return result;
+  }
+  function rsRemainder(data, divisor){
+    const result = divisor.map(()=>0);
+    for(const b of data){
+      const factor = b ^ result.shift();
+      result.push(0);
+      divisor.forEach((coef,i)=> result[i] ^= gfMul(coef, factor));
+    }
+    return result;
+  }
+
+  function encode(text){
+    const data = new TextEncoder().encode(text);
+    /* pick smallest version that fits (byte mode) */
+    let ver = 0;
+    for(let v=1;v<=40;v++){
+      const cc = v < 10 ? 8 : 16;
+      if(4 + cc + data.length*8 <= dataCodewords(v)*8){ ver = v; break; }
+    }
+    if(!ver) return null;
+
+    /* bit stream: mode, count, data, terminator, padding */
+    const bits = [];
+    const push = (val,n)=>{ for(let i=n-1;i>=0;i--) bits.push((val >>> i) & 1); };
+    push(4, 4);
+    push(data.length, ver < 10 ? 8 : 16);
+    for(const b of data) push(b, 8);
+    const cap = dataCodewords(ver)*8;
+    push(0, Math.min(4, cap - bits.length));
+    if(bits.length % 8) push(0, 8 - bits.length % 8);
+    for(let pad=0xEC; bits.length < cap; pad ^= 0xEC ^ 0x11) push(pad, 8);
+    const dataCw = new Uint8Array(bits.length/8);
+    bits.forEach((b,i)=>{ dataCw[i >>> 3] |= b << (7 - (i & 7)); });
+
+    /* split into blocks, add ECC, interleave */
+    const numBlocks = NUM_BLOCKS[ver-1], eccLen = ECC_PER_BLOCK[ver-1];
+    const rawCw = Math.floor(rawDataModules(ver)/8);
+    const numShort = numBlocks - rawCw % numBlocks;
+    const shortLen = Math.floor(rawCw/numBlocks);
+    const divisor = rsDivisor(eccLen);
+    const blocks = [];
+    for(let i=0,k=0;i<numBlocks;i++){
+      const dlen = shortLen - eccLen + (i < numShort ? 0 : 1);
+      const dat = Array.from(dataCw.slice(k, k + dlen)); k += dlen;
+      const ecc = rsRemainder(dat, divisor);
+      if(i < numShort) dat.push(0);
+      blocks.push(dat.concat(ecc));
+    }
+    const allCw = [];
+    for(let i=0;i<blocks[0].length;i++){
+      blocks.forEach((block,j)=>{
+        if(i !== shortLen - eccLen || j >= numShort) allCw.push(block[i]);
+      });
+    }
+
+    /* matrix */
+    const size = ver*4 + 17;
+    const modules = Array.from({length:size}, ()=> new Array(size).fill(false));
+    const isFunc  = Array.from({length:size}, ()=> new Array(size).fill(false));
+    const setFunc = (x,y,dark)=>{ modules[y][x] = dark; isFunc[y][x] = true; };
+
+    for(let i=0;i<size;i++){ setFunc(6,i,i%2===0); setFunc(i,6,i%2===0); }
+    const drawFinder = (cx,cy)=>{
+      for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){
+        const x = cx+dx, y = cy+dy;
+        if(x<0||x>=size||y<0||y>=size) continue;
+        const d = Math.max(Math.abs(dx), Math.abs(dy));
+        setFunc(x,y, d !== 2 && d !== 4);
+      }
+    };
+    drawFinder(3,3); drawFinder(size-4,3); drawFinder(3,size-4);
+
+    if(ver >= 2){
+      const na = Math.floor(ver/7) + 2;
+      const step = ver === 32 ? 26 : Math.ceil((ver*4 + 4)/(na*2 - 2))*2;
+      const ap = [6];
+      for(let pos=size-7; ap.length<na; pos-=step) ap.splice(1,0,pos);
+      for(let i=0;i<na;i++)for(let j=0;j<na;j++){
+        if((i===0&&j===0)||(i===0&&j===na-1)||(i===na-1&&j===0)) continue;
+        for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)
+          setFunc(ap[i]+dx, ap[j]+dy, Math.max(Math.abs(dx),Math.abs(dy)) !== 1);
+      }
+    }
+
+    const drawFormat = mask=>{
+      const dataF = 0 << 3 | mask;   /* ECC M => format bits 0 */
+      let rem = dataF;
+      for(let i=0;i<10;i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+      const f = (dataF << 10 | rem) ^ 0x5412;
+      const get = i => ((f >>> i) & 1) !== 0;
+      for(let i=0;i<=5;i++) setFunc(8,i,get(i));
+      setFunc(8,7,get(6)); setFunc(8,8,get(7)); setFunc(7,8,get(8));
+      for(let i=9;i<15;i++) setFunc(14-i,8,get(i));
+      for(let i=0;i<8;i++) setFunc(size-1-i,8,get(i));
+      for(let i=8;i<15;i++) setFunc(8,size-15+i,get(i));
+      setFunc(8,size-8,true);
+    };
+    drawFormat(0);
+
+    if(ver >= 7){
+      let rem = ver;
+      for(let i=0;i<12;i++) rem = (rem << 1) ^ ((rem >>> 11) * 0x1F25);
+      const vb = ver << 12 | rem;
+      for(let i=0;i<18;i++){
+        const bit = ((vb >>> i) & 1) !== 0;
+        const a = size - 11 + i % 3, b = Math.floor(i/3);
+        setFunc(a,b,bit); setFunc(b,a,bit);
+      }
+    }
+
+    /* zigzag data placement */
+    let bi = 0;
+    for(let right=size-1; right>=1; right-=2){
+      if(right === 6) right = 5;
+      for(let vert=0; vert<size; vert++){
+        for(let j=0;j<2;j++){
+          const x = right - j;
+          const upward = ((right + 1) & 2) === 0;
+          const y = upward ? size-1-vert : vert;
+          if(!isFunc[y][x] && bi < allCw.length*8){
+            modules[y][x] = ((allCw[bi >>> 3] >>> (7 - (bi & 7))) & 1) !== 0;
+            bi++;
+          }
+        }
+      }
+    }
+
+    const maskFns = [
+      (x,y)=> (x + y) % 2 === 0,
+      (x,y)=> y % 2 === 0,
+      (x,y)=> x % 3 === 0,
+      (x,y)=> (x + y) % 3 === 0,
+      (x,y)=> (Math.floor(x/3) + Math.floor(y/2)) % 2 === 0,
+      (x,y)=> (x*y) % 2 + (x*y) % 3 === 0,
+      (x,y)=> ((x*y) % 2 + (x*y) % 3) % 2 === 0,
+      (x,y)=> ((x + y) % 2 + (x*y) % 3) % 2 === 0
+    ];
+    const applyMask = m=>{
+      for(let y=0;y<size;y++)for(let x=0;x<size;x++)
+        if(!isFunc[y][x] && maskFns[m](x,y)) modules[y][x] = !modules[y][x];
+    };
+    const penalty = ()=>{
+      let score = 0;
+      /* runs of same color, rows and columns */
+      for(let y=0;y<size;y++){
+        let col = modules[y][0], run = 1;
+        for(let x=1;x<size;x++){
+          if(modules[y][x] === col) run++;
+          else { if(run >= 5) score += run - 2; col = modules[y][x]; run = 1; }
+        }
+        if(run >= 5) score += run - 2;
+      }
+      for(let x=0;x<size;x++){
+        let col = modules[0][x], run = 1;
+        for(let y=1;y<size;y++){
+          if(modules[y][x] === col) run++;
+          else { if(run >= 5) score += run - 2; col = modules[y][x]; run = 1; }
+        }
+        if(run >= 5) score += run - 2;
+      }
+      /* 2x2 blocks */
+      for(let y=0;y<size-1;y++)for(let x=0;x<size-1;x++){
+        const c = modules[y][x];
+        if(c === modules[y][x+1] && c === modules[y+1][x] && c === modules[y+1][x+1]) score += 3;
+      }
+      /* finder-like patterns */
+      const p1 = [true,false,true,true,true,false,true,false,false,false,false];
+      const p2 = [false,false,false,false,true,false,true,true,true,false,true];
+      for(let y=0;y<size;y++)for(let x=0;x<=size-11;x++){
+        let m1 = true, m2 = true;
+        for(let k=0;k<11;k++){
+          if(modules[y][x+k] !== p1[k]) m1 = false;
+          if(modules[y][x+k] !== p2[k]) m2 = false;
+        }
+        if(m1) score += 40;
+        if(m2) score += 40;
+      }
+      for(let x=0;x<size;x++)for(let y=0;y<=size-11;y++){
+        let m1 = true, m2 = true;
+        for(let k=0;k<11;k++){
+          if(modules[y+k][x] !== p1[k]) m1 = false;
+          if(modules[y+k][x] !== p2[k]) m2 = false;
+        }
+        if(m1) score += 40;
+        if(m2) score += 40;
+      }
+      /* dark proportion */
+      let dark = 0;
+      for(const row of modules) for(const c of row) if(c) dark++;
+      const total = size*size;
+      score += Math.floor(Math.abs(dark*20 - total*10)/total) * 10;
+      return score;
+    };
+
+    let best = 0, bestScore = Infinity;
+    for(let m=0;m<8;m++){
+      applyMask(m); drawFormat(m);
+      const s = penalty();
+      if(s < bestScore){ bestScore = s; best = m; }
+      applyMask(m);   /* undo (XOR) */
+    }
+    applyMask(best); drawFormat(best);
+
+    return { size, get: (x,y)=> modules[y][x] };
+  }
+  return { encode };
+})();
+
+function drawQr(canvas, text){
+  const qr = QR.encode(text);
+  if(!qr) return false;
+  const quiet = 4, n = qr.size + quiet*2;
+  const scale = Math.max(4, Math.floor(800/n));
+  canvas.width = canvas.height = n*scale;
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "#0E0E0E";
+  for(let y=0;y<qr.size;y++)for(let x=0;x<qr.size;x++)
+    if(qr.get(x,y)) ctx.fillRect((x+quiet)*scale,(y+quiet)*scale,scale,scale);
+  return true;
+}
+
+/* one download handler per QR zone */
+document.querySelectorAll(".qrzone").forEach(zone=>{
+  zone.querySelector(".qrdl").addEventListener("click", ()=>{
+    const a = document.createElement("a");
+    a.href = zone.querySelector(".qrcanvas").toDataURL("image/png");
+    a.download = "anprobe-qr.png";
+    a.click();
+  });
+});
+
+let qrRequest = 0;
+async function setupQr(zone, link){
+  const req = ++qrRequest;
+  const status = zone.querySelector(".qrstatus");
+  const canvas = zone.querySelector(".qrcanvas");
+  const dl = zone.querySelector(".qrdl");
+  canvas.style.display = "none";
+  dl.style.display = "none";
+  const render = (txt, note)=>{
+    if(drawQr(canvas, txt)){
+      canvas.style.display = "block";
+      dl.style.display = "inline-block";
+      status.textContent = note;
+    }else{
+      status.textContent = "Der Link ist für einen QR-Code zu lang.";
+    }
+  };
+  if(link.length <= 2300){
+    render(link, "Kund:innen scannen den Code mit der Handy-Kamera und landen direkt bei der Anprobe.");
+    return;
+  }
+  const api = (localStorage.getItem("brs_shortlink_api") || "").trim();
+  if(!api){
+    status.textContent = "QR-Code braucht die Live-Version mit Kurzlinks – der WhatsApp-Versand funktioniert jetzt schon.";
+    return;
+  }
+  status.textContent = "Kurzlink wird erstellt …";
+  try{
+    const res = await fetch(api, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: link })
+    });
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    const j = await res.json();
+    if(!j || !j.url) throw new Error("Antwort ohne url");
+    if(req !== qrRequest) return;   /* a newer link was created meanwhile */
+    render(j.url, "Der QR-Code zeigt auf den Kurzlink: " + j.url);
+  }catch(_){
+    if(req !== qrRequest) return;
+    status.textContent = "Der Kurzlink-Dienst war gerade nicht erreichbar – der WhatsApp-Versand funktioniert trotzdem.";
+  }
+}
+
+/* ---------- init ---------- */
+renderArticles();
 </script>
 </body>
 </html>

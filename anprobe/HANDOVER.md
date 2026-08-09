@@ -1,67 +1,89 @@
 # Projekt-Übergabe: Digitale Anprobe (Virtual Try-on)
 
 > Für Claude (oder jeden Entwickler), der an diesem Projekt weiterarbeitet —
-> egal in welcher Session, auf welchem Gerät. Stand: 09.08.2026.
+> egal in welcher Session, auf welchem Gerät. Stand: 09.08.2026 (abends).
 > Branch: `claude/virtual-try-on-shop-2tv6sr` im Repo `bbaltes0-ops/vorschau`.
 
 ## Worum es geht
 
 Bernd (Black Rabbit Studio, b.baltes0@gmail.com) baut eine KI-gestützte
-**digitale Anprobe**: Kund:innen probieren Kleidung per Handy-/Laptop-Kamera
-virtuell an (Vorbilder: Decart Anywear · anywear.decart.ai, X-Posts von
-@sofiasofian und @decartai). Zwei Zielrichtungen:
+**digitale Anprobe** als VERKAUFBARES Produkt für Mode-Einzelhändler und
+Onlineverkäufer: Der Händler schickt gezielt Produkte an Kund:innen
+(WhatsApp-Link/QR), die Kund:in probiert per Handy-Kamera digital an
+(Gemini-Bildmodell) und bestellt direkt zurück. Vorbild-UX: Decart Anywear
+(anywear.decart.ai) — die beiden Referenzvideos wurden am 09.08. Frame für
+Frame ausgewertet (Overlay-Panel auf der Produktseite, Drag-and-drop des
+Produktbilds, Scan-Animation mit Kreisfortschritt, Fehlerkarte mit Restart,
+Größenwahl im Panel).
 
-1. **Eigener Shop / Ordertool:** Anprobe-Funktion für die eigenen Produkte im
-   Ordertool (Onlineshop). Das Ordertool selbst liegt NICHT in diesem Repo und
-   war aus der bisherigen Session nicht erreichbar — Integration steht noch aus.
-2. **Produkt für Einzelhändler (Verkaufsidee):** Kleine Händler ohne Onlineshop
-   fotografieren Artikel im Laden, schicken per WhatsApp einen Anprobe-Link an
-   Stammkunden/Gruppen („Probier das mal an, das steht dir bestimmt"), Kunde
-   probiert digital an und bestellt per WhatsApp zurück. Später: White-Label,
-   kurze Links/QR, Bezahllinks, Abrechnung pro Händler.
+## Stand: Verkaufsversion 1 ist FERTIG gebaut und getestet
 
-## Was schon gebaut und gepusht ist (Ordner `/anprobe/`)
+Am 09.08. wurde per Agenten-Orchester (5 parallele Bau-Agenten) die
+Verkaufsversion gebaut. Alle Flows im Browser end-to-end getestet
+(Desktop + iPhone-Viewport 375px, keine JS-Fehler, kein horizontales Scrollen).
 
-- `index.html` — Kunden-App: Produktkatalog aus `products.json`, Foto per
-  Kamera (getUserMedia) oder Upload (clientseitig auf 1024 px verkleinert),
-  Try-on via Gemini-Bildmodell `gemini-3-pro-image` (Fallback
-  `gemini-2.5-flash-image`), Vorher/Nachher-Schieberegler, Größenwahl,
-  Bestell-CTA. Erkennt Händler-Links im URL-Fragment `#a=<base64url-JSON>`
-  und startet dann im Artikelmodus (Katalog aus, nur der geschickte Artikel,
-  Bestellung als vorbefüllte wa.me-Nachricht an den Händler).
-- `haendler.html` — Händler-App: Artikel fotografieren (vorne/hinten),
-  Preis/Größen/Geschäft/WhatsApp-Nummer erfassen, Anprobe-Link erzeugen
-  (Artikeldaten + komprimierte Fotos stecken direkt im Link, serverlos),
-  Teilen per Web Share API / wa.me.
-- `products.json` — Beispielsortiment + Config (orderMail, orderUrlBase,
-  Währung). SVG-Platzhalterbilder in `img/`.
-- `README.md` — Funktionsweise, Demo- vs. Live-Betrieb, fertiger
-  Cloudflare-Worker-Proxy (API-Key darf nie öffentlich ins Frontend!),
-  Integrationsanleitung Ordertool, Händler-Flow und Ausbaustufen.
+### Dateien in `/anprobe/`
 
-Design: Black-Rabbit-CI (Schwarz #0E0E0E, Papier #F3EFE6, Neon-Lime #D8FF3E,
-Archivo Black / Bodoni Moda Italic / Inter, Grain-Overlay). Deutsch, mobil
-getestet (Playwright, Händler→Kunde-Flow end-to-end grün).
+- `index.html` — **Kunden-App**: Katalog aus products.json, Kamera/Upload,
+  Gemini-Try-on, Decart-Scan-Zustand (abgedunkeltes Foto + Lime-Ring +
+  Scanlinie), Fehlerkarte im Stage mit "Neu starten", Vorher/Nachher-Regler,
+  Teilen (Web Share API mit Bild-File, Fallback Download), Größen-Merker
+  (brs_size_pref). Händler-Links: `#a=` (1 Artikel, v1) UND `#k=`
+  (Mini-Katalog v2 mit Artikelleiste zum Umschalten). Bestellung per
+  WhatsApp (wa.me vorbefüllt) oder orderUrl/mailto.
+- `haendler.html` — **Händler-Cockpit**: Artikel fotografieren + beschreiben,
+  Anprobe-Link + fertige WhatsApp-Nachricht, **Artikel-Speicher** (localStorage
+  brs_articles, Bereich "Meine Artikel" mit Teilen/Bearbeiten/Löschen,
+  Quota-Behandlung), **Mini-Katalog** (mehrere Artikel anhaken → #k=-Link),
+  **QR-Code** (eigener Inline-Encoder, qrcodegen-Ansatz: Byte-Modus, ECC M,
+  Auto-Version, Masken-Penalty; Links ≤2300 Zeichen direkt, längere über
+  optionale Kurzlink-API brs_shortlink_api, sonst Hinweis; PNG-Download
+  "QR für den Ladentresen"). QR-Decode per BarcodeDetector verifiziert.
+- `widget/anprobe-widget.js` + `widget/demo-shop.html` — **Shop-Widget**
+  (Produktlinie 2): EIN Script-Tag, Shadow DOM, schwebender Button + Bindung
+  an [data-anprobe]-Elemente, Panel im Decart-Stil (draggbar, Drop-Zone,
+  Kamera/Upload, Scan, Vorher/Nachher, Fehlerkarte), Kauf-Button feuert
+  CustomEvent "anprobe:order". Demo-Shop "ATELIER NORD" (bewusst fremdes,
+  helles Design) demonstriert die Integration; Bestell-Event landet im
+  Demo-Warenkorb. Konfig: data-proxy, data-model, data-cta, data-brand.
+- `backend/` — **Cloudflare Worker** (deploybereit, noch NICHT deployt):
+  POST /api/generate (Gemini-Proxy: Key nur als Secret, Origin-/Modell-
+  Allowlist, 12-MB-Limit, Rate-Limit 20/10min pro IP via KV, optional
+  X-Anprobe-Key mit Monatszähler cnt:<key>:<JJJJ-MM> = Abrechnungsgrundlage),
+  POST /api/links + GET /a/<id> (Kurzlinks für QR/WhatsApp), GET /api/stats.
+  wrangler.toml + Schritt-für-Schritt-README für Bernd.
+- `verkauf.html` — **Verkaufsseite** für die Händler-Akquise (Sie-Form):
+  Hero "Schicken Sie Ihren Kunden die Umkleide aufs Handy", 3 Schritte,
+  zwei Produktlinien, Demo-Links, Preise (0 € Kennenlernen 14 Tage /
+  29 €/Monat Laden / 79 €/Monat Shop, monatlich kündbar, zzgl. USt.),
+  FAQ, Kontakt mailto. Kein JavaScript (FAQ über details/summary).
+- `docs/VERTRIEB.md` — intern: Preislogik + Marge, 30-Sek- und 2-Min-Pitch,
+  Einwandbehandlung (5 Einwände), Onboarding-Checkliste, 3 Akquise-Vorlagen.
+- `products.json`, `img/*.svg`, `README.md` (Technik-Doku).
+
+### Agentur-Struktur (Repo-Root `.claude/agents/`)
+
+anprobe-produkt (Orchestrator), anprobe-frontend, anprobe-haendler,
+anprobe-backend, anprobe-vertrieb, anprobe-qa — für künftige Sessions.
 
 ## Offene Punkte / nächste Schritte
 
-1. **KI live testen:** Gemini-API-Key nötig (aistudio.google.com/apikey),
-   auf der Seite unter „⚙ KI-Setup" eintragen. Es gab noch KEINEN Test mit
-   echtem Key — Prompt-Qualität pro Kategorie prüfen und nachschärfen.
-2. **Ordertool-Integration:** Zugriff aufs Ordertool-Repo/System besorgen,
-   echte Produkte + Bestell-URLs in `products.json`, Anprobe-Button auf
-   Produktkarten.
-3. **Verkaufsversion Händler:** kleines Backend für kurze Links + QR-Codes,
-   Händler-Konten/White-Label, Bestell-Dashboard, Bezahllink (PayPal/Stripe),
-   Preismodell (KI-Kosten pro Bild im Cent-Bereich).
-4. **Live-Video-Anprobe** (wie Decart, 30 fps) später via
-   docs.platform.decart.ai/models/realtime/virtual-try-on evaluieren.
-5. X-Videos konnten aus der Cloud-Session nicht abgerufen werden (Netzwerk
-   blockiert x.com) — falls Bernd die Videos bereitstellt: Frame-für-Frame
-   auswerten und UX-Details übernehmen.
+1. **KI live testen (wichtigster Punkt):** Es gab noch KEINEN Test mit echtem
+   Gemini-Key. Key von aistudio.google.com/apikey unter "⚙ KI-Setup"
+   eintragen, Prompt-Qualität pro Kategorie prüfen (alle KI-Pfade wurden mit
+   gemockten Antworten verifiziert, inkl. Fehlerpfade).
+2. **Backend deployen:** Cloudflare-Account + wrangler, siehe
+   backend/README.md. Danach: Proxy-URL im KI-Setup, Kurzlink-API im
+   Händler-Cockpit eintragen → QR-Codes für lange Links funktionieren.
+3. **Ordertool-Integration:** echte Produkte/Bestell-URLs in products.json;
+   im eigenen Shop das Widget einbinden.
+4. **Preise bestätigen:** 0/29/79 € sind gesetzt, aber Bernds Entscheidung.
+5. **Später:** Bezahllink in Bestell-Nachricht (PayPal.Me/Stripe),
+   White-Label pro Händler, Live-Video-Anprobe (Decart Realtime-API).
 
 ## Arbeitsweise mit Bernd
 
-Deutsch, pragmatisch, wenig Technik-Jargon. Er arbeitet oft vom iPhone
-(diese Session lief über die iOS-App) und will Ergebnisse sehen
-(Screenshots schicken). Digitalisierung des Vertriebs ist das Leitmotiv.
+Deutsch, pragmatisch, wenig Technik-Jargon. Arbeitet oft vom iPhone und
+will Ergebnisse sehen. Fertige Ergebnisse per Telegram melden
+(@dvssocialmedia_bot, Token in /Users/bb/Desktop/DvS/DvS_API_Keys.env,
+Chat-ID 8539755378). Digitalisierung des Vertriebs ist das Leitmotiv.

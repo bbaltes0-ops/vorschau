@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><rect width=%27100%27 height=%27100%27 rx=%2720%27 fill=%27%230E0E0E%27/><path d=%27M38 22c-5 0-8 4-7 9l2 8c-6 3-9 9-9 16 0 12 11 20 26 20s26-8 26-20c0-7-3-13-9-16l2-8c1-5-2-9-7-9-4 0-7 3-8 7l-1 5a34 34 0 0 0-6 0l-1-5c-1-4-4-7-8-7z%27 fill=%27%23D8FF3E%27/></svg>">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digitale Anprobe für Ihr Geschäft · Black Rabbit Studio</title>
+<meta name="description" content="Schicken Sie Ihren Kunden die Umkleide aufs Handy: Artikel fotografieren, per WhatsApp verschicken, Kunde probiert digital an und bestellt.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0E0E0E; --ink:#161616; --card:#181818; --line:#2A2A2A;
+  --paper:#F3EFE6; --muted:#9C9890; --lime:#D8FF3E; --red:#FF3B2F; --wa:#25D366;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--paper);font-family:Inter,system-ui,sans-serif;min-height:100vh;position:relative}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:99;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1,h2,h3,.display{font-family:'Archivo Black',Inter,sans-serif;letter-spacing:-.01em;text-transform:uppercase}
+.serif{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0}
+.label{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+
+header{position:sticky;top:0;z-index:50;background:rgba(14,14,14,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px}
+.bar .brand{font-family:'Archivo Black';font-size:15px;text-transform:uppercase}
+.bar .brand em{font-family:'Bodoni Moda',serif;font-style:italic;text-transform:none;color:var(--lime);font-size:16px}
+.bar .spacer{flex:1}
+.iconbtn{background:none;border:1px solid var(--line);color:var(--paper);border-radius:10px;padding:8px 12px;font-size:13px;transition:.15s;text-decoration:none;display:inline-block}
+.iconbtn:hover{border-color:var(--lime)}
+@media(max-width:560px){.bar .label{display:none}}
+
+main{max-width:1080px;margin:0 auto;padding:0 20px 90px}
+.hero{padding:70px 0 44px}
+.hero h1{font-size:clamp(32px,6.4vw,68px);line-height:.97;max-width:900px}
+.hero h1 .lime{color:var(--lime)}
+.hero p.sub{margin-top:20px;max-width:620px;color:var(--muted);font-size:16.5px;line-height:1.65}
+.hero p.sub b{color:var(--paper);font-weight:600}
+.heroactions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+
+.btn{background:var(--lime);color:var(--black);border:none;border-radius:10px;padding:12px 20px;font-weight:600;font-size:14.5px;transition:.15s;text-decoration:none;display:inline-block;text-align:center}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:none;color:var(--paper);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--lime)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.small{padding:9px 15px;font-size:13.5px}
+
+section{margin-top:74px}
+section>h2{font-size:clamp(20px,3.4vw,28px);margin-bottom:8px}
+section>p.hint{color:var(--muted);font-size:14.5px;margin-bottom:26px;max-width:620px;line-height:1.6}
+.kicker{display:block;margin-bottom:10px}
+
+.stepgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.stepgrid{grid-template-columns:1fr}}
+.stepcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.stepcard .ill{background:var(--ink);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;justify-content:center}
+.stepcard .ill svg{width:100%;max-width:190px;height:auto;display:block}
+.stepcard .n{font-family:'Archivo Black';color:var(--lime);font-size:13px;letter-spacing:.08em}
+.stepcard h3{font-size:16px}
+.stepcard p{color:var(--muted);font-size:14px;line-height:1.65}
+.stepcard p b{color:var(--paper);font-weight:600}
+
+.linegrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.linegrid{grid-template-columns:1fr}}
+.linecard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:12px;transition:.18s}
+.linecard:hover{border-color:var(--lime)}
+.linecard h3{font-size:19px}
+.linecard .serif{color:var(--lime);font-size:17px}
+.linecard p{color:var(--muted);font-size:14.5px;line-height:1.65}
+.linecard p b{color:var(--paper);font-weight:600}
+.linecard ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin:6px 0 4px}
+.linecard li{font-size:14px;color:var(--paper);padding-left:22px;position:relative;line-height:1.5}
+.linecard li::before{content:"";position:absolute;left:0;top:7px;width:9px;height:9px;border-radius:50%;background:var(--lime)}
+.linecard .foot{margin-top:auto;padding-top:14px}
+
+.demorow{display:flex;gap:12px;flex-wrap:wrap}
+
+.pricegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.pricegrid{grid-template-columns:1fr}}
+.price{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:10px}
+.price.hot{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime),0 0 34px rgba(216,255,62,.12)}
+.price .tier{font-family:'Archivo Black';font-size:14px;text-transform:uppercase;letter-spacing:.04em}
+.price .amount{font-family:'Archivo Black';font-size:38px;line-height:1}
+.price .amount span{font-family:Inter,sans-serif;font-size:14px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0}
+.price ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:8px}
+.price li{font-size:14px;color:var(--paper);padding-left:22px;position:relative;line-height:1.5}
+.price li::before{content:"";position:absolute;left:0;top:7px;width:9px;height:9px;border-radius:50%;background:var(--lime)}
+.price .cancel{margin-top:auto;padding-top:16px;color:var(--muted);font-size:12.5px}
+.pricenote{color:var(--muted);font-size:12.5px;margin-top:16px}
+
+.faq{display:flex;flex-direction:column;gap:10px;max-width:760px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.15s}
+.faq details:hover{border-color:var(--lime)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 22px;font-weight:600;font-size:15px;display:flex;align-items:center;gap:14px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";margin-left:auto;font-family:'Archivo Black';color:var(--lime);font-size:18px;flex-shrink:0;transition:.2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .a{padding:0 22px 20px;color:var(--muted);font-size:14.5px;line-height:1.7}
+.faq .a b{color:var(--paper);font-weight:600}
+
+.contact{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px 28px;text-align:center}
+.contact h2{font-size:clamp(20px,3.4vw,26px)}
+.contact p{color:var(--muted);font-size:15px;line-height:1.65;max-width:520px;margin:12px auto 0}
+.contact .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.contact .wa-hint{color:var(--muted);font-size:13px;margin-top:14px}
+
+footer{border-top:1px solid var(--line);margin-top:80px}
+footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted);font-size:12.5px;line-height:1.7}
+footer b{color:var(--paper)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="brand">Black Rabbit <em>Studio</em></div>
+    <span class="label">Digitale Anprobe · Für Händler</span>
+    <div class="spacer"></div>
+    <a class="iconbtn" href="#preise">Preise</a>
+    <a class="iconbtn" href="#kontakt">Kontakt</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="label">Verkaufen, wo Ihre Kunden ohnehin sind: auf dem Handy</span>
+    <h1 style="margin-top:14px">Schicken Sie Ihren Kunden die <span class="lime">Umkleide</span> aufs Handy.</h1>
+    <p class="sub">Sie fotografieren einen Artikel, schicken den Link per <b>WhatsApp</b> – und Ihre Kundin probiert ihn in Sekunden digital an, mit ihrem eigenen Foto. Gefällt es, bestellt sie direkt zurück per WhatsApp. Ohne App, ohne Registrierung, ohne Technikaufwand.</p>
+    <div class="heroactions">
+      <a class="btn" href="#demos">Live ausprobieren</a>
+      <a class="btn ghost" href="#funktion">So funktioniert&rsquo;s</a>
+    </div>
+  </div>
+
+  <!-- SO FUNKTIONIERT'S -->
+  <section id="funktion">
+    <span class="label kicker">Drei Schritte, kein Handbuch</span>
+    <h2>So funktioniert&rsquo;s</h2>
+    <p class="hint">Alles läuft über Geräte, die Sie und Ihre Kunden schon besitzen: Ihr Smartphone und WhatsApp.</p>
+    <div class="stepgrid">
+
+      <div class="stepcard">
+        <div class="ill">
+          <svg viewBox="0 0 190 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Artikel fotografieren">
+            <rect x="18" y="26" width="98" height="86" rx="10" fill="none" stroke="#2A2A2A" stroke-width="2"/>
+            <path d="M46 26 L52 16 H82 L88 26" fill="none" stroke="#2A2A2A" stroke-width="2"/>
+            <circle cx="67" cy="68" r="24" fill="none" stroke="#D8FF3E" stroke-width="2.5"/>
+            <circle cx="67" cy="68" r="12" fill="none" stroke="#D8FF3E" stroke-width="2"/>
+            <circle cx="102" cy="40" r="3.5" fill="#D8FF3E"/>
+            <path d="M136 52 l10 -6 v14 l-10 -6 z" fill="#D8FF3E"/>
+            <path d="M152 40 c14 4 14 24 0 28" fill="none" stroke="#9C9890" stroke-width="2" stroke-linecap="round"/>
+            <path d="M158 32 c22 8 22 36 0 44" fill="none" stroke="#9C9890" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+          </svg>
+        </div>
+        <span class="n">SCHRITT 01</span>
+        <h3>Artikel fotografieren</h3>
+        <p>Legen Sie das Teil auf den Tresen oder hängen Sie es auf den Bügel – <b>ein Handyfoto genügt.</b> Name, Preis und Größen dazu, fertig ist der Anprobe-Link.</p>
+      </div>
+
+      <div class="stepcard">
+        <div class="ill">
+          <svg viewBox="0 0 190 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Per WhatsApp verschicken">
+            <rect x="20" y="34" width="76" height="46" rx="14" fill="none" stroke="#2A2A2A" stroke-width="2"/>
+            <path d="M34 80 l-6 14 16 -14 z" fill="none" stroke="#2A2A2A" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="30" y="48" width="44" height="6" rx="3" fill="#9C9890" opacity=".6"/>
+            <rect x="30" y="60" width="30" height="6" rx="3" fill="#9C9890" opacity=".35"/>
+            <path d="M104 57 h44" stroke="#D8FF3E" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 7"/>
+            <path d="M142 49 l12 8 -12 8" fill="none" stroke="#D8FF3E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="156" y="30" width="18" height="60" rx="5" fill="none" stroke="#25D366" stroke-width="2.5"/>
+            <rect x="162" y="82" width="6" height="3" rx="1.5" fill="#25D366"/>
+          </svg>
+        </div>
+        <span class="n">SCHRITT 02</span>
+        <h3>Per WhatsApp schicken</h3>
+        <p>Sie kennen Ihre Kundinnen und wissen, wem was steht. Schicken Sie den Link gezielt – <b>&bdquo;Das ist gerade reingekommen, probier&rsquo;s mal an.&ldquo;</b> Oder legen Sie den QR-Code an den Tresen.</p>
+      </div>
+
+      <div class="stepcard">
+        <div class="ill">
+          <svg viewBox="0 0 190 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Digital anprobieren und bestellen">
+            <rect x="62" y="12" width="66" height="106" rx="10" fill="none" stroke="#2A2A2A" stroke-width="2"/>
+            <circle cx="95" cy="44" r="11" fill="none" stroke="#D8FF3E" stroke-width="2.5"/>
+            <path d="M76 92 c2 -22 12 -30 19 -30 s17 8 19 30 z" fill="none" stroke="#D8FF3E" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M84 66 l-8 12 M106 66 l8 12" stroke="#D8FF3E" stroke-width="2.5" stroke-linecap="round"/>
+            <rect x="74" y="100" width="42" height="10" rx="5" fill="#D8FF3E"/>
+            <path d="M140 34 l6 6 10 -12" fill="none" stroke="#25D366" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="146" cy="32" r="16" fill="none" stroke="#25D366" stroke-width="2"/>
+          </svg>
+        </div>
+        <span class="n">SCHRITT 03</span>
+        <h3>Anprobieren &amp; bestellen</h3>
+        <p>Ihre Kundin macht ein Foto von sich – die KI zeigt ihr in Sekunden, <b>wie der Artikel an ihr aussieht.</b> Gefällt es, geht die Bestellung als WhatsApp-Nachricht direkt an Sie zurück.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ZWEI PRODUKTLINIEN -->
+  <section id="linien">
+    <span class="label kicker">Zwei Wege, ein Werkzeug</span>
+    <h2>Für den Laden. Für den Shop.</h2>
+    <p class="hint">Ob Sie ein Ladengeschäft führen oder online verkaufen – die Anprobe passt sich Ihrem Vertrieb an, nicht umgekehrt.</p>
+    <div class="linegrid">
+
+      <div class="linecard">
+        <span class="serif">Persönlich verkaufen, digital verlängert.</span>
+        <h3>Für den Laden</h3>
+        <p>Das Händler-Cockpit im Browser: Artikel fotografieren, Links und QR-Codes erzeugen, gezielt an Stammkundinnen verschicken. Ihre Beratung endet nicht an der Ladentür – sie geht auf dem Handy weiter.</p>
+        <ul>
+          <li>Cockpit im Browser – kein Programm zu installieren</li>
+          <li>Anprobe-Link pro Artikel, in unter einer Minute erstellt</li>
+          <li>QR-Code für Tresen, Schaufenster oder Etikett</li>
+          <li>Bestellungen kommen als WhatsApp-Nachricht bei Ihnen an</li>
+        </ul>
+        <div class="foot">
+          <a class="btn ghost" href="haendler.html">Cockpit ansehen →</a>
+        </div>
+      </div>
+
+      <div class="linecard">
+        <span class="serif">Eine Zeile Code, eine Umkleide im Shop.</span>
+        <h3>Für Ihren Onlineshop</h3>
+        <p>Das Anprobe-Widget legt sich direkt auf Ihre Produktseite: Ihre Kunden probieren an, ohne die Seite zu verlassen. Eingebaut mit einem einzigen Script-Tag – egal, welches Shopsystem Sie nutzen.</p>
+        <ul>
+          <li>Ein Script-Tag – Ihr Webdesigner braucht 10 Minuten</li>
+          <li>&bdquo;Anprobieren&ldquo;-Button direkt am Produkt</li>
+          <li>Kunden bleiben auf Ihrer Seite, kein Absprung</li>
+          <li>Funktioniert auf Handy und Desktop</li>
+        </ul>
+        <div class="foot">
+          <a class="btn ghost" href="widget/demo-shop.html">Widget im Demo-Shop ansehen →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIVE AUSPROBIEREN -->
+  <section id="demos">
+    <span class="label kicker">Nicht glauben – ausprobieren</span>
+    <h2>Live ausprobieren</h2>
+    <p class="hint">Alle Demos laufen direkt im Browser, auf dem Handy genauso wie am Rechner. Nehmen Sie Ihr eigenes Foto – dann sehen Sie, was Ihre Kunden sehen.</p>
+    <div class="demorow">
+      <a class="btn" href="index.html">Anprobe aus Kundensicht</a>
+      <a class="btn ghost" href="haendler.html">Händler-Cockpit</a>
+      <a class="btn ghost" href="widget/demo-shop.html">Shop-Widget</a>
+    </div>
+  </section>
+
+  <!-- PREISE -->
+  <section id="preise">
+    <span class="label kicker">Klar kalkuliert, monatlich kündbar</span>
+    <h2>Preise</h2>
+    <p class="hint">Kein Einrichtungspreis, keine Mindestlaufzeit. Sie starten kostenlos und entscheiden nach 14 Tagen, ob es zu Ihrem Geschäft passt.</p>
+    <div class="pricegrid">
+
+      <div class="price">
+        <span class="tier">Kennenlernen</span>
+        <div class="amount">0&nbsp;€ <span>· 14 Tage</span></div>
+        <ul>
+          <li>Alle Funktionen, ohne Einschränkung</li>
+          <li>Keine Zahlungsdaten nötig</li>
+          <li>Endet automatisch – kein Kündigen nötig</li>
+        </ul>
+        <div class="cancel">Unverbindlich testen</div>
+      </div>
+
+      <div class="price hot">
+        <span class="tier">Laden</span>
+        <div class="amount">29&nbsp;€ <span>/ Monat</span></div>
+        <ul>
+          <li>Händler-Cockpit im Browser</li>
+          <li>Unbegrenzte Artikel und Anprobe-Links</li>
+          <li>QR-Code für den Tresen</li>
+          <li>WhatsApp-Verkauf inklusive</li>
+        </ul>
+        <div class="cancel">Monatlich kündbar</div>
+      </div>
+
+      <div class="price">
+        <span class="tier">Shop</span>
+        <div class="amount">79&nbsp;€ <span>/ Monat</span></div>
+        <ul>
+          <li>Alles aus &bdquo;Laden&ldquo;</li>
+          <li>Anprobe-Widget im eigenen Onlineshop</li>
+          <li>Kurzlinks &amp; API</li>
+        </ul>
+        <div class="cancel">Monatlich kündbar</div>
+      </div>
+
+    </div>
+    <p class="pricenote">Alle Preise zzgl. USt.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <span class="label kicker">Ehrliche Antworten</span>
+    <h2>Häufige Fragen</h2>
+    <p class="hint">Die Fragen, die uns Händler im ersten Gespräch stellen – ohne Ausflüchte beantwortet.</p>
+    <div class="faq">
+
+      <details>
+        <summary>Was sehen meine Kunden genau?</summary>
+        <div class="a">Ihre Kundin öffnet den Link, den Sie ihr geschickt haben, und sieht den Artikel mit Foto, Preis und Größen. Sie macht ein Foto von sich (oder lädt eines hoch) – und bekommt in wenigen Sekunden ein Bild, auf dem sie den Artikel trägt. Darunter: ein Bestell-Button, der eine fertige WhatsApp-Nachricht an Sie öffnet. <b>Keine App, kein Konto, keine Registrierung.</b></div>
+      </details>
+
+      <details>
+        <summary>Brauche ich dafür Technik oder IT-Kenntnisse?</summary>
+        <div class="a">Nein. Für den Laden reicht ein Smartphone mit WhatsApp – das Cockpit läuft im Browser, wie eine normale Webseite. Sie fotografieren, tippen Name und Preis ein, und der Link ist fertig. Für das Shop-Widget baut Ihr Webdesigner eine einzige Code-Zeile ein; das dauert etwa zehn Minuten und ist bei jedem gängigen Shopsystem möglich.</div>
+      </details>
+
+      <details>
+        <summary>Was passiert mit den Fotos meiner Kunden? (Datenschutz)</summary>
+        <div class="a">Das Foto wird ausschließlich für die eine Anprobe verwendet: Es geht verschlüsselt an die Bild-KI, das Ergebnis kommt zurück, und <b>das Foto wird nicht dauerhaft gespeichert.</b> Es entsteht kein Kundenprofil und kein Bildarchiv. Ob Ihre Kundin das Ergebnisbild speichert oder teilt, entscheidet sie selbst auf ihrem eigenen Handy.</div>
+      </details>
+
+      <details>
+        <summary>Wie echt sieht das Ergebnis aus?</summary>
+        <div class="a">Sehr gut – und trotzdem ehrlich gesagt: Es ist eine Visualisierung, keine Passform-Garantie. Farbe, Muster und Sitz des Artikels werden realistisch auf das Kundenfoto übertragen; feine Details wie exakte Saumlängen können abweichen. Deshalb steht unter jeder Anprobe ein entsprechender Hinweis. Am besten beurteilen Sie es selbst: <a href="index.html" style="color:var(--lime)">Probieren Sie die Demo mit Ihrem eigenen Foto.</a></div>
+      </details>
+
+      <details>
+        <summary>Was kostet mich eine einzelne Anprobe?</summary>
+        <div class="a">Nichts extra. Die Bild-KI-Kosten pro Anprobe liegen im Cent-Bereich und sind <b>im Monatspreis bereits enthalten.</b> Sie müssen also nicht rechnen, ob sich eine verschickte Anprobe &bdquo;lohnt&ldquo; – schicken Sie so viele, wie Ihr Sortiment und Ihre Kundschaft hergeben.</div>
+      </details>
+
+      <details>
+        <summary>Funktioniert das mit meiner Ware?</summary>
+        <div class="a">Mit dem allermeisten, was am Körper getragen wird: Oberteile, Kleider, Jacken, Hosen, Röcke. Am besten funktionieren Artikel, die auf dem Foto klar zu erkennen sind – auf dem Bügel, auf dem Tresen oder als Freisteller. Bei Schmuck, Brillen und sehr kleinen Accessoires sind die Ergebnisse noch nicht verlässlich. Im Zweifel: Schicken Sie uns ein Foto Ihrer Ware, wir probieren es gemeinsam aus.</div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section id="kontakt">
+    <div class="contact">
+      <span class="label">Direkter Draht, keine Warteschleife</span>
+      <h2 style="margin-top:12px">Sprechen wir über Ihr Geschäft.</h2>
+      <p>Schreiben Sie uns kurz, was Sie verkaufen – wir melden uns mit einer Einschätzung, ob und wie die Anprobe für Ihre Ware funktioniert. Auf Wunsch richten wir Ihnen den Testzugang direkt im ersten Gespräch ein.</p>
+      <div class="actions">
+        <a class="btn" href="mailto:b.baltes0@gmail.com?subject=Digitale%20Anprobe%20%E2%80%93%20Anfrage">E-Mail schreiben</a>
+      </div>
+      <p class="wa-hint">Oder per WhatsApp – Nummer erhalten Sie auf Anfrage per E-Mail.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="inner">
+    <b>Hinweis:</b> Diese Seite ist ein Prototyp von Black Rabbit Studio. Impressum und Datenschutzerklärung folgen mit dem offiziellen Start.<br>
+    Die digitale Anprobe ist eine KI-Visualisierung und kann von Passform und Farbe des realen Produkts abweichen. Sie ersetzt keine Größenberatung.
+  </div>
+</footer>
+
+</body>
+</html>

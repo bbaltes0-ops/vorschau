@@ -1,0 +1,28 @@
+# wrangler.toml · Anprobe-API (Cloudflare Worker)
+# Jede Zeile mit "EINTRAGEN:" muss vor dem Deploy angepasst werden.
+# Anleitung Schritt fuer Schritt: siehe README.md in diesem Ordner.
+
+name = "anprobe-api"                # Name des Workers (ergibt anprobe-api.<account>.workers.dev)
+main = "worker.js"                  # Einstiegsdatei -- nicht aendern
+compatibility_date = "2026-08-01"   # Cloudflare-Kompatibilitaetsdatum -- kann so bleiben
+
+# --- KV-Speicher (Kurzlinks, Rate-Limits, Haendler-Keys, Zaehler) ---
+[[kv_namespaces]]
+binding = "LINKS"                   # Name im Code -- nicht aendern
+id = "HIER_KV_NAMESPACE_ID"         # EINTRAGEN: ID aus "npx wrangler kv namespace create LINKS"
+
+# --- Konfigurations-Variablen (unkritisch, duerfen in dieser Datei stehen) ---
+[vars]
+# EINTRAGEN: alle Domains, von denen aus die App den Worker aufrufen darf
+# (kommasepariert, ohne Slash am Ende; die Widget-/Shop-Domains ergaenzen)
+ALLOWED_ORIGINS = "https://vorschau.black-rabbit.studio"
+
+# EINTRAGEN: Basis-URL der Anprobe-App -- nur Links, die so beginnen, werden gekuerzt
+ANPROBE_BASE = "https://vorschau.black-rabbit.studio/anprobe/"
+
+# Lebensdauer der Kurzlinks in Tagen (danach laeuft der QR-/WhatsApp-Link ab)
+LINK_TTL_DAYS = "90"
+
+# --- Geheimnisse (NIEMALS hier eintragen!) ---
+# Der Gemini-API-Key wird als Secret gesetzt, nicht als Variable:
+#   npx wrangler secret put GEMINI_API_KEY

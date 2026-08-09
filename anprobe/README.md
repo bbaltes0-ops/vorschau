@@ -135,7 +135,13 @@ serverlos, nichts wird gespeichert. Grenze: der Link wird ~20–60 KB lang.
 
 ## Dateien
 
-- `index.html` — Kunden-App (UI, Kamera, Upload, KI-Aufruf, Vergleich, Bestellung; Artikelmodus für Händler-Links)
-- `haendler.html` — Händler-App (Artikel fotografieren, Link erzeugen, WhatsApp-Teilen)
+- `index.html` — Kunden-App (Kamera, Upload, KI-Aufruf, Scan-Zustand, Vorher/Nachher, Teilen, Bestellung; Artikelmodus `#a=` und Mini-Katalog `#k=`)
+- `haendler.html` — Händler-Cockpit (Artikel fotografieren, Artikel-Speicher "Meine Artikel", Link + WhatsApp, Mini-Katalog, QR-Code inkl. PNG-Download)
+- `verkauf.html` — Verkaufsseite für die Händler-Akquise (Pakete/Preise, Demos, FAQ)
+- `widget/anprobe-widget.js` — einbettbares Shop-Widget (ein Script-Tag, Shadow DOM, CustomEvent `anprobe:order`)
+- `widget/demo-shop.html` — Demo-Shop "ATELIER NORD" mit eingebundenem Widget
+- `backend/` — Cloudflare Worker (Gemini-Proxy, Kurzlinks, Anproben-Zähler) + Deploy-Anleitung
+- `docs/VERTRIEB.md` — internes Vertriebsdokument (Preislogik, Pitch, Einwände, Onboarding)
 - `products.json` — Sortiment + Konfiguration (Bestell-Mail/-URL, Währung)
 - `img/*.svg` — Platzhalter-Produktbilder im CI
+- `HANDOVER.md` — aktueller Projektstand für die nächste Session

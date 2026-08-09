@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><rect width=%27100%27 height=%27100%27 rx=%2720%27 fill=%27%230E0E0E%27/><path d=%27M38 22c-5 0-8 4-7 9l2 8c-6 3-9 9-9 16 0 12 11 20 26 20s26-8 26-20c0-7-3-13-9-16l2-8c1-5-2-9-7-9-4 0-7 3-8 7l-1 5a34 34 0 0 0-6 0l-1-5c-1-4-4-7-8-7z%27 fill=%27%23D8FF3E%27/></svg>">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Digitale Anprobe · Black Rabbit Studio</title>
 <meta name="description" content="Produkte direkt per Kamera oder Foto virtuell anprobieren – KI-gestützte Anprobe für den Black Rabbit Shop.">
@@ -16,7 +17,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--black);color:var(--paper);font-family:Inter,system-ui,sans-serif;min-height:100vh;position:relative}
+body{background:var(--black);color:var(--paper);font-family:Inter,system-ui,sans-serif;min-height:100vh;position:relative;overflow-x:hidden}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:99;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
 h1,h2,.display{font-family:'Archivo Black',Inter,sans-serif;letter-spacing:-.01em;text-transform:uppercase}
@@ -117,6 +118,48 @@ video,#photoPreview{width:100%;max-width:460px;border-radius:16px;border:1px sol
 .error{background:rgba(255,59,47,.08);border:1px solid var(--red);color:var(--paper);border-radius:12px;padding:16px 18px;font-size:14px;line-height:1.6;margin-top:16px;display:none}
 .error b{color:var(--red)}
 
+/* Scan-Zustand: abgedunkeltes Nutzerfoto + Fortschrittsring */
+.scan{position:absolute;inset:0;z-index:1}
+.scan .scanbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.32) saturate(.75)}
+.scan .scanline{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(216,255,62,.85),transparent);box-shadow:0 0 12px rgba(216,255,62,.5);animation:scanmove 2.6s ease-in-out infinite}
+@keyframes scanmove{0%{top:8%}50%{top:88%}100%{top:8%}}
+.scan .scanui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.scan .ring{width:112px;height:112px;margin-bottom:16px}
+.scan .ring .track{fill:none;stroke:rgba(243,239,230,.18);stroke-width:5}
+.scan .ring .arc{fill:none;stroke:var(--lime);stroke-width:5;stroke-linecap:round;stroke-dasharray:82 245;filter:drop-shadow(0 0 8px rgba(216,255,62,.55));transform-origin:50% 50%;animation:ringspin 1.3s linear infinite}
+@keyframes ringspin{to{transform:rotate(360deg)}}
+.scan .serif{color:var(--lime);font-size:18px;display:block;margin-bottom:6px;text-shadow:0 1px 10px rgba(0,0,0,.7)}
+.scan .msg{color:var(--paper);opacity:.85;font-size:13.5px;text-shadow:0 1px 10px rgba(0,0,0,.7)}
+
+/* Fehlerkarte im Stage */
+.errcard{position:relative;z-index:1;max-width:360px;margin:0 auto;text-align:center;padding:36px 24px}
+.errcard h3{font-family:'Archivo Black',Inter,sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:-.01em;margin:10px 0 8px}
+.errcard p{color:var(--muted);font-size:13.5px;line-height:1.6;margin-bottom:20px;overflow-wrap:anywhere}
+.errcard .errbtns{display:flex;flex-direction:column;gap:10px}
+.errcard .errbtns .btn{width:100%;padding:13px 16px}
+
+/* Mini-Katalog: horizontale Artikelleiste */
+.itembar{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 12px;-webkit-overflow-scrolling:touch}
+.itembar::-webkit-scrollbar{height:6px}
+.itembar::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.item{flex:0 0 auto;width:124px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;color:var(--paper);text-align:left;padding:0;transition:.15s}
+.item:hover{border-color:var(--lime)}
+.item img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--paper)}
+.item .nm{font-size:12px;font-weight:600;padding:8px 10px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .pr{font-family:'Archivo Black',Inter,sans-serif;font-size:12px;padding:0 10px 10px}
+.item.on{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime),0 0 24px rgba(216,255,62,.12)}
+
+/* Mobiler Feinschliff */
+@media(max-width:640px){
+  .stage{min-height:300px}
+  .panel{padding:18px}
+  .hero{padding:44px 0 28px}
+  .bar{padding:12px 16px;gap:10px}
+  .bar .label{display:none}
+  .errcard{padding:26px 18px}
+  .resultactions .btn{min-height:44px}
+}
+
 dialog{background:var(--card);color:var(--paper);border:1px solid var(--line);border-radius:20px;padding:30px;max-width:520px;width:92%}
 dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
 dialog h2{font-size:18px;margin-bottom:6px}
@@ -157,6 +200,12 @@ footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted
     <h2>Kollektion</h2>
     <p class="hint">Beispiel-Sortiment · die Produktliste kommt aus <code>products.json</code> und wird 1:1 durch das Ordertool-Sortiment ersetzt.</p>
     <div class="grid" id="productGrid"></div>
+  </section>
+
+  <section id="secItems" style="display:none">
+    <h2>Deine Auswahl</h2>
+    <p class="hint">Tippe ein Teil an, um es anzuprobieren – dein Foto brauchst du nur einmal.</p>
+    <div class="itembar" id="itemBar"></div>
   </section>
 
   <section id="secPhoto" style="display:none">
@@ -207,6 +256,7 @@ footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted
           <div class="placeholder" id="stagePlaceholder">Produkt und Foto auswählen,<br>dann startet die Anprobe automatisch.</div>
         </div>
         <div class="resultactions" id="resultActions" style="display:none">
+          <button class="btn small" id="btnShare">↗ Teilen</button>
           <button class="btn ghost small" id="btnDownload">⬇ Bild speichern</button>
           <button class="btn ghost small" id="btnRegenerate">↻ Neu generieren</button>
         </div>
@@ -238,7 +288,8 @@ footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted
   <div class="inner">
     <b style="color:var(--paper)">Hinweis:</b> Die Anprobe ist eine KI-Visualisierung und kann von Passform und Farbe des realen Produkts abweichen. Sie ersetzt keine Größenberatung.<br>
     <b style="color:var(--paper)">Datenschutz:</b> Dein Foto wird ausschließlich zur Erstellung der Anprobe an die Google-Gemini-API übertragen und von dieser Seite nicht gespeichert.<br><br>
-    Black Rabbit Studio · Digitale Anprobe (Prototyp) · Integration ins Ordertool siehe README.
+    Black Rabbit Studio · Digitale Anprobe (Prototyp) · Integration ins Ordertool siehe README.<br>
+    Sie führen ein Geschäft und möchten das für Ihre Kundschaft? <a href="verkauf.html" style="color:var(--lime)">Digitale Anprobe für Händler →</a>
   </div>
 </footer>
 
@@ -248,6 +299,7 @@ const $ = id => document.getElementById(id);
 const state = {
   products: [], config: {},
   product: null, size: null,
+  catalogItems: [],         // Artikel aus einem Mini-Katalog-Link (#k=)
   photoDataUrl: null,       // downscaled user photo (JPEG data URL)
   resultDataUrl: null,
   stream: null, busy: false
@@ -263,11 +315,13 @@ const settings = {
 
 /* ---------- init ---------- */
 const articleFromLink = parseArticleLink();
+const catalogFromLink = articleFromLink ? null : parseCatalogLink();
 fetch("products.json").then(r => r.json()).then(data => {
   state.products = data.products; state.config = data.config || {};
-  if(!articleFromLink) renderProducts();
-});
+  if(!articleFromLink && !catalogFromLink) renderProducts();
+}).catch(()=>{ /* im Link-Modus wird products.json nicht gebraucht */ });
 if(articleFromLink) enterArticleMode(articleFromLink);
+else if(catalogFromLink) enterCatalogMode(catalogFromLink);
 
 /* Händler-Link: #a=<base64url(JSON)> — vom Händler per WhatsApp verschickt */
 function parseArticleLink(){
@@ -281,19 +335,7 @@ function parseArticleLink(){
   }catch(e){ return null; }
 }
 function enterArticleMode(a){
-  const p = {
-    id: "wa-artikel",
-    name: a.n,
-    category: a.c || "Oberteil",
-    price: a.p || 0,
-    sizes: (a.s && a.s.length) ? a.s : ["One Size"],
-    color: a.de || "",
-    image: "data:image/jpeg;base64," + a.i[0],
-    imagesB64: a.i,
-    promptHint: a.de || "",
-    dealer: a.d || "",
-    whatsapp: a.w || ""
-  };
+  const p = linkItemToProduct(a, "wa-artikel", a.d || "", a.w || "");
   document.querySelector(".hero h1").innerHTML =
     "Probier es an.<br>Ohne <span class='lime'>Umkleide.</span>";
   document.querySelector(".hero p.sub").innerHTML =
@@ -302,12 +344,86 @@ function enterArticleMode(a){
   $("secProducts").style.display = "none";
   $("lnkDealer").style.display = "none";
   state.product = p;
-  state.size = p.sizes.length === 1 ? p.sizes[0] : null;
+  state.size = p.sizes.length === 1 ? p.sizes[0] : preferredSize(p.sizes);
   fillTryCard(p);
   $("btnOtherProduct").style.display = "none";
   $("btnOrder").textContent = "Per WhatsApp bestellen →";
   setStep(2);
   $("secPhoto").style.display = "block";
+}
+
+/* Mini-Katalog-Link (v2): #k=<base64url(JSON)> — mehrere Artikel in einem Link */
+function parseCatalogLink(){
+  const m = location.hash.match(/#k=([A-Za-z0-9_-]+)/);
+  if(!m) return null;
+  try{
+    const b64 = m[1].replace(/-/g,"+").replace(/_/g,"/");
+    const k = JSON.parse(decodeURIComponent(escape(atob(b64))));
+    if(k.v !== 2 || !Array.isArray(k.items) || !k.items.length) return null;
+    if(!k.items.every(it => it.n && it.i && it.i.length)) return null;
+    return k;
+  }catch(e){ return null; }
+}
+function linkItemToProduct(it, id, dealer, whatsapp){
+  return {
+    id: id,
+    name: it.n,
+    category: it.c || "Oberteil",
+    price: it.p || 0,
+    sizes: (it.s && it.s.length) ? it.s : ["One Size"],
+    color: it.de || "",
+    image: "data:image/jpeg;base64," + it.i[0],
+    imagesB64: it.i,
+    promptHint: it.de || "",
+    dealer: dealer,
+    whatsapp: whatsapp
+  };
+}
+function enterCatalogMode(k){
+  state.catalogItems = k.items.map((it,i) => linkItemToProduct(it, "wa-katalog-" + i, k.d || "", k.w || ""));
+  const n = state.catalogItems.length;
+  document.querySelector(".hero h1").innerHTML =
+    "Probier sie an.<br>Ohne <span class='lime'>Umkleide.</span>";
+  document.querySelector(".hero p.sub").innerHTML =
+    "<b>" + escapeHtml(k.d || "Dein Geschäft") + "</b> hat dir <b>" + n + (n===1 ? " Teil" : " Teile") +
+    "</b> zum Anprobieren geschickt. Wähle eines aus und mach ein Foto – die KI zeigt dir, wie es an dir aussieht. Bestellen geht danach direkt per WhatsApp.";
+  $("secProducts").style.display = "none";
+  $("lnkDealer").style.display = "none";
+  $("btnOtherProduct").style.display = "none";
+  $("secItems").style.display = "block";
+  renderItemBar(state.catalogItems);
+  selectCatalogItem(0);
+  setStep(2);
+  $("secPhoto").style.display = "block";
+}
+function renderItemBar(items){
+  const bar = $("itemBar"); bar.innerHTML = "";
+  items.forEach((p,i)=>{
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "item"; b.id = "item-" + i;
+    const img = document.createElement("img"); img.src = p.image; img.alt = p.name;
+    const nm = document.createElement("div"); nm.className = "nm"; nm.textContent = p.name;
+    const pr = document.createElement("div"); pr.className = "pr"; pr.textContent = fmtPrice(p.price);
+    b.append(img, nm, pr);
+    b.addEventListener("click", ()=> selectCatalogItem(i));
+    bar.appendChild(b);
+  });
+}
+function selectCatalogItem(i){
+  if(state.busy) return;
+  const p = state.catalogItems[i]; if(!p) return;
+  state.product = p;
+  state.size = p.sizes.length === 1 ? p.sizes[0] : preferredSize(p.sizes);
+  document.querySelectorAll(".item").forEach(e=>e.classList.remove("on"));
+  const el = $("item-" + i); if(el) el.classList.add("on");
+  fillTryCard(p);
+  $("btnOrder").textContent = p.whatsapp ? "Per WhatsApp bestellen →" : "Jetzt bestellen →";
+  if(state.photoDataUrl){ showTryArea(); startTryOn(); }
+}
+/* Größen-Merker: einmal gewählte Größe für die nächsten Artikel vormerken */
+function preferredSize(sizes){
+  const pref = localStorage.getItem("brs_size_pref");
+  return (pref && sizes.indexOf(pref) !== -1) ? pref : null;
 }
 function escapeHtml(s){ const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
 
@@ -339,7 +455,7 @@ function setStep(n){
   for(let i=1;i<=3;i++) $("step"+i).classList.toggle("active", i<=n);
 }
 function selectProduct(p){
-  state.product = p; state.size = p.sizes.length===1 ? p.sizes[0] : null;
+  state.product = p; state.size = p.sizes.length===1 ? p.sizes[0] : preferredSize(p.sizes);
   document.querySelectorAll(".product").forEach(e=>e.classList.remove("selected"));
   $("prod-"+p.id).classList.add("selected");
   fillTryCard(p);
@@ -361,6 +477,7 @@ function fillTryCard(p){
     b.className = "size" + (state.size===s ? " on" : "");
     b.textContent = s;
     b.addEventListener("click", ()=>{ state.size = s;
+      localStorage.setItem("brs_size_pref", s);
       row.querySelectorAll(".size").forEach(x=>x.classList.remove("on")); b.classList.add("on"); });
     row.appendChild(b);
   }
@@ -457,8 +574,18 @@ async function startTryOn(){
   state.busy = true; hideError();
   $("resultActions").style.display = "none";
   const stage = $("stage");
-  stage.innerHTML = `<div class="loading"><div class="spinner"></div>
-    <span class="serif">Digitale Anprobe läuft</span><div class="msg" id="loadMsg">${LOADING_LINES[0]}</div></div>`;
+  stage.innerHTML = `<div class="scan">
+    <img class="scanbg" src="${state.photoDataUrl}" alt="">
+    <div class="scanline"></div>
+    <div class="scanui">
+      <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="track" cx="60" cy="60" r="52"></circle>
+        <circle class="arc" cx="60" cy="60" r="52"></circle>
+      </svg>
+      <span class="serif">Digitale Anprobe läuft</span>
+      <div class="msg" id="loadMsg">${LOADING_LINES[0]}</div>
+    </div>
+  </div>`;
   let li = 0;
   const timer = setInterval(()=>{ li=(li+1)%LOADING_LINES.length; const m=$("loadMsg"); if(m) m.textContent = LOADING_LINES[li]; }, 3500);
   try{
@@ -471,11 +598,26 @@ async function startTryOn(){
     state.resultDataUrl = "data:image/png;base64," + b64;
     renderResult();
   }catch(e){
-    stage.innerHTML = `<div class="placeholder">Keine Anprobe erstellt.</div>`;
-    showError("Generierung fehlgeschlagen", (e && e.message) ? e.message : String(e));
+    stageError((e && e.message) ? e.message : String(e));
   }finally{
     clearInterval(timer); state.busy = false;
   }
+}
+/* Fehlerkarte im Stage — für Generierungsfehler; Formular-/Setupfehler laufen weiter über errorBox */
+function stageError(msg){
+  $("resultActions").style.display = "none";
+  $("stage").innerHTML = `
+    <div class="errcard">
+      <span class="label" style="color:var(--red)">Fehler</span>
+      <h3>Das hat nicht geklappt</h3>
+      <p>${escapeHtml(msg)}</p>
+      <div class="errbtns">
+        <button class="btn" id="btnStageRetry">↻ Neu starten</button>
+        <button class="btn ghost" id="btnStagePhoto">Anderes Foto</button>
+      </div>
+    </div>`;
+  $("btnStageRetry").addEventListener("click", startTryOn);
+  $("btnStagePhoto").addEventListener("click", newPhoto);
 }
 function buildPrompt(p){
   const item = p.promptHint || (p.name + ", " + p.color);
@@ -581,18 +723,40 @@ $("btnDownload").addEventListener("click", ()=>{
   a.download = "anprobe-" + state.product.id + ".png";
   a.click();
 });
+/* Ergebnis teilen: Web Share API mit Bild-Datei, sonst Download als Fallback */
+$("btnShare").addEventListener("click", async ()=>{
+  if(!state.resultDataUrl) return;
+  const fname = "anprobe-" + (state.product ? state.product.id : "bild") + ".png";
+  try{
+    const blob = await (await fetch(state.resultDataUrl)).blob();
+    const file = new File([blob], fname, { type: blob.type || "image/png" });
+    if(navigator.canShare && navigator.canShare({ files: [file] })){
+      await navigator.share({
+        files: [file],
+        title: "Meine digitale Anprobe",
+        text: "Schau mal – so sieht " + (state.product ? state.product.name : "das Teil") + " an mir aus."
+      });
+      return;
+    }
+  }catch(e){
+    if(e && e.name === "AbortError") return; // Teilen bewusst abgebrochen
+  }
+  const a = document.createElement("a");
+  a.href = state.resultDataUrl; a.download = fname; a.click();
+});
 $("btnRegenerate").addEventListener("click", startTryOn);
 $("btnOtherProduct").addEventListener("click", ()=>{
   setStep(1);
   $("secProducts").scrollIntoView({behavior:"smooth"});
 });
-$("btnNewPhoto").addEventListener("click", ()=>{
+function newPhoto(){
   state.photoDataUrl = null; state.resultDataUrl = null;
   $("secTry").classList.remove("open");
   setStep(2);
   $("secPhoto").style.display = "block";
   $("secPhoto").scrollIntoView({behavior:"smooth"});
-});
+}
+$("btnNewPhoto").addEventListener("click", newPhoto);
 $("btnOrder").addEventListener("click", ()=>{
   const p = state.product; if(!p) return;
   const size = state.size || (p.sizes.length===1 ? p.sizes[0] : "");
