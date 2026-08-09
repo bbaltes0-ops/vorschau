@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digitale Anprobe · Black Rabbit Studio</title>
+<meta name="description" content="Produkte direkt per Kamera oder Foto virtuell anprobieren – KI-gestützte Anprobe für den Black Rabbit Shop.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0E0E0E; --ink:#161616; --card:#181818; --line:#2A2A2A;
+  --paper:#F3EFE6; --muted:#9C9890; --lime:#D8FF3E; --red:#FF3B2F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--paper);font-family:Inter,system-ui,sans-serif;min-height:100vh;position:relative}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:99;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1,h2,.display{font-family:'Archivo Black',Inter,sans-serif;letter-spacing:-.01em;text-transform:uppercase}
+.serif{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0}
+.label{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+
+header{position:sticky;top:0;z-index:50;background:rgba(14,14,14,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px}
+.bar .brand{font-family:'Archivo Black';font-size:15px;text-transform:uppercase}
+.bar .brand em{font-family:'Bodoni Moda',serif;font-style:italic;text-transform:none;color:var(--lime);font-size:16px}
+.bar .spacer{flex:1}
+.iconbtn{background:none;border:1px solid var(--line);color:var(--paper);border-radius:10px;padding:8px 12px;font-size:13px;transition:.15s}
+.iconbtn:hover{border-color:var(--lime)}
+
+main{max-width:1080px;margin:0 auto;padding:0 20px 90px}
+.hero{padding:64px 0 40px}
+.hero h1{font-size:clamp(34px,7vw,72px);line-height:.95}
+.hero h1 .lime{color:var(--lime)}
+.hero p.sub{margin-top:18px;max-width:560px;color:var(--muted);font-size:16px;line-height:1.6}
+.hero p.sub b{color:var(--paper);font-weight:600}
+
+.steps{display:flex;gap:10px;margin:34px 0 8px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:13px;color:var(--muted);transition:.2s}
+.step .n{font-family:'Archivo Black';font-size:12px;color:var(--muted)}
+.step.active{border-color:var(--lime);color:var(--paper)}
+.step.active .n{color:var(--lime)}
+
+section{margin-top:44px}
+section>h2{font-size:20px;margin-bottom:6px}
+section>p.hint{color:var(--muted);font-size:14px;margin-bottom:22px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.product{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.18s;display:flex;flex-direction:column}
+.product:hover{border-color:var(--lime);transform:translateY(-3px)}
+.product.selected{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime),0 0 34px rgba(216,255,62,.14)}
+.product img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--paper)}
+.product .info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.product .name{font-weight:600;font-size:15px}
+.product .meta{color:var(--muted);font-size:12.5px}
+.product .row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:10px}
+.product .price{font-family:'Archivo Black';font-size:16px}
+.btn{background:var(--lime);color:var(--black);border:none;border-radius:10px;padding:10px 16px;font-weight:600;font-size:14px;transition:.15s}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--paper);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--lime)}
+.btn.small{padding:8px 14px;font-size:13px}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;margin-top:18px}
+.srcgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.srcgrid{grid-template-columns:1fr}}
+.srcbtn{background:var(--ink);border:1px dashed var(--line);border-radius:16px;padding:30px 20px;color:var(--paper);text-align:center;transition:.15s}
+.srcbtn:hover{border-color:var(--lime)}
+.srcbtn .big{font-size:30px;display:block;margin-bottom:10px}
+.srcbtn .t{font-weight:600;font-size:15px}
+.srcbtn .d{color:var(--muted);font-size:12.5px;margin-top:6px;display:block}
+.tips{margin-top:16px;color:var(--muted);font-size:13px;line-height:1.7}
+.tips b{color:var(--paper);font-weight:600}
+
+.camwrap{display:none;text-align:center}
+.camwrap.open{display:block}
+video,#photoPreview{width:100%;max-width:460px;border-radius:16px;border:1px solid var(--line);background:#000;transform:scaleX(-1)}
+#photoPreview{transform:none}
+.camactions{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.shutter{width:64px;height:64px;border-radius:50%;background:var(--paper);border:5px solid var(--lime);transition:.1s}
+.shutter:active{transform:scale(.92)}
+
+.tryarea{display:none}
+.tryarea.open{display:block}
+.trygrid{display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:start}
+@media(max-width:820px){.trygrid{grid-template-columns:1fr}}
+.trycard{background:var(--ink);border:1px solid var(--line);border-radius:16px;padding:18px}
+.trycard img.pimg{width:100%;border-radius:12px;background:var(--paper)}
+.sizerow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.size{border:1px solid var(--line);background:none;color:var(--paper);border-radius:8px;padding:7px 12px;font-size:13px}
+.size.on{border-color:var(--lime);color:var(--lime)}
+
+.stage{background:var(--ink);border:1px solid var(--line);border-radius:16px;min-height:420px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.stage .placeholder{color:var(--muted);text-align:center;padding:40px;font-size:14px;line-height:1.7}
+.loading{text-align:center;padding:40px}
+.spinner{width:52px;height:52px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--lime);animation:spin 1s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading .msg{color:var(--muted);font-size:14px}
+.loading .serif{color:var(--lime);font-size:19px;display:block;margin-bottom:8px}
+
+.compare{position:relative;width:100%;user-select:none}
+.compare img{width:100%;display:block;border-radius:0}
+.compare .before{position:absolute;inset:0;overflow:hidden}
+.compare .before img{width:100%;height:100%;object-fit:cover}
+.compare .divider{position:absolute;top:0;bottom:0;width:2px;background:var(--lime);box-shadow:0 0 14px rgba(216,255,62,.6)}
+.compare .knob{position:absolute;top:50%;transform:translate(-50%,-50%);background:var(--lime);color:var(--black);font-family:'Archivo Black';font-size:10px;border-radius:999px;padding:6px 10px;white-space:nowrap}
+.badge{position:absolute;top:12px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;background:rgba(14,14,14,.75);padding:5px 10px;border-radius:6px}
+.badge.l{left:12px}.badge.r{right:12px}
+
+.resultactions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.error{background:rgba(255,59,47,.08);border:1px solid var(--red);color:var(--paper);border-radius:12px;padding:16px 18px;font-size:14px;line-height:1.6;margin-top:16px;display:none}
+.error b{color:var(--red)}
+
+dialog{background:var(--card);color:var(--paper);border:1px solid var(--line);border-radius:20px;padding:30px;max-width:520px;width:92%}
+dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
+dialog h2{font-size:18px;margin-bottom:6px}
+dialog p{color:var(--muted);font-size:13.5px;line-height:1.65;margin-bottom:18px}
+dialog label{display:block;font-size:12px;color:var(--muted);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.12em;font-family:ui-monospace,monospace}
+dialog input,dialog select{width:100%;background:var(--ink);border:1px solid var(--line);color:var(--paper);border-radius:10px;padding:11px 13px;font:inherit;font-size:14px}
+dialog input:focus,dialog select:focus{outline:none;border-color:var(--lime)}
+.dlgactions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px}
+
+footer{border-top:1px solid var(--line);margin-top:70px}
+footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted);font-size:12.5px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="brand">Black Rabbit <em>Studio</em></div>
+    <span class="label">Digitale Anprobe · Demo</span>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="btnSettings" title="KI-Einstellungen">⚙ KI-Setup</button>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Anprobieren.<br>Ohne <span class="lime">Umkleide.</span></h1>
+    <p class="sub">Wähle ein Produkt, mach ein Foto mit der Kamera <b>deines Handys oder Laptops</b> – und die KI zeigt dir in Sekunden, wie es an dir aussieht. Direkt aus dem Shop, direkt bestellbar.</p>
+    <div class="steps">
+      <div class="step active" id="step1"><span class="n">01</span> Produkt wählen</div>
+      <div class="step" id="step2"><span class="n">02</span> Foto aufnehmen</div>
+      <div class="step" id="step3"><span class="n">03</span> Anprobe ansehen</div>
+    </div>
+  </div>
+
+  <section id="secProducts">
+    <h2>Kollektion</h2>
+    <p class="hint">Beispiel-Sortiment · die Produktliste kommt aus <code>products.json</code> und wird 1:1 durch das Ordertool-Sortiment ersetzt.</p>
+    <div class="grid" id="productGrid"></div>
+  </section>
+
+  <section id="secPhoto" style="display:none">
+    <h2>Dein Foto</h2>
+    <p class="hint">Das Foto wird nur für die Anprobe verwendet und nicht gespeichert.</p>
+    <div class="panel">
+      <div class="srcgrid" id="srcChoice">
+        <button class="srcbtn" id="btnCam"><span class="big">📷</span><span class="t">Kamera verwenden</span><span class="d">Front-Kamera von Handy oder Laptop</span></button>
+        <button class="srcbtn" id="btnUpload"><span class="big">🖼️</span><span class="t">Foto hochladen</span><span class="d">JPG oder PNG aus der Galerie</span></button>
+        <input type="file" id="fileInput" accept="image/*" hidden>
+      </div>
+      <div class="camwrap" id="camWrap">
+        <video id="video" autoplay playsinline muted></video>
+        <img id="photoPreview" style="display:none" alt="Dein Foto">
+        <div class="camactions">
+          <button class="shutter" id="btnShutter" title="Foto aufnehmen"></button>
+          <button class="btn ghost small" id="btnRetake" style="display:none">↺ Neu aufnehmen</button>
+          <button class="btn small" id="btnUsePhoto" style="display:none">Foto verwenden →</button>
+          <button class="btn ghost small" id="btnCancelCam">Abbrechen</button>
+        </div>
+      </div>
+      <p class="tips" id="photoTips"><b>Tipps für ein gutes Ergebnis:</b> gutes Licht, frontal zur Kamera, Oberkörper sichtbar, ruhiger Hintergrund.</p>
+    </div>
+  </section>
+
+  <section class="tryarea" id="secTry">
+    <h2>Deine Anprobe</h2>
+    <p class="hint serif" style="font-size:17px;color:var(--muted)">So sieht es an dir aus.</p>
+    <div class="trygrid">
+      <div class="trycard">
+        <img class="pimg" id="tryProductImg" alt="">
+        <div style="margin-top:12px">
+          <div class="label" id="tryProductCat"></div>
+          <div style="font-weight:600;font-size:16px;margin-top:4px" id="tryProductName"></div>
+          <div style="font-family:'Archivo Black';font-size:18px;margin-top:6px" id="tryProductPrice"></div>
+        </div>
+        <div class="sizerow" id="sizeRow"></div>
+        <div class="resultactions">
+          <button class="btn" id="btnOrder" style="width:100%">Jetzt bestellen →</button>
+        </div>
+        <div class="resultactions">
+          <button class="btn ghost small" id="btnOtherProduct" style="flex:1">Anderes Produkt</button>
+          <button class="btn ghost small" id="btnNewPhoto" style="flex:1">Neues Foto</button>
+        </div>
+      </div>
+      <div>
+        <div class="stage" id="stage">
+          <div class="placeholder" id="stagePlaceholder">Produkt und Foto auswählen,<br>dann startet die Anprobe automatisch.</div>
+        </div>
+        <div class="resultactions" id="resultActions" style="display:none">
+          <button class="btn ghost small" id="btnDownload">⬇ Bild speichern</button>
+          <button class="btn ghost small" id="btnRegenerate">↻ Neu generieren</button>
+        </div>
+        <div class="error" id="errorBox"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog id="dlgSettings">
+  <h2>KI-Setup</h2>
+  <p>Die Anprobe nutzt Googles Bild-KI <b>Gemini (Nano Banana Pro)</b>. Für die Demo kann direkt ein API-Key hinterlegt werden (bleibt nur in diesem Browser, localStorage). Für den Live-Betrieb im Ordertool wird stattdessen die Proxy-URL genutzt, damit kein Key im Browser liegt – siehe README.</p>
+  <label>Gemini API-Key (Demo-Modus)</label>
+  <input type="password" id="inpKey" placeholder="AIza…  (aistudio.google.com/apikey)">
+  <label>Modell</label>
+  <select id="inpModel">
+    <option value="gemini-3-pro-image">gemini-3-pro-image · beste Qualität (Nano Banana Pro)</option>
+    <option value="gemini-2.5-flash-image">gemini-2.5-flash-image · schneller und günstiger</option>
+  </select>
+  <label>Proxy-URL (Live-Betrieb, optional)</label>
+  <input type="url" id="inpProxy" placeholder="https://tryon.black-rabbit.studio/api/generate">
+  <div class="dlgactions">
+    <button class="btn ghost small" id="btnDlgClose">Abbrechen</button>
+    <button class="btn small" id="btnDlgSave">Speichern</button>
+  </div>
+</dialog>
+
+<footer>
+  <div class="inner">
+    <b style="color:var(--paper)">Hinweis:</b> Die Anprobe ist eine KI-Visualisierung und kann von Passform und Farbe des realen Produkts abweichen. Sie ersetzt keine Größenberatung.<br>
+    <b style="color:var(--paper)">Datenschutz:</b> Dein Foto wird ausschließlich zur Erstellung der Anprobe an die Google-Gemini-API übertragen und von dieser Seite nicht gespeichert.<br><br>
+    Black Rabbit Studio · Digitale Anprobe (Prototyp) · Integration ins Ordertool siehe README.
+  </div>
+</footer>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const state = {
+  products: [], config: {},
+  product: null, size: null,
+  photoDataUrl: null,       // downscaled user photo (JPEG data URL)
+  resultDataUrl: null,
+  stream: null, busy: false
+};
+const settings = {
+  get key(){ return localStorage.getItem("brs_tryon_key") || ""; },
+  set key(v){ localStorage.setItem("brs_tryon_key", v); },
+  get model(){ return localStorage.getItem("brs_tryon_model") || "gemini-3-pro-image"; },
+  set model(v){ localStorage.setItem("brs_tryon_model", v); },
+  get proxy(){ return localStorage.getItem("brs_tryon_proxy") || ""; },
+  set proxy(v){ localStorage.setItem("brs_tryon_proxy", v); }
+};
+
+/* ---------- init ---------- */
+fetch("products.json").then(r => r.json()).then(data => {
+  state.products = data.products; state.config = data.config || {};
+  renderProducts();
+});
+
+function renderProducts(){
+  const grid = $("productGrid");
+  grid.innerHTML = "";
+  for(const p of state.products){
+    const el = document.createElement("div");
+    el.className = "product"; el.id = "prod-" + p.id;
+    el.innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <div class="info">
+        <div class="label">${p.category}</div>
+        <div class="name">${p.name}</div>
+        <div class="meta">${p.color} · Größen: ${p.sizes.join(", ")}</div>
+        <div class="row">
+          <div class="price">${fmtPrice(p.price)}</div>
+          <button class="btn small">Anprobieren</button>
+        </div>
+      </div>`;
+    el.querySelector("button").addEventListener("click", () => selectProduct(p));
+    grid.appendChild(el);
+  }
+}
+function fmtPrice(v){ return v.toLocaleString("de-DE",{style:"currency",currency:(state.config.currency||"EUR")}); }
+
+/* ---------- flow ---------- */
+function setStep(n){
+  for(let i=1;i<=3;i++) $("step"+i).classList.toggle("active", i<=n);
+}
+function selectProduct(p){
+  state.product = p; state.size = p.sizes.length===1 ? p.sizes[0] : null;
+  document.querySelectorAll(".product").forEach(e=>e.classList.remove("selected"));
+  $("prod-"+p.id).classList.add("selected");
+  fillTryCard(p);
+  if(state.photoDataUrl){ showTryArea(); startTryOn(); }
+  else{
+    setStep(2);
+    $("secPhoto").style.display = "block";
+    $("secPhoto").scrollIntoView({behavior:"smooth"});
+  }
+}
+function fillTryCard(p){
+  $("tryProductImg").src = p.image;
+  $("tryProductCat").textContent = p.category;
+  $("tryProductName").textContent = p.name;
+  $("tryProductPrice").textContent = fmtPrice(p.price);
+  const row = $("sizeRow"); row.innerHTML = "";
+  for(const s of p.sizes){
+    const b = document.createElement("button");
+    b.className = "size" + (state.size===s ? " on" : "");
+    b.textContent = s;
+    b.addEventListener("click", ()=>{ state.size = s;
+      row.querySelectorAll(".size").forEach(x=>x.classList.remove("on")); b.classList.add("on"); });
+    row.appendChild(b);
+  }
+}
+function showTryArea(){
+  setStep(3);
+  $("secTry").classList.add("open");
+  $("secTry").scrollIntoView({behavior:"smooth"});
+}
+
+/* ---------- photo: camera ---------- */
+$("btnCam").addEventListener("click", async ()=>{
+  hideError();
+  try{
+    state.stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:"user", width:{ideal:1280}, height:{ideal:1280}}});
+    $("video").srcObject = state.stream;
+    $("srcChoice").style.display = "none";
+    $("camWrap").classList.add("open");
+    $("video").style.display = ""; $("photoPreview").style.display = "none";
+    $("btnShutter").style.display = ""; $("btnRetake").style.display = "none"; $("btnUsePhoto").style.display = "none";
+  }catch(e){
+    showError("Kamera-Zugriff nicht möglich", "Bitte Kamera-Freigabe im Browser erlauben oder stattdessen ein Foto hochladen. ("+e.name+")");
+  }
+});
+$("btnShutter").addEventListener("click", ()=>{
+  const v = $("video");
+  const c = document.createElement("canvas");
+  c.width = v.videoWidth; c.height = v.videoHeight;
+  const ctx = c.getContext("2d");
+  ctx.translate(c.width,0); ctx.scale(-1,1);   // un-mirror
+  ctx.drawImage(v,0,0);
+  setUserPhoto(c.toDataURL("image/jpeg",0.92));
+  $("photoPreview").src = state.photoDataUrl;
+  $("video").style.display = "none"; $("photoPreview").style.display = "";
+  $("btnShutter").style.display = "none"; $("btnRetake").style.display = ""; $("btnUsePhoto").style.display = "";
+});
+$("btnRetake").addEventListener("click", ()=>{
+  $("video").style.display = ""; $("photoPreview").style.display = "none";
+  $("btnShutter").style.display = ""; $("btnRetake").style.display = "none"; $("btnUsePhoto").style.display = "none";
+});
+$("btnUsePhoto").addEventListener("click", ()=>{ stopCam(); photoReady(); });
+$("btnCancelCam").addEventListener("click", ()=>{ stopCam();
+  $("srcChoice").style.display = ""; $("camWrap").classList.remove("open"); });
+function stopCam(){
+  if(state.stream){ state.stream.getTracks().forEach(t=>t.stop()); state.stream = null; }
+}
+
+/* ---------- photo: upload ---------- */
+$("btnUpload").addEventListener("click", ()=> $("fileInput").click());
+$("fileInput").addEventListener("change", e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const rd = new FileReader();
+  rd.onload = ()=>{ setUserPhoto(rd.result, ()=>photoReady()); };
+  rd.readAsDataURL(f);
+});
+
+function setUserPhoto(dataUrl, cb){
+  // downscale to max 1024px long edge for token efficiency
+  const img = new Image();
+  img.onload = ()=>{
+    const max = 1024;
+    let {width:w, height:h} = img;
+    if(Math.max(w,h) > max){ const s = max/Math.max(w,h); w = Math.round(w*s); h = Math.round(h*s); }
+    const c = document.createElement("canvas"); c.width = w; c.height = h;
+    c.getContext("2d").drawImage(img,0,0,w,h);
+    state.photoDataUrl = c.toDataURL("image/jpeg",0.9);
+    if(cb) cb();
+  };
+  img.src = dataUrl;
+  state.photoDataUrl = dataUrl; // provisional until downscale finishes
+}
+function photoReady(){
+  $("camWrap").classList.remove("open");
+  $("srcChoice").style.display = "";
+  showTryArea();
+  startTryOn();
+}
+
+/* ---------- try-on generation ---------- */
+const LOADING_LINES = [
+  "Die KI legt dir das Teil an …",
+  "Stoff, Licht und Schatten werden angepasst …",
+  "Passform wird gerechnet …",
+  "Gleich fertig · noch einen Moment …"
+];
+async function startTryOn(){
+  if(state.busy || !state.product || !state.photoDataUrl) return;
+  if(!settings.proxy && !settings.key){
+    showError("KI noch nicht verbunden",
+      "Für die Demo oben rechts unter <b>⚙ KI-Setup</b> einen Gemini API-Key eintragen (kostenlos unter aistudio.google.com/apikey) – oder die Proxy-URL des Ordertools hinterlegen.");
+    openSettings();
+    return;
+  }
+  state.busy = true; hideError();
+  $("resultActions").style.display = "none";
+  const stage = $("stage");
+  stage.innerHTML = `<div class="loading"><div class="spinner"></div>
+    <span class="serif">Digitale Anprobe läuft</span><div class="msg" id="loadMsg">${LOADING_LINES[0]}</div></div>`;
+  let li = 0;
+  const timer = setInterval(()=>{ li=(li+1)%LOADING_LINES.length; const m=$("loadMsg"); if(m) m.textContent = LOADING_LINES[li]; }, 3500);
+  try{
+    const productB64 = await imageToBase64(state.product.image);
+    const personB64 = state.photoDataUrl.split(",")[1];
+    const prompt = buildPrompt(state.product);
+    const b64 = await callGemini(prompt, personB64, productB64);
+    state.resultDataUrl = "data:image/png;base64," + b64;
+    renderResult();
+  }catch(e){
+    stage.innerHTML = `<div class="placeholder">Keine Anprobe erstellt.</div>`;
+    showError("Generierung fehlgeschlagen", (e && e.message) ? e.message : String(e));
+  }finally{
+    clearInterval(timer); state.busy = false;
+  }
+}
+function buildPrompt(p){
+  const item = p.promptHint || (p.name + ", " + p.color);
+  const region = p.category === "Kopfbedeckung"
+    ? "Place the product on the person's head. Do not change their clothing."
+    : "Replace the person's current upper body clothing with the product.";
+  return "Virtual try-on task. The first image shows a person. The second image shows a product: " + item + ". " +
+    region + " Keep the person's face, identity, hair, skin tone, body shape, pose and the photo background EXACTLY the same. " +
+    "The product must fit naturally with realistic fabric drape, folds, lighting and shadows consistent with the original photo. " +
+    "Photorealistic output, same framing and resolution as the first image. Output only the final image.";
+}
+async function callGemini(prompt, personB64, productB64){
+  const body = {
+    contents: [{ parts: [
+      { text: prompt },
+      { inline_data: { mime_type: "image/jpeg", data: personB64 } },
+      { inline_data: { mime_type: "image/png", data: productB64 } }
+    ]}],
+    generationConfig: { responseModalities: ["IMAGE","TEXT"] }
+  };
+  let url, headers = {"Content-Type":"application/json"};
+  if(settings.proxy){
+    url = settings.proxy;
+    body.model = settings.model;
+  }else{
+    url = "https://generativelanguage.googleapis.com/v1beta/models/" + settings.model + ":generateContent";
+    headers["x-goog-api-key"] = settings.key;
+  }
+  const res = await fetch(url, {method:"POST", headers, body: JSON.stringify(body)});
+  if(!res.ok){
+    let msg = "HTTP " + res.status;
+    try{ const j = await res.json(); msg = (j.error && j.error.message) || msg; }catch(_){}
+    if(res.status===400 && /API key/i.test(msg)) msg = "API-Key ungültig. Bitte unter ⚙ KI-Setup prüfen.";
+    if(res.status===429) msg = "Rate-Limit erreicht. Kurz warten und erneut versuchen.";
+    throw new Error(msg);
+  }
+  const j = await res.json();
+  const parts = j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts || [];
+  for(const part of parts){
+    const d = part.inlineData || part.inline_data;
+    if(d && d.data) return d.data;
+  }
+  throw new Error("Das Modell hat kein Bild zurückgegeben. Bitte mit anderem Foto oder Modell erneut versuchen.");
+}
+function imageToBase64(src){
+  return new Promise((resolve,reject)=>{
+    const img = new Image();
+    img.onload = ()=>{
+      const c = document.createElement("canvas");
+      c.width = img.naturalWidth || 800; c.height = img.naturalHeight || 800;
+      const ctx = c.getContext("2d");
+      ctx.fillStyle = "#ffffff"; ctx.fillRect(0,0,c.width,c.height);
+      ctx.drawImage(img,0,0,c.width,c.height);
+      resolve(c.toDataURL("image/png").split(",")[1]);
+    };
+    img.onerror = ()=>reject(new Error("Produktbild konnte nicht geladen werden."));
+    img.src = src;
+  });
+}
+
+/* ---------- result: before/after ---------- */
+function renderResult(){
+  const stage = $("stage");
+  stage.innerHTML = `
+    <div class="compare" id="compare">
+      <img src="${state.resultDataUrl}" alt="Anprobe-Ergebnis">
+      <div class="before" id="cmpBefore"><img src="${state.photoDataUrl}" alt="Original"></div>
+      <div class="divider" id="cmpDiv"></div>
+      <div class="knob" id="cmpKnob">◂ Vorher · Nachher ▸</div>
+      <span class="badge l">Vorher</span><span class="badge r">Nachher · KI</span>
+    </div>`;
+  $("resultActions").style.display = "flex";
+  initCompare();
+}
+function initCompare(){
+  const wrap = $("compare"), before = $("cmpBefore"), div = $("cmpDiv"), knob = $("cmpKnob");
+  let pos = .5;
+  function apply(){
+    before.style.clipPath = `inset(0 ${100-pos*100}% 0 0)`;
+    div.style.left = (pos*100)+"%"; knob.style.left = (pos*100)+"%";
+  }
+  function move(clientX){
+    const r = wrap.getBoundingClientRect();
+    pos = Math.min(1, Math.max(0, (clientX - r.left)/r.width)); apply();
+  }
+  wrap.addEventListener("pointerdown", e=>{ wrap.setPointerCapture(e.pointerId); move(e.clientX); });
+  wrap.addEventListener("pointermove", e=>{ if(e.buttons) move(e.clientX); });
+  apply();
+}
+
+/* ---------- actions ---------- */
+$("btnDownload").addEventListener("click", ()=>{
+  const a = document.createElement("a");
+  a.href = state.resultDataUrl;
+  a.download = "anprobe-" + state.product.id + ".png";
+  a.click();
+});
+$("btnRegenerate").addEventListener("click", startTryOn);
+$("btnOtherProduct").addEventListener("click", ()=>{
+  setStep(1);
+  $("secProducts").scrollIntoView({behavior:"smooth"});
+});
+$("btnNewPhoto").addEventListener("click", ()=>{
+  state.photoDataUrl = null; state.resultDataUrl = null;
+  $("secTry").classList.remove("open");
+  setStep(2);
+  $("secPhoto").style.display = "block";
+  $("secPhoto").scrollIntoView({behavior:"smooth"});
+});
+$("btnOrder").addEventListener("click", ()=>{
+  const p = state.product; if(!p) return;
+  const size = state.size || (p.sizes.length===1 ? p.sizes[0] : "");
+  if(!size && p.sizes.length>1){ showError("Größe wählen", "Bitte zuerst eine Größe auswählen."); return; }
+  hideError();
+  const target = p.orderUrl || state.config.orderUrlBase;
+  if(target){
+    location.href = target + (target.includes("?") ? "&" : "?") + "product=" + encodeURIComponent(p.id) + "&size=" + encodeURIComponent(size);
+  }else{
+    const subject = encodeURIComponent("Bestellung: " + p.name + " (" + size + ")");
+    const bodyTxt = encodeURIComponent("Hallo,\n\nich möchte bestellen:\n\nProdukt: " + p.name + "\nGröße: " + size + "\nPreis: " + fmtPrice(p.price) + "\n\n(Anfrage über die Digitale Anprobe)");
+    location.href = "mailto:" + (state.config.orderMail || "") + "?subject=" + subject + "&body=" + bodyTxt;
+  }
+});
+
+/* ---------- errors ---------- */
+function showError(title, html){
+  const box = $("errorBox");
+  box.innerHTML = "<b>" + title + "</b> · " + html;
+  box.style.display = "block";
+}
+function hideError(){ $("errorBox").style.display = "none"; }
+
+/* ---------- settings dialog ---------- */
+function openSettings(){
+  $("inpKey").value = settings.key;
+  $("inpModel").value = settings.model;
+  $("inpProxy").value = settings.proxy;
+  $("dlgSettings").showModal();
+}
+$("btnSettings").addEventListener("click", openSettings);
+$("btnDlgClose").addEventListener("click", ()=> $("dlgSettings").close());
+$("btnDlgSave").addEventListener("click", ()=>{
+  settings.key = $("inpKey").value.trim();
+  settings.model = $("inpModel").value;
+  settings.proxy = $("inpProxy").value.trim();
+  $("dlgSettings").close();
+  if(state.product && state.photoDataUrl) startTryOn();
+});
+window.addEventListener("beforeunload", stopCam);
+</script>
+</body>
+</html>

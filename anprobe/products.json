@@ -1,0 +1,54 @@
+{
+  "config": {
+    "shopName": "Black Rabbit Studio · Shop",
+    "orderMail": "b.baltes0@gmail.com",
+    "orderUrlBase": "",
+    "currency": "EUR"
+  },
+  "products": [
+    {
+      "id": "brs-tee-neon",
+      "name": "Studio Tee · Neon Rabbit",
+      "category": "Oberteil",
+      "price": 29.0,
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "color": "Schwarz mit Neon-Lime Print",
+      "image": "img/tee.svg",
+      "promptHint": "a black t-shirt with a small neon lime rabbit logo print on the chest",
+      "orderUrl": ""
+    },
+    {
+      "id": "brs-hoodie-midnight",
+      "name": "Hoodie · Midnight",
+      "category": "Oberteil",
+      "price": 59.0,
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "color": "Schwarz, Logo tonal",
+      "image": "img/hoodie.svg",
+      "promptHint": "a black hoodie with drawstrings and a subtle tonal rabbit logo on the chest",
+      "orderUrl": ""
+    },
+    {
+      "id": "brs-cap-signal",
+      "name": "Cap · Signal",
+      "category": "Kopfbedeckung",
+      "price": 24.0,
+      "sizes": ["One Size"],
+      "color": "Schwarz, Lime Stick",
+      "image": "img/cap.svg",
+      "promptHint": "a black baseball cap with a small neon lime embroidered rabbit on the front",
+      "orderUrl": ""
+    },
+    {
+      "id": "brs-softshell-work",
+      "name": "Workwear Softshell",
+      "category": "Jacke",
+      "price": 89.0,
+      "sizes": ["S", "M", "L", "XL", "XXL", "3XL"],
+      "color": "Schwarz/Anthrazit",
+      "image": "img/jacket.svg",
+      "promptHint": "a black softshell work jacket with a zipper, worn open over the current outfit",
+      "orderUrl": ""
+    }
+  ]
+}
