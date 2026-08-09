@@ -231,8 +231,42 @@ async function setGarment(){
   await state.rt.setImage(state.garmentBlob, { prompt: garmentPrompt() });
 }
 
+/* In-App-Browser (Telegram, Instagram, Facebook, WhatsApp) blockieren die
+ * Kamera oft komplett oder lassen die Anfrage stumm haengen. Erkennen und
+ * den Weg in den richtigen Browser zeigen. */
+function inAppBrowser(){
+  const ua = navigator.userAgent || "";
+  return /Telegram|Instagram|FBAN|FBAV|FB_IAB|Line\/|WhatsApp/i.test(ua)
+    || !(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+}
+function showBrowserHint(){
+  setOverlay("Die Kamera funktioniert hier nicht, weil der Link in einer App geöffnet wurde. Tipp oben auf das Menü und wähle Im Browser öffnen. Oder kopiere den Link und öffne ihn in Safari.", false);
+  let cp = $("btnCopyLink");
+  if(!cp){
+    cp = document.createElement("button");
+    cp.id = "btnCopyLink"; cp.className = "btn ghost"; cp.textContent = "Link kopieren";
+    cp.addEventListener("click", async ()=>{
+      try{ await navigator.clipboard.writeText(location.href); cp.textContent = "Kopiert. Jetzt in Safari einfügen."; }
+      catch(_){ prompt("Link markieren und kopieren:", location.href); }
+    });
+    $("overlay").appendChild(cp);
+  }
+  const fb = $("btnFotoFallback");
+  fb.href = "./" + location.hash;
+  fb.style.display = "";
+  $("btnStart").disabled = false;
+}
+/* getUserMedia mit Zeitwaechter: in App-Browsern kommt sonst nie eine Antwort */
+function getCameraWithTimeout(constraints, ms){
+  return Promise.race([
+    navigator.mediaDevices.getUserMedia(constraints),
+    new Promise((_,rej)=> setTimeout(()=> rej(new Error("Zeitüberschreitung")), ms))
+  ]);
+}
+
 async function start(){
   $("btnStart").disabled = true;
+  if(inAppBrowser()){ showBrowserHint(); return; }
   setOverlay("Kamera wird gestartet …", true);
   /* Kamera in drei Stufen anfragen: Wunsch, einfach, minimal.
    * Manche Geraete lehnen strenge Vorgaben mit OverconstrainedError ab. */
@@ -243,10 +277,11 @@ async function start(){
   ];
   let camErr = null;
   for(const constraints of versuche){
-    try{ state.stream = await navigator.mediaDevices.getUserMedia(constraints); camErr = null; break; }
-    catch(e){ camErr = e; }
+    try{ state.stream = await getCameraWithTimeout(constraints, 12000); camErr = null; break; }
+    catch(e){ camErr = e; if(e.message === "Zeitüberschreitung") break; }
   }
   if(!state.stream){
+    if(camErr && camErr.message === "Zeitueberschreitung"){ showBrowserHint(); return; }
     setOverlay("Kamera-Zugriff nicht möglich. Bitte im Browser erlauben und erneut starten. Oder probier das Teil mit einem Foto an.", false);
     const fb = $("btnFotoFallback");
     fb.href = "./" + location.hash;
@@ -324,6 +359,8 @@ function stop(){
   $("btnStart").disabled = !state.garmentBlob;
 }
 $("btnStart").addEventListener("click", start);
+/* Schon beim Laden warnen, wenn der Link in einer App steckt statt im Browser */
+if(inAppBrowser()) showBrowserHint();
 $("btnStop").addEventListener("click", ()=>{ stop(); setOverlay("Gestoppt. Jederzeit wieder startbar.", false); });
 
 $("btnOrder").addEventListener("click", ()=>{
