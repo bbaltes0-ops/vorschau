@@ -66,6 +66,18 @@ Verkaufsversion gebaut. Alle Flows im Browser end-to-end getestet
 anprobe-produkt (Orchestrator), anprobe-frontend, anprobe-haendler,
 anprobe-backend, anprobe-vertrieb, anprobe-qa — für künftige Sessions.
 
+## TAKT-SPIEGEL: LIVE-GEFUEHL OHNE DECART (09.08. nachts, getestet)
+
+Bernd will Live, keine Foto-Anprobe, und kein Decart. Antwort: TAKT-SPIEGEL
+in live.html. Kamera laeuft durchgehend; das Spiegelbild mit angezogenem
+Teil erneuert sich automatisch im Takt (eigene Kamera als Eckfenster).
+Rechnet ueber den generate-Weg: eigener Motor (wenn OWN_ENGINE_URL auf
+GPU-Server zeigt, 5-10s Takt) oder Google-Weg (nach Freischalten-Doppelklick,
+~10-15s Takt, ~4 Cent je Aktualisierung, 90s-Sitzung = grob 20-30 Cent).
+Startet automatisch, wenn der Decart-Token 501 liefert. Mit Mock-Kamera und
+Mock-Motor im Browser getestet (Bild erscheint, PiP, Takt, Timer, 503-Pfad).
+Echtes 30fps-Live bleibt nur ueber Decart moeglich - dokumentiert.
+
 ## EIGENER MOTOR: ERSTER LAUF ERFOLGREICH (09.08. nachts)
 
 FASHN VTON 1.5 laeuft auf Bernds Mac (M4, MPS): Capri-Top und Palazzo-Hose
