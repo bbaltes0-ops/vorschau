@@ -1,53 +1,98 @@
 {
   "config": {
-    "shopName": "Black Rabbit Studio · Shop",
+    "shopName": "Dagmar von Schmaus · Sommer",
     "orderMail": "b.baltes0@gmail.com",
     "orderUrlBase": "",
-    "currency": "EUR"
+    "currency": "EUR",
+    "priceNote": "Preise vorlaeufig - Freigabe CD steht aus"
   },
   "products": [
     {
-      "id": "brs-tee-neon",
-      "name": "Studio Tee · Neon Rabbit",
+      "id": "dvs-capri",
+      "name": "Capri · Kurzarm",
       "category": "Oberteil",
-      "price": 29.0,
-      "sizes": ["S", "M", "L", "XL", "XXL"],
-      "color": "Schwarz mit Neon-Lime Print",
-      "image": "img/tee.svg",
-      "promptHint": "a black t-shirt with a small neon lime rabbit logo print on the chest",
-      "orderUrl": ""
-    },
-    {
-      "id": "brs-hoodie-midnight",
-      "name": "Hoodie · Midnight",
-      "category": "Oberteil",
-      "price": 59.0,
-      "sizes": ["S", "M", "L", "XL", "XXL"],
-      "color": "Schwarz, Logo tonal",
-      "image": "img/hoodie.svg",
-      "promptHint": "a black hoodie with drawstrings and a subtle tonal rabbit logo on the chest",
-      "orderUrl": ""
-    },
-    {
-      "id": "brs-cap-signal",
-      "name": "Cap · Signal",
-      "category": "Kopfbedeckung",
-      "price": 24.0,
-      "sizes": ["One Size"],
-      "color": "Schwarz, Lime Stick",
-      "image": "img/cap.svg",
-      "promptHint": "a black baseball cap with a small neon lime embroidered rabbit on the front",
-      "orderUrl": ""
-    },
-    {
-      "id": "brs-softshell-work",
-      "name": "Workwear Softshell",
-      "category": "Jacke",
       "price": 89.0,
-      "sizes": ["S", "M", "L", "XL", "XXL", "3XL"],
-      "color": "Schwarz/Anthrazit",
-      "image": "img/jacket.svg",
-      "promptHint": "a black softshell work jacket with a zipper, worn open over the current outfit",
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "color": "Gelb gestreift, CAPRI-Schriftzug",
+      "image": "img/dvs/capri.png",
+      "promptHint": "a yellow and cream striped short-sleeve fine-knit top with the word CAPRI in red letters on the chest",
+      "orderUrl": ""
+    },
+    {
+      "id": "dvs-breton",
+      "name": "Marine · Streifen",
+      "category": "Oberteil",
+      "price": 99.0,
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "color": "Marine/Creme gestreift",
+      "image": "img/dvs/breton.png",
+      "promptHint": "a navy and cream breton striped long-sleeve fine-knit top with a buttoned neckline",
+      "orderUrl": ""
+    },
+    {
+      "id": "dvs-top-creme",
+      "name": "Top · Creme",
+      "category": "Oberteil",
+      "price": 89.0,
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "color": "Creme",
+      "image": "img/dvs/top_creme.png",
+      "promptHint": "a cream short-sleeve fine-knit top with a round neck",
+      "orderUrl": ""
+    },
+    {
+      "id": "dvs-bordeaux",
+      "name": "Kurzarm-Cardigan · Bordeaux",
+      "category": "Oberteil",
+      "price": 119.0,
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "color": "Bordeaux, Puffaermel",
+      "image": "img/dvs/bordeaux.png",
+      "promptHint": "a bordeaux red short-sleeve knitted cardigan with puff sleeves and small buttons down the front",
+      "orderUrl": ""
+    },
+    {
+      "id": "dvs-hellblau",
+      "name": "Kurzarm-Cardigan · Hellblau",
+      "category": "Oberteil",
+      "price": 119.0,
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "color": "Hellblau, Puffaermel",
+      "image": "img/dvs/hellblau.png",
+      "promptHint": "a light blue short-sleeve knitted cardigan with puff sleeves and small buttons down the front",
+      "orderUrl": ""
+    },
+    {
+      "id": "dvs-georgiana",
+      "name": "Georgiana · Cardigan",
+      "category": "Jacke",
+      "price": 149.0,
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "color": "Creme/Beige",
+      "image": "img/dvs/georgiana.png",
+      "promptHint": "a cream ribbed knitted cardigan jacket with a v-neck, buttons and patch pockets",
+      "orderUrl": ""
+    },
+    {
+      "id": "dvs-hose-altrosa",
+      "name": "Palazzo-Hose · Altrosa",
+      "category": "Hose",
+      "price": 129.0,
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "color": "Altrosa",
+      "image": "img/dvs/hose_altrosa.png",
+      "promptHint": "wide-leg palazzo knit trousers in dusty rose with an elastic waistband",
+      "orderUrl": ""
+    },
+    {
+      "id": "dvs-rock-creme",
+      "name": "Rock · Creme",
+      "category": "Rock",
+      "price": 99.0,
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "color": "Creme",
+      "image": "img/dvs/rock_creme.png",
+      "promptHint": "a cream a-line knit mini skirt",
       "orderUrl": ""
     }
   ]

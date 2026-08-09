@@ -199,7 +199,7 @@ footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted
 
   <section id="secProducts">
     <h2>Kollektion</h2>
-    <p class="hint">Beispiel-Sortiment · die Produktliste kommt aus <code>products.json</code> und wird 1:1 durch das Ordertool-Sortiment ersetzt.</p>
+    <p class="hint">Sommer-Auswahl von Dagmar von Schmaus · Preise vorläufig, bis zur Freigabe.</p>
     <div class="grid" id="productGrid"></div>
   </section>
 
@@ -257,7 +257,7 @@ footer .inner{max-width:1080px;margin:0 auto;padding:28px 20px;color:var(--muted
           <div class="placeholder" id="stagePlaceholder">Produkt und Foto auswählen,<br>dann startet die Anprobe automatisch.</div>
         </div>
         <div class="resultactions" id="resultActions" style="display:none">
-          <button class="btn small" id="btnShare">↗ Teilen</button>
+          <button class="btn small" id="btnShare">↗ Freunde fragen</button>
           <button class="btn ghost small" id="btnDownload">⬇ Bild speichern</button>
           <button class="btn ghost small" id="btnRegenerate">↻ Neu generieren</button>
         </div>
@@ -623,6 +623,7 @@ function buildPrompt(p){
   const regions = {
     "Kopfbedeckung": "Place the product on the person's head. Do not change their clothing.",
     "Hose": "Replace the person's current lower body clothing (pants/skirt) with the product.",
+    "Rock": "Replace the person's current lower body clothing with the product skirt.",
     "Kleid": "Replace the person's current outfit with the product dress.",
     "Jacke": "Put the product jacket on the person, worn over their current outfit.",
     "Accessoire": "Add the product accessory to the person naturally. Do not change their clothing."
@@ -728,18 +729,24 @@ $("btnDownload").addEventListener("click", ()=>{
   a.download = "anprobe-" + state.product.id + ".png";
   a.click();
 });
-/* Ergebnis teilen: Web Share API mit Bild-Datei, sonst Download als Fallback */
+/* Ergebnis teilen: Web Share API mit Bild-Datei, sonst Download als Fallback.
+ * Der Text ist bewusst eine FRAGE an die Community ("Steht mir das?") -
+ * das bringt Antworten, Reichweite und im besten Fall den Kauf-Impuls. */
 $("btnShare").addEventListener("click", async ()=>{
   if(!state.resultDataUrl) return;
   const fname = "anprobe-" + (state.product ? state.product.id : "bild") + ".png";
+  const p = state.product;
+  const from = p && p.dealer ? (" (gesehen bei " + p.dealer + ")") : "";
+  const shareText = "Steht mir das? 🤔 Digital anprobiert – noch nicht gekauft. Was meint ihr: " +
+    (p ? p.name : "das Teil") + from + " – Ja oder Nein?";
   try{
     const blob = await (await fetch(state.resultDataUrl)).blob();
     const file = new File([blob], fname, { type: blob.type || "image/png" });
     if(navigator.canShare && navigator.canShare({ files: [file] })){
       await navigator.share({
         files: [file],
-        title: "Meine digitale Anprobe",
-        text: "Schau mal – so sieht " + (state.product ? state.product.name : "das Teil") + " an mir aus."
+        title: "Steht mir das?",
+        text: shareText
       });
       return;
     }

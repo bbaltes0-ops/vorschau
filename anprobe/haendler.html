@@ -61,6 +61,11 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--lime)}
 .result{display:none}
 .result.open{display:block}
 .linkbox{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px;font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);word-break:break-all;max-height:110px;overflow:auto;margin-top:6px}
+.msgbox{margin-top:18px}
+.msgrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 10px}
+@media(max-width:560px){.msgrow{grid-template-columns:1fr}}
+.msgbox textarea{width:100%;background:var(--ink);border:1px solid var(--line);color:var(--paper);border-radius:12px;padding:12px 14px;font:inherit;font-size:14px;line-height:1.55;resize:vertical}
+.msgbox textarea:focus{outline:none;border-color:var(--lime)}
 .note{color:var(--muted);font-size:13px;line-height:1.65;margin-top:14px}
 .note b{color:var(--paper)}
 .warn{color:var(--red)}
@@ -148,7 +153,7 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
       <div><label>Kategorie</label>
         <select id="inpCat">
           <option>Oberteil</option><option>Jacke</option><option>Kleid</option>
-          <option>Hose</option><option>Kopfbedeckung</option><option>Accessoire</option>
+          <option>Hose</option><option>Rock</option><option>Kopfbedeckung</option><option>Accessoire</option>
         </select></div>
       <div><label>Größen (Komma-getrennt)</label><input id="inpSizes" placeholder="S, M, L, XL"></div>
     </div>
@@ -172,11 +177,25 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
     <p class="note">Dieser Link enthält Foto und Artikeldaten. Wer ihn öffnet, kann den Artikel direkt mit der eigenen Handy-Kamera anprobieren und per WhatsApp bei dir bestellen.</p>
     <div class="linkbox" id="linkBox"></div>
     <p class="note" id="linkLen"></p>
+    <div class="msgbox">
+      <span class="label">Deine Nachricht</span>
+      <div class="msgrow">
+        <select id="msgKindS" class="msgkind">
+          <option value="persoenlich">Persönliche Empfehlung</option>
+          <option value="tag">Empfehlung des Tages</option>
+          <option value="neu">Neu eingetroffen</option>
+        </select>
+        <input id="msgNameS" class="msgname" placeholder="Name der Kundin (optional)">
+      </div>
+      <textarea id="msgTextS" rows="7" spellcheck="false"></textarea>
+      <p class="note" style="margin-top:8px">Der Text lässt sich frei anpassen – er wird genau so verschickt.</p>
+    </div>
     <div class="actions">
       <button class="btn wa" id="btnShareWa">WhatsApp · an Kunden oder Gruppe senden</button>
       <button class="btn ghost" id="btnCopy">Link kopieren</button>
       <a class="btn ghost" id="btnPreview" target="_blank" style="text-decoration:none">Vorschau öffnen</a>
     </div>
+    <p class="note"><b>Tipp:</b> Schick nach dem Link noch eine kurze <b>Sprachnachricht</b> hinterher („Ich hab da was für dich gesehen …") – persönlicher verkauft besser.</p>
     <div class="qrzone" id="qrZoneSingle">
       <span class="label">QR-Code für den Laden</span>
       <p class="note qrstatus"></p>
@@ -204,11 +223,25 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
     <p class="note">Ein Link, mehrere Teile: Deine Kund:innen blättern durch die Auswahl, probieren jedes Teil digital an und bestellen per WhatsApp bei dir.</p>
     <div class="linkbox" id="catLinkBox"></div>
     <p class="note" id="catLinkLen"></p>
+    <div class="msgbox">
+      <span class="label">Deine Nachricht</span>
+      <div class="msgrow">
+        <select id="msgKindC" class="msgkind">
+          <option value="persoenlich">Persönliche Empfehlung</option>
+          <option value="tag">Empfehlung des Tages</option>
+          <option value="neu">Neu eingetroffen</option>
+        </select>
+        <input id="msgNameC" class="msgname" placeholder="Name der Kundin (optional)">
+      </div>
+      <textarea id="msgTextC" rows="7" spellcheck="false"></textarea>
+      <p class="note" style="margin-top:8px">Der Text lässt sich frei anpassen – er wird genau so verschickt.</p>
+    </div>
     <div class="actions">
       <button class="btn wa" id="btnCatShareWa">WhatsApp · Auswahl senden</button>
       <button class="btn ghost" id="btnCatCopy">Link kopieren</button>
       <a class="btn ghost" id="btnCatPreview" target="_blank" style="text-decoration:none">Vorschau öffnen</a>
     </div>
+    <p class="note"><b>Tipp:</b> Schick nach dem Link noch eine kurze <b>Sprachnachricht</b> hinterher – persönlicher verkauft besser.</p>
     <div class="qrzone" id="qrZoneCatalog">
       <span class="label">QR-Code für den Laden</span>
       <p class="note qrstatus"></p>
@@ -367,23 +400,51 @@ function readDealer(){
   };
 }
 
+/* ---------- Nachrichten-Vorlagen (Empfehlung des Tages etc.) ---------- */
+const MSG_OPENERS = {
+  persoenlich: n => "Hey" + n + "! 👋 Ich musste eben an dich denken – das hier ist doch wie für dich gemacht:",
+  tag:         n => "Hey" + n + "! ☀️ Meine Empfehlung des Tages aus dem Laden:",
+  neu:         n => "Hey" + n + "! ✨ Gerade frisch reingekommen – ich finde, das könnte deins sein:"
+};
+const MSG_OPENERS_CAT = {
+  persoenlich: (n,c) => "Hey" + n + "! 👋 Ich habe dir " + c + " rausgesucht, die dir stehen dürften:",
+  tag:         (n,c) => "Hey" + n + "! ☀️ Meine Empfehlungen des Tages – " + c + " für dich:",
+  neu:         (n,c) => "Hey" + n + "! ✨ Gerade frisch reingekommen – " + c + ", die zu dir passen könnten:"
+};
+const nameToken = v => { const t = (v||"").trim(); return t ? " " + t : ""; };
+function singleMsg(kind, name, art, link, dealer){
+  return MSG_OPENERS[kind](nameToken(name)) + "\n\n" +
+    art.n + " · " + fmtPrice(art.p) +
+    "\n\nEinfach Link öffnen, Foto machen, anprobieren:\n" + link +
+    "\n\nWenn es dir gefällt: einfach hier antworten, ich lege es dir zurück.\n– " + dealer;
+}
+function catalogMsg(kind, name, items, link, dealer){
+  const c = items.length === 1 ? "ein Teil" : items.length + " Teile";
+  return MSG_OPENERS_CAT[kind](nameToken(name), c) + "\n\n" +
+    items.map(a=> "· " + a.n + " – " + fmtPrice(a.p)).join("\n") +
+    "\n\nEinfach Link öffnen, Foto machen, alles anprobieren:\n" + link +
+    "\n\nWenn dir etwas gefällt: einfach hier antworten, ich lege es dir zurück.\n– " + dealer;
+}
+let msgCtxS = null, msgCtxC = null;
+function refreshMsgS(){ if(msgCtxS) $("msgTextS").value = singleMsg($("msgKindS").value, $("msgNameS").value, msgCtxS.art, msgCtxS.link, msgCtxS.dealer); }
+function refreshMsgC(){ if(msgCtxC) $("msgTextC").value = catalogMsg($("msgKindC").value, $("msgNameC").value, msgCtxC.items, msgCtxC.link, msgCtxC.dealer); }
+["msgKindS","msgNameS"].forEach(id => $(id).addEventListener("input", refreshMsgS));
+["msgKindC","msgNameC"].forEach(id => $(id).addEventListener("input", refreshMsgC));
+
 /* ---------- single-article link ---------- */
-let currentLink = "", currentMsg = "";
+let currentLink = "";
 function buildSingleLink(art, dealer, wa){
   const payload = {
     v: 1, n: art.n, p: art.p, c: art.c, s: art.s, de: art.de,
     d: dealer, w: wa, i: art.i
   };
-  const link = linkBase() + "#a=" + enc(payload);
-  const msg = "Hey! 👋 Probier das doch mal an, das steht dir bestimmt:\n\n" +
-    art.n + " · " + fmtPrice(art.p) +
-    "\n\nEinfach Link öffnen, Foto machen, anprobieren:\n" + link +
-    "\n\n– " + dealer;
-  return { link, msg };
+  return { link: linkBase() + "#a=" + enc(payload) };
 }
 function showSingleResult(art, dealer, wa){
-  const { link, msg } = buildSingleLink(art, dealer, wa);
-  currentLink = link; currentMsg = msg;
+  const { link } = buildSingleLink(art, dealer, wa);
+  currentLink = link;
+  msgCtxS = { art, link, dealer };
+  refreshMsgS();
   $("linkBox").textContent = link;
   const kb = Math.round(link.length/1024);
   $("linkLen").innerHTML = "Link-Größe: ~" + kb + " KB. " +
@@ -436,10 +497,11 @@ $("btnCreate").addEventListener("click", ()=>{
 });
 
 $("btnShareWa").addEventListener("click", ()=>{
+  const msg = $("msgTextS").value;
   if(navigator.share){
-    navigator.share({ text: currentMsg }).catch(()=>{});
+    navigator.share({ text: msg }).catch(()=>{});
   }else{
-    window.open("https://wa.me/?text=" + encodeURIComponent(currentMsg), "_blank");
+    window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
   }
 });
 $("btnCopy").addEventListener("click", async ()=>{
@@ -591,7 +653,7 @@ function shareArticleAgain(art){
 }
 
 /* ---------- Mini-Katalog ---------- */
-let catLink = "", catMsg = "";
+let catLink = "";
 $("btnCatalog").addEventListener("click", ()=>{
   const list = loadArticles().sort((a,b)=> b.ts - a.ts);
   const items = list.filter(a=> selected.has(a.id) && a.i && a.i.length);
@@ -604,11 +666,8 @@ $("btnCatalog").addEventListener("click", ()=>{
     items: items.map(a=> ({ n:a.n, p:a.p, c:a.c, s:a.s, de:a.de, i:a.i }))
   };
   catLink = linkBase() + "#k=" + enc(payload);
-  const count = items.length === 1 ? "ein Teil" : items.length + " Teile";
-  catMsg = "Hey! 👋 Ich habe dir " + count + " zum Anprobieren rausgesucht:\n\n" +
-    items.map(a=> "· " + a.n + " – " + fmtPrice(a.p)).join("\n") +
-    "\n\nEinfach Link öffnen, Foto machen, alles anprobieren:\n" + catLink +
-    "\n\n– " + d.dealer;
+  msgCtxC = { items, link: catLink, dealer: d.dealer };
+  refreshMsgC();
 
   $("catLinkBox").textContent = catLink;
   const kb = Math.round(catLink.length/1024);
@@ -622,10 +681,11 @@ $("btnCatalog").addEventListener("click", ()=>{
   setupQr($("qrZoneCatalog"), catLink);
 });
 $("btnCatShareWa").addEventListener("click", ()=>{
+  const msg = $("msgTextC").value;
   if(navigator.share){
-    navigator.share({ text: catMsg }).catch(()=>{});
+    navigator.share({ text: msg }).catch(()=>{});
   }else{
-    window.open("https://wa.me/?text=" + encodeURIComponent(catMsg), "_blank");
+    window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
   }
 });
 $("btnCatCopy").addEventListener("click", async ()=>{
