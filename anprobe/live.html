@@ -148,7 +148,7 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
   <div class="controls">
     <button class="btn ghost" id="btnCam" style="display:none">Kamera wechseln</button>
     <button class="btn ghost" id="btnStop" style="display:none">Stoppen</button>
-    <button class="btn ghost" id="btnExtend" style="display:none">60 Sekunden verlängern</button>
+    <button class="btn ghost" id="btnExtend" style="display:none">Weiter</button>
     <button class="btn wa" id="btnOrder" style="display:none">Per WhatsApp bestellen</button>
   </div>
 
@@ -346,7 +346,7 @@ async function startTakt(){
   $("overlay").classList.add("peek");
   $("btnStop").style.display = "";
   $("btnCam").style.display = "";
-  startTimer(SESSION_S);
+  laufzeitStarten();   /* kein Abschalten, nur Anzeige, wie lange der Spiegel laeuft */
   while(takt.on && state.stream){
     try{
       const b64 = await taktRound(garmentB64);
@@ -357,7 +357,7 @@ async function startTakt(){
       $("overlay").classList.add("hidden");
       chip("Takt-Spiegel, erneuert sich", true);
       takt.fails = 0;
-      await new Promise(res => setTimeout(res, 1200));
+      await new Promise(res => setTimeout(res, 2000));
     }catch(e){
       if(e.setup){
         stopTakt();
@@ -366,13 +366,23 @@ async function startTakt(){
         const fb = $("btnFotoFallback"); fb.href = "./" + location.hash; fb.style.display = "";
         return;
       }
-      takt.fails++;
-      if(takt.fails >= 3){
+      /* Aussetzer sind normal: der Spiegel laeuft weiter und versucht es erneut.
+       * Nur ein abgelehnter Schluessel ist ein echter Stopp-Grund. */
+      const abgelehnt = /Schlüssel|403/i.test(e.message || "");
+      if(abgelehnt){
         stopTakt();
-        setOverlay("Die Anprobe hat mehrfach nicht geantwortet. Bitte neu starten. (" + (e.message || e) + ")", false);
+        setOverlay(e.message, false);
         return;
       }
-      await new Promise(res => setTimeout(res, 6000));
+      takt.fails++;
+      const wartezeit = /Zu viele Anfragen/i.test(e.message || "") ? 20000 : 4000;
+      if(takt.fails === 1) chip("Bild kommt gleich", true);
+      if(takt.fails >= 4){
+        /* laenger still: Hinweis einblenden, aber Kamera und Spiegel bleiben an */
+        setOverlay("Die Anprobe braucht gerade länger. Der Spiegel läuft weiter und versucht es automatisch erneut.", false);
+        $("overlay").classList.add("peek");
+      }
+      await new Promise(res => setTimeout(res, wartezeit));
     }
   }
 }
@@ -558,6 +568,17 @@ async function start(){
   startTimer(SESSION_S);
 }
 
+/* Laufzeit-Anzeige ohne Abschaltung: der Spiegel laeuft, solange der Kunde will */
+function laufzeitStarten(){
+  clearInterval(state.timer);
+  let sek = 0;
+  $("chipTimer").style.display = "";
+  $("chipTimer").textContent = "0:00";
+  state.timer = setInterval(()=>{
+    sek++;
+    $("chipTimer").textContent = Math.floor(sek/60) + ":" + String(sek%60).padStart(2,"0");
+  }, 1000);
+}
 function startTimer(sec){
   state.left = sec;
   $("chipTimer").style.display = "";
