@@ -66,6 +66,26 @@ Verkaufsversion gebaut. Alle Flows im Browser end-to-end getestet
 anprobe-produkt (Orchestrator), anprobe-frontend, anprobe-haendler,
 anprobe-backend, anprobe-vertrieb, anprobe-qa — für künftige Sessions.
 
+## STRATEGIEWECHSEL (Bernd, 09.08. nachts): EIGENER MOTOR statt Miet-KI
+
+Bernd will die KI besitzen, nicht mieten. Ergebnis der Recherche:
+- FOTO-Anprobe: FASHN VTON v1.5 (github.com/fashn-AI/fashn-vton-1.5),
+  Apache-2.0 = kommerziell frei, Gewichte ~2 GB lokal, fotorealistisch,
+  kann flach fotografierte Artikel. DAS wird der eigene Motor.
+  Vorbereitet: backend/eigener-motor/ (motor_server.py spricht das
+  Gemini-Format der App, README mit Aufbau + Kosten) und die Weiche
+  OWN_ENGINE_URL im VPS-Backend (deployt, Restart steht aus).
+  ACHTUNG: Die bekannten Spitzenmodelle IDM-VTON/CatVTON/OOTDiffusion sind
+  CC-BY-NC = NICHT kommerziell nutzbar, nicht verwenden.
+- LIVE-Anprobe: Es existiert Stand 08/2026 KEIN selbst betreibbares
+  Echtzeit-Modell (nur Anbieter wie Decart, per Sekunde). Ehrlich an Bernd
+  kommuniziert. Spaeterer eigener Weg fuer Bewegtbild: ViViD (Apache-2.0,
+  Video-Anprobe offline) fuer kurze Anprobe-Clips.
+- OFFEN (Bernd): Grafikserver-Entscheidung (eigene Hardware ~2500 EUR /
+  Miet-GPU ~200 EUR Monat / stundenweise zum Test) - dann Einrichtung,
+  erster echter Lauf von motor_server.py (ist noch UNGETESTET) und
+  Qualitaetsvergleich gegen die Gemini-Ergebnisse.
+
 ## RICHTUNGSENTSCHEID (Bernd, 09.08. spaet): LIVE-Anprobe ist das Produkt
 
 Nicht Foto, sondern live im Kamerabild. Haendler-Einzelartikel-Links zielen

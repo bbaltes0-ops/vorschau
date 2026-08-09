@@ -184,10 +184,20 @@ async function handleGenerate(req, res, cors) {
 
   const gKey = String(process.env.GEMINI_API_KEY || "").trim();
   const hasKey = gKey && gKey !== "HIER_KEY_EINTRAGEN";
+  const ownEngine = String(process.env.OWN_ENGINE_URL || "").trim();
 
   let upstream;
   try {
-    if (hasKey) {
+    if (ownEngine) {
+      /* EIGENER MOTOR (FASHN VTON auf eigenem Grafikserver) hat Vorrang:
+       * gleiches Anfrage- und Antwortformat, kein Google noetig. */
+      delete body.model;
+      upstream = await fetch(ownEngine, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } else if (hasKey) {
       upstream = await fetch(
         "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent",
         {
