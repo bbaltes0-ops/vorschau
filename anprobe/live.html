@@ -324,10 +324,11 @@ async function taktRoundMit(frame, garmentB64){
   if(!r.ok){
     const j = await r.json().catch(()=> ({}));
     const roh = (j.error && j.error.message) || ("Fehler " + r.status);
-    if(r.status === 400 && /API key/i.test(roh)) throw new Error("Der hinterlegte Schlüssel wird von Google abgelehnt. Bitte oben unter Setup prüfen.");
-    if(r.status === 429) throw new Error("Zu viele Anfragen in kurzer Zeit. Kurz warten, dann neu starten.");
-    if(r.status === 403) throw new Error("Der Schlüssel darf dieses Modell nicht nutzen (403).");
-    throw new Error(roh);
+    const mit = (txt)=>{ const e = new Error(txt); e.technisch = "HTTP " + r.status + ": " + String(roh).slice(0,90); return e; };
+    if(r.status === 400 && /API key/i.test(roh)) throw mit("Der hinterlegte Schlüssel wird von Google abgelehnt. Bitte oben unter Setup prüfen.");
+    if(r.status === 429) throw mit("Zu viele Anfragen in kurzer Zeit. Kurz warten, dann neu starten.");
+    if(r.status === 403) throw mit("Der Schlüssel ist für dieses Modell gesperrt, oft durch eine Einschränkung im Google-Konto.");
+    throw mit(roh);
   }
   const j = await r.json();
   const parts = (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || [];
@@ -378,7 +379,7 @@ async function startTakt(){
         chip("Spiegel ohne Anprobe", false);
         zeigeProblem(e.setup
           ? "Die Anprobe ist auf diesem Gerät noch nicht eingerichtet. Tipp auf Setup und trag deinen Schlüssel ein, dann startet die Anprobe sofort."
-          : e.message);
+          : (e.message || "Unbekannter Fehler"), e.technisch || (e.setup ? "Server antwortet 503" : ""));
         return;
       }
       takt.fails++;
@@ -394,9 +395,19 @@ async function startTakt(){
   }
 }
 /* Deutliche Karte im Spiegel: was ist los und was tun */
-function zeigeProblem(text){
+function zeigeProblem(text, technisch){
   $("overlay").classList.remove("hidden","peek");
   $("overlayMsg").textContent = text;
+  let d = $("problemDetail");
+  if(!d){
+    d = document.createElement("div");
+    d.id = "problemDetail";
+    d.style.cssText = "font-family:ui-monospace,monospace;font-size:11px;color:var(--muted);max-width:340px;line-height:1.5";
+    $("overlay").appendChild(d);
+  }
+  const key = localStorage.getItem("brs_tryon_key") || "";
+  d.textContent = "Diagnose: Schlüssel " + (key ? "hinterlegt (…" + key.slice(-6) + ")" : "FEHLT")
+    + (technisch ? " | " + technisch : "");
   $("btnStart").textContent = "Nochmal versuchen";
   $("btnStart").disabled = false;
   let s = $("btnProblemSetup");
@@ -636,7 +647,11 @@ function stop(){
   $("btnStart").disabled = !state.garmentBlob;
 }
 $("btnKey").addEventListener("click", ()=>{
-  $("inpKey").value = localStorage.getItem("brs_tryon_key") || "";
+  const k = localStorage.getItem("brs_tryon_key") || "";
+  $("inpKey").value = k;
+  $("keyStatus").innerHTML = k
+    ? "Aktuell hinterlegt: <b>…" + k.slice(-6) + "</b>. Mit Selbsttest prüfen."
+    : "<span class='rot'>Noch kein Schlüssel hinterlegt.</span> Einfügen, dann Speichern.";
   $("dlgKey").showModal();
 });
 /* Nimmt auch eine ganze Zeile wie GOOGLE_AI_API_KEY="AIza..." und holt den Schlüssel heraus */
