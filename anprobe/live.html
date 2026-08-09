@@ -174,7 +174,7 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
 const $ = id => document.getElementById(id);
 const TOKEN_API = localStorage.getItem("brs_live_token_api")
   || "https://b2b.dagmarvonschmaus.com/anprobe-api/api/live-token";
-const VERSION = "2026-08-09 v10";   /* steht im Setup und in der Diagnose */
+const VERSION = "2026-08-09 v11";   /* steht im Setup und in der Diagnose */
 const SESSION_S = 90;          /* Kostenbremse: Echtzeit-KI wird pro Sekunde abgerechnet */
 
 const state = { garmentBlob:null, garmentName:"", article:null, stream:null, rt:null, timer:null, left:0 };
@@ -264,7 +264,10 @@ function chip(txt, live){
  * automatisch im Takt. Rechnet auf dem eigenen Motor (Grafikserver) oder
  * uebergangsweise ueber den Google-Weg. Braucht KEIN Decart. ---------- */
 const DEFAULT_PROXY = "https://b2b.dagmarvonschmaus.com/anprobe-api/api/generate";
-const takt = { on:false, fails:0, ersteFertig:false };
+const takt = { on:false, fails:0, ersteFertig:false, abstandMs:8000, letzterStart:0 };
+/* Googles kostenloser Zugang erlaubt nur wenige Bilder pro Minute. Deshalb halten
+ * wir einen Mindestabstand ein und vergroessern ihn automatisch, wenn Google bremst.
+ * Auf dem eigenen Motor gibt es diese Grenze nicht (dort steht abstandMs auf 0). */
 
 function blobToB64(blob){
   return new Promise((res,rej)=>{
@@ -285,6 +288,24 @@ function warteAufBild(maxMs){
       setTimeout(pruefe, 200);
     })();
   });
+}
+/* Grobe Bewegungserkennung: winziges Graustufenbild vergleichen */
+let letzteMiniatur = null;
+function hatSichBewegt(){
+  const v = $("liveVideo");
+  if(!v.videoWidth) return true;
+  const c = document.createElement("canvas"); c.width = 32; c.height = 32;
+  const g = c.getContext("2d");
+  g.drawImage(v, 0, 0, 32, 32);
+  const d = g.getImageData(0,0,32,32).data;
+  const jetzt = [];
+  for(let i=0;i<d.length;i+=4) jetzt.push((d[i]+d[i+1]+d[i+2])/3);
+  if(!letzteMiniatur){ letzteMiniatur = jetzt; return true; }
+  let summe = 0;
+  for(let i=0;i<jetzt.length;i++) summe += Math.abs(jetzt[i] - letzteMiniatur[i]);
+  const schnitt = summe / jetzt.length;
+  letzteMiniatur = jetzt;
+  return schnitt > 6;   /* deutliche Aenderung im Bild */
 }
 function captureFrameB64(){
   const v = $("liveVideo");
@@ -388,6 +409,19 @@ async function startTakt(){
   $("btnCam").style.display = "";
   laufzeitStarten();   /* kein Abschalten, nur Anzeige, wie lange der Spiegel laeuft */
   while(takt.on && state.stream){
+    if(localStorage.getItem("brs_tryon_proxy")) takt.abstandMs = 0;   /* eigener Motor: kein Limit */
+    const seitLetztem = Date.now() - takt.letzterStart;
+    if(takt.letzterStart && seitLetztem < takt.abstandMs){
+      await new Promise(r=>setTimeout(r, takt.abstandMs - seitLetztem));
+      if(!takt.on) break;
+    }
+    /* Nichts bewegt? Dann keine Anfrage verschwenden. */
+    if(takt.ersteFertig && !hatSichBewegt()){
+      $("statusZeile").innerHTML = "<b>Anprobe-Bild ist da.</b> Beweg dich, dann wird ein neues gerechnet.";
+      await new Promise(r=>setTimeout(r, 1500));
+      continue;
+    }
+    takt.letzterStart = Date.now();
     let sek = 0;
     const ticker = setInterval(()=>{
       sek++;
@@ -429,7 +463,13 @@ async function startTakt(){
       $("statusZeile").innerHTML = "<span class='rot'>" + (e.message || "Aussetzer") + "</span> "
         + (e.technisch ? "<span style='font-size:12px'>(" + e.technisch + ")</span>" : "")
         + " Versuch " + takt.fails;
-      const wartezeit = /Zu viele Anfragen/i.test(e.message || "") ? 20000 : 4000;
+      const gebremst = /Zu viele Anfragen/i.test(e.message || "");
+      if(gebremst){
+        takt.abstandMs = Math.min(30000, Math.round(takt.abstandMs * 1.6));
+        $("statusZeile").innerHTML = "<span class='rot'>Google bremst gerade.</span> Der Spiegel rechnet jetzt ruhiger, alle "
+          + Math.round(takt.abstandMs/1000) + " Sekunden. Er laeuft weiter.";
+      }
+      const wartezeit = gebremst ? 20000 : 4000;
       if(takt.fails === 1) chip("Bild kommt gleich", true);
       if(takt.fails >= 4){
         /* laenger still: Hinweis einblenden, aber Kamera und Spiegel bleiben an */
