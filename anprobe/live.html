@@ -359,19 +359,18 @@ async function startTakt(){
       takt.fails = 0;
       await new Promise(res => setTimeout(res, 2000));
     }catch(e){
-      if(e.setup){
-        stopTakt();
-        setOverlay("Die Anprobe wird gerade eingerichtet. Dein Spiegel läuft schon, das angezogene Bild kommt nach der Freischaltung.", false);
-        $("overlay").classList.add("peek");
-        const fb = $("btnFotoFallback"); fb.href = "./" + location.hash; fb.style.display = "";
-        return;
-      }
       /* Aussetzer sind normal: der Spiegel laeuft weiter und versucht es erneut.
        * Nur ein abgelehnter Schluessel ist ein echter Stopp-Grund. */
       const abgelehnt = /Schlüssel|403/i.test(e.message || "");
-      if(abgelehnt){
-        stopTakt();
-        setOverlay(e.message, false);
+      if(abgelehnt || e.setup){
+        /* Spiegel laeuft weiter, aber der Kunde sieht, was zu tun ist */
+        takt.on = false;
+        $("taktImg").style.display = "none";
+        $("liveVideo").classList.remove("pip");
+        chip("Spiegel ohne Anprobe", false);
+        zeigeProblem(e.setup
+          ? "Die Anprobe ist auf diesem Gerät noch nicht eingerichtet. Tipp auf Setup und trag deinen Schlüssel ein, dann startet die Anprobe sofort."
+          : e.message);
         return;
       }
       takt.fails++;
@@ -385,6 +384,22 @@ async function startTakt(){
       await new Promise(res => setTimeout(res, wartezeit));
     }
   }
+}
+/* Deutliche Karte im Spiegel: was ist los und was tun */
+function zeigeProblem(text){
+  $("overlay").classList.remove("hidden","peek");
+  $("overlayMsg").textContent = text;
+  $("btnStart").textContent = "Nochmal versuchen";
+  $("btnStart").disabled = false;
+  let s = $("btnProblemSetup");
+  if(!s){
+    s = document.createElement("button");
+    s.id = "btnProblemSetup"; s.className = "btn ghost"; s.textContent = "Setup öffnen";
+    s.addEventListener("click", ()=>{ $("btnKey").click(); });
+    $("overlay").insertBefore(s, $("btnFotoFallback"));
+  }
+  s.style.display = "";
+  const fb = $("btnFotoFallback"); fb.href = "./" + location.hash; fb.style.display = "";
 }
 function stopTakt(){
   takt.on = false;
@@ -480,7 +495,10 @@ async function kameraWechseln(){
     state.stream = stream; state.seite = neu;
     $("liveVideo").srcObject = stream;
     $("liveVideo").classList.toggle("hinten", neu === "hinten");
-    try{ await $("liveVideo").play(); }catch(_){}
+    await Promise.race([
+      $("liveVideo").play().catch(()=>{}),
+      new Promise(res=>setTimeout(res,3000))
+    ]);
     await warteAufBild(6000);
     $("btnCam").textContent = neu === "hinten" ? "Zur Frontkamera" : "Kamera wechseln";
     if(neu === "hinten"){
@@ -497,6 +515,8 @@ async function kameraWechseln(){
 async function start(){
   $("btnStart").disabled = true;
   if(inAppBrowser()){ showBrowserHint(); return; }
+  const b = $("btnProblemSetup"); if(b) b.style.display = "none";
+  $("btnStart").textContent = "Anprobe starten";
   setOverlay("Kamera wird gestartet …", true);
   /* Kamera in drei Stufen anfragen: Wunsch, einfach, minimal.
    * Manche Geraete lehnen strenge Vorgaben mit OverconstrainedError ab. */
@@ -512,7 +532,11 @@ async function start(){
     $("btnStart").disabled = false; return;
   }
   $("liveVideo").srcObject = state.stream;   /* Vorschau, bis die KI übernimmt */
-  try{ await $("liveVideo").play(); }catch(_){}
+  /* play() kann haengen, wenn noch keine Bilder fliessen: mit Zeitwaechter absichern */
+  await Promise.race([
+    $("liveVideo").play().catch(()=>{}),
+    new Promise(res=>setTimeout(res,3000))
+  ]);
   await warteAufBild();                      /* iOS liefert erst nach kurzer Zeit Bildmasse */
 
   setOverlay("Live-KI wird verbunden …", true);
@@ -653,6 +677,14 @@ $("btnKeyDel").addEventListener("click", ()=>{
 $("btnStart").addEventListener("click", start);
 /* Schon beim Laden warnen, wenn der Link in einer App steckt statt im Browser */
 if(inAppBrowser()) showBrowserHint();
+else if(!localStorage.getItem("brs_tryon_key") && !localStorage.getItem("brs_tryon_proxy")){
+  /* Testphase: ohne eigenen Schluessel kann nur der Server rechnen. Ist er noch
+   * nicht eingerichtet, sagen wir es sofort statt beim Start abzubrechen. */
+  fetch(DEFAULT_PROXY, { method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ contents:[{parts:[{text:"ping"}]}] }) })
+    .then(r=>{ if(r.status === 503) zeigeProblem("Die Anprobe ist auf diesem Gerät noch nicht eingerichtet. Tipp auf Setup und trag deinen Schlüssel ein, dann läuft der Spiegel sofort."); })
+    .catch(()=>{});
+}
 $("btnStop").addEventListener("click", ()=>{ stop(); setOverlay("Gestoppt. Jederzeit wieder startbar.", false); });
 
 $("btnOrder").addEventListener("click", ()=>{
