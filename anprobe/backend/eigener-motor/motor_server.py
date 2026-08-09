@@ -58,6 +58,10 @@ def category_from_prompt(prompt):
 
 
 def run_tryon(body):
+    """Rechnet die Anprobe. Im Spiegel-Modus (body["takt"] = true) mit
+    weniger Rechenschritten und kleinerer Aufloesung, damit sich das
+    Spiegelbild schnell erneuert. Sonst volle Qualitaet."""
+    takt = bool(body.get("takt"))
     parts = body["contents"][0]["parts"]
     prompt = ""
     images = []
@@ -74,10 +78,19 @@ def run_tryon(body):
     person = Image.open(io.BytesIO(images[0])).convert("RGB")
     garment = Image.open(io.BytesIO(images[1])).convert("RGB")
 
+    if takt:
+        # Spiegel: kleiner rechnen, damit das Bild schnell zurueckkommt
+        max_kante = 512
+        w, h = person.size
+        s = min(1.0, max_kante / max(w, h))
+        if s < 1.0:
+            person = person.resize((round(w * s), round(h * s)))
+
     result = pipeline(
         person_image=person,
         garment_image=garment,
         category=category_from_prompt(prompt),
+        num_timesteps=8 if takt else 30,
     )
     out = io.BytesIO()
     result.images[0].save(out, format="PNG")

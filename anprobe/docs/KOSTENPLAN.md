@@ -43,6 +43,22 @@ Damit leistet der eigene Motor:
 | RunPod Community | ~0,34 USD/Std = ~230 EUR/Monat | billig, aber geteilte Fremdrechner - nicht fuer Kundendaten |
 | Eigene Hardware (RTX 4090 PC) | ~2.500 EUR einmalig + Strom ~20 EUR/Monat | ab ~14 Monaten guenstiger als Miete, ABER: haengt an Laden-Internet, kein Rechenzentrum, Ausfallrisiko |
 
+## Wie fluessig wird der Spiegel wirklich (Schnellmodus)
+
+Das Modell rechnet standardmaessig 30 Rechenschritte pro Bild. Fuer den
+Spiegel ist das Verschwendung: Mit 8 Schritten und 512 Pixel Kantenlaenge
+(Schalter "takt" im Motor, live.html sendet ihn automatisch) wird es rund
+viermal schneller, bei fuer den Spiegel ausreichender Qualitaet.
+
+Erwartete Erneuerungsrate auf dem GEX44 (RTX 4000 Ada):
+- volle Qualitaet, 30 Schritte, 768 px: ~5-10 Sekunden pro Bild
+- Spiegel-Schnellmodus, 8 Schritte, 512 px: grob 1,5-3 Sekunden pro Bild
+
+Auf der groesseren Karte (GEX131, 889 EUR/Monat) waere unter einer Sekunde
+denkbar. GENAU MESSEN laesst sich das erst auf der echten Karte - der erste
+Messlauf steht direkt nach der Bestellung an, danach wird der Takt fest
+eingestellt.
+
 ## Ehrliche Abgrenzung: echtes 30-Bilder-pro-Sekunde-Live
 
 Fluessiges Echtzeit-Video wie die Anywear-App kann Stand heute kein frei

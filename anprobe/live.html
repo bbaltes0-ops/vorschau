@@ -258,6 +258,7 @@ async function taktRound(garmentB64){
   const frame = captureFrameB64();
   if(!frame) throw new Error("Kein Kamerabild.");
   const body = {
+    takt: true,   /* Spiegel-Modus: eigener Motor rechnet schnell statt maximal fein */
     contents: [{ parts: [
       { text: taktPrompt() },
       { inline_data: { mime_type: "image/jpeg", data: frame } },
