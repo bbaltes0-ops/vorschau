@@ -66,6 +66,21 @@ Verkaufsversion gebaut. Alle Flows im Browser end-to-end getestet
 anprobe-produkt (Orchestrator), anprobe-frontend, anprobe-haendler,
 anprobe-backend, anprobe-vertrieb, anprobe-qa — für künftige Sessions.
 
+## LIVE seit 09.08.2026: https://vorschau.black-rabbit.studio/anprobe/
+
+Bernd hat freigegeben ("schalte das live") → Branch auf main gemerged,
+GitHub Pages liefert aus. Live verifiziert (Browser + Mobil): Kunden-App
+mit ECHTEM DvS-Sortiment (8 Artikel aus /DvS/Artikelkatalog/, Freisteller
+einzeln geprüft — Achtung: Katalog-Dateinamen lügen teils über Farben,
+"Kaleia Weiss" ist schwarz, "Limone Blau" ist rosé, "111_Lavendel" trägt
+ein JIL-SANDER-Label → aussortiert; Preise vorläufig bis CD-Freigabe),
+Händler-Cockpit inkl. Nachrichten-Vorlagen (Persönlich/Empfehlung des
+Tages/Neu + Kundenname, frei editierbar) und automatischem Kurzlink+QR
+gegen die VPS-API (End-to-End live getestet), Community-Share beim
+Ergebnis ("Steht mir das?"-Frage mit Bild), Kategorie Rock ergänzt.
+Sprachnachrichten kann ein wa.me-Link technisch nicht anhängen — dafür
+steht der Tipp im Cockpit, nach dem Link eine Sprachnachricht zu schicken.
+
 ## Update 09.08. abends: KI getestet, Backend LIVE, Live-Spiegel gebaut
 
 - **KI live getestet** mit dem vorhandenen Key aus
