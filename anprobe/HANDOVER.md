@@ -66,6 +66,18 @@ Verkaufsversion gebaut. Alle Flows im Browser end-to-end getestet
 anprobe-produkt (Orchestrator), anprobe-frontend, anprobe-haendler,
 anprobe-backend, anprobe-vertrieb, anprobe-qa — für künftige Sessions.
 
+## RICHTUNGSENTSCHEID (Bernd, 09.08. spaet): LIVE-Anprobe ist das Produkt
+
+Nicht Foto, sondern live im Kamerabild. Haendler-Einzelartikel-Links zielen
+seit c5308d5 direkt auf live.html (Ein-Knopf-Landung: Artikel vorgeladen,
+"Anprobe starten", Kamera-Stufenfallback, bei Kamera-/Freischalt-Problemen
+Ausweichknopf zur Foto-Anprobe mit Artikel im Hash). KEINE Emojis und keine
+Schmuckzeichen mehr in App und Nachrichten (Bernd-Regel, strikt einhalten).
+Im iPhone-Simulator selbst getestet. BLOCKER fuer echtes Live: DECART_API_KEY
+fehlt (Konto auf platform.decart.ai kann nur Bernd anlegen; Freischalten-
+Command fragt den Key mit ab). Kosten ca. 0,02 USD pro Sekunde, Sitzung
+deshalb 90s begrenzt (SESSION_S in live.html).
+
 ## LIVE seit 09.08.2026: https://vorschau.black-rabbit.studio/anprobe/
 
 Bernd hat freigegeben ("schalte das live") → Branch auf main gemerged,
