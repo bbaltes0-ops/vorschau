@@ -159,7 +159,7 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
     <button class="btn wa" id="btnOrder" style="display:none">Per WhatsApp bestellen</button>
   </div>
 
-  <p class="note" id="footNote">Jede Sitzung läuft 90 Sekunden und lässt sich verlängern. Die <a href="./" id="lnkFoto" style="color:var(--lime)">Foto-Anprobe</a> funktioniert immer.</p>
+  <p class="note" id="footNote">Der Spiegel läuft, solange du magst. Die <a href="./" id="lnkFoto" style="color:var(--lime)">Foto-Anprobe</a> funktioniert immer.</p>
 </main>
 
 <footer>
@@ -174,7 +174,7 @@ footer .inner{max-width:820px;margin:0 auto;padding:24px 20px;color:var(--muted)
 const $ = id => document.getElementById(id);
 const TOKEN_API = localStorage.getItem("brs_live_token_api")
   || "https://b2b.dagmarvonschmaus.com/anprobe-api/api/live-token";
-const VERSION = "2026-08-09 v11";   /* steht im Setup und in der Diagnose */
+const VERSION = "2026-08-10 v12";   /* steht im Setup und in der Diagnose */
 const SESSION_S = 90;          /* Kostenbremse: Echtzeit-KI wird pro Sekunde abgerechnet */
 
 const state = { garmentBlob:null, garmentName:"", article:null, stream:null, rt:null, timer:null, left:0 };
