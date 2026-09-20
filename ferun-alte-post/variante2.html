@@ -405,7 +405,7 @@ fieldset{border:0;padding:0;margin:0}
     // Nur das gezeichnete Blatt, gross und mittig - danach loest es sich auf und die Seite erscheint
     const breite = Math.min(innerWidth * .62, innerHeight * .62, 460) / BW * CW;
     Object.assign(vid.style, {left: (innerWidth - breite) / 2 + 'px', top: (innerHeight - breite * 894 / CW) / 2 + 'px', width: breite + 'px', transform: 'none'});
-    vid.playbackRate = 1.2;                                   // einen Tick schneller zeichnen
+    vid.playbackRate = 1.43;                                  // zeichnet in gut 4 Sekunden (0,8 s schneller als zuvor)
     await wait(200); if (done) return;
     anims.push(vid.animate([{opacity: 0}, {opacity: 1}], {duration: 450, easing: 'ease-out', fill: 'forwards'}));
     await videoFertig(); if (done) return;
