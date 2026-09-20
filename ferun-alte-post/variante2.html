@@ -13,6 +13,7 @@
   --ease:cubic-bezier(.4,0,.2,1);--ease-out:cubic-bezier(.22,.61,.36,1);color-scheme:light}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--papier);color:var(--navy);min-height:100%;overflow-x:clip}
+body{position:relative}
 body{font:400 15px/1.65 "Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}
 .caps{font:500 11px/1.4 "Montserrat",system-ui,sans-serif;letter-spacing:.3em;text-transform:uppercase}
@@ -20,12 +21,12 @@ a{color:inherit}
 [hidden]{display:none!important}
 
 /* Kastanienschatten: Video (Veo) der Kastanienblatt-Schatten, weisser Grund per multiply unsichtbar */
-.schatten{position:fixed;top:0;left:50%;width:max(100vw,1100px);aspect-ratio:16/9;transform:translateX(-50%);pointer-events:none;z-index:0;
+.schatten{position:absolute;top:0;left:50%;width:max(100vw,1100px);aspect-ratio:16/9;transform:translateX(-50%);pointer-events:none;z-index:0;
   -webkit-mask-image:linear-gradient(#000 55%,transparent 92%);mask-image:linear-gradient(#000 55%,transparent 92%)}
 .schatten video,.schatten img{display:block;width:100%;height:100%;object-fit:cover}
 
 /* Kopf */
-.kopf{position:fixed;top:calc(26px + env(safe-area-inset-top,0px));right:clamp(20px,4vw,48px);z-index:5;transition:opacity .9s var(--ease) .5s}
+.kopf{position:absolute;top:calc(26px + env(safe-area-inset-top,0px));right:clamp(20px,4vw,48px);z-index:5;transition:opacity .9s var(--ease) .5s}
 .kontakt-knopf{display:flex;align-items:center;gap:14px;background:none;border:0;padding:8px 0;color:var(--navy);cursor:pointer}
 .kontakt-knopf::after{content:"";width:52px;height:1px;background:var(--kupfer);transition:width .5s var(--ease)}
 .kontakt-knopf:hover::after,.kontakt-knopf[aria-expanded="true"]::after{width:74px}
@@ -34,9 +35,12 @@ a{color:inherit}
 .kontakt-box.offen{opacity:1;transform:none;pointer-events:auto}
 .kontakt-box a{text-decoration:none;border-bottom:1px solid transparent;justify-self:start;transition:border-color .3s var(--ease)}
 .kontakt-box a:hover{border-color:var(--kupfer)}
-.zurueck{position:fixed;top:calc(26px + env(safe-area-inset-top,0px));left:clamp(20px,4vw,48px);z-index:5;display:flex;align-items:center;gap:14px;
+.zurueck{position:absolute;top:calc(26px + env(safe-area-inset-top,0px));left:clamp(20px,4vw,48px);z-index:5;display:flex;align-items:center;gap:14px;
   background:none;border:0;padding:8px 0;color:var(--navy);cursor:pointer;text-decoration:none}
 .zurueck::before{content:"";width:40px;height:1px;background:var(--kupfer);transition:width .5s var(--ease)}
+.zurueck.schwebend{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));background:rgba(246,245,241,.94);border:1px solid var(--linie);
+  padding:10px 16px;box-shadow:0 10px 24px rgba(27,61,74,.08);backdrop-filter:blur(6px)}
+.zurueck.schwebend::before{width:24px}
 .zurueck:hover::before{width:60px}
 
 /* Ansichten */
@@ -85,7 +89,7 @@ h1{font:400 clamp(36px,min(5.2vw,7.6vh),80px)/1.02 "Cormorant Garamond",Georgia,
 .stellen{margin:clamp(14px,2.6vh,30px) 0 0;font-size:13px;letter-spacing:.22em;color:var(--navy)}
 .fuss-linie{width:64px;height:1px;background:var(--navy);margin:12px auto 10px;opacity:.9}
 .adresse{margin:0;font-size:11.5px;letter-spacing:.2em;color:var(--navy-weich)}
-.replay{position:fixed;left:clamp(16px,3vw,40px);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:5;background:none;border:0;padding:6px;font:inherit;color:var(--navy-weich);cursor:pointer;opacity:.5;font-size:10px;transition:opacity .4s var(--ease)}
+.replay{position:absolute;left:clamp(16px,3vw,40px);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:5;background:none;border:0;padding:6px;font:inherit;color:var(--navy-weich);cursor:pointer;opacity:.5;font-size:10px;transition:opacity .4s var(--ease)}
 .replay:hover{opacity:1}
 
 /* Bewerbungsseite */
@@ -462,6 +466,10 @@ fieldset{border:0;padding:0;margin:0}
   back.addEventListener('click', e => { e.preventDefault(); history.pushState(null, '', location.pathname + location.search); zeige(start); });
   addEventListener('popstate', () => zeige(location.hash === '#bewerben' ? bew : start));
   document.getElementById('bTitel').tabIndex = -1;
+  // Auf der Bewerbungsseite kommt "Zurück" beim Scrollen als kleiner schwebender Knopf zurück
+  addEventListener('scroll', () => {
+    back.classList.toggle('schwebend', !bew.hidden && scrollY > 180);
+  }, {passive: true});
 
   // Formular: ohne Server -> fertige E-Mail an Holger oeffnen
   document.getElementById('form').addEventListener('submit', e => {
