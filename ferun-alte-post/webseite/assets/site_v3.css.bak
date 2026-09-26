@@ -324,66 +324,10 @@ a:hover .bild img,a:focus-visible .bild img{transform:scale(calc(var(--s,1) * 1.
   .raum{flex:0 0 74%;scroll-snap-align:start;margin-top:0!important}
   .galerie3{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(var(--rand) * -1);padding-inline:var(--rand);scroll-padding-inline:var(--rand);scrollbar-width:none;gap:12px}
   .galerie3::-webkit-scrollbar{display:none}
+  .galerie3 a{flex:0 0 auto;height:min(62vh,440px);scroll-snap-align:start}
+  .galerie3 .h{aspect-ratio:3/4.4}.galerie3 .q{aspect-ratio:3/2}.galerie3 .k{aspect-ratio:1}
   .wisch{display:flex!important}
 }
 .wisch{display:none;align-items:center;gap:10px;margin-top:14px;color:var(--text-weich)}
 .wisch::after{content:"";width:40px;height:1px;background:var(--akzent)}
 @media (prefers-reduced-motion:reduce){.hero3 .schatten,.kopf3 .schatten{display:none}}
-
-/* =====================================================================
-   Version 4 (26.09.2026): klare Fassung (Foto-Einstieg wie Waltz/Heufler) + ruhige, feste Raster
-   ===================================================================== */
-*{-webkit-tap-highlight-color:transparent}
-/* Kein Wackeln auf Touch-Geraeten: Hover-Zoom nur mit echter Maus */
-@media (hover:none){a:hover .bild img,a:focus-visible .bild img{transform:scale(var(--s,1))}}
-
-/* Foto-Einstieg */
-.hero-foto{position:relative;height:calc(100svh - var(--kopf));min-height:520px;max-height:880px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
-.hero-foto .bild{position:absolute;inset:0;aspect-ratio:auto}
-.hero-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,30,36,0) 34%,rgba(16,30,36,.62) 100%);pointer-events:none}
-.hero-foto-inhalt{position:relative;z-index:2;text-align:center;color:#fff;padding:0 var(--rand) clamp(40px,7vh,80px);display:flex;flex-direction:column;align-items:center;gap:clamp(16px,2.4vh,24px)}
-.hero-logo{width:clamp(120px,12vw,168px);height:auto}
-.hero-foto h1{font-size:clamp(26px,2.6vw,38px);line-height:1.2;font-weight:400;letter-spacing:.01em;max-width:none}
-.hero-foto .aktionen{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.knopf.hell{border-color:#fff;color:#fff}
-.knopf.hell:hover{background:#fff;color:var(--navy)}
-.knopf.hell.voll{background:#fff;color:var(--navy)}
-.knopf.hell.voll:hover{background:transparent;color:#fff}
-.theme-salbei .hero-foto{height:calc(100svh - var(--kopf) - 2*clamp(12px,2vw,28px));margin:clamp(12px,2vw,28px);margin-bottom:0}
-
-/* Willkommen */
-.willkommen3{text-align:center}
-.willkommen3 .lead{margin:22px auto 0;max-width:46ch}
-
-/* Kacheln: Name + klare Beschreibung */
-.kachel .unter{display:block;padding:14px 0 0;border-bottom:0}
-.kachel .unter h3{margin:0}
-.kachel .unter p{margin:4px 0 0;color:var(--text-weich);font-size:13.5px}
-.kachel:hover .unter{border-color:transparent}
-
-/* Feste Raster auf Tablet/Handy (kein seitliches Wischen) */
-@media (max-width:760px){
-  .kacheln{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0;gap:22px 14px}
-  .kachel{flex:none}
-  .kachel h3{font-size:22px}
-  .kachel .unter p{font-size:12.5px}
-  .raeume{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;margin-inline:0;padding-inline:0;gap:26px 14px}
-  .raum{flex:none;margin-top:0!important}
-  .raum .schild{grid-template-columns:1fr}
-  .raum .pfeil{display:none}
-  .galerie3{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:min(56vw,300px);overflow:visible;margin-inline:0;padding-inline:0;gap:10px}
-  .galerie3 a{height:auto;aspect-ratio:auto!important}
-  .galerie3{grid-auto-flow:dense}
-  .galerie3 .h,.galerie3 .k{grid-column:span 1}
-  .galerie3 .q{grid-column:span 2}
-  .hero-foto{min-height:560px}
-  .theme-salbei .hero-foto{margin:10px 10px 0;height:calc(100svh - var(--kopf) - 10px)}
-}
-/* Bogen-Variante: Raum-Schild ohne Nummer */
-.raum .schild{grid-template-columns:1fr auto}
-.raum .schild h3{grid-column:1}
-.raum .was{grid-column:1}
-.raum .pfeil{grid-column:2;grid-row:1}
-/* Lightbox: ruhig, kein Verschieben */
-.lb{overscroll-behavior:contain;touch-action:none}
-.lb img{touch-action:none;user-select:none;-webkit-user-drag:none;transition:opacity .25s var(--ease)}
