@@ -120,7 +120,7 @@
   d.body.appendChild(bib);
   var raster = bib.querySelector('.ed-raster'), filter = bib.querySelector('.ed-filter');
   var liste = window.FERUN_BIB || [], filterWert = 'Alle';
-  var gruppen = ['Alle', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände'];
+  var gruppen = ['Alle', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände'];
   filter.innerHTML = gruppen.map(function(g){ return '<button type="button" data-f="' + g + '"' + (g === 'Alle' ? ' class="an"' : '') + '>' + g + '</button>'; }).join('');
   function zeichnen(){
     var sicht = liste.filter(function(b){ return filterWert === 'Alle' || b.k === filterWert; });
