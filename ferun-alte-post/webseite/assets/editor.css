@@ -43,4 +43,5 @@
 .ed-raster figure.an img{outline:3px solid #AC845B;outline-offset:-3px}
 .ed-toast{position:fixed;left:50%;bottom:22px;z-index:99;transform:translate(-50%,20px);opacity:0;background:#1B3C4A;color:#F6F5F1;font:500 12px/1 "Montserrat",sans-serif;padding:11px 16px;transition:opacity .3s,transform .3s;pointer-events:none}
 .ed-toast.an{opacity:1;transform:translate(-50%,0)}
+@media (max-width:760px){.ed-knopf{display:none}}
 @media print{.ed-knopf,.ed-leiste,.ed-bib{display:none!important}}

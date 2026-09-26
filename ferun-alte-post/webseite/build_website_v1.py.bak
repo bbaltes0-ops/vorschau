@@ -1,0 +1,485 @@
+#!/usr/bin/env python3
+"""FERUN Alte Post – Webseite bauen (26.09.2026).
+Eine Quelle, zwei Designs: klar/ (Papierweiss) und salbei/ (Salbei praesent), je zehn Seiten.
+Texte nach Webseite/Texte/FERUN_Sprache_und_Texte.md: Ihr/Euch, max. ein bairisches Wort pro Absatz,
+keine Jahreszahl, kein "wieder", keine Post-Wortspiele. Nichts erfinden (Zeiten, Preise, Plaetze, Namen).
+Bilder: assets/bibliothek (build_assets.py). Jedes Bild ist ein editierbares Feld (assets/editor.js)."""
+import html as H
+import json, os, re, time
+VER = time.strftime("%Y%m%d%H%M")
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+BIB = os.path.join(HERE, "assets", "bibliothek")
+TEL, TEL_TXT, MAIL = "+491622308214", "+49 162 230 82 14", "holger.brunk@ferun.de"
+ADRESSE = "Kirchplatz 2 · 83125 Eggstätt"
+WA = "https://wa.me/491622308214"
+
+BEREICHE = [  # slug, Name, Spruch, Satz, Hero-Bild
+    ("gasthaus", "Gasthaus", "Mahlzeit.", "Alpenländische Küche, ehrlich gekocht und schön angerichtet.", "R4G_M01_16x9"),
+    ("vinothek", "Vinothek", "Zum Wohl.", "Gute Weine und Zeit für eine gute Beratung.", "R4C_N04_16x9"),
+    ("biergarten", "Biergarten", "Unter der Kastanie.", "Eine Brotzeit, a kühle Halbe und Schatten unter alten Bäumen.", "R1G_E07_getraenke"),
+    ("greisslerei", "Greißlerei", "Für daheim.", "Gutes aus der Region und Feines aus unserer Küche zum Mitnehmen.", "WG_W07_16x9"),
+    ("bar", "Bar", "Auf ein Glaserl.", "Für den Aperitif vorm Essen und das letzte Glas des Abends.", "R4G_M05_16x9"),
+    ("festsaal", "Festsaal", "Feiern.", "Hochzeiten, Taufen, Geburtstage – ein Saal für die großen Tage.", "R4G_M17_16x9"),
+]
+B = {b[0]: b for b in BEREICHE}
+VERWENDET = set()
+
+
+def f(name):
+    p = os.path.join(BIB, name + ".jpg")
+    if not os.path.exists(p):
+        raise SystemExit("Bild fehlt: " + name)
+    VERWENDET.add(name)
+    return "../assets/bibliothek/" + name + ".jpg"
+
+
+def bild(slot, name, ar="4/5", cls="", alt="", parallax=False, fest=False, lazy=True, reveal=True):
+    a = f' style="aspect-ratio:{ar}"' if ar else ""
+    extra = (" data-parallax" if parallax else "") + (" data-fest" if fest else "")
+    c = "bild" + (" reveal" if reveal else "") + ("" if parallax else " nicht-par") + (" " + cls if cls else "")
+    ld = ' loading="lazy"' if lazy else ' fetchpriority="high"'
+    return (f'<figure class="{c}" data-edit="{slot}"{extra}{a}><div class="par"><img src="{f(name)}" alt="{H.escape(alt)}"{ld} decoding="async"></div></figure>')
+
+
+# ---------------------------------------------------------------- Rahmen
+
+def kopf(v, seite, ueber_hero):
+    nav = "".join(f'<a class="caps" href="{s}.html"{" aria-current=\"page\"" if s == seite else ""}>{n}</a>' for s, n, *_ in BEREICHE)
+    neben = (f'<a class="caps nav-text" href="karte.html"{" aria-current=\"page\"" if seite == "karte" else ""}>Karte</a>'
+             f'<a class="caps nav-text" href="haus.html"{" aria-current=\"page\"" if seite == "haus" else ""}>Das Haus</a>'
+             f'<a class="caps reservieren" href="kontakt.html#reservieren">Tisch reservieren</a>'
+             f'<button class="menue-knopf caps" type="button" aria-expanded="false" aria-controls="vollmenue">Menü</button>')
+    cls = "kopf" + (" ueber-hero" if ueber_hero else "")
+    vm_links = "".join(f'<a href="{s}.html" data-b="{s}" style="--i:{i}">{n}</a>' for i, (s, n, *_) in enumerate(BEREICHE))
+    vm_links += f'<a href="karte.html" style="--i:6">Karte</a><a href="haus.html" style="--i:7">Das Haus</a><a href="kontakt.html" style="--i:8">Reservieren &amp; Kontakt</a>'
+    vm_bilder = "".join(f'<img src="{f(b[4])}" alt="" data-b="{b[0]}" loading="lazy">' for b in BEREICHE)
+    return f"""<header class="{cls}"><div class="wrap">
+  <a class="logo-link" href="index.html" aria-label="FERUN Alte Post – Startseite"><img class="dunkel" src="../assets/logo/FERUN_04_Quer_Blatt_farbig.svg" alt="FERUN Alte Post"><img class="hell" src="../assets/logo/FERUN_04_Quer_Blatt_weiss.svg" alt="" aria-hidden="true"></a>
+  <nav class="hauptnav" aria-label="Bereiche">{nav}</nav>
+  <div class="nebennav">{neben}</div>
+</div></header>
+<div class="vollmenue" id="vollmenue" aria-label="Menü"><button class="menue-zu caps" type="button">Schließen</button>
+  <nav>{vm_links}<span class="caps">{ADRESSE}</span></nav><div class="vorschau">{vm_bilder}</div></div>"""
+
+
+def stempel():
+    return """<a class="stempel" href="kontakt.html#reservieren" aria-label="Tisch reservieren">
+  <svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="kreis" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+  <text font-family="Montserrat, sans-serif" font-size="8.2" fill="currentColor"><textPath href="#kreis" textLength="236" lengthAdjust="spacing">TISCH RESERVIEREN · FERUN ALTE POST ·</textPath></text></svg>
+  <img src="../assets/logo/FERUN_08_Signet_Blatt_kupfer.svg" alt=""></a>"""
+
+
+def fuss(v):
+    logo = "FERUN_01_Hoch_Blatt_Eggstaett_weiss" if v == "salbei" else "FERUN_01_Hoch_Blatt_Eggstaett_farbig"
+    links = "".join(f'<li><a href="{s}.html">{n}</a></li>' for s, n, *_ in BEREICHE)
+    return f"""<footer class="fuss"><div class="wrap">
+  <div class="fuss-raster">
+    <div><img class="fuss-logo" src="../assets/logo/{logo}.svg" alt="FERUN Alte Post Eggstätt"></div>
+    <div><h4>Besuch</h4><ul><li>FERUN Alte Post</li><li>Kirchplatz 2</li><li>83125 Eggstätt</li><li>Öffnungszeiten folgen zur Eröffnung</li></ul></div>
+    <div><h4>Kontakt</h4><ul><li><a href="tel:{TEL}">{TEL_TXT}</a></li><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="kontakt.html#reservieren">Tisch reservieren</a></li><li><a href="kontakt.html#jobs">Jobs</a></li></ul></div>
+    <div><h4>Das Haus</h4><ul>{links}<li><a href="karte.html">Karte</a></li><li><a href="haus.html">Das Haus</a></li></ul></div>
+  </div>
+  <img class="zeichnung" src="../assets/haus_zeichnung.png" alt="" loading="lazy">
+  <div class="fuss-unten"><span>FERUN Alte Post · Alpenländische Küche am Kirchplatz</span><span>Impressum und Datenschutz folgen</span></div>
+</div></footer>"""
+
+
+def seite(v, slug, titel, beschreibung, inhalt, ueber_hero=False):
+    andere = "salbei" if v == "klar" else "klar"
+    schema = json.dumps({"@context": "https://schema.org", "@type": "Restaurant", "name": "FERUN Alte Post",
+                         "servesCuisine": "Alpenländische Küche", "telephone": TEL_TXT, "email": MAIL,
+                         "address": {"@type": "PostalAddress", "streetAddress": "Kirchplatz 2", "postalCode": "83125",
+                                     "addressLocality": "Eggstätt", "addressCountry": "DE"}}, ensure_ascii=False)
+    return f"""<!doctype html>
+<html lang="de" class="theme-{v}" data-variante="{v}" data-seite="{slug}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{H.escape(titel)}</title>
+<meta name="description" content="{H.escape(beschreibung)}">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/site.css?v={VER}">
+<link rel="stylesheet" href="../assets/editor.css?v={VER}">
+<link rel="icon" href="../assets/logo/FERUN_08_Signet_Blatt_kupfer.svg">
+<script type="application/ld+json">{schema}</script>
+</head>
+<body>
+<a class="caps" href="#inhalt" style="position:absolute;left:-9999px">Zum Inhalt</a>
+{kopf(v, slug, ueber_hero)}
+<main id="inhalt">
+{inhalt}
+</main>
+{fuss(v)}
+{stempel()}
+<a href="../{andere}/{slug}.html" class="variante-link" hidden>Andere Variante</a>
+<script src="../assets/bibliothek.js?v={VER}"></script>
+<script src="../assets/medien-data.js" onerror="this.remove()"></script>
+<script src="../assets/site.js?v={VER}"></script>
+<script src="../assets/editor.js?v={VER}"></script>
+</body>
+</html>
+"""
+
+
+# ---------------------------------------------------------------- Startseite
+
+def hero(v):
+    slides = [bild("hero-start", "WC_W01_16x9", ar=None, cls="slide an", alt="Die Tafelstube im Morgenlicht", fest=True, lazy=False, reveal=False).replace('data-edit', 'data-b="start" data-edit')]
+    for s, n, spr, satz, h in BEREICHE:
+        slides.append(bild("hero-" + s, h, ar=None, cls="slide", alt=n, fest=True, reveal=False).replace('data-edit', f'data-b="{s}" data-edit'))
+    bilder = '<div class="bilder">' + "".join(slides) + "</div>"
+    sub = "Ein neues Gasthaus in einem alten, historischen Haus in Eggstätt."
+    if v == "klar":
+        leiste = "".join(f'<a href="{s}.html" data-b="{s}" data-spruch="{H.escape(spr)}"><span class="caps">{n}</span><span class="spr">{spr}</span></a>' for s, n, spr, *_ in BEREICHE)
+        return f"""<section class="hero" aria-label="Willkommen">{bilder}
+  <div class="hero-inhalt wrap">
+    <span class="caps ort">Kirchplatz · Eggstätt · Chiemgau</span>
+    <div class="hero-zeile"><h1 data-split>Alpenländische Küche am Kirchplatz.</h1><p class="hero-sub">{sub}</p></div>
+    <nav class="bereichsleiste" aria-label="Die sechs Bereiche">{leiste}</nav>
+  </div></section>"""
+    liste = "".join(f'<li><a href="{s}.html" data-b="{s}" data-spruch="{H.escape(spr)}"><span class="name">{n}</span><span class="spr">{spr}</span></a></li>' for s, n, spr, *_ in BEREICHE)
+    return f"""<section class="hero" aria-label="Willkommen">
+  <div class="hero-panel">
+    <div><span class="caps ort">Kirchplatz · Eggstätt · Chiemgau</span>
+    <h1 data-split style="margin-top:22px">Alpenländische Küche am Kirchplatz.</h1><p class="hero-sub">{sub}</p></div>
+    <ul class="bereichsliste" aria-label="Die sechs Bereiche">{liste}</ul>
+  </div>{bilder}</section>"""
+
+
+BLOCKS = {  # slug: (Hauptbild, Detailbild, Ueberschrift, Text)
+    "gasthaus": ("R2C_A08_gedeck", "WG_W33_1x1", "Mahlzeit.",
+                 "Knödel, Kraut und Braten, Fisch aus dem See, Wild aus der Gegend und zum Schluss ein Kaiserschmarrn. Wir kochen die Klassiker der Alpen, mit gutem Handwerk und schön angerichtet."),
+    "vinothek": ("R4G_M04_4x5", "R2C_E04_getraenke", "Zum Wohl.",
+                 "Unter dem Gewölbe, zwischen dunkelroten Wänden und leuchtenden Nischen, stehen die Flaschen, die uns selber Freude machen. Wir nehmen uns Zeit für Eure Fragen."),
+    "biergarten": ("R1G_E07_getraenke", "R2G_G06_aussen", "Unter der Kastanie.",
+                   "Wenn die Sonne scheint, gehört der Nachmittag dem Biergarten: eine Brotzeit, a kühle Halbe und Schatten unter alten Bäumen."),
+    "greisslerei": ("R4G_M06_4x5", "R3G_G23_4x5", "Für daheim.",
+                    "Brot, Käse aus den Bergen, Eingemachtes und Feines aus unserer Küche. In der Greißlerei nehmt Ihr mit, was Euch bei uns geschmeckt hat."),
+    "bar": ("R3C_C04_4x5", "R1G_E05_getraenke", "Auf ein Glaserl.",
+            "Eine lange Theke aus Eiche, Terrazzo und Messing. Hier beginnt der Abend mit dem Aperitif, und manchmal hört er hier auch auf."),
+    "festsaal": ("R2C_C04_raeume", "R2G_C04_raeume", "Feiern.",
+                 "Lange Tafeln, weißes Leinen, Kerzen und frisches Grün. Für Hochzeiten, Taufen und Geburtstage decken wir so, dass der Tag lange nachklingt."),
+}
+
+
+def startseite(v):
+    teile = [hero(v)]
+    teile.append(f"""<section class="sektion willkommen" aria-labelledby="w-titel">
+  <div class="schatten" aria-hidden="true"><video src="../assets/schatten.mp4" poster="../assets/schatten_poster.jpg" muted autoplay loop playsinline preload="metadata"></video></div>
+  <div class="wrap inhalt">
+    <img class="signet reveal-text" src="../assets/logo/FERUN_08_Signet_Blatt_kupfer.svg" alt="">
+    <h2 id="w-titel" data-split>Grüß Gott am Kirchplatz.</h2>
+    <p class="lead reveal-text v1">Am Kirchplatz in Eggstätt zieht ein neues Gasthaus in ein altes, historisches Haus ein.</p>
+    <p class="reveal-text v2">Wir kochen alpenländisch, mit guten Zutaten aus der Region und viel Handwerk. Dazu gibt es eine Vinothek, einen Biergarten, eine Greißlerei, eine Bar und einen Festsaal – und für jeden ein Tischerl.</p>
+    <p class="satz reveal-text v3">Kommt zu uns, wenn Ihr <a href="gasthaus.html">gut essen</a>, <a href="bar.html">ein Glaserl trinken</a>, <a href="biergarten.html">draußen sitzen</a>, <a href="greisslerei.html">etwas mitnehmen</a> oder <a href="festsaal.html">feiern</a> wollt.</p>
+  </div></section>""")
+    for i, (s, n, spr, satz, h) in enumerate(BEREICHE):
+        haupt, detail, ueber, text = BLOCKS[s]
+        seite_cls = "rechts" if i % 2 else ""
+        alt = " alt" if i % 2 else ""
+        teile.append(f"""<section class="bereich-band{alt}" aria-labelledby="b-{s}"><div class="wrap bereich {seite_cls}">
+  <a class="haupt" href="{s}.html" tabindex="-1" aria-hidden="true">{bild("block-" + s, haupt, ar="4/5", parallax=True, alt=n)}</a>
+  {bild("detail-" + s, detail, ar="1/1", cls="detail", alt="")}
+  <div class="text"><span class="caps eyebrow reveal-text">{n}</span><h3 id="b-{s}" class="reveal-text v1">{ueber}</h3><p class="reveal-text v2">{text}</p>
+  <a class="mehr caps reveal-text v3" href="{s}.html">Mehr über {"die " if s in ("vinothek","greisslerei","bar") else "den " if s in ("biergarten","festsaal") else "das "}{n}</a></div>
+</div></section>""")
+    teile.append(karte_teaser())
+    teile.append(f"""<section class="band" aria-labelledby="h-titel">
+  {bild("band-haus", "WG_W16_21x9", ar=None, parallax=True, fest=True, alt="Kreuzgewölbe und Salbei-Vertäfelung")}
+  <div class="kasten reveal-text"><span class="caps eyebrow">Das Haus</span><h2 id="h-titel">Altes Haus, neues Leben.</h2>
+  <p>Dicke Mauern, weiße Kreuzgewölbe, tiefe Fensternischen. In dieses Haus zieht jetzt ein Gasthaus ein – mit Eichendielen, Salbeigrün, Messing und handbemaltem Porzellan.</p>
+  <a class="mehr caps" href="haus.html">Das Haus entdecken</a></div></section>
+<section class="sektion dicht" aria-label="Details aus dem Haus"><div class="streifen">
+  {"".join(f'<figure>{bild("streifen-" + str(k), n_, ar="4/5", alt=t)}<figcaption class="caps klein">{t}</figcaption></figure>' for k, (n_, t) in enumerate([("R4G_M02_4x5", "Raumfolge"), ("R4G_M08_4x5", "Kachelofen"), ("R4G_M07_1x1", "Holz, Putz und Eiche"), ("R4G_M09_1x1", "Terrazzo und Messing"), ("R4G_M16_4x5", "Die Eichentür"), ("R4G_M23_4x5", "Licht an der Wand"), ("R4G_M14_4x5", "Weinnische")]))}
+</div></section>""")
+    teile.append(f"""<section class="sektion flaeche" aria-labelledby="f-titel"><div class="wrap zweispaltig">
+  {bild("feiern", "WG_W11_16x9", ar="4/3", parallax=True, alt="Lange Tafel für ein Fest")}
+  <div><span class="caps eyebrow reveal-text">Festsaal</span><h2 id="f-titel" data-split>Für die großen Tage.</h2>
+  <p class="reveal-text v1" style="margin-top:24px">Hochzeiten, Taufen, Geburtstage oder das Fest mit der ganzen Firma: Erzählt uns, was Ihr feiern wollt. Wir melden uns mit einem Vorschlag für Menü, Tafel und Ablauf.</p>
+  <a class="knopf reveal-text v2" href="festsaal.html#anfrage" style="margin-top:14px">Fest anfragen</a></div>
+</div></section>""")
+    teile.append(besuch())
+    return seite(v, "index", "FERUN Alte Post · Gasthaus am Kirchplatz in Eggstätt",
+                 "FERUN Alte Post: ein neues Gasthaus am Kirchplatz in Eggstätt mit alpenländischer Küche, Vinothek, Biergarten, Greißlerei, Bar und Festsaal.",
+                 "\n".join(teile), ueber_hero=(v == "klar"))
+
+
+def karte_teaser():
+    return f"""<section class="sektion" aria-labelledby="k-titel"><div class="wrap karte-teaser">
+  <div class="teller-buehne" aria-hidden="true"><img class="teller" src="../assets/teller_rosen.png" alt=""></div>
+  <div><span class="caps eyebrow reveal-text">Die Wochenkarte</span><h2 id="k-titel" data-split>Jede Woche neu.</h2>
+  <p class="reveal-text v1" style="margin-top:22px">Was auf den Tisch kommt, bestimmen Markt und Jahreszeit. Ein paar Beispiele, wie eine Woche bei uns schmecken kann:</p>
+  <ul class="gerichte reveal-text v2">
+    <li><span class="g">Klare Rindssuppe mit Leberknödel</span><span class="d">Schnittlauch</span></li>
+    <li><span class="g">Kasnocken mit brauner Butter</span><span class="d">Bergkäse</span></li>
+    <li><span class="g">Rehrücken mit Spätzle und Blaukraut</span><span class="d">Wacholder</span></li>
+    <li><span class="g">Kaiserschmarrn mit Zwetschgenröster</span><span class="d">Puderzucker</span></li>
+  </ul><a class="mehr caps reveal-text v3" href="karte.html">Zur Wochenkarte</a></div>
+</div></section>"""
+
+
+def besuch():
+    return f"""<section class="sektion linie-oben" aria-labelledby="bes-titel"><div class="wrap">
+  <span class="caps eyebrow reveal-text">Besuch</span><h2 id="bes-titel" data-split style="margin-bottom:clamp(36px,5vw,70px)">Wir freuen uns auf Euch.</h2>
+  <div class="info-spalten">
+    <div class="reveal-text"><h3>Adresse</h3><p>FERUN Alte Post<br>Kirchplatz 2<br>83125 Eggstätt</p><p class="klein">Mitten im Ort, zwischen Chiemsee und der Eggstätter Seenplatte.</p></div>
+    <div class="reveal-text v1"><h3>Öffnungszeiten</h3><p>Geben wir hier bekannt, sobald wir aufsperren.</p></div>
+    <div class="reveal-text v2"><h3>Kontakt</h3><p><a href="tel:{TEL}">{TEL_TXT}</a><br><a href="mailto:{MAIL}">{MAIL}</a></p><a class="knopf" href="kontakt.html#reservieren" style="margin-top:10px">Tisch reservieren</a></div>
+  </div></div></section>"""
+
+
+# ---------------------------------------------------------------- Bereichsseiten
+
+SEITEN = {
+    "gasthaus": dict(
+        lead="Bei uns kommt auf den Tisch, was die Jahreszeit hergibt – aus dem Chiemgau, aus den Bergen und vom See.",
+        texte=["Wir kochen die Klassiker aus Bayern, Österreich und Südtirol: Knödel, Kraut und Braten, Fisch, Wild, Kasnocken und Kaiserschmarrn. Mit gutem Handwerk, ohne Schnickschnack und so angerichtet, dass man sich schon beim Hinschauen freut.",
+               "Gegessen wird in hellen Stuben unter weißen Gewölben, an Tischen mit weißem Leinen und auf handbemaltem Porzellan. Mittags auf einen Teller, abends gern ein bisserl länger."],
+        intro_bild=("R2C_A08_gedeck", "Gedeckter Tisch in der Stube"),
+        fakten=[("Die Stuben", "Hell, unter weißen Kreuzgewölben, mit Salbeigrün und Eichendielen."),
+                ("Die Kaminstube", "Am dunkelroten Kachelofen, für die Abende, an denen es draußen kalt wird."),
+                ("Die Wochenkarte", "Jede Woche neu, je nachdem, was Markt und Jahreszeit bringen."),
+                ("Das Porzellan", "Handbemalte Teller mit Blüten, Rosen und Ranken – kaum einer gleicht dem anderen.")],
+        galerie=[("R4C_N01_16x9", "g1"), ("R4C_N02_4x5", "g2"), ("R3C_C19_4x5", "g3"), ("WG_W09_16x9", "g4"), ("R3G_G30_4x5", "g5"), ("WG_W03_16x9", "g6")],
+        ruf="Essen, das wir selber gern essen.", cta=("Tisch reservieren", "kontakt.html#reservieren")),
+    "vinothek": dict(
+        lead="In der Vinothek stehen die Flaschen, die uns selber Freude machen – vom guten Alltagswein bis zur besonderen Flasche.",
+        texte=["Unter dem Gewölbe, zwischen dunkelroten Wänden und leuchtenden Nischen, dürft Ihr in Ruhe stöbern, probieren und fragen. Wir erzählen Euch gern, woher ein Wein kommt und zu welchem Gericht er passt.",
+               "Ein Glaserl zum Essen, eine Flasche für den Tisch oder etwas für daheim: Alles ist möglich."],
+        intro_bild=("R4G_M04_4x5", "Die Vinothek"),
+        fakten=[("Beratung", "Wir nehmen uns Zeit und finden mit Euch den passenden Wein."),
+                ("Zum Essen", "Die Flasche aus der Vinothek kommt direkt an Euren Tisch."),
+                ("Für daheim", "Gute Weine zum Mitnehmen, gern auch als Geschenk."),
+                ("Weinproben", "Abende mit Weinen und Winzern – die Termine stehen hier, sobald es losgeht.")],
+        galerie=[("WG_W18_21x9", "g6"), ("R4G_M14_4x5", "g2"), ("R1G_E01_getraenke", "g3"), ("R4C_N25_3x2", "g1"), ("R3C_C34_4x5", "g4"), ("R4C_N14_9x16", "g5")],
+        ruf="Auf die guten Dinge.", cta=("Tisch reservieren", "kontakt.html#reservieren")),
+    "biergarten": dict(
+        lead="Wenn die Sonne scheint, gehört der Nachmittag dem Biergarten.",
+        texte=["Unter alten Bäumen stehen Tische und Bänke, im Herbst liegen die Kastanien im Kies. Dazu gibt es eine gscheite Brotzeit, frisches Bier und für die Kinder eine kalte Limo.",
+               "Der Biergarten ist für alle da: für Radler auf dem Weg zum Chiemsee, für Familien nach dem Spaziergang und für alle, die einfach sitzen bleiben wollen."],
+        intro_bild=("R2G_G06_aussen", "Kastanien im Kies"),
+        fakten=[("Brotzeit", "Brot, Käse, Geräuchertes und Eingemachtes – ehrlich und gut."),
+                ("Bier und Limo", "Frisch gezapft und schön kalt."),
+                ("Schatten", "Unter den Kastanien bleibt es auch im Hochsommer angenehm."),
+                ("Bei Regen", "Rücken wir drinnen in den Stuben zusammen.")],
+        galerie=[("R2C_E02_getraenke", "g2"), ("R3C_C31_4x5", "g3"), ("WG_W24_3x2", "g1"), ("R2G_E06_getraenke", "g4"), ("R1G_E07_getraenke", "g5")],
+        ruf="Sitzen bleiben ist ausdrücklich erlaubt.", cta=("Kontakt", "kontakt.html")),
+    "greisslerei": dict(
+        lead="In der Greißlerei nehmt Ihr mit, was Euch bei uns geschmeckt hat.",
+        texte=["Brot, Käse aus den Bergen, Eingemachtes, Honig, Säfte und manches, was in unserer Küche entsteht – ausgesucht bei Erzeugern aus der Region.",
+               "Ein kleiner Laden mit rosa Wänden, grünen Kacheln und einer alten Werkbank als Theke. Zum Einkaufen, zum Ratschen und für ein Geschenk, wenn Ihr eingeladen seid."],
+        intro_bild=("R4G_M06_4x5", "Die Greißlerei"),
+        fakten=[("Aus der Region", "Gutes von Erzeugern aus dem Chiemgau und den Bergen."),
+                ("Aus unserer Küche", "Eingemachtes, Saucen und Süßes, so wie wir es auch im Gasthaus verwenden."),
+                ("Zum Verschenken", "Kleine Pakete für Gastgeber, Freunde und Familie."),
+                ("Zum Sitzen", "Ein paar Plätze gibt es auch – für einen Kaffee zwischendurch.")],
+        galerie=[("R4G_M18_4x5", "g2"), ("R4C_N05_3x2", "g1"), ("R3G_G47_4x5", "g3"), ("WG_W25_3x2", "g4"), ("R3C_C36_4x5", "g5"), ("WG_W19_21x9", "g6")],
+        ruf="Was schmeckt, darf mit.", cta=("Kontakt", "kontakt.html")),
+    "bar": dict(
+        lead="An der Bar beginnt der Abend – und manchmal hört er hier auch auf.",
+        texte=["Eine lange Theke aus Eiche mit Terrazzo und Messing, grüne Kacheln, dahinter die leuchtenden Flaschen. Hier gibt es den Aperitif vor dem Essen, ein frisch gezapftes Bier, einen guten Brand und Drinks ohne großes Tamtam.",
+               "Wer nicht essen mag, ist genauso willkommen. Auf ein Glas, auf zwei oder einfach zum Reden an der Theke."],
+        intro_bild=("R3C_C04_4x5", "Die Bar"),
+        fakten=[("Aperitif", "Das erste Glas des Abends, bevor es zu Tisch geht."),
+                ("Nach dem Essen", "Ein Brand, ein Digestif oder ein letztes Glas Wein."),
+                ("Ohne Alkohol", "Schöne Getränke auch für alle, die fahren."),
+                ("An der Theke", "Für einen kurzen Besuch oder einen langen Abend.")],
+        galerie=[("R4C_N03_3x2", "g1"), ("R4C_N08_4x5", "g2"), ("R1G_E05_getraenke", "g3"), ("R3C_C33_4x5", "g4"), ("R4G_M21_9x16", "g5"), ("WG_W17_21x9", "g6")],
+        ruf="Noch eins? Gern.", cta=("Tisch reservieren", "kontakt.html#reservieren")),
+    "festsaal": dict(
+        lead="Für die Tage, an denen die ganze Familie zusammenkommt.",
+        texte=["Lange Tafeln mit weißem Leinen, handbemaltes Porzellan, Kerzen und frisches Grün: Wir decken für Euer Fest und kochen, was zu Euch passt – vom Menü bis zum Buffet.",
+               "Erzählt uns, was Ihr feiern wollt, wie viele Gäste kommen und was Euch wichtig ist. Wir melden uns mit einem Vorschlag."],
+        intro_bild=("R2C_C04_raeume", "Festlich gedeckte Tafeln"),
+        fakten=[], galerie=[("R2G_C04_raeume", "g2"), ("WG_W15_21x9", "g1"), ("R3C_C49_4x5", "g3"), ("R4C_N21_4x5", "g4"), ("WG_W39_1x1", "g5")],
+        ruf="Auf die großen Tage.", cta=("Fest anfragen", "#anfrage")),
+}
+
+
+def bereichsseite(v, s):
+    _, n, spr, satz, h = B[s]
+    c = SEITEN[s]
+    idx = [b[0] for b in BEREICHE].index(s)
+    nxt = BEREICHE[(idx + 1) % len(BEREICHE)]
+    teile = [f"""<section class="seitenkopf" aria-labelledby="t"><div class="wrap">
+  <div class="titel"><div><span class="caps eyebrow">{n}</span><h1 id="t" data-split>{spr}</h1></div><p class="sub reveal-text v1">{satz}</p></div>
+  {bild("kopf", h, ar="21/9", cls="breit", parallax=True, fest=False, lazy=False, alt=n)}
+</div></section>"""]
+    ib, ialt = c["intro_bild"]
+    texte = "".join(f'<p class="reveal-text v{i + 1}">{t}</p>' for i, t in enumerate(c["texte"]))
+    teile.append(f"""<section class="sektion"><div class="wrap zweispaltig oben">
+  <div><p class="lead reveal-text" style="margin-bottom:34px">{c["lead"]}</p>{texte}</div>
+  {bild("intro", ib, ar="4/5", parallax=True, alt=ialt)}
+</div></section>""")
+    if c["fakten"]:
+        fk = "".join(f'<div class="fakt reveal-text"><h3>{t}</h3><p>{x}</p></div>' for t, x in c["fakten"])
+        teile.append(f'<section class="sektion dicht {"flaeche" if v == "salbei" else "grund-2"}"><div class="wrap"><span class="caps eyebrow">Was Euch erwartet</span><div class="fakten" style="margin-top:14px">{fk}</div></div></section>')
+    if s == "festsaal":
+        teile.append(festsaal_extra())
+    gal = "".join(bild(f"galerie-{i}", nm, ar=None, cls=cl, parallax=(cl in ("g1", "g6")), alt=n) for i, (nm, cl) in enumerate(c["galerie"]))
+    teile.append(f'<section class="sektion" aria-label="Bilder"><div class="wrap galerie">{gal}</div></section>')
+    teile.append(f'<p class="zwischenruf reveal-text">{c["ruf"]}</p>')
+    teile.append(f"""<section class="wrap"><div class="weiter">
+  <div><span class="caps eyebrow">Weiter</span><br><a class="gross" href="{nxt[0]}.html"><span>{nxt[1]}</span></a></div>
+  <a class="knopf" href="{c["cta"][1]}">{c["cta"][0]}</a></div></section>""")
+    return seite(v, s, f"{n} · FERUN Alte Post Eggstätt", f"{n} im FERUN Alte Post am Kirchplatz in Eggstätt: {satz}", "\n".join(teile))
+
+
+def festsaal_extra():
+    anl = "".join(f"<li>{a}</li>" for a in ("Hochzeiten", "Taufen", "Kommunion und Firmung", "Geburtstage", "Firmenfeiern", "Trauerfeiern"))
+    return f"""<section class="sektion dicht grund-2"><div class="wrap">
+  <div class="zweispaltig oben"><div><span class="caps eyebrow">Anlässe</span><h2>Was wir gern ausrichten.</h2><ul class="anlaesse">{anl}</ul></div>
+  <div><span class="caps eyebrow">So geht's</span><ol class="ablauf" style="grid-template-columns:1fr 1fr">
+    <li><h3>Anfrage</h3><p>Schickt uns Anlass, Datum und die ungefähre Zahl der Gäste.</p></li>
+    <li><h3>Gespräch</h3><p>Wir rufen an und besprechen alles in Ruhe.</p></li>
+    <li><h3>Vorschlag</h3><p>Ihr bekommt einen Vorschlag für Menü, Getränke und Ablauf.</p></li>
+    <li><h3>Das Fest</h3><p>Wir decken die Tafel, Ihr feiert.</p></li></ol></div></div>
+  <form class="formular" id="anfrage" data-mail="{MAIL}" data-betreff="Anfrage Festsaal" style="margin-top:clamp(50px,6vw,90px)" novalidate>
+    <div class="voll"><h2>Fest anfragen</h2></div>
+    <div class="feld"><label class="caps" for="fa-anlass">Anlass</label><select id="fa-anlass" name="anlass" data-label="Anlass"><option>Hochzeit</option><option>Taufe</option><option>Kommunion / Firmung</option><option>Geburtstag</option><option>Firmenfeier</option><option>Trauerfeier</option><option>Etwas anderes</option></select></div>
+    <div class="feld"><label class="caps" for="fa-datum">Wunschdatum</label><input id="fa-datum" name="datum" type="date" data-label="Wunschdatum"></div>
+    <div class="feld"><label class="caps" for="fa-gaeste">Gäste (ungefähr)</label><input id="fa-gaeste" name="gaeste" inputmode="numeric" data-label="Gäste"></div>
+    <div class="feld"><label class="caps" for="fa-name">Name</label><input id="fa-name" name="name" autocomplete="name" required data-label="Name"></div>
+    <div class="feld voll"><label class="caps" for="fa-kontakt">Telefon oder E-Mail</label><input id="fa-kontakt" name="kontakt" autocomplete="email" required data-label="Kontakt"></div>
+    <div class="feld voll"><label class="caps" for="fa-text">Was ist Euch wichtig?</label><textarea id="fa-text" name="nachricht" data-label="Nachricht"></textarea></div>
+    <p class="klein fehler voll" hidden>Bitte Name und Telefon oder E-Mail angeben.</p>
+    <div class="voll"><button class="knopf" type="submit">Anfrage senden</button></div>
+    <p class="danke voll" hidden>Danke! Euer E-Mail-Programm öffnet sich mit der fertigen Anfrage – nur noch auf Senden drücken.</p>
+  </form></div></section>"""
+
+
+# ---------------------------------------------------------------- Karte, Haus, Kontakt
+
+GAENGE = [
+    ("anfang", "Zum Anfang", "R3C_C27_4x5", [("Klare Rindssuppe mit Leberknödel", "Schnittlauch"), ("Rindertatar mit Preiselbeeren", "frischer Kren, Schwarzbrot"),
+                                               ("Eierschwammerl und Steinpilze", "auf geröstetem Brot"), ("Feldsalat mit Kürbiskernöl", "Speck und Croutons")]),
+    ("haupt", "Hauptgerichte", "WG_W09_16x9", [("Kasnocken mit brauner Butter", "Bergkäse, Schnittlauch"), ("Saibling mit Rahmsauce", "Dill und Erdäpfel"),
+                                               ("Rehrücken mit Spätzle", "Blaukraut und Wacholder"), ("Tafelspitz mit Wurzelgemüse", "Apfelkren und Schnittlauchsauce"),
+                                               ("Schweinsbraten mit Kruste", "Knödel und Krautsalat")]),
+    ("schluss", "Zum Schluss", "WG_W08_16x9", [("Kaiserschmarrn mit Zwetschgenröster", "Puderzucker"), ("Apfelstrudel", "Vanillesauce"),
+                                               ("Marillenknödel", "Butterbrösel"), ("Maronicreme", "kandierte Kastanie")]),
+    ("kinder", "Für die Kleinen", "R3G_G31_4x5", [("Kleiner Kaiserschmarrn", "Apfelmus"), ("Wiener Schnitzel vom Kalb", "Erdäpfelsalat"), ("Kasspatzn", "Röstzwiebeln")]),
+]
+
+
+def karte(v):
+    nav = "".join(f'<a class="caps" href="#{i}">{t}</a>' for i, t, *_ in GAENGE)
+    teile = [f"""<section class="seitenkopf" aria-labelledby="t"><div class="wrap">
+  <div class="titel"><div><span class="caps eyebrow">Karte</span><h1 id="t" data-split>Die Wochenkarte.</h1></div>
+  <p class="sub reveal-text v1">Jede Woche neu, nach Markt und Jahreszeit.</p></div>
+  {bild("kopf", "WG_W21_3x2", ar="21/9", cls="breit", parallax=True, lazy=False, alt="Pilze auf dem Hausteller")}
+</div></section>
+<nav class="kartennav" aria-label="Gänge"><div class="wrap">{nav}</div></nav>
+<section class="wrap" style="padding-top:clamp(40px,5vw,70px)"><p class="hinweis-box">Beispiel: So kann eine Woche bei uns schmecken. Die echte Wochenkarte mit Preisen gibt es hier zur Eröffnung.</p></section>"""]
+    for i, (gid, titel, b, gerichte) in enumerate(GAENGE):
+        li = "".join(f'<li><span class="g">{g}</span><span class="d">{x}</span></li>' for g, x in gerichte)
+        teller = f'<div class="teller-buehne" style="max-width:300px;margin-top:40px" aria-hidden="true"><img class="teller" src="../assets/{("teller_grau_muster" if i % 2 else "teller_rosen")}.png" alt=""></div>' if i in (0, 2) else ""
+        teile.append(f"""<section class="wrap"><div class="gang" id="{gid}">
+  <div>{bild("gang-" + gid, b, ar="4/5", parallax=True, alt=titel)}{teller}</div>
+  <div><h2 data-split>{titel}</h2><ul class="gerichte">{li}</ul></div></div></section>""")
+    teile.append(f"""<section class="sektion dicht"><div class="wrap zweispaltig">
+  <div><span class="caps eyebrow">Zum Trinken</span><h2>Wein, Bier und Säfte.</h2>
+  <p style="margin-top:20px">Weine aus unserer Vinothek, frisch gezapftes Bier, Säfte und Limo aus der Region. Fragt einfach nach, wir beraten Euch gern.</p>
+  <a class="mehr caps" href="vinothek.html">Zur Vinothek</a></div>
+  {bild("trinken", "WG_W27_3x2", ar="3/2", alt="Dekanter in der Vinothek")}</div></section>""")
+    teile.append(besuch())
+    return seite(v, "karte", "Wochenkarte · FERUN Alte Post Eggstätt", "Die Wochenkarte im FERUN Alte Post: alpenländische Küche nach Markt und Jahreszeit.", "\n".join(teile))
+
+
+MATERIAL = [("R4G_M10_9x16", "Die Gewölbe", "Weiße Kreuzgewölbe über allen Stuben. Sie geben dem Haus seine Ruhe."),
+            ("R4G_M07_1x1", "Holz und Putz", "Salbeigrüne Vertäfelung, Kalkputz und breite Eichendielen."),
+            ("R4G_M08_4x5", "Der Kachelofen", "Dunkelrot glasiert, das warme Herz der Kaminstube."),
+            ("R4G_M09_1x1", "Terrazzo und Messing", "An der Bar: grüner Terrazzo mit Messingkante."),
+            ("R4G_M24_3x2", "Stein", "Ausgetretene Stufen und alte Böden, die bleiben dürfen."),
+            ("R4G_M16_4x5", "Die Türen", "Schwere Eichentüren zwischen den Räumen.")]
+
+
+def haus(v):
+    teile = [f"""<section class="seitenkopf" aria-labelledby="t"><div class="wrap">
+  <div class="titel"><div><span class="caps eyebrow">Das Haus</span><h1 id="t" data-split>Altes Haus, neues Leben.</h1></div>
+  <p class="sub reveal-text v1">Ein neues Gasthaus zieht in ein altes, historisches Haus am Kirchplatz.</p></div>
+  {bild("kopf", "R4C_N10_16x9", ar="21/9", cls="breit", parallax=True, lazy=False, alt="Raumfolge durch die Glastüren")}
+</div></section>
+<section class="sektion"><div class="wrap zweispaltig oben">
+  <div><p class="lead reveal-text" style="margin-bottom:34px">Dicke Mauern, weiße Kreuzgewölbe, tiefe Fensternischen: Das Haus am Kirchplatz hat Charakter.</p>
+  <p class="reveal-text v1">Jetzt bekommt es ein neues Leben – als Gasthaus mit Vinothek, Biergarten, Greißlerei, Bar und Festsaal.</p>
+  <p class="reveal-text v2">Beim Umbau bleibt, was das Haus ausmacht. Dazu kommt, was ein Gasthaus heute braucht: Eichendielen, Salbeigrün, Messing, Terrazzo und grüne Kacheln. Alt und neu stehen ganz selbstverständlich nebeneinander.</p></div>
+  {bild("intro", "R4G_M02_4x5", ar="4/5", parallax=True, alt="Blick durch drei Türen")}
+</div></section>"""]
+    mat = "".join(f"""<div class="bereich{' rechts' if i % 2 else ''}" style="padding-block:clamp(40px,5vw,80px)">
+  {bild("material-" + str(i), b, ar="4/5", cls="haupt", parallax=True, alt=t)}
+  <div class="text"><span class="caps eyebrow reveal-text">Material</span><h3 class="reveal-text v1">{t}</h3><p class="reveal-text v2">{x}</p></div></div>""" for i, (b, t, x) in enumerate(MATERIAL))
+    teile.append(f'<section class="{"flaeche" if v == "salbei" else ""}"><div class="wrap">{mat}</div></section>')
+    teile.append('<p class="zwischenruf reveal-text">Alt und neu, unter einem Dach.</p>')
+    teile.append(f"""<section class="sektion dicht"><div class="wrap" style="text-align:center">
+  <img src="../assets/haus_zeichnung.png" alt="Zeichnung des Hauses am Kirchplatz" style="width:min(900px,100%);margin:0 auto;mix-blend-mode:multiply" loading="lazy">
+  <p class="klein" style="margin:20px auto 0">Das Haus am Kirchplatz in Eggstätt.</p></div></section>""")
+    teile.append(besuch())
+    return seite(v, "haus", "Das Haus · FERUN Alte Post Eggstätt", "Ein neues Gasthaus zieht in ein altes, historisches Haus am Kirchplatz in Eggstätt.", "\n".join(teile))
+
+
+def kontakt(v):
+    teile = [f"""<section class="seitenkopf" aria-labelledby="t"><div class="wrap">
+  <div class="titel"><div><span class="caps eyebrow">Reservieren &amp; Kontakt</span><h1 id="t" data-split>Besucht uns.</h1></div>
+  <p class="sub reveal-text v1">Wir freuen uns auf Euch am Kirchplatz in Eggstätt.</p></div>
+  {bild("kopf", "WG_W04_16x9", ar="21/9", cls="breit", parallax=True, lazy=False, alt="Gedeckter Platz im Sonnenlicht")}
+</div></section>
+<section class="sektion" id="reservieren"><div class="wrap zweispaltig oben">
+  <div><span class="caps eyebrow">Reservieren</span><h2>Ein Tischerl für Euch.</h2>
+  <p style="margin-top:22px">Bis wir aufsperren, nehmen wir Reservierungen per Anfrage entgegen. Schreibt uns, wir melden uns mit einer Bestätigung.</p>
+  <p class="klein">Lieber persönlich? Ruft einfach an: <a href="tel:{TEL}">{TEL_TXT}</a></p>
+  {bild("reservieren", "R4C_N18_4x5", ar="4/5", parallax=True, alt="Tisch am Fenster")}</div>
+  <form class="formular" data-mail="{MAIL}" data-betreff="Tischreservierung" novalidate>
+    <div class="feld"><label class="caps" for="r-datum">Datum</label><input id="r-datum" name="datum" type="date" required data-label="Datum"></div>
+    <div class="feld"><label class="caps" for="r-zeit">Uhrzeit</label><input id="r-zeit" name="zeit" type="time" data-label="Uhrzeit"></div>
+    <div class="feld"><label class="caps" for="r-personen">Personen</label><select id="r-personen" name="personen" data-label="Personen">{"".join(f"<option>{i}</option>" for i in range(1, 11))}<option>mehr als 10</option></select></div>
+    <div class="feld"><label class="caps" for="r-bereich">Wo</label><select id="r-bereich" name="bereich" data-label="Wo"><option>Gasthaus</option><option>Kaminstube</option><option>Biergarten</option><option>Bar</option><option>Egal</option></select></div>
+    <div class="feld"><label class="caps" for="r-name">Name</label><input id="r-name" name="name" autocomplete="name" required data-label="Name"></div>
+    <div class="feld"><label class="caps" for="r-kontakt">Telefon oder E-Mail</label><input id="r-kontakt" name="kontakt" autocomplete="email" required data-label="Kontakt"></div>
+    <div class="feld voll"><label class="caps" for="r-text">Wünsche (freiwillig)</label><textarea id="r-text" name="wunsch" data-label="Wünsche"></textarea></div>
+    <p class="klein fehler voll" hidden>Bitte Datum, Name und Telefon oder E-Mail angeben.</p>
+    <div class="voll"><button class="knopf" type="submit">Anfrage senden</button></div>
+    <p class="danke voll" hidden>Danke! Euer E-Mail-Programm öffnet sich mit der fertigen Anfrage – nur noch auf Senden drücken.</p>
+  </form></div></section>"""]
+    teile.append(besuch())
+    teile.append(f"""<section class="sektion flaeche" id="jobs"><div class="wrap zweispaltig">
+  <div><span class="caps eyebrow">Jobs</span><h2 data-split>Wir suchen Verstärkung.</h2>
+  <p style="margin-top:22px">Wir suchen Menschen, keine Lebensläufe. Quereinsteiger sind herzlich willkommen – ein kurzes Hallo genügt, den Rest besprechen wir persönlich.</p>
+  <p class="caps" style="margin:26px 0">Service · Küche · Bar · Greißlerei · Vinothek</p>
+  <a class="knopf" href="{WA}" target="_blank" rel="noopener">Per WhatsApp melden</a>
+  <p class="klein" style="margin-top:16px">Oder anrufen: <a href="tel:{TEL}">{TEL_TXT}</a> · <a href="mailto:{MAIL}">{MAIL}</a></p></div>
+  {bild("jobs", "R2C_F10_haende", ar="4/5", parallax=True, alt="Hände beim Eindecken")}</div></section>""")
+    return seite(v, "kontakt", "Reservieren & Kontakt · FERUN Alte Post Eggstätt", "Tisch reservieren, Kontakt und Jobs im FERUN Alte Post am Kirchplatz in Eggstätt.", "\n".join(teile))
+
+
+def main():
+    for v in ("klar", "salbei"):
+        out = os.path.join(HERE, v)
+        os.makedirs(out, exist_ok=True)
+        dateien = {"index": startseite(v), "karte": karte(v), "haus": haus(v), "kontakt": kontakt(v)}
+        for s in B:
+            dateien[s] = bereichsseite(v, s)
+        for name, inhalt in dateien.items():
+            open(os.path.join(out, name + ".html"), "w").write(inhalt)
+        print(v, len(dateien), "Seiten")
+    # Einstiegsseite: beide Varianten nebeneinander
+    open(os.path.join(HERE, "index.html"), "w").write("""<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FERUN Webseite · Zwei Designs</title><meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Montserrat:wght@400;500&display=swap">
+<style>body{margin:0;min-height:100svh;display:grid;place-items:center;background:#F6F5F1;color:#1B3C4A;font:15px/1.6 Montserrat,sans-serif;padding:40px 20px}
+h1{font:400 clamp(40px,6vw,76px)/1 "Cormorant Garamond",serif;margin:0 0 14px;text-align:center}p{text-align:center;margin:0 0 40px}
+.w{display:grid;grid-template-columns:repeat(2,minmax(0,360px));gap:24px}a{display:block;text-decoration:none;color:inherit;padding:38px 30px;border:1px solid #D7D8D0;transition:transform .4s}
+a:hover{transform:translateY(-4px)}a.s{background:#C4CBC1}b{font:400 34px/1 "Cormorant Garamond",serif;display:block;margin-bottom:10px}
+@media(max-width:700px){.w{grid-template-columns:1fr}}</style></head><body><div>
+<h1>FERUN Alte Post</h1><p>Webseite – zwei Designs zur Auswahl</p><div class="w">
+<a href="klar/index.html"><b>Variante A · Klar</b>Papierweiß, Navy und Kupfer. Hell, klar, magazinartig.</a>
+<a class="s" href="salbei/index.html"><b>Variante B · Salbei</b>Salbei präsent, geteilter Hero, wärmer und ruhiger.</a>
+</div></div></body></html>""")
+    print("Bilder verwendet:", len(VERWENDET))
+
+
+if __name__ == "__main__":
+    main()
