@@ -35,7 +35,7 @@
     var s = state[key(h)] || {}, i = img(h); if(!i) return;
     var soll = s.src ? quelle(s.src) : h.dataset.orig;
     if(i.getAttribute('src') !== soll){ i.setAttribute('src', soll); i.removeAttribute('srcset'); }
-    i.style.setProperty('--px', (s.px == null ? 50 : s.px) + '%');
+    i.style.setProperty('--px', (s.px == null ? (h.dataset.px || 50) : s.px) + '%');
     i.style.setProperty('--py', (s.py == null ? 50 : s.py) + '%');
     i.style.setProperty('--s', s.s || 1);
     if(!h.hasAttribute('data-fest')) h.style.aspectRatio = s.ar ? String(s.ar) : h.dataset.origAr;
@@ -87,7 +87,7 @@
     h.addEventListener('pointerdown', function(e){ if(!aktiv() || e.target.closest('.ed-ctrl,.ed-griff')) return;
       if(aktivBib){ neuesBild(h, 'bib:' + aktivBib); return; }
       zieht = true; h.classList.add('ed-zieht'); x0 = e.clientX; y0 = e.clientY; var s = state[key(h)] = state[key(h)] || {};
-      px0 = s.px == null ? 50 : s.px; py0 = s.py == null ? 50 : s.py; try{ h.setPointerCapture(e.pointerId); }catch(_){} e.preventDefault(); });
+      px0 = s.px == null ? +(h.dataset.px || 50) : s.px; py0 = s.py == null ? 50 : s.py; try{ h.setPointerCapture(e.pointerId); }catch(_){} e.preventDefault(); });
     h.addEventListener('pointermove', function(e){ if(!zieht) return; var s = state[key(h)], r = h.getBoundingClientRect(), f = 110 / (s.s || 1);
       s.px = Math.max(0, Math.min(100, px0 - (e.clientX - x0) / r.width * f));
       s.py = Math.max(0, Math.min(100, py0 - (e.clientY - y0) / r.height * f)); anwenden(h); });

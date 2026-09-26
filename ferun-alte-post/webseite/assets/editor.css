@@ -43,5 +43,12 @@
 .ed-raster figure.an img{outline:3px solid #AC845B;outline-offset:-3px}
 .ed-toast{position:fixed;left:50%;bottom:22px;z-index:99;transform:translate(-50%,20px);opacity:0;background:#1B3C4A;color:#F6F5F1;font:500 12px/1 "Montserrat",sans-serif;padding:11px 16px;transition:opacity .3s,transform .3s;pointer-events:none}
 .ed-toast.an{opacity:1;transform:translate(-50%,0)}
-@media (max-width:760px){.ed-knopf{display:none}}
+@media (max-width:760px){.ed-knopf{left:10px;bottom:10px;padding:9px 12px;font-size:10px}.ed-leiste{left:10px;right:10px;bottom:50px;max-width:none}.ed-tipp{display:none}}
 @media print{.ed-knopf,.ed-leiste,.ed-bib{display:none!important}}
+
+/* v5: Hero-Foto und Karten-Links im Bearbeiten-Modus bedienbar */
+.bearbeiten .hero-foto::after{pointer-events:none}
+.bearbeiten .hero-foto-inhalt{pointer-events:none}
+.bearbeiten .hero-foto .bild .ed-ctrl,.bearbeiten .hero-foto .bild .ed-name{top:14px}
+.bearbeiten .galerie3 a{cursor:grab}
+.bearbeiten .intro{display:none!important}

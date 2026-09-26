@@ -461,3 +461,28 @@ a:hover .bild img,a:focus-visible .bild img{transform:scale(calc(var(--s,1) * 1.
 .intro-blatt.an{opacity:1}
 .intro-blatt.weg{opacity:0;filter:blur(2px);transition:opacity 1.2s var(--ease),filter 1.2s var(--ease)}
 .intro-skip{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));text-align:center;color:var(--text-weich);opacity:.5}
+
+/* =====================================================================
+   Version 6 (26.09.2026): Knoepfe ohne Farb-Hover (nur leicht groesser), Kacheln mit zweitem Bild + Spruch
+   ===================================================================== */
+.knopf,.reservieren{transition:transform .45s var(--ease)}
+.knopf:hover,.knopf:focus-visible,.reservieren:hover,.reservieren:focus-visible{transform:scale(1.045)}
+.knopf:hover,.knopf:focus-visible{background:transparent;color:var(--navy);letter-spacing:.26em}
+.knopf.voll:hover,.knopf.voll:focus-visible{background:var(--navy);border-color:var(--navy);color:var(--papier)}
+.knopf.hell:hover{background:transparent;color:#fff}
+.knopf.hell.voll:hover{background:#fff;color:var(--navy)}
+.reservieren:hover{background:transparent;color:inherit}
+
+.kachel-bild{position:relative;overflow:hidden}
+.kachel-bild .zweit{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);pointer-events:none;
+  transition:opacity .9s var(--ease),transform 1.6s var(--ease-out)}
+.kachel-bild::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,30,36,0) 50%,rgba(16,30,36,.5) 100%);opacity:0;pointer-events:none;transition:opacity .7s var(--ease)}
+.kachel-bild .spruch{position:absolute;left:clamp(14px,1.6vw,22px);bottom:clamp(12px,1.6vw,20px);z-index:2;color:#fff;pointer-events:none;
+  font:italic 400 clamp(26px,2.4vw,36px)/1.1 "Cormorant Garamond",Georgia,serif;opacity:0;transform:translateY(10px);transition:opacity .7s var(--ease) .1s,transform .9s var(--ease-out) .1s}
+@media (hover:hover) and (pointer:fine){
+  .kachel:hover .zweit{opacity:1;transform:none}
+  .kachel:hover .kachel-bild::after{opacity:1}
+  .kachel:hover .spruch{opacity:1;transform:none}
+}
+.kachel:hover .bild img{transform:scale(var(--s,1))}
+.bearbeiten .kachel-bild .zweit,.bearbeiten .kachel-bild .spruch,.bearbeiten .kachel-bild::after{display:none}
