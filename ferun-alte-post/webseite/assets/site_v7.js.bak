@@ -37,7 +37,7 @@
   }
 
   /* Galerie: antippen = gross, Pfeile/Wischen = weiter */
-  var gal = [].slice.call(d.querySelectorAll('.galerie3 a, .l2-bahn a'));
+  var gal = [].slice.call(d.querySelectorAll('.galerie3 a'));
   if(gal.length){
     var lb = d.createElement('div'); lb.className = 'lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-label', 'Bild vergrößert');
     lb.innerHTML = '<div class="oben"><span class="caps zaehler"></span><button type="button" class="caps zu">Schließen</button></div>' +
@@ -143,65 +143,4 @@
     var li = links[i] && links[i].parentNode; if(text && li) text.textContent = li.querySelector('.l-was').textContent; };
   links.forEach(function(a){ a.addEventListener('mouseenter', function(){ setze(a.dataset.i); }); a.addEventListener('focus', function(){ setze(a.dataset.i); }); });
   setze(0);
-})();
-
-/* Variante Linie v2: Buehne, Querfahrt, Parallax, Maus-Kreis */
-(function(){
-  var d = document, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var bearb = function(){ return d.body.classList.contains('bearbeiten'); };
-
-  /* Buehne: Zeichnung -> Foto, dann ruhiger Wechsel */
-  [].forEach.call(d.querySelectorAll('.l2-buehne'), function(bu){
-    var hero = bu.closest('.l2-hero'), slides = [].slice.call(bu.querySelectorAll('.l2-slide'));
-    var cap = hero.querySelector('.l2-cap'), fort = hero.querySelector('.l2-fort i'), i = 0, DAUER = 6500, t = 0;
-    var lauf = function(){ if(!fort) return; fort.classList.remove('lauf'); void fort.offsetWidth; fort.style.setProperty('--dauer', DAUER + 'ms'); fort.classList.add('lauf'); };
-    var weiter = function(){ if(bearb() || d.hidden || slides.length < 2){ t = setTimeout(weiter, DAUER); return; }
-      slides[i].classList.remove('an'); i = (i + 1) % slides.length; slides[i].classList.add('an');
-      var im = slides[i].querySelector('img'); if(im && im.loading === 'lazy') im.loading = 'eager';
-      if(cap){ cap.style.opacity = 0; setTimeout(function(){ cap.textContent = slides[i].dataset.t; cap.style.opacity = 1; }, 400); }
-      lauf(); t = setTimeout(weiter, DAUER); };
-    var start = function(){ bu.classList.add('offen'); if(!reduce){ lauf(); t = setTimeout(weiter, DAUER); } };
-    if(bu.classList.contains('mit-skizze')){
-      var gesehen = false; try{ gesehen = !!sessionStorage.getItem('ferun_skizze'); }catch(_){}
-      if(reduce || gesehen || bearb()){ bu.classList.add('offen'); var p = bu.querySelector('.l2-papier'); if(p) p.remove(); start(); }
-      else { setTimeout(start, 2300); try{ sessionStorage.setItem('ferun_skizze', '1'); }catch(_){} }
-    } else start();
-  });
-
-  /* Querfahrt: senkrechtes Scrollen bewegt die Bilder seitwaerts (nur grosse Bildschirme) */
-  var quer = [].slice.call(d.querySelectorAll('.l2-quer'));
-  var mq = matchMedia('(min-width: 861px)');
-  function masse(){
-    quer.forEach(function(q){ var bahn = q.querySelector('.l2-bahn');
-      if(!mq.matches || reduce){ q.style.height = ''; bahn.style.transform = ''; return; }
-      var weg = Math.max(0, bahn.scrollWidth - innerWidth);
-      q._weg = weg; q.style.height = (q.querySelector('.l2-pin').offsetHeight + weg) + 'px'; });
-    tick();
-  }
-  var band = [].slice.call(d.querySelectorAll('.l2-band-bild .bild'));
-  function tick(){
-    quer.forEach(function(q){ if(!mq.matches || reduce || !q._weg) return;
-      var r = q.getBoundingClientRect(), pin = q.querySelector('.l2-pin'), gesamt = q.offsetHeight - pin.offsetHeight;
-      var pr = Math.min(1, Math.max(0, (-r.top + (parseFloat(getComputedStyle(pin).top) || 0)) / (gesamt || 1)));
-      q.querySelector('.l2-bahn').style.transform = 'translate3d(' + (-pr * q._weg).toFixed(1) + 'px,0,0)'; });
-    if(!reduce) band.forEach(function(b){ var r = b.parentNode.getBoundingClientRect(); if(r.bottom < 0 || r.top > innerHeight) return;
-      var pr = (r.top + r.height / 2 - innerHeight / 2) / (innerHeight + r.height); b.style.transform = 'translate3d(0,' + (pr * -14).toFixed(2) + '%,0)'; });
-  }
-  var tk = false;
-  addEventListener('scroll', function(){ if(!tk){ tk = true; requestAnimationFrame(function(){ tick(); tk = false; }); } }, {passive:true});
-  addEventListener('resize', masse); addEventListener('load', masse); masse();
-  [].forEach.call(d.querySelectorAll('.l2-bahn img'), function(im){ im.addEventListener('load', masse); });
-
-  /* Maus-Kreis mit Hinweis */
-  if(!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches && d.querySelector('.l2-hero')){
-    var m = d.createElement('div'); m.className = 'l2-maus'; m.innerHTML = '<span></span>'; d.body.appendChild(m);
-    var sp = m.firstChild, x = 0, y = 0, mx = 0, my = 0;
-    addEventListener('mousemove', function(e){ x = e.clientX; y = e.clientY; m.classList.add('an'); });
-    d.addEventListener('mouseleave', function(){ m.classList.remove('an'); });
-    (function schleife(){ mx += (x - mx) * .2; my += (y - my) * .2; m.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)'; requestAnimationFrame(schleife); })();
-    var ziel = function(sel, txt){ [].forEach.call(d.querySelectorAll(sel), function(el){
-      el.addEventListener('mouseenter', function(){ sp.textContent = txt; m.classList.add('gross'); });
-      el.addEventListener('mouseleave', function(){ m.classList.remove('gross'); }); }); };
-    ziel('.l2-bahn a', 'Ansehen'); ziel('.l-liste a', 'Entdecken'); ziel('.l2-buehne', 'FERUN');
-  }
 })();
