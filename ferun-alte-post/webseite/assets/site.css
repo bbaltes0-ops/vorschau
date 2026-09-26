@@ -740,3 +740,12 @@ a:hover .bild img,a:focus-visible .bild img{transform:scale(calc(var(--s,1) * 1.
 .layout-linie .l2-unter .l2-leiste h1{font-size:clamp(40px,4vw,64px)}
 @media (max-width:860px){.layout-linie .l2-buehne{height:min(66svh,540px)}}
 @media (max-width:860px){.l2-bahn a{aspect-ratio:auto!important}.l2-bahn figure{height:auto}}
+
+/* v9: Reservieren-Stempel – Blatt bleibt scharf und unveraendert, Knopf wird nur etwas groesser; Farbe je nach Untergrund */
+.stempel,.stempel:hover{transform:none}
+.stempel{transition:width .4s var(--ease),height .4s var(--ease),background-color .5s var(--ease),opacity .4s}
+.stempel:hover{width:104px;height:104px}
+.stempel img{width:26px!important;height:auto;transform:none!important;image-rendering:auto}
+.stempel svg{transform-origin:50% 50%}
+.theme-klar .stempel.auf-grund,.layout-linie .stempel.auf-grund{background:var(--salbei)}
+.theme-salbei .stempel{background:var(--papier)}

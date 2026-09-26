@@ -27,7 +27,21 @@
 
   /* Stempel ausblenden, sobald der Fuss kommt */
   var st = d.querySelector('.stempel'), fuss = d.querySelector('.fuss');
-  if(st && fuss){ var pr = function(){ st.classList.toggle('weg', fuss.getBoundingClientRect().top < innerHeight - 40); }; addEventListener('scroll', pr, {passive:true}); pr(); }
+  if(st && fuss){
+    /* Grundfarbe: ueber Fotos hell, ueber hellem Grund Salbei (damit er nicht untergeht) */
+    var pruefe = function(){
+      st.classList.toggle('weg', fuss.getBoundingClientRect().top < innerHeight - 40);
+      var r = st.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, aufBild = false;
+      st.style.pointerEvents = 'none';
+      var unter = d.elementsFromPoint ? d.elementsFromPoint(x, y) : [];
+      st.style.pointerEvents = '';
+      for(var k = 0; k < unter.length; k++){ var e = unter[k]; if(e === st || st.contains(e)) continue;
+        if(e.tagName === 'IMG' || e.tagName === 'VIDEO' || (e.closest && e.closest('.bild, .hero-foto, .l2-buehne'))){ aufBild = true; } break; }
+      st.classList.toggle('auf-grund', !aufBild);
+    };
+    var tp = false; addEventListener('scroll', function(){ if(!tp){ tp = true; requestAnimationFrame(function(){ pruefe(); tp = false; }); } }, {passive:true});
+    addEventListener('resize', pruefe); addEventListener('load', pruefe); pruefe();
+  }
 
   /* Karte: aktiver Gang */
   var kn = [].slice.call(d.querySelectorAll('.kartennav a'));
