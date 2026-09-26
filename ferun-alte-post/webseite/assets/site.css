@@ -1,0 +1,335 @@
+/* FERUN Alte Post – Webseite (26.09.2026). Zwei Designs: .theme-klar (Papierweiss) und .theme-salbei (Salbei praesent). */
+:root{
+  --papier:#F6F5F1; --weiss:#FFFFFF; --salbei:#C4CBC1; --salbei-hell:#DCE1D9; --salbei-tief:#6F7D6C;
+  --navy:#1B3C4A; --navy-weich:#566C75; --kupfer:#AC845B; --rot:#824550; --weinrot:#6F4445;
+  --ease:cubic-bezier(.4,0,.2,1); --ease-out:cubic-bezier(.22,.61,.36,1);
+  --rand:clamp(20px,5.2vw,84px); --max:1380px; --kopf:78px;
+  /* Theme-Tokens (Klar als Grundwert) */
+  --grund:var(--papier); --grund-2:#EEEDE7; --flaeche:#E9ECE6; --text:var(--navy); --text-weich:var(--navy-weich);
+  --akzent:var(--kupfer); --linie:rgba(27,60,74,.14); --kopf-grund:rgba(246,245,241,.94); --fuss-grund:var(--papier);
+  --fuss-text:var(--navy); --karte:var(--weiss);
+  color-scheme:light;
+}
+.theme-salbei{
+  --grund:var(--salbei-hell); --grund-2:var(--salbei); --flaeche:var(--salbei); --karte:var(--papier);
+  --linie:rgba(27,60,74,.18); --kopf-grund:rgba(196,203,193,.96); --fuss-grund:var(--salbei-tief); --fuss-text:var(--papier);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;background:var(--grund);color:var(--text);overflow-x:clip}
+body{font:400 16px/1.72 "Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--akzent);outline-offset:4px}
+[hidden]{display:none!important}
+.caps{font:500 11px/1.4 "Montserrat",system-ui,sans-serif;letter-spacing:.28em;text-transform:uppercase}
+.serif{font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.012em;text-wrap:balance;margin:0}
+h1{font-size:clamp(44px,6.4vw,104px);line-height:.98}
+h2{font-size:clamp(34px,4.2vw,66px);line-height:1.04}
+h3{font-size:clamp(24px,2.2vw,34px);line-height:1.12}
+p{margin:0 0 1.1em;max-width:62ch}
+.lead{font:400 clamp(22px,2vw,30px)/1.4 "Cormorant Garamond",Georgia,serif;max-width:34ch}
+.klein{font-size:13.5px;color:var(--text-weich)}
+.eyebrow{color:var(--akzent);display:inline-block;margin-bottom:18px}
+.wrap{width:min(var(--max),100%);margin:0 auto;padding-inline:var(--rand)}
+.linie-oben{border-top:1px solid var(--linie)}
+.sektion{padding-block:clamp(84px,11vw,168px);position:relative}
+.sektion.dicht{padding-block:clamp(56px,7vw,110px)}
+.flaeche{background:var(--flaeche)}
+.grund-2{background:var(--grund-2)}
+
+/* ---------- Kopfleiste ---------- */
+.kopf{position:fixed;inset:0 0 auto 0;z-index:40;height:calc(var(--kopf) + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px);
+  display:flex;align-items:center;transition:background-color .5s var(--ease),box-shadow .5s var(--ease),color .5s var(--ease)}
+.kopf .wrap{display:flex;align-items:center;gap:28px;max-width:none}
+.logo-link{flex:none;display:block;width:clamp(128px,11vw,168px);position:relative}
+.logo-link img{width:100%;height:auto;transition:opacity .5s var(--ease)}
+.logo-link .hell{position:absolute;inset:0}
+.hauptnav{flex:1;display:flex;justify-content:center;gap:clamp(14px,1.9vw,30px)}
+.hauptnav a,.nebennav a{text-decoration:none;position:relative;padding:8px 0;white-space:nowrap}
+.hauptnav a::after,.nebennav a::after{content:"";position:absolute;left:0;right:100%;bottom:2px;height:1px;background:var(--akzent);transition:right .5s var(--ease)}
+.hauptnav a:hover::after,.hauptnav a[aria-current="page"]::after,.nebennav a:hover::after,.nebennav a[aria-current="page"]::after{right:0}
+.nebennav{display:flex;align-items:center;gap:clamp(14px,1.6vw,26px)}
+.reservieren{display:inline-flex;align-items:center;gap:12px;text-decoration:none;padding:12px 0}
+.reservieren::before{content:"";width:34px;height:1px;background:var(--akzent);transition:width .5s var(--ease)}
+.reservieren:hover::before{width:52px}
+.menue-knopf{display:none;background:none;border:0;color:inherit;cursor:pointer;padding:10px 0}
+/* Klar: ueber dem Hero transparent + weiss, danach Papier */
+.theme-klar .kopf.ueber-hero:not(.gescrollt){color:#fff}
+.theme-klar .kopf.ueber-hero:not(.gescrollt) .logo-link .dunkel{opacity:0}
+.theme-klar .kopf.ueber-hero.gescrollt .logo-link .hell,.theme-klar .kopf:not(.ueber-hero) .logo-link .hell{opacity:0}
+.kopf.gescrollt,.kopf:not(.ueber-hero){background:var(--kopf-grund);box-shadow:0 1px 0 var(--linie);backdrop-filter:saturate(1.1) blur(8px)}
+.theme-salbei .kopf{background:var(--kopf-grund);box-shadow:0 1px 0 var(--linie)}
+.theme-salbei .logo-link .hell{opacity:0}
+.theme-salbei .reservieren{border:1px solid var(--navy);padding:11px 20px}
+.theme-salbei .reservieren::before{display:none}
+.theme-salbei .reservieren:hover{background:var(--navy);color:var(--papier)}
+
+/* Vollbild-Menue (Handy + schmale Fenster) */
+.vollmenue{position:fixed;inset:0;z-index:60;background:var(--grund);display:grid;grid-template-columns:1fr 1fr;opacity:0;pointer-events:none;transition:opacity .5s var(--ease)}
+.vollmenue.offen{opacity:1;pointer-events:auto}
+.vollmenue nav{padding:calc(var(--kopf) + 30px) var(--rand) 40px;display:flex;flex-direction:column;gap:4px;overflow:auto}
+.vollmenue nav a{font:400 clamp(30px,4.6vw,52px)/1.2 "Cormorant Garamond",Georgia,serif;text-decoration:none;transform:translateY(12px);opacity:0;transition:transform .6s var(--ease-out),opacity .6s var(--ease-out),color .3s}
+.vollmenue.offen nav a{transform:none;opacity:1;transition-delay:calc(var(--i)*45ms + .1s)}
+.vollmenue nav a:hover{color:var(--akzent)}
+.vollmenue nav .caps{margin-top:26px;font-size:11px;opacity:1;transform:none;font-family:"Montserrat",sans-serif}
+.vollmenue .vorschau{position:relative;overflow:hidden;background:var(--flaeche)}
+.vollmenue .vorschau img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .7s var(--ease),transform 1.6s var(--ease-out)}
+.vollmenue .vorschau img.an{opacity:1;transform:none}
+.menue-zu{position:absolute;top:calc(22px + env(safe-area-inset-top,0px));right:var(--rand);background:none;border:0;cursor:pointer;color:var(--text);padding:10px 0;z-index:2}
+
+/* ---------- Bilder (editierbare Rahmen) ---------- */
+.bild{position:relative;overflow:hidden;margin:0;background:var(--flaeche);aspect-ratio:4/5}
+.bild .par{position:absolute;inset:-7% 0;will-change:transform}
+.bild img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--px,50%) var(--py,50%);
+  transform:scale(var(--s,1));transform-origin:var(--px,50%) var(--py,50%);transition:transform 1.4s var(--ease-out)}
+.bild.nicht-par .par{inset:0}
+a:hover > .bild img,.bild.zoom:hover img{transform:scale(calc(var(--s,1) * 1.035))}
+.bildtext{margin-top:12px;color:var(--text-weich)}
+/* Vorhang-Einblendung */
+.js .bild.reveal{clip-path:inset(0 0 100% 0);transition:clip-path 1.25s var(--ease-out)}
+.js .bild.reveal.sichtbar{clip-path:inset(0 0 0 0)}
+.js .reveal-text{opacity:0;transform:translateY(22px);transition:opacity 1s var(--ease-out),transform 1s var(--ease-out)}
+.js .reveal-text.sichtbar{opacity:1;transform:none}
+.js .reveal-text.v1{transition-delay:.12s}.js .reveal-text.v2{transition-delay:.24s}.js .reveal-text.v3{transition-delay:.36s}
+
+/* Wort fuer Wort */
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.split .w > span{display:inline-block;transform:translateY(105%);transition:transform 1.1s var(--ease-out);transition-delay:calc(var(--i) * 70ms + .15s)}
+.split.sichtbar .w > span{transform:none}
+
+/* ---------- Hero Startseite ---------- */
+.hero{position:relative;min-height:max(100svh,640px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.hero .bilder{position:absolute;inset:0}
+.hero .slide{position:absolute;inset:0;aspect-ratio:auto;opacity:0;transition:opacity 1.3s var(--ease)}
+.hero .slide.an{opacity:1;z-index:1}
+.hero .slide .par{inset:0}
+.hero .slide.an img{animation:kenburns 16s var(--ease) forwards}
+@keyframes kenburns{from{transform:scale(calc(var(--s,1) * 1.09))}to{transform:scale(var(--s,1))}}
+.theme-klar .hero::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(14,30,37,.34) 0,rgba(14,30,37,0) 24%,rgba(14,30,37,0) 42%,rgba(14,30,37,.62) 100%)}
+.hero-inhalt{position:relative;z-index:3;color:#fff;padding-bottom:clamp(26px,4vh,46px)}
+.hero-inhalt .ort{color:#fff;opacity:.92;display:block;margin-bottom:22px}
+.hero-inhalt h1{max-width:13ch}
+.hero-zeile{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.hero-sub{font:400 clamp(16px,1.35vw,20px)/1.5 "Montserrat",sans-serif;max-width:34ch;margin:0 0 10px;letter-spacing:.02em;min-height:3em}
+.hero-spruch{font:italic 400 clamp(26px,2.6vw,40px)/1.1 "Cormorant Garamond",Georgia,serif}
+.bereichsleiste{position:relative;z-index:3;display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid rgba(255,255,255,.35);margin-top:clamp(26px,4vh,44px)}
+.bereichsleiste a{color:#fff;text-decoration:none;padding:20px 0 22px;position:relative;display:flex;flex-direction:column;gap:6px}
+.bereichsleiste a::before{content:"";position:absolute;left:0;right:100%;top:-1px;height:2px;background:var(--akzent);transition:right .8s var(--ease)}
+.bereichsleiste a.an::before,.bereichsleiste a:hover::before,.bereichsleiste a:focus-visible::before{right:0}
+.bereichsleiste .spr{font:italic 400 17px/1.2 "Cormorant Garamond",Georgia,serif;opacity:.0;transform:translateY(6px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.bereichsleiste a.an .spr,.bereichsleiste a:hover .spr{opacity:.95;transform:none}
+.scroll-hinweis{position:absolute;right:var(--rand);bottom:calc(100% + 20px);color:#fff;display:flex;align-items:center;gap:12px;writing-mode:vertical-rl}
+.scroll-hinweis::after{content:"";width:1px;height:54px;background:rgba(255,255,255,.6);animation:strich 2.4s var(--ease) infinite}
+@keyframes strich{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* Salbei: geteilter Hero */
+.theme-salbei .hero{flex-direction:row;justify-content:stretch;min-height:max(100svh,680px);padding-top:var(--kopf)}
+.theme-salbei .hero-panel{position:relative;z-index:3;flex:0 0 min(46%,640px);background:var(--salbei);display:flex;flex-direction:column;justify-content:space-between;
+  padding:clamp(28px,5vh,80px) var(--rand) clamp(56px,7vh,72px)}
+.theme-salbei .hero .bilder{position:relative;flex:1;inset:auto}
+.theme-salbei .hero-panel h1{color:var(--navy);font-size:clamp(40px,min(4.6vw,7.4vh),84px);max-width:11ch}
+.theme-salbei .hero-panel .ort{color:var(--kupfer)}
+.theme-salbei .hero-panel .hero-sub{color:var(--navy);margin-top:24px}
+.bereichsliste{list-style:none;margin:clamp(22px,4vh,44px) 0 0;padding:0;border-top:1px solid var(--linie)}
+.bereichsliste a{display:flex;align-items:baseline;justify-content:space-between;gap:20px;text-decoration:none;padding:clamp(7px,1.2vh,13px) 0;border-bottom:1px solid var(--linie)}
+.bereichsliste .name{font:400 clamp(22px,min(2vw,3.4vh),32px)/1.1 "Cormorant Garamond",Georgia,serif;transition:transform .6s var(--ease),color .4s}
+.bereichsliste .spr{font:italic 400 17px/1.2 "Cormorant Garamond",Georgia,serif;color:var(--rot);opacity:0;transform:translateX(-8px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.bereichsliste a:hover .name,.bereichsliste a.an .name{transform:translateX(10px);color:var(--rot)}
+.bereichsliste a:hover .spr,.bereichsliste a.an .spr{opacity:1;transform:none}
+
+/* ---------- Unterseiten-Hero ---------- */
+.seitenkopf{position:relative;padding-top:calc(var(--kopf) + clamp(40px,7vh,90px))}
+.seitenkopf .titel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,90px);align-items:end;padding-bottom:clamp(36px,5vw,70px)}
+.seitenkopf h1{font-size:clamp(56px,8vw,132px)}
+.seitenkopf .sub{font:400 clamp(20px,1.7vw,26px)/1.45 "Cormorant Garamond",Georgia,serif;max-width:32ch;margin:0}
+.seitenkopf .bild.breit{aspect-ratio:21/9;max-height:78vh;width:100%}
+.theme-salbei .seitenkopf{background:linear-gradient(var(--salbei) 0,var(--salbei) 72%,var(--grund) 72%)}
+
+/* ---------- Willkommen mit Kastanien-Schatten ---------- */
+.willkommen{text-align:center;overflow:hidden}
+.willkommen .schatten{position:absolute;inset:-6% -10% auto;height:120%;pointer-events:none;mix-blend-mode:multiply;opacity:.9;
+  -webkit-mask-image:linear-gradient(#000 40%,transparent 88%);mask-image:linear-gradient(#000 40%,transparent 88%)}
+.willkommen .schatten video{width:100%;height:100%;object-fit:cover}
+.willkommen .inhalt{position:relative;display:flex;flex-direction:column;align-items:center}
+.signet{width:44px;height:auto;margin-bottom:34px}
+.willkommen h2{max-width:16ch}
+.willkommen p{margin-inline:auto;text-align:center}
+.willkommen .lead{margin:34px auto 24px;max-width:42ch}
+.satz{margin-top:40px;font:italic 400 clamp(21px,1.8vw,27px)/1.6 "Cormorant Garamond",Georgia,serif;color:var(--text-weich)}
+.satz a{text-decoration:none;color:var(--text);border-bottom:1px solid var(--akzent);font-style:normal}
+
+/* ---------- Bereiche (Editorial) ---------- */
+.bereich{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(14px,2vw,28px);align-items:center;padding-block:clamp(56px,7vw,120px)}
+.bereich .haupt{grid-column:1 / span 6;grid-row:1}
+.bereich .detail{grid-column:6 / span 3;grid-row:1;align-self:end;aspect-ratio:1;margin-bottom:-12%;z-index:2;box-shadow:0 30px 60px -34px rgba(27,60,74,.45);outline:10px solid var(--grund)}
+.bereich .text{grid-column:9 / span 4;grid-row:1;padding-top:40px}
+.bereich.rechts .haupt{grid-column:7 / span 6}
+.bereich.rechts .detail{grid-column:5 / span 3}
+.bereich.rechts .text{grid-column:1 / span 4}
+.bereich h3{font-size:clamp(34px,3.4vw,54px);margin-bottom:20px}
+.bereich .mehr{margin-top:12px}
+.mehr{display:inline-flex;align-items:center;gap:14px;text-decoration:none;padding:8px 0}
+.mehr::after{content:"";width:40px;height:1px;background:var(--akzent);transition:width .5s var(--ease)}
+.mehr:hover::after{width:64px}
+.theme-salbei .bereich-band.alt{background:var(--salbei)}
+.theme-salbei .bereich-band.alt .detail{outline-color:var(--salbei)}
+
+/* ---------- Karte / Teller ---------- */
+.karte-teaser{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,6vw,110px);align-items:center}
+.teller-buehne{position:relative;aspect-ratio:1;max-width:500px;width:100%;justify-self:center}
+.teller{position:absolute;inset:0;width:100%;height:100%;will-change:transform;filter:drop-shadow(0 30px 40px rgba(27,60,74,.18))}
+.gerichte{list-style:none;margin:28px 0 32px;padding:0;border-top:1px solid var(--linie)}
+.gerichte li{display:flex;justify-content:space-between;gap:20px;padding:16px 0;border-bottom:1px solid var(--linie)}
+.gerichte .g{font:400 clamp(20px,1.6vw,24px)/1.3 "Cormorant Garamond",Georgia,serif}
+.gerichte .d{color:var(--text-weich);font-size:14px}
+.hinweis-box{border-left:2px solid var(--akzent);padding:4px 0 4px 18px;color:var(--text-weich);font-size:14.5px;max-width:60ch}
+
+/* ---------- Haus-Band + Streifen ---------- */
+.band{position:relative;min-height:min(86vh,900px);display:flex;align-items:flex-end;overflow:hidden}
+.band > .bild{position:absolute;inset:0;aspect-ratio:auto}
+.band .kasten h2{margin-bottom:18px}
+.band .kasten{position:relative;z-index:2;background:var(--karte);max-width:560px;padding:clamp(30px,4vw,56px);margin:0 0 clamp(30px,5vw,70px) var(--rand)}
+.streifen{display:flex;gap:clamp(14px,1.8vw,26px);overflow-x:auto;padding:10px var(--rand) 26px;scroll-snap-type:x proximity;scroll-padding-inline:var(--rand);cursor:grab;scrollbar-width:thin}
+.streifen.zieht{cursor:grabbing;scroll-snap-type:none}
+.streifen figure{flex:0 0 clamp(240px,26vw,380px);margin:0;scroll-snap-align:start}
+.streifen figcaption{margin-top:12px}
+.streifen .bild{aspect-ratio:4/5}
+
+/* ---------- Zwei Spalten, Galerie, Fakten ---------- */
+.zweispaltig{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,6vw,110px);align-items:center}
+.zweispaltig.oben{align-items:start}
+.galerie{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(12px,1.6vw,24px)}
+.galerie .g1{grid-column:span 7;aspect-ratio:4/3}
+.galerie .g2{grid-column:span 5;aspect-ratio:4/5}
+.galerie .g3{grid-column:span 4;aspect-ratio:4/5}
+.galerie .g4{grid-column:span 4;aspect-ratio:1}
+.galerie .g5{grid-column:span 4;aspect-ratio:4/5;margin-top:12%}
+.galerie .g6{grid-column:2 / span 10;aspect-ratio:21/9}
+.fakten{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(24px,4vw,60px);border-top:1px solid var(--linie)}
+.fakt{padding:26px 0;border-bottom:1px solid var(--linie)}
+.fakt h3{font-size:clamp(22px,1.9vw,28px);margin-bottom:8px}
+.fakt p{margin:0;color:var(--text-weich)}
+.zwischenruf{text-align:center;font:italic 400 clamp(38px,5vw,84px)/1.05 "Cormorant Garamond",Georgia,serif;padding-block:clamp(70px,9vw,140px);margin:0}
+.theme-salbei .zwischenruf{background:var(--salbei)}
+.ablauf{counter-reset:schritt;list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,2.4vw,34px)}
+.ablauf li{counter-increment:schritt;border-top:1px solid var(--akzent);padding-top:18px}
+.ablauf li::before{content:counter(schritt,upper-roman);font:400 30px/1 "Cormorant Garamond",Georgia,serif;color:var(--akzent);display:block;margin-bottom:12px}
+.anlaesse{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0;margin:26px 0 0}
+.anlaesse li{border:1px solid var(--linie);padding:9px 16px;font-size:14px;background:var(--karte)}
+
+/* ---------- Weiter / CTA ---------- */
+.weiter{display:grid;grid-template-columns:1fr auto;align-items:end;gap:30px;border-top:1px solid var(--linie);padding-block:clamp(48px,6vw,90px)}
+.weiter a.gross{font:400 clamp(44px,6vw,96px)/1 "Cormorant Garamond",Georgia,serif;text-decoration:none;display:inline-flex;align-items:baseline;gap:.35em}
+.weiter a.gross span{transition:transform .6s var(--ease)}
+.weiter a.gross:hover span{transform:translateX(12px);color:var(--akzent)}
+.knopf{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--navy);color:var(--navy);background:transparent;
+  text-decoration:none;padding:17px 34px;font:500 11.5px/1 "Montserrat",sans-serif;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;isolation:isolate;
+  transition:color .6s var(--ease),letter-spacing .6s var(--ease)}
+.knopf::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--navy);transform:scaleY(0);transform-origin:50% 100%;transition:transform .6s var(--ease)}
+.knopf:hover,.knopf:focus-visible{color:var(--papier);letter-spacing:.32em}
+.knopf:hover::before,.knopf:focus-visible::before{transform:scaleY(1)}
+
+/* ---------- Karte-Seite ---------- */
+.kartennav{position:sticky;top:var(--kopf);z-index:10;background:var(--kopf-grund);backdrop-filter:blur(8px);border-block:1px solid var(--linie)}
+.kartennav .wrap{display:flex;gap:clamp(16px,3vw,44px);overflow-x:auto;padding-block:16px}
+.kartennav a{text-decoration:none;white-space:nowrap}
+.kartennav a.an{color:var(--akzent)}
+.gang{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(30px,6vw,100px);padding-block:clamp(60px,7vw,110px);border-bottom:1px solid var(--linie);scroll-margin-top:calc(var(--kopf) + 60px)}
+.gang h2{font-size:clamp(34px,3.6vw,56px);margin-bottom:22px}
+.gang .bild{aspect-ratio:4/5;max-width:440px}
+.gang .gerichte{margin-top:0}
+.gang .gerichte .g{font-size:clamp(21px,1.7vw,26px)}
+
+/* ---------- Formulare ---------- */
+.formular{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 26px}
+.formular .voll{grid-column:1/-1}
+.feld label{display:block;margin-bottom:6px;color:var(--text-weich)}
+.feld input,.feld textarea,.feld select{width:100%;font:inherit;color:var(--text);background:transparent;border:0;border-bottom:1px solid var(--text-weich);padding:9px 0;border-radius:0;transition:border-color .4s var(--ease)}
+.feld select{appearance:none;background:linear-gradient(45deg,transparent 50%,var(--text) 50%) calc(100% - 10px) 55%/6px 6px no-repeat,linear-gradient(-45deg,transparent 50%,var(--text) 50%) calc(100% - 5px) 55%/6px 6px no-repeat}
+.feld textarea{min-height:96px;resize:vertical}
+.feld input:focus,.feld textarea:focus,.feld select:focus{outline:none;border-bottom-color:var(--akzent)}
+.danke{border-left:2px solid var(--akzent);padding:6px 0 6px 16px;margin:0}
+.info-spalten{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,60px)}
+.info-spalten h3{font-size:26px;margin-bottom:12px}
+.info-spalten p{color:var(--text-weich)}
+.info-spalten a{text-decoration:none;border-bottom:1px solid var(--linie)}
+.info-spalten a:hover{border-color:var(--akzent)}
+
+/* ---------- Stempel ---------- */
+.stempel{position:fixed;right:clamp(16px,2.4vw,34px);bottom:clamp(16px,2.4vw,34px);z-index:35;width:108px;height:108px;border-radius:50%;
+  display:grid;place-items:center;text-decoration:none;color:var(--navy);background:var(--papier);box-shadow:0 14px 34px -18px rgba(27,60,74,.5);transition:transform .5s var(--ease),opacity .5s}
+.theme-salbei .stempel{background:var(--salbei)}
+.stempel svg.ring{position:absolute;inset:0;width:100%;height:100%;animation:drehen 16s linear infinite}
+.stempel img{width:30px}
+.stempel:hover{transform:scale(1.06)}
+.stempel.weg{opacity:0;pointer-events:none;transform:scale(.8)}
+@keyframes drehen{to{transform:rotate(360deg)}}
+
+/* ---------- Vorschau-Bild folgt dem Mauszeiger ---------- */
+.maus-vorschau{position:fixed;left:0;top:0;z-index:30;width:260px;aspect-ratio:4/5;pointer-events:none;opacity:0;overflow:hidden;
+  transform:translate(-50%,-50%) scale(.9);transition:opacity .35s var(--ease),transform .35s var(--ease);box-shadow:0 30px 60px -30px rgba(27,60,74,.5)}
+.maus-vorschau.an{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.maus-vorschau img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- Fuss ---------- */
+.fuss{background:var(--fuss-grund);color:var(--fuss-text);padding-block:clamp(70px,8vw,120px) 34px;position:relative;overflow:hidden}
+.theme-klar .fuss{border-top:1px solid var(--linie)}
+.fuss-raster{display:grid;grid-template-columns:1.2fr repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,60px)}
+.fuss-logo{width:150px}
+.fuss h4{font:500 11px/1.4 "Montserrat",sans-serif;letter-spacing:.28em;text-transform:uppercase;color:var(--akzent);margin:0 0 16px}
+.theme-salbei .fuss h4{color:var(--papier);opacity:.75}
+.fuss ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fuss a{text-decoration:none}
+.fuss a:hover{text-decoration:underline;text-underline-offset:4px}
+.fuss .zeichnung{width:min(760px,90%);margin:clamp(50px,6vw,90px) auto 0;opacity:.22;mix-blend-mode:multiply}
+.theme-salbei .fuss .zeichnung{mix-blend-mode:screen;filter:invert(1);opacity:.28}
+.fuss-unten{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid currentColor;border-color:color-mix(in srgb,currentColor 22%,transparent);margin-top:34px;padding-top:22px;font-size:12.5px;opacity:.85}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1180px){
+  .hauptnav,.nebennav .nav-text{display:none}
+  .menue-knopf{display:inline-flex}
+  .kopf .wrap{justify-content:space-between}
+}
+@media (max-width:980px){
+  .bereichsleiste{grid-template-columns:repeat(3,1fr)}
+  .bereich,.bereich.rechts{grid-template-columns:repeat(6,minmax(0,1fr));row-gap:24px}
+  .bereich .haupt,.bereich.rechts .haupt{grid-column:1 / span 5;grid-row:1}
+  .bereich .detail,.bereich.rechts .detail{grid-column:4 / span 3;grid-row:1;margin-bottom:-18%}
+  .bereich .text,.bereich.rechts .text{grid-column:1 / -1;grid-row:2;padding-top:60px}
+  .karte-teaser,.zweispaltig,.seitenkopf .titel,.gang{grid-template-columns:1fr}
+  .theme-salbei .hero{flex-direction:column;padding-top:var(--kopf)}
+  .theme-salbei .hero-panel{flex:none}
+  .theme-salbei .hero .bilder{min-height:62vh}
+  .fuss-raster{grid-template-columns:1fr 1fr}
+  .info-spalten{grid-template-columns:1fr}
+  .ablauf{grid-template-columns:1fr 1fr}
+  .vollmenue{grid-template-columns:1fr}
+  .vollmenue .vorschau{display:none}
+  .galerie .g1,.galerie .g2,.galerie .g6{grid-column:1/-1}
+  .galerie .g3,.galerie .g4,.galerie .g5{grid-column:span 6}
+  .galerie .g5{margin-top:0}
+}
+@media (max-width:620px){
+  body{font-size:15.5px}
+  .kopf .reservieren{display:none}
+  .kopf .wrap{gap:12px}
+  .stempel{display:none}
+  .hero-inhalt{padding-bottom:70px}
+  .bereichsleiste{grid-template-columns:repeat(2,1fr)}
+  .bereichsleiste a{padding:14px 0 16px}
+  .bereichsleiste .spr{display:none}
+  .fakten,.formular,.fuss-raster,.ablauf{grid-template-columns:1fr}
+  .galerie .g3,.galerie .g4,.galerie .g5{grid-column:1/-1}
+  .stempel{width:86px;height:86px}
+  .weiter{grid-template-columns:1fr}
+  .band .kasten{margin-inline:16px}
+  .scroll-hinweis{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .bild.reveal{clip-path:none}.js .reveal-text{opacity:1;transform:none}.split .w > span{transform:none}
+}
