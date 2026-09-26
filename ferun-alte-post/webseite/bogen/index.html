@@ -8,28 +8,31 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="../assets/site.css?v=202609260702">
-<link rel="stylesheet" href="../assets/editor.css?v=202609260702">
+<link rel="stylesheet" href="../assets/site.css?v=202609260740">
+<link rel="stylesheet" href="../assets/editor.css?v=202609260740">
 <link rel="icon" href="../assets/logo/FERUN_08_Signet_Blatt_kupfer.svg">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Restaurant", "name": "FERUN Alte Post", "servesCuisine": "Alpenländische Küche", "telephone": "+49 162 230 82 14", "email": "holger.brunk@ferun.de", "address": {"@type": "PostalAddress", "streetAddress": "Kirchplatz 2", "postalCode": "83125", "addressLocality": "Eggstätt", "addressCountry": "DE"}}</script>
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt</a>
+<div class="intro" id="intro" hidden aria-hidden="true"><video class="intro-blatt" src="../assets/blatt_zeichnen.mp4" muted playsinline preload="auto"></video>
+<span class="caps intro-skip">Klicken zum Überspringen</span></div>
+<script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('ferun_intro')&&!sessionStorage.getItem('ferun_bearbeiten')){document.getElementById('intro').hidden=false;document.documentElement.classList.add('mit-intro');}}catch(e){}</script>
 <header class="kopf"><div class="wrap">
   <a class="logo-link" href="index.html" aria-label="FERUN Alte Post – Startseite"><img src="../assets/logo/FERUN_04_Quer_Blatt_farbig.svg" alt="FERUN Alte Post"></a>
   <nav class="hauptnav" aria-label="Bereiche"><a class="caps" href="gasthaus.html">Gasthaus</a><a class="caps" href="vinothek.html">Vinothek</a><a class="caps" href="biergarten.html">Biergarten</a><a class="caps" href="greisslerei.html">Greißlerei</a><a class="caps" href="bar.html">Bar</a><a class="caps" href="festsaal.html">Festsaal</a></nav>
   <div class="nebennav"><a class="caps nav-text" href="karte.html">Karte</a><a class="caps nav-text" href="haus.html">Das Haus</a>
-  <a class="caps reservieren" href="kontakt.html">Tisch reservieren</a>
+  <a class="caps reservieren" href="kontakt.html" data-res>Tisch reservieren</a>
   <button class="menue-knopf caps" type="button" aria-expanded="false" aria-controls="vollmenue">Menü</button></div>
 </div></header>
 <div class="vollmenue" id="vollmenue" aria-label="Menü"><button class="menue-zu caps" type="button">Schließen</button>
-  <nav><a href="gasthaus.html">Gasthaus</a><a href="vinothek.html">Vinothek</a><a href="biergarten.html">Biergarten</a><a href="greisslerei.html">Greißlerei</a><a href="bar.html">Bar</a><a href="festsaal.html">Festsaal</a><div class="unten"><a href="karte.html">Wochenkarte</a><a href="haus.html">Das Haus</a><a href="kontakt.html">Tisch reservieren</a><a href="tel:+491622308214">+49 162 230 82 14</a></div></nav></div>
+  <nav><a href="index.html">Startseite</a><a href="gasthaus.html">Gasthaus</a><a href="vinothek.html">Vinothek</a><a href="biergarten.html">Biergarten</a><a href="greisslerei.html">Greißlerei</a><a href="bar.html">Bar</a><a href="festsaal.html">Festsaal</a><div class="unten"><a href="karte.html">Wochenkarte</a><a href="haus.html">Das Haus</a><a href="kontakt.html" data-res>Tisch reservieren</a><a href="tel:+491622308214">+49 162 230 82 14</a></div></nav></div>
 <main id="inhalt">
 <section class="hero3" aria-label="Willkommen"><div class="schatten" aria-hidden="true"><video src="../assets/schatten.mp4" poster="../assets/schatten_poster.jpg" muted autoplay loop playsinline preload="metadata"></video></div><div class="wrap raster">
   <div class="text">
     <h1>Ein Gasthaus am <em>Kirchplatz</em>.</h1>
     <p class="sub">Alpenländische Küche in einem alten, historischen Haus – mit Vinothek, Biergarten, Greißlerei, Bar und Festsaal.</p>
-    <div class="aktionen"><a class="knopf voll" href="kontakt.html">Tisch reservieren</a><a class="mehr caps" href="karte.html">Wochenkarte</a></div>
+    <div class="aktionen"><a class="knopf voll" href="kontakt.html" data-res>Tisch reservieren</a><a class="mehr caps" href="karte.html">Wochenkarte</a></div>
   </div>
   <div class="collage"><figure class="bild bogen gross" data-edit="hero"><div class="par"><img src="../assets/bibliothek/WC_W41_9x16.jpg" alt="Gedeckter Tisch unter dem Gewölbe" fetchpriority="high" decoding="async"></div></figure>
     <figure class="bild bogen klein" data-edit="hero-detail"><div class="par"><img src="../assets/bibliothek/R4G_M14_4x5.jpg" alt="Detail aus dem Haus" fetchpriority="high" decoding="async"></div></figure></div>
@@ -47,7 +50,7 @@
   <div class="galerie3"><a class="h b" href="../assets/bibliothek/WG_W42_9x16.jpg"><figure class="bild" data-edit="einblicke-0"><div class="par"><img src="../assets/bibliothek/WG_W42_9x16.jpg" alt="Die Kaminstube" loading="lazy" decoding="async"></div></figure></a><a class="k" href="../assets/bibliothek/R3C_C26_1x1.jpg"><figure class="bild" data-edit="einblicke-1"><div class="par"><img src="../assets/bibliothek/R3C_C26_1x1.jpg" alt="Rindertatar auf dem Hausteller" loading="lazy" decoding="async"></div></figure></a><a class="q" href="../assets/bibliothek/R4C_N12_3x2.jpg"><figure class="bild" data-edit="einblicke-2"><div class="par"><img src="../assets/bibliothek/R4C_N12_3x2.jpg" alt="Ein runder Tisch für vier" loading="lazy" decoding="async"></div></figure></a><a class="h" href="../assets/bibliothek/R3C_C34_4x5.jpg"><figure class="bild" data-edit="einblicke-3"><div class="par"><img src="../assets/bibliothek/R3C_C34_4x5.jpg" alt="Dekantieren in der Vinothek" loading="lazy" decoding="async"></div></figure></a><a class="h" href="../assets/bibliothek/R3G_G24_4x5.jpg"><figure class="bild" data-edit="einblicke-4"><div class="par"><img src="../assets/bibliothek/R3G_G24_4x5.jpg" alt="Kaiserschmarrn" loading="lazy" decoding="async"></div></figure></a><a class="k" href="../assets/bibliothek/R4G_M09_1x1.jpg"><figure class="bild" data-edit="einblicke-5"><div class="par"><img src="../assets/bibliothek/R4G_M09_1x1.jpg" alt="Terrazzo und Messing an der Bar" loading="lazy" decoding="async"></div></figure></a><a class="h b" href="../assets/bibliothek/R3G_G23_4x5.jpg"><figure class="bild" data-edit="einblicke-6"><div class="par"><img src="../assets/bibliothek/R3G_G23_4x5.jpg" alt="Honig aus der Greißlerei" loading="lazy" decoding="async"></div></figure></a><a class="q" href="../assets/bibliothek/R3G_G20_16x9.jpg"><figure class="bild" data-edit="einblicke-7"><div class="par"><img src="../assets/bibliothek/R3G_G20_16x9.jpg" alt="Morgens in der Stube" loading="lazy" decoding="async"></div></figure></a><a class="h" href="../assets/bibliothek/R3C_C38_4x5.jpg"><figure class="bild" data-edit="einblicke-8"><div class="par"><img src="../assets/bibliothek/R3C_C38_4x5.jpg" alt="Eindecken" loading="lazy" decoding="async"></div></figure></a><a class="k b" href="../assets/bibliothek/R3C_C35_1x1.jpg"><figure class="bild" data-edit="einblicke-9"><div class="par"><img src="../assets/bibliothek/R3C_C35_1x1.jpg" alt="Ein Espresso an der Bar" loading="lazy" decoding="async"></div></figure></a></div></div></section><section class="sektion aufruf linie-oben"><div class="wrap">
   <h2 class="fade">Damit auch ein Tischerl frei ist.</h2>
   <div class="fade d1" style="display:flex;justify-content:center;gap:14px 26px;flex-wrap:wrap;align-items:center">
-    <a class="knopf voll" href="kontakt.html">Tisch reservieren</a><a class="mehr caps" href="karte.html">Zur Wochenkarte</a></div>
+    <a class="knopf voll" href="kontakt.html" data-res>Tisch reservieren</a><a class="mehr caps" href="karte.html">Zur Wochenkarte</a></div>
   <div class="zeile caps fade d2"><span>Kirchplatz 2 · 83125 Eggstätt</span><a href="tel:+491622308214" style="text-decoration:none">+49 162 230 82 14</a><span>Öffnungszeiten folgen</span></div>
 </div></section>
 </main>
@@ -55,18 +58,18 @@
   <div class="fuss-raster">
     <div><img class="fuss-logo" src="../assets/logo/FERUN_01_Hoch_Blatt_Eggstaett_farbig.svg" alt="FERUN Alte Post Eggstätt"></div>
     <div><h4>Besuch</h4><ul><li>Kirchplatz 2</li><li>83125 Eggstätt</li><li>Öffnungszeiten folgen</li></ul></div>
-    <div><h4>Kontakt</h4><ul><li><a href="tel:+491622308214">+49 162 230 82 14</a></li><li><a href="mailto:holger.brunk@ferun.de">holger.brunk@ferun.de</a></li><li><a href="kontakt.html">Tisch reservieren</a></li><li><a href="kontakt.html#jobs">Jobs</a></li></ul></div>
-    <div><h4>Bereiche</h4><ul><li><a href="gasthaus.html">Gasthaus</a></li><li><a href="vinothek.html">Vinothek</a></li><li><a href="biergarten.html">Biergarten</a></li><li><a href="greisslerei.html">Greißlerei</a></li><li><a href="bar.html">Bar</a></li><li><a href="festsaal.html">Festsaal</a></li></ul></div>
+    <div><h4>Kontakt</h4><ul><li><a href="tel:+491622308214">+49 162 230 82 14</a></li><li><a href="mailto:holger.brunk@ferun.de">holger.brunk@ferun.de</a></li><li><a href="kontakt.html" data-res>Tisch reservieren</a></li><li><a href="kontakt.html#jobs">Jobs</a></li></ul></div>
+    <div><h4>Bereiche</h4><ul><li><a href="index.html">Startseite</a></li><li><a href="gasthaus.html">Gasthaus</a></li><li><a href="vinothek.html">Vinothek</a></li><li><a href="biergarten.html">Biergarten</a></li><li><a href="greisslerei.html">Greißlerei</a></li><li><a href="bar.html">Bar</a></li><li><a href="festsaal.html">Festsaal</a></li></ul></div>
   </div>
   <div class="fuss-unten"><span>FERUN Alte Post · Alpenländische Küche am Kirchplatz</span><span>Impressum · Datenschutz</span></div>
 </div></footer>
-<a class="stempel" href="kontakt.html" aria-label="Tisch reservieren">
+<a class="stempel" href="kontakt.html" data-res aria-label="Tisch reservieren">
   <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="kreis" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
   <text font-family="Montserrat, sans-serif" font-size="8.2" fill="currentColor"><textPath href="#kreis" textLength="236" lengthAdjust="spacing">TISCH RESERVIEREN · FERUN ALTE POST ·</textPath></text></svg>
   <img src="../assets/logo/FERUN_08_Signet_Blatt_kupfer.svg" alt=""></a>
-<script src="../assets/bibliothek.js?v=202609260702"></script>
+<script src="../assets/bibliothek.js?v=202609260740"></script>
 <script src="../assets/medien-data.js" onerror="this.remove()"></script>
-<script src="../assets/site.js?v=202609260702"></script>
-<script src="../assets/editor.js?v=202609260702"></script>
+<script src="../assets/site.js?v=202609260740"></script>
+<script src="../assets/editor.js?v=202609260740"></script>
 </body>
 </html>

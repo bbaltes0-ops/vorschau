@@ -67,57 +67,6 @@
     if('IntersectionObserver' in window) new IntersectionObserver(function(es){ es[0].isIntersecting ? los() : v.pause(); }).observe(v); else los();
   });
 
-  /* Intro: das Kastanienblatt zeichnet sich (wie Coming Soon), loest sich auf, dann die Seite */
-  var intro = d.getElementById('intro');
-  if(intro && !intro.hidden){
-    var iv = intro.querySelector('video'), fertig = false;
-    d.body.style.overflow = 'hidden';
-    var ende = function(){
-      if(fertig) return; fertig = true;
-      try{ sessionStorage.setItem('ferun_intro', '1'); }catch(_){}
-      intro.classList.add('aus'); d.body.style.overflow = '';
-      setTimeout(function(){ intro.hidden = true; d.documentElement.classList.remove('mit-intro'); }, 1100);
-    };
-    iv.playbackRate = 1.43;
-    iv.addEventListener('ended', function(){ iv.classList.add('weg'); setTimeout(ende, 650); });
-    intro.addEventListener('click', ende);
-    addEventListener('keydown', function(e){ if(!fertig && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) ende(); });
-    setTimeout(function(){ var p = iv.play(); if(p && p.catch) p.catch(ende); iv.playbackRate = 1.43; iv.classList.add('an'); }, 200);
-    setTimeout(ende, 9000);                                   // Sicherheit, falls das Video nicht startet
-  }
-
-  /* Tisch reservieren: Pop-up statt Seitenwechsel */
-  var TEL = '+49 162 230 82 14', MAIL = 'holger.brunk@ferun.de';
-  var pers = ''; for(var n = 1; n <= 10; n++) pers += '<option>' + n + '</option>';
-  var rs = d.createElement('div'); rs.className = 'res'; rs.id = 'reservieren'; rs.setAttribute('role', 'dialog'); rs.setAttribute('aria-modal', 'true'); rs.setAttribute('aria-labelledby', 'res-titel');
-  rs.innerHTML = '<div class="res-karte"><button type="button" class="res-zu caps" aria-label="Schließen">Schließen</button>' +
-    '<span class="caps eyebrow">FERUN Alte Post</span><h2 id="res-titel">Ein Tischerl für Euch.</h2>' +
-    '<p class="res-sub">Schreibt uns, wir melden uns mit einer Bestätigung. Lieber persönlich? <a href="tel:' + TEL.replace(/\s/g, '') + '">' + TEL + '</a></p>' +
-    '<form class="formular" data-mail="' + MAIL + '" data-betreff="Tischreservierung" novalidate>' +
-    '<div class="feld"><label class="caps" for="p-datum">Datum</label><input id="p-datum" name="datum" type="date" required data-label="Datum"></div>' +
-    '<div class="feld"><label class="caps" for="p-zeit">Uhrzeit</label><input id="p-zeit" name="zeit" type="time" data-label="Uhrzeit"></div>' +
-    '<div class="feld"><label class="caps" for="p-pers">Personen</label><select id="p-pers" name="personen" data-label="Personen">' + pers + '<option>mehr als 10</option></select></div>' +
-    '<div class="feld"><label class="caps" for="p-wo">Wo</label><select id="p-wo" name="bereich" data-label="Wo"><option>Gasthaus</option><option>Kaminstube</option><option>Biergarten</option><option>Bar</option><option>Egal</option></select></div>' +
-    '<div class="feld"><label class="caps" for="p-name">Name</label><input id="p-name" name="name" autocomplete="name" required data-label="Name"></div>' +
-    '<div class="feld"><label class="caps" for="p-kontakt">Telefon oder E-Mail</label><input id="p-kontakt" name="kontakt" autocomplete="email" required data-label="Kontakt"></div>' +
-    '<div class="feld voll"><label class="caps" for="p-text">Wünsche (freiwillig)</label><textarea id="p-text" name="wunsch" data-label="Wünsche"></textarea></div>' +
-    '<p class="klein fehler voll" hidden>Bitte Datum, Name und Telefon oder E-Mail angeben.</p>' +
-    '<div class="voll"><button class="knopf voll" type="submit">Anfrage senden</button></div>' +
-    '<p class="danke voll" hidden>Danke! Euer E-Mail-Programm öffnet sich mit der fertigen Anfrage – nur noch auf Senden drücken.</p></form></div>';
-  d.body.appendChild(rs);
-  var resVorher = null;
-  var resAuf = function(){ resVorher = d.activeElement; rs.classList.add('offen'); d.body.style.overflow = 'hidden'; setTimeout(function(){ rs.querySelector('#p-datum').focus(); }, 60); };
-  var resZu = function(){ rs.classList.remove('offen'); d.body.style.overflow = ''; if(resVorher) resVorher.focus(); };
-  d.addEventListener('click', function(e){
-    var a = e.target.closest && e.target.closest('[data-res]');
-    if(!a || d.body.classList.contains('bearbeiten')) return;
-    e.preventDefault(); if(vm && vm.classList.contains('offen')){ vm.classList.remove('offen'); mk.setAttribute('aria-expanded', false); }
-    resAuf();
-  });
-  rs.querySelector('.res-zu').addEventListener('click', resZu);
-  rs.addEventListener('click', function(e){ if(e.target === rs) resZu(); });
-  addEventListener('keydown', function(e){ if(e.key === 'Escape' && rs.classList.contains('offen')) resZu(); });
-
   /* Formulare ohne Server: fertige E-Mail an Holger */
   [].forEach.call(d.querySelectorAll('form[data-mail]'), function(f){
     f.addEventListener('submit', function(e){
