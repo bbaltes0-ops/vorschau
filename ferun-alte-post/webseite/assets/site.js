@@ -132,3 +132,15 @@
     });
   });
 })();
+
+/* Variante Linie: Verzeichnis wechselt das Bild im Rahmen */
+(function(){
+  var liste = document.querySelector('.l-liste'), rahmen = document.querySelector('.l-rahmen');
+  if(!liste || !rahmen) return;
+  var bilder = [].slice.call(rahmen.querySelectorAll('.l-rbild')), links = [].slice.call(liste.querySelectorAll('a[data-i]')), text = rahmen.querySelector('.l-rtext');
+  var setze = function(i){ bilder.forEach(function(b){ b.classList.toggle('an', b.dataset.i === String(i)); });
+    links.forEach(function(a){ a.classList.toggle('an', a.dataset.i === String(i)); });
+    var li = links[i] && links[i].parentNode; if(text && li) text.textContent = li.querySelector('.l-was').textContent; };
+  links.forEach(function(a){ a.addEventListener('mouseenter', function(){ setze(a.dataset.i); }); a.addEventListener('focus', function(){ setze(a.dataset.i); }); });
+  setze(0);
+})();
