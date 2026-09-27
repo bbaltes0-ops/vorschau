@@ -122,7 +122,7 @@
   d.body.appendChild(bib);
   var raster = bib.querySelector('.ed-raster'), filter = bib.querySelector('.ed-filter');
   var liste = window.FERUN_BIB || [], filterWert = 'Alle';
-  var gruppen = ['Alle', 'Favoriten', 'Hero', 'Umbau', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände'];
+  var gruppen = ['Alle', 'Favoriten', 'Hero', 'Küche', 'Umbau', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände'];
   /* Favoriten: Stern an jedem Bild, gilt fuer alle Seiten und Varianten, wird mit "Stand sichern" mitgesichert */
   var FAV_KEY = 'ferun_favoriten', favs = [];
   function istFav(f){ return favs.indexOf(f) >= 0; }
