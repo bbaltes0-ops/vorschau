@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FERUN Alte Post · Webseite</title><meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo/FERUN_08_Signet_Blatt_kupfer.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600&display=swap">
+<style>
+:root{--papier:#F6F5F1;--navy:#1B3C4A;--kupfer:#AC845B;--salbei:#C4CBC1;--linie:rgba(27,60,74,.14);--weich:#566C75}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papier);color:var(--navy);font:15px/1.65 Montserrat,system-ui,sans-serif;padding:clamp(28px,6vw,80px) clamp(16px,5vw,64px)}
+.kopf{max-width:1240px;margin:0 auto clamp(30px,5vw,60px);display:grid;gap:18px;justify-items:center;text-align:center}
+.kopf img{width:clamp(150px,18vw,210px)}
+h1{font:400 clamp(34px,5vw,58px)/1.05 "Cormorant Garamond",Georgia,serif;margin:6px 0 0;text-wrap:balance}
+.kopf p{max-width:60ch;margin:0;color:var(--weich)}
+.raster{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,32px)}
+.karte{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--linie);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.karte:hover,.karte:focus-visible{transform:translateY(-4px);box-shadow:0 22px 40px -28px rgba(27,60,74,.45)}
+.karte:focus-visible{outline:2px solid var(--kupfer);outline-offset:3px}
+.karte.salbei{background:var(--salbei)}
+.bild{display:block;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--linie);background:#E9ECE6}
+.bild img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.karte:hover .bild img{transform:scale(1.03)}
+.text{display:flex;flex-direction:column;gap:6px;padding:clamp(20px,2.4vw,30px);flex:1}
+.nr{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--kupfer)}
+b{font:400 clamp(30px,3vw,40px)/1 "Cormorant Garamond",Georgia,serif}
+em{font:italic 400 20px/1.3 "Cormorant Garamond",Georgia,serif}
+.lang{color:var(--weich);font-size:14px;margin-top:4px;flex:1}
+.karte.salbei .lang{color:#3D525A}
+.los{margin-top:14px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;align-self:flex-start;border-bottom:1px solid var(--kupfer);padding-bottom:3px}
+.gemeinsam{max-width:1240px;margin:clamp(34px,5vw,64px) auto 0;border-top:1px solid var(--linie);padding-top:26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px 40px}
+.gemeinsam h2{font:400 26px/1.2 "Cormorant Garamond",Georgia,serif;margin:0}
+.gemeinsam ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;color:var(--weich)}
+.gemeinsam li::before{content:"";display:inline-block;width:14px;height:1px;background:var(--kupfer);vertical-align:middle;margin-right:10px}
+.fuss{max-width:1240px;margin:28px auto 0;font-size:12px;color:var(--weich)}
+@media (max-width:900px){.raster{grid-template-columns:1fr}.gemeinsam{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.karte,.bild img{transition:none}}
+</style></head><body>
+<header class="kopf"><img src="../assets/logo/FERUN_04_Quer_Blatt_farbig.svg" alt="FERUN Alte Post">
+  <h1>Die Webseite in drei Varianten.</h1>
+  <p>Inhalte und Bilder sind in allen drei Varianten gleich – sie unterscheiden sich in Stimmung, Farbe und Aufbau. Einfach anklicken und durchklicken, am Computer oder am Handy.</p></header>
+<main class="raster"><a class="karte" href="klar/index.html">
+  <span class="bild"><img src="bilder/klar.jpg" alt="Startseite der Variante Klar" loading="lazy"></span>
+  <span class="text"><span class="nr">Variante 1</span><b>Klar</b><em>Hell, ruhig, zeitlos.</em><span class="lang">Papierweiß als Grund, ein großes Foto zum Einstieg, dazu Navy und Kupfer aus dem Logo. Die klassische Variante: Räume, Bilder und Essen stehen im Vordergrund.</span><span class="los">Ansehen</span></span></a><a class="karte salbei" href="salbei/index.html">
+  <span class="bild"><img src="bilder/salbei.jpg" alt="Startseite der Variante Salbei" loading="lazy"></span>
+  <span class="text"><span class="nr">Variante 2</span><b>Salbei</b><em>Die Hausfarbe als Grundton.</em><span class="lang">Die ganze Seite liegt im Salbeigrün der Stuben. Wärmer und wohnlicher, sofort als FERUN erkennbar. Aufbau wie bei Klar.</span><span class="los">Ansehen</span></span></a><a class="karte" href="linie/index.html">
+  <span class="bild"><img src="bilder/linie.jpg" alt="Startseite der Variante Linie" loading="lazy"></span>
+  <span class="text"><span class="nr">Variante 3</span><b>Linie</b><em>Wie ein Bildband.</em><span class="lang">Zum Einstieg zeichnet sich das Haus Strich für Strich, dann öffnet sich das große Bild. Logo in der Mitte, Räume als Verzeichnis, feine Linien und viel Platz für große Bilder. Die kunstvollste Variante.</span><span class="los">Ansehen</span></span></a></main>
+<section class="gemeinsam"><h2>In allen drei Varianten</h2><ul>
+  <li>Sechs Räume mit eigener Seite: Gasthaus, Vinothek, Biergarten, Greißlerei, Bar, Festsaal</li>
+  <li>Wochenkarte mit Gängen zum Durchtippen</li>
+  <li>„Die Alte Post“: das Haus als Zeichnung, alte Aufnahmen, Vorher und Nachher</li>
+  <li>„Tisch reservieren“ als kleines Fenster, von jeder Seite aus</li>
+  <li>Angepasst für Computer, Tablet und Handy</li></ul></section>
+<p class="fuss">Entwurf. Texte, Öffnungszeiten und Preise folgen, die Wochenkarte ist ein Beispiel.</p>
+</body></html>

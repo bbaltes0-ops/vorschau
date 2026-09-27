@@ -9,7 +9,8 @@
   'use strict';
   var d = document, html = d.documentElement;
   var VAR = html.dataset.variante || 'x', SEITE = html.dataset.seite || 'x';
-  var BIB_PFAD = '../assets/bibliothek/';
+  var BIB_PFAD = (html.dataset.assets || '../assets/') + 'bibliothek/';
+  var NUR_ANSICHT = html.hasAttribute('data-ansicht');   /* Kunden-Ansicht: nur den gesicherten Bild-Stand zeigen, kein Werkzeug */
   var hosts = [].slice.call(d.querySelectorAll('.bild[data-edit]'));
   if(!hosts.length) return;
   function key(h){ return 'ferun_' + VAR + '_' + SEITE + '_' + h.dataset.edit; }
@@ -51,7 +52,7 @@
     var basis = window.FERUN_MEDIA || {};
     hosts.forEach(function(h){ var k = key(h); state[k] = Object.assign({}, basis[k] || {}, gespeichert[k] || {}); anwenden(h); });
     var fv = gespeichert.ferun_favoriten || basis.ferun_favoriten; favs = Array.isArray(fv) ? fv.slice() : [];
-    if(typeof filterKnoepfe === 'function'){ filterKnoepfe(); if(raster.children.length) zeichnen(); }
+    if(!NUR_ANSICHT && typeof filterKnoepfe === 'function'){ filterKnoepfe(); if(raster.children.length) zeichnen(); }
   }); }
 
   /* ---------- Datei vom Rechner ---------- */
@@ -109,6 +110,7 @@
   }
   function aktiv(){ return d.body.classList.contains('bearbeiten'); }
 
+  if(NUR_ANSICHT){ laden(); return; }
   /* ---------- Werkzeugleiste + Bibliothek ---------- */
   var knopf = d.createElement('button'); knopf.type = 'button'; knopf.className = 'ed-knopf'; knopf.textContent = 'Bilder bearbeiten'; d.body.appendChild(knopf);
   var leiste = d.createElement('div'); leiste.className = 'ed-leiste'; leiste.hidden = true;
@@ -122,7 +124,7 @@
   d.body.appendChild(bib);
   var raster = bib.querySelector('.ed-raster'), filter = bib.querySelector('.ed-filter');
   var liste = window.FERUN_BIB || [], filterWert = 'Alle';
-  var gruppen = ['Alle', 'Favoriten', 'Hero', 'Küche', 'Umbau', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände'];
+  var gruppen = ['Alle', 'Favoriten', 'Hero', 'Küche', 'Vinothek', 'Umbau', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände'];
   /* Favoriten: Stern an jedem Bild, gilt fuer alle Seiten und Varianten, wird mit "Stand sichern" mitgesichert */
   var FAV_KEY = 'ferun_favoriten', favs = [];
   function istFav(f){ return favs.indexOf(f) >= 0; }
