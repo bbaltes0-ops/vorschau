@@ -826,3 +826,18 @@ a:hover .bild img,a:focus-visible .bild img{transform:scale(calc(var(--s,1) * 1.
 .vn-regler:focus-visible + *,.vn:focus-within .vn-griff::after{outline:2px solid var(--akzent);outline-offset:3px}
 .bearbeiten .vn-regler{display:none}
 @media (prefers-reduced-motion:reduce){.js .ap-skizze{clip-path:none}.ap-an .ap-skizze{animation:none}.js .ap-alt{opacity:1;transform:rotate(var(--r,0deg))}}
+
+/* =====================================================================
+   Version 11 (27.09.2026): Wochenkarte am Handy – Kopf bleibt oben, Gaenge-Leiste kompakt und laeuft mit
+   ===================================================================== */
+@media (max-width:1180px){.layout-linie .kopf{position:sticky;top:0;z-index:40}}
+@media (min-width:1181px){.layout-linie .kartennav{top:0}}
+.kartennav .wrap{scroll-snap-type:x proximity;scroll-padding-inline:var(--rand)}
+.kartennav a{scroll-snap-align:start;flex:none}
+@media (max-width:760px){
+  .kartennav{box-shadow:0 6px 14px -12px rgba(27,60,74,.45)}
+  .kartennav .wrap{gap:8px;padding-block:9px;-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+  .kartennav .wrap::after{content:"";flex:none;width:30px}
+  .kartennav a{font-size:10px;letter-spacing:.14em;padding:8px 12px}
+  .gang{scroll-margin-top:calc(var(--kopf) + 62px + env(safe-area-inset-top,0px))}
+}

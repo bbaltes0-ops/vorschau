@@ -47,8 +47,16 @@
   /* Karte: aktiver Gang */
   var kn = [].slice.call(d.querySelectorAll('.kartennav a'));
   if(kn.length && 'IntersectionObserver' in window){
-    var ko = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) kn.forEach(function(a){ a.classList.toggle('an', a.hash === '#' + e.target.id); }); }); }, {rootMargin:'-35% 0px -60% 0px'});
+    var leiste = kn[0].parentNode;
+    var mitziehen = function(a){ var ziel = a.offsetLeft - leiste.offsetLeft - parseFloat(getComputedStyle(leiste).paddingLeft || 0);
+      if(Math.abs(leiste.scrollLeft - ziel) > 4) leiste.scrollTo({left:Math.max(0, ziel), behavior: reduce ? 'auto' : 'smooth'}); };
+    var ko = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) kn.forEach(function(a){ var an = a.hash === '#' + e.target.id; a.classList.toggle('an', an); if(an) mitziehen(a); }); }); }, {rootMargin:'-35% 0px -60% 0px'});
     kn.forEach(function(a){ var z = d.querySelector(a.hash); if(z) ko.observe(z); });
+    /* ganz unten: letzten Gang markieren, auch wenn er die Mitte nie erreicht */
+    var letzter = kn[kn.length - 1], lz = d.querySelector(letzter.hash);
+    addEventListener('scroll', function(){ if(!lz) return; var r = lz.getBoundingClientRect();
+      if(r.bottom > 0 && r.bottom < innerHeight * .9 && r.top < innerHeight * .6){
+        kn.forEach(function(a){ a.classList.toggle('an', a === letzter); }); mitziehen(letzter); } }, {passive:true});
   }
 
   /* Galerie: antippen = gross, Pfeile/Wischen = weiter */
