@@ -187,7 +187,10 @@
     if(bu.classList.contains('mit-skizze')){
       var gesehen = false; try{ gesehen = !!sessionStorage.getItem('ferun_skizze'); }catch(_){}
       if(reduce || gesehen || bearb()){ bu.classList.add('offen'); var p = bu.querySelector('.l2-papier'); if(p) p.remove(); start(); }
-      else { setTimeout(start, 2300); try{ sessionStorage.setItem('ferun_skizze', '1'); }catch(_){} }
+      else { var sk = bu.querySelector('img.l2-skizze');
+        if(sk && window.FERUN_HAUS && typeof hausZeichnen === 'function') hausZeichnen(sk, function(){ setTimeout(start, 450); });
+        else setTimeout(start, 2300);
+        try{ sessionStorage.setItem('ferun_skizze', '1'); }catch(_){} }
     } else start();
   });
 
@@ -239,10 +242,10 @@
 /* Hauszeichnung Strich fuer Strich: Die echten Linien (haus_linien.js) sind der Weg des Stifts,
    sichtbar ist immer die Originalzeichnung genau dort, wo der Stift schon war.
    Reihenfolge wie beim Hausbau: tragende Linien von unten nach oben, dann Fenster und Details, dann Schraffur. */
-function hausZeichnen(img){
+function hausZeichnen(img, danach){
   var D = window.FERUN_HAUS, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fertig = function(){ img.classList.add('gezeichnet'); };
-  if(!D || reduce || !img.complete || !img.naturalWidth){ if(!D || reduce) fertig(); else img.addEventListener('load', function(){ hausZeichnen(img); }, {once:true}); return; }
+  var fertig = function(){ img.classList.add('gezeichnet'); if(danach) danach(); };
+  if(!D || reduce || !img.complete || !img.naturalWidth){ if(!D || reduce) fertig(); else img.addEventListener('load', function(){ hausZeichnen(img, danach); }, {once:true}); return; }
   var r = img.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
   var cw = Math.max(1, Math.round(r.width * dpr)), ch = Math.round(cw * D.h / D.w), sc = cw / D.w;
   var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch; cv.className = img.className + ' ap-leinwand'; cv.setAttribute('aria-hidden', 'true');
@@ -296,7 +299,7 @@ function hausZeichnen(img){
       c.globalAlpha = 1; }
     if(t > ende){ c.globalCompositeOperation = 'source-over'; c.globalAlpha = Math.min(1, (t - ende) / .45); c.drawImage(img, 0, 0, cw, ch); c.globalAlpha = 1; }
     if(t < ende + .45) requestAnimationFrame(schritt);
-    else { img.style.display = ''; img.classList.add('gezeichnet', 'sofort'); cv.remove(); }
+    else { img.style.display = ''; img.classList.add('sofort'); cv.remove(); fertig(); }
   }
   requestAnimationFrame(schritt);
 }
