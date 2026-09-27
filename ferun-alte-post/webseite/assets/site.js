@@ -232,9 +232,74 @@
 (function(){
   var f = document.querySelector('.ap-feld'); if(!f) return;
   if(!('IntersectionObserver' in window)){ f.classList.add('ap-an'); return; }
-  var o = new IntersectionObserver(function(es){ if(es[0].isIntersecting){ f.classList.add('ap-an'); o.disconnect(); } }, {threshold:.25});
+  var los = function(){ f.classList.add('ap-an'); var sk = f.querySelector('img.ap-skizze'); if(sk) hausZeichnen(sk); };
+  var o = new IntersectionObserver(function(es){ if(es[0].isIntersecting){ los(); o.disconnect(); } }, {threshold:.25});
   o.observe(f);
 })();
+/* Hauszeichnung Strich fuer Strich: Die echten Linien (haus_linien.js) sind der Weg des Stifts,
+   sichtbar ist immer die Originalzeichnung genau dort, wo der Stift schon war.
+   Reihenfolge wie beim Hausbau: tragende Linien von unten nach oben, dann Fenster und Details, dann Schraffur. */
+function hausZeichnen(img){
+  var D = window.FERUN_HAUS, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fertig = function(){ img.classList.add('gezeichnet'); };
+  if(!D || reduce || !img.complete || !img.naturalWidth){ if(!D || reduce) fertig(); else img.addEventListener('load', function(){ hausZeichnen(img); }, {once:true}); return; }
+  var r = img.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+  var cw = Math.max(1, Math.round(r.width * dpr)), ch = Math.round(cw * D.h / D.w), sc = cw / D.w;
+  var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch; cv.className = img.className + ' ap-leinwand'; cv.setAttribute('aria-hidden', 'true');
+  var m = document.createElement('canvas'); m.width = cw; m.height = ch;
+  var c = cv.getContext('2d'), mc = m.getContext('2d');
+  img.parentNode.insertBefore(cv, img.nextSibling); img.style.display = 'none';
+  mc.lineCap = mc.lineJoin = 'round'; mc.strokeStyle = '#000';
+  /* Linien vorbereiten */
+  var zufall = function(i){ var x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); };
+  var L = D.l.map(function(l, i){
+    var p = l.slice(1), n = p.length / 2, cum = [0], yc = 0, xc = 0, len = 0;
+    for(var k = 1; k < n; k++){ len += Math.hypot(p[2*k] - p[2*k-2], p[2*k+1] - p[2*k-1]); cum.push(len); }
+    for(var k2 = 0; k2 < n; k2++){ xc += p[2*k2]; yc += p[2*k2+1]; } xc /= n; yc /= n;
+    var t0, v, VOR = .32, rnd = zufall(i);
+    if(len >= 200){ t0 = .5 * (1 - yc / D.h); v = 2600; }                       /* tragende Linien, von unten */
+    else if(yc < 345){ t0 = 1.45 + .75 * Math.abs(xc - 696) / 705 + .08 * rnd; v = len >= 20 ? 1100 : 600; }   /* Dach: von der Spitze nach aussen */
+    else { var hw = Math.min(1, Math.max(0, (795 - yc) / 450));                  /* Mauern: Stockwerk fuer Stockwerk */
+      if(len >= 20){ t0 = .35 + 1.1 * hw + .2 * rnd; v = 950; } else { t0 = .55 + 1.1 * hw + .25 * rnd; v = 520; } }
+    return {p:p, cum:cum, len:len, t0:t0 + VOR, v:v, w:Math.min(7, Math.max(4.5, l[0] * 2.8)) * sc, gez:0, k:1};
+  }).filter(function(x){ return x.len > 0; }).sort(function(a, b){ return a.t0 - b.t0; });
+  var ende = 0; L.forEach(function(x){ ende = Math.max(ende, x.t0 + x.len / x.v); });
+  /* Hilfslinien wie auf dem Reissbrett: Boden, Waende, Achse, Dachschraegen (ueberstehend) */
+  var HILF = [[60,795,1340,795],[163,850,163,290],[1231,850,1231,290],[696,850,696,-20],[-30,223,760,-20],[1430,221,630,-20],[0,340,1400,340]];
+  var kupfer = getComputedStyle(document.documentElement).getPropertyValue('--kupfer').trim() || '#AC845B';
+  var naechste = 0, aktiv = [], start = null;
+  function schritt(ts){
+    if(start === null) start = ts;
+    var t = (ts - start) / 1000;
+    while(naechste < L.length && L[naechste].t0 <= t) aktiv.push(L[naechste++]);
+    aktiv = aktiv.filter(function(x){
+      var soll = Math.min(x.len, (t - x.t0) * x.v); if(soll <= x.gez) return x.gez < x.len;
+      var p = x.p, cum = x.cum;
+      mc.beginPath();
+      var k = x.k, f0 = cum[k] > cum[k-1] ? (x.gez - cum[k-1]) / (cum[k] - cum[k-1]) : 0;
+      mc.moveTo((p[2*k-2] + (p[2*k] - p[2*k-2]) * f0) * sc, (p[2*k-1] + (p[2*k+1] - p[2*k-1]) * f0) * sc);
+      while(k < cum.length - 1 && cum[k] <= soll){ mc.lineTo(p[2*k] * sc, p[2*k+1] * sc); k++; }
+      var f = cum[k] > cum[k-1] ? Math.min(1, (soll - cum[k-1]) / (cum[k] - cum[k-1])) : 1;
+      mc.lineTo((p[2*k-2] + (p[2*k] - p[2*k-2]) * f) * sc, (p[2*k-1] + (p[2*k+1] - p[2*k-1]) * f) * sc);
+      mc.globalAlpha = .3; mc.lineWidth = x.w * 1.9; mc.stroke();   /* weicher Tintenrand */
+      mc.globalAlpha = 1; mc.lineWidth = x.w; mc.stroke(); x.k = k; x.gez = soll;
+      return soll < x.len;
+    });
+    c.globalCompositeOperation = 'copy'; c.drawImage(m, 0, 0);
+    c.globalCompositeOperation = 'source-in'; c.drawImage(img, 0, 0, cw, ch);
+    /* am Ende die letzten Feinheiten sanft vervollstaendigen, dann das Originalbild zeigen */
+    /* Hilfslinien: schnell gezogen, am Ende ausgeblendet */
+    var ha = t < ende - .7 ? .75 : Math.max(0, .75 * (ende - .1 - t) / .6);
+    if(ha > 0){ c.globalCompositeOperation = 'source-over'; c.strokeStyle = kupfer; c.lineWidth = Math.max(1, dpr * .8); c.globalAlpha = ha;
+      HILF.forEach(function(h, i){ var q = Math.min(1, Math.max(0, (t - i * .06) / .42)); if(!q) return; q = 1 - Math.pow(1 - q, 3);
+        c.beginPath(); c.moveTo(h[0] * sc, h[1] * sc); c.lineTo((h[0] + (h[2] - h[0]) * q) * sc, (h[1] + (h[3] - h[1]) * q) * sc); c.stroke(); });
+      c.globalAlpha = 1; }
+    if(t > ende){ c.globalCompositeOperation = 'source-over'; c.globalAlpha = Math.min(1, (t - ende) / .45); c.drawImage(img, 0, 0, cw, ch); c.globalAlpha = 1; }
+    if(t < ende + .45) requestAnimationFrame(schritt);
+    else { img.style.display = ''; img.classList.add('gezeichnet', 'sofort'); cv.remove(); }
+  }
+  requestAnimationFrame(schritt);
+}
 /* Vorher / Nachher */
 [].forEach.call(document.querySelectorAll('.vn'), function(v){
   var r = v.querySelector('.vn-regler'); if(!r) return;

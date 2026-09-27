@@ -841,3 +841,13 @@ a:hover .bild img,a:focus-visible .bild img{transform:scale(calc(var(--s,1) * 1.
   .kartennav a{font-size:10px;letter-spacing:.14em;padding:8px 12px}
   .gang{scroll-margin-top:calc(var(--kopf) + 62px + env(safe-area-inset-top,0px))}
 }
+
+/* Version 12 (27.09.2026): Hauszeichnung wird Strich fuer Strich gezeichnet (Canvas) statt eingeblendet */
+.js .ap-skizze{clip-path:none!important;animation:none!important;opacity:0}
+.js .ap-skizze.gezeichnet{opacity:.9;transition:opacity .6s var(--ease)}
+.theme-salbei.js .ap-skizze.gezeichnet,.js.theme-salbei .ap-skizze.gezeichnet{opacity:.8}
+.ap-leinwand{opacity:.9!important;pointer-events:none;transition:opacity .8s var(--ease)}
+.js .ap-skizze.sofort{transition:none}
+.ap-an .ap-0{transition-delay:2.3s}.ap-an .ap-1{transition-delay:2.65s}.ap-an .ap-2{transition-delay:3s}
+.bearbeiten .ap-skizze{opacity:.9}
+@media (prefers-reduced-motion:reduce){.js .ap-skizze{opacity:.9}}
