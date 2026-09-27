@@ -474,18 +474,15 @@ a:hover .bild img,a:focus-visible .bild img{transform:scale(calc(var(--s,1) * 1.
 .reservieren:hover{background:transparent;color:inherit}
 
 .kachel-bild{position:relative;overflow:hidden}
-.kachel-bild .zweit{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);pointer-events:none;
-  transition:opacity .9s var(--ease),transform 1.6s var(--ease-out)}
 .kachel-bild::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,30,36,0) 50%,rgba(16,30,36,.5) 100%);opacity:0;pointer-events:none;transition:opacity .7s var(--ease)}
 .kachel-bild .spruch{position:absolute;left:clamp(14px,1.6vw,22px);bottom:clamp(12px,1.6vw,20px);z-index:2;color:#fff;pointer-events:none;
   font:italic 400 clamp(26px,2.4vw,36px)/1.1 "Cormorant Garamond",Georgia,serif;opacity:0;transform:translateY(10px);transition:opacity .7s var(--ease) .1s,transform .9s var(--ease-out) .1s}
 @media (hover:hover) and (pointer:fine){
-  .kachel:hover .zweit{opacity:1;transform:none}
   .kachel:hover .kachel-bild::after{opacity:1}
   .kachel:hover .spruch{opacity:1;transform:none}
 }
 .kachel:hover .bild img{transform:scale(var(--s,1))}
-.bearbeiten .kachel-bild .zweit,.bearbeiten .kachel-bild .spruch,.bearbeiten .kachel-bild::after{display:none}
+.bearbeiten .kachel-bild .spruch,.bearbeiten .kachel-bild::after{display:none}
 
 /* =====================================================================
    Version 7 (26.09.2026): Salbei als echter Hauptton + Variante "Linie"
@@ -749,3 +746,83 @@ a:hover .bild img,a:focus-visible .bild img{transform:scale(calc(var(--s,1) * 1.
 .stempel svg{transform-origin:50% 50%}
 .theme-klar .stempel.auf-grund,.layout-linie .stempel.auf-grund{background:var(--salbei)}
 .theme-salbei .stempel{background:var(--papier)}
+
+/* =====================================================================
+   Version 10 (27.09.2026): aufgeraeumte Kopfleiste, Seite "Die Alte Post", Vorher/Nachher
+   ===================================================================== */
+/* Kopf: nur Raeume + Reservieren + Menue */
+.menue-knopf{display:inline-flex;align-items:center;gap:10px;font:inherit;letter-spacing:inherit;text-transform:inherit}
+.kopf .menue-knopf{font:500 11px/1 "Montserrat",sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.mk-striche{display:inline-grid;gap:5px;width:18px}
+.mk-striche i{display:block;height:1px;background:currentColor;transition:transform .35s var(--ease)}
+.mk-striche i:last-child{width:12px}
+.menue-knopf:hover .mk-striche i:last-child{transform:scaleX(1.5);transform-origin:left}
+.l-zeile{justify-content:space-between;align-items:center}
+.l-zeile .menue-knopf{display:inline-flex;padding:0;font-size:10px;color:var(--text-weich)}
+.l-zeile .menue-knopf:hover{color:var(--akzent)}
+@media (min-width:1181px){.l-kopf .l-mitte .menue-knopf{display:none}}
+
+/* Vollmenue: zwei Spalten */
+.vollmenue .vm-raster{padding:calc(var(--kopf) + 24px) var(--rand) 48px;display:grid;gap:36px;max-width:1240px;margin:0 auto}
+.vollmenue .vm-raster nav{padding:0;display:grid;gap:2px;align-content:start}
+.vm-titel{font-size:10px;color:var(--akzent);margin-bottom:10px}
+.vollmenue .vm-mehr a{font-size:clamp(24px,3.4vw,32px)}
+.vollmenue nav a[aria-current="page"]{color:var(--akzent)}
+.vollmenue .vm-mehr .unten{margin-top:28px}
+.vollmenue .vm-mehr .unten a{font:500 12px/1.6 "Montserrat",sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.vollmenue .vm-mehr .unten span{font-size:13px;color:var(--text-weich)}
+@media (min-width:900px){.vollmenue .vm-raster{grid-template-columns:1.3fr 1fr;padding-top:calc(var(--kopf) + 9vh);gap:60px}}
+.l-mehr{margin:clamp(26px,3vw,40px) 0 0;text-align:center}
+.l-mehr a{text-decoration:none;border-bottom:1px solid var(--akzent);padding-bottom:4px}
+.willkommen3 .mehr{display:inline-block;margin-top:18px}
+
+/* Die Alte Post: Zeichnung + alte Aufnahmen */
+.ap-buehne{padding-block:clamp(10px,3vw,40px) clamp(40px,6vw,96px);overflow:hidden}
+.ap-feld{position:relative;max-width:1180px;margin:0 auto;aspect-ratio:16/9}
+.ap-skizze{position:absolute;left:50%;top:48%;width:56%;height:auto;transform:translate(-50%,-50%);mix-blend-mode:multiply;
+  filter:grayscale(1) sepia(.35) contrast(1.05);opacity:.9}
+.theme-salbei .ap-skizze{opacity:.8}
+.js .ap-skizze{clip-path:inset(100% 0 0 0)}
+.ap-an .ap-skizze{animation:l-zeichnen 2.8s cubic-bezier(.65,0,.35,1) .2s forwards}
+.ap-alt{position:absolute;margin:0;z-index:2;background:#FBFAF6;padding:9px 9px 34px;
+  box-shadow:0 22px 44px -24px rgba(27,60,74,.5),0 2px 6px rgba(27,60,74,.08);transform:rotate(var(--r,0deg))}
+.ap-alt .bild{background:#E6E1D6}
+.ap-alt img{filter:grayscale(1) sepia(.55) contrast(1.08) brightness(1.02)}
+.ap-alt figcaption{position:absolute;left:9px;right:9px;bottom:8px;text-align:center;color:#5E5648;
+  font:italic 400 clamp(13px,1.2vw,16px)/1.2 "Cormorant Garamond",Georgia,serif}
+.ap-0{left:1%;top:2%;width:18%;--r:-4deg}
+.ap-1{right:1%;top:10%;width:23%;--r:3deg}
+.ap-2{left:13%;bottom:2%;width:14%;--r:2.5deg}
+.js .ap-alt{opacity:0;transform:translateY(46px) rotate(0deg)}
+.ap-an .ap-alt{opacity:1;transform:rotate(var(--r,0deg));transition:opacity 1.1s var(--ease),transform 1.6s var(--ease-out)}
+.ap-an .ap-0{transition-delay:1.3s}.ap-an .ap-1{transition-delay:1.7s}.ap-an .ap-2{transition-delay:2.1s}
+.bearbeiten .ap-skizze{clip-path:none;animation:none}
+.bearbeiten .ap-alt{opacity:1;transform:rotate(var(--r,0deg))}
+@media (max-width:760px){
+  .ap-feld{aspect-ratio:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:start}
+  .ap-skizze{position:static;grid-column:1/-1;width:100%;transform:none;margin-bottom:6px}
+  .ap-alt{position:static;width:auto;padding:5px 5px 7px}
+  .ap-alt figcaption{position:static;font-size:12px;margin-top:5px;line-height:1.15}
+}
+.ap-chronik{list-style:none;margin:0;padding:0;border-top:1px solid var(--linie)}
+.ap-chronik li{padding:18px 0;border-bottom:1px solid var(--linie)}
+.ap-chronik span{font-size:11px;color:var(--akzent)}
+.ap-chronik p{margin:6px 0 0}
+.ap-kopf{display:grid;gap:8px;margin-bottom:clamp(24px,3vw,40px)}
+.vn-kopf{max-width:1040px;margin-inline:auto}
+.ap-kopf h2,.ap-kopf p{margin:0}
+.ap-kopf p{color:var(--text-weich)}
+
+/* Vorher / Nachher */
+.vn{position:relative;overflow:hidden;--pos:50%;user-select:none;max-width:1040px;margin:0 auto}
+.vn .bild{aspect-ratio:3/2}
+.vn-vor{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.vn-griff{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:#fff;pointer-events:none;z-index:3}
+.vn-griff::after{content:"\2039\00a0\203A";position:absolute;top:50%;left:50%;width:50px;height:50px;border-radius:50%;background:#fff;color:var(--navy);
+  transform:translate(-50%,-50%);display:grid;place-items:center;font:400 24px/1 "Cormorant Garamond",Georgia,serif;box-shadow:0 8px 24px -10px rgba(16,30,36,.5)}
+.vn-l,.vn-r{position:absolute;top:14px;z-index:3;color:#fff;font-size:10px;background:rgba(16,30,36,.38);padding:7px 11px;pointer-events:none}
+.vn-l{left:14px}.vn-r{right:14px}
+.vn-regler{position:absolute;inset:0;z-index:4;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y;-webkit-appearance:none;appearance:none}
+.vn-regler:focus-visible + *,.vn:focus-within .vn-griff::after{outline:2px solid var(--akzent);outline-offset:3px}
+.bearbeiten .vn-regler{display:none}
+@media (prefers-reduced-motion:reduce){.js .ap-skizze{clip-path:none}.ap-an .ap-skizze{animation:none}.js .ap-alt{opacity:1;transform:rotate(var(--r,0deg))}}

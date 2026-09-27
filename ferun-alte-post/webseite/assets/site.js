@@ -6,11 +6,12 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Vollbild-Menue */
-  var vm = d.getElementById('vollmenue'), mk = d.querySelector('.menue-knopf');
+  var vm = d.getElementById('vollmenue'), mks = [].slice.call(d.querySelectorAll('.menue-knopf')), mk = mks[0];
   if(vm && mk){
     var zu = vm.querySelector('.menue-zu');
-    var auf = function(o){ vm.classList.toggle('offen', o); mk.setAttribute('aria-expanded', o); d.body.style.overflow = o ? 'hidden' : ''; (o ? zu : mk).focus(); };
-    mk.addEventListener('click', function(){ auf(true); });
+    var auf = function(o){ vm.classList.toggle('offen', o); mks.forEach(function(k){ k.setAttribute('aria-expanded', o); }); d.body.style.overflow = o ? 'hidden' : '';
+      if(o){ zu.focus(); } else { (mks.filter(function(k){ return k.offsetParent; })[0] || mk).focus(); } };
+    mks.forEach(function(k){ k.addEventListener('click', function(){ auf(true); }); });
     zu.addEventListener('click', function(){ auf(false); });
     addEventListener('keydown', function(e){ if(e.key === 'Escape' && vm.classList.contains('offen')) auf(false); });
   }
@@ -218,4 +219,18 @@
       el.addEventListener('mouseleave', function(){ m.classList.remove('gross'); }); }); };
     ziel('.l2-bahn a', 'Ansehen'); ziel('.l-liste a', 'Entdecken'); ziel('.l2-buehne', 'FERUN');
   }
+
+/* Die Alte Post: Zeichnung zeichnet sich beim Hinscrollen, alte Aufnahmen legen sich dazu */
+(function(){
+  var f = document.querySelector('.ap-feld'); if(!f) return;
+  if(!('IntersectionObserver' in window)){ f.classList.add('ap-an'); return; }
+  var o = new IntersectionObserver(function(es){ if(es[0].isIntersecting){ f.classList.add('ap-an'); o.disconnect(); } }, {threshold:.25});
+  o.observe(f);
+})();
+/* Vorher / Nachher */
+[].forEach.call(document.querySelectorAll('.vn'), function(v){
+  var r = v.querySelector('.vn-regler'); if(!r) return;
+  var setz = function(){ v.style.setProperty('--pos', r.value + '%'); };
+  r.addEventListener('input', setz); setz();
+});
 })();

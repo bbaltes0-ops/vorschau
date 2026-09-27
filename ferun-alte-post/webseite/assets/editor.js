@@ -50,6 +50,8 @@
   function laden(){ dbAlle(function(gespeichert){
     var basis = window.FERUN_MEDIA || {};
     hosts.forEach(function(h){ var k = key(h); state[k] = Object.assign({}, basis[k] || {}, gespeichert[k] || {}); anwenden(h); });
+    var fv = gespeichert.ferun_favoriten || basis.ferun_favoriten; favs = Array.isArray(fv) ? fv.slice() : [];
+    if(typeof filterKnoepfe === 'function'){ filterKnoepfe(); if(raster.children.length) zeichnen(); }
   }); }
 
   /* ---------- Datei vom Rechner ---------- */
@@ -120,14 +122,34 @@
   d.body.appendChild(bib);
   var raster = bib.querySelector('.ed-raster'), filter = bib.querySelector('.ed-filter');
   var liste = window.FERUN_BIB || [], filterWert = 'Alle';
-  var gruppen = ['Alle', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände'];
-  filter.innerHTML = gruppen.map(function(g){ return '<button type="button" data-f="' + g + '"' + (g === 'Alle' ? ' class="an"' : '') + '>' + g + '</button>'; }).join('');
-  function zeichnen(){
-    var sicht = liste.filter(function(b){ return filterWert === 'Alle' || b.k === filterWert; });
-    raster.innerHTML = sicht.map(function(b){ return '<figure draggable="true" data-f="' + b.f + '" title="' + b.f + ' (' + b.w + '×' + b.h + ')"><img loading="lazy" src="' + BIB_PFAD + 'thumb/' + b.f + '" alt=""><figcaption>' + b.f.replace('.jpg', '') + '</figcaption></figure>'; }).join('');
+  var gruppen = ['Alle', 'Favoriten', 'Hero', 'Umbau', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände'];
+  /* Favoriten: Stern an jedem Bild, gilt fuer alle Seiten und Varianten, wird mit "Stand sichern" mitgesichert */
+  var FAV_KEY = 'ferun_favoriten', favs = [];
+  function istFav(f){ return favs.indexOf(f) >= 0; }
+  function filterKnoepfe(){
+    filter.innerHTML = gruppen.map(function(g){ var n = g === 'Favoriten' ? ' (' + favs.length + ')' : '';
+      return '<button type="button" data-f="' + g + '"' + (g === filterWert ? ' class="an"' : '') + (g === 'Favoriten' ? ' data-fav' : '') + '>' + g + n + '</button>'; }).join('');
   }
+  var STERN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2 6.3 20.3l1.2-6.4L2.8 9.5l6.4-.8z"/></svg>';
+  function zeichnen(){
+    var sicht = filterWert === 'Favoriten' ? favs.map(function(f){ return liste.filter(function(b){ return b.f === f; })[0]; }).filter(Boolean)
+      : liste.filter(function(b){ return filterWert === 'Alle' || b.k === filterWert; });
+    raster.innerHTML = sicht.length ? sicht.map(function(b){ var fv = istFav(b.f);
+      return '<figure draggable="true" data-f="' + b.f + '" title="' + b.f + ' (' + b.w + '×' + b.h + ')"><img loading="lazy" src="' + BIB_PFAD + 'thumb/' + b.f + '" alt="">' +
+        '<button type="button" class="ed-stern' + (fv ? ' an' : '') + '" aria-pressed="' + fv + '" aria-label="' + (fv ? 'Aus Favoriten entfernen' : 'Zu Favoriten') + '" title="' + (fv ? 'Aus Favoriten entfernen' : 'Zu Favoriten') + '">' + STERN + '</button>' +
+        '<figcaption>' + b.f.replace('.jpg', '') + '</figcaption></figure>'; }).join('')
+      : '<p class="ed-leer">' + (filterWert === 'Favoriten' ? 'Noch keine Favoriten. Tippt auf den Stern an einem Bild.' : 'Keine Bilder in dieser Gruppe.') + '</p>';
+  }
+  function favUmschalten(f){
+    var i = favs.indexOf(f); if(i >= 0) favs.splice(i, 1); else favs.unshift(f);
+    dbPut(FAV_KEY, favs.length ? favs.slice() : null); toast(i >= 0 ? 'Aus Favoriten entfernt' : 'Zu Favoriten hinzugefügt');
+    filterKnoepfe(); zeichnen();
+  }
+  filterKnoepfe();
   filter.addEventListener('click', function(e){ var b = e.target.closest('button'); if(!b) return; filterWert = b.dataset.f;
     [].forEach.call(filter.children, function(x){ x.classList.toggle('an', x === b); }); zeichnen(); });
+  raster.addEventListener('click', function(e){ var st = e.target.closest('.ed-stern'); if(!st) return;
+    e.stopPropagation(); e.preventDefault(); favUmschalten(st.closest('figure').dataset.f); }, true);
   raster.addEventListener('dragstart', function(e){ var f = e.target.closest('figure'); if(!f) return; e.dataTransfer.setData('text/x-ferun', f.dataset.f); e.dataTransfer.effectAllowed = 'copy'; });
   raster.addEventListener('click', function(e){ var f = e.target.closest('figure'); if(!f) return;
     var gleich = aktivBib === f.dataset.f; aktivBib = gleich ? null : f.dataset.f;

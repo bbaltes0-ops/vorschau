@@ -52,3 +52,14 @@
 .bearbeiten .hero-foto .bild .ed-ctrl,.bearbeiten .hero-foto .bild .ed-name{top:14px}
 .bearbeiten .galerie3 a{cursor:grab}
 .bearbeiten .intro{display:none!important}
+
+/* Favoriten (27.09.2026) */
+.ed-stern{position:absolute;top:4px;right:4px;width:26px;height:26px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.88);cursor:pointer;
+  display:grid;place-items:center;opacity:0;transition:opacity .2s,transform .2s;box-shadow:0 1px 4px rgba(16,30,36,.25)}
+.ed-stern svg{width:15px;height:15px;fill:none;stroke:#1B3C4A;stroke-width:1.6;stroke-linejoin:round}
+.ed-raster figure:hover .ed-stern,.ed-stern.an,.ed-stern:focus-visible{opacity:1}
+.ed-stern:hover{transform:scale(1.12)}
+.ed-stern.an svg{fill:#AC845B;stroke:#AC845B}
+@media (hover:none){.ed-stern{opacity:1}}
+.ed-filter button[data-fav]{border-color:#AC845B}
+.ed-leer{grid-column:1/-1;font-size:12px;color:#566C75;margin:10px 0}
