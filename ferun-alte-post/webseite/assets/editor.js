@@ -120,11 +120,15 @@
   d.body.appendChild(leiste);
   var bib = d.createElement('aside'); bib.className = 'ed-bib'; bib.setAttribute('aria-label', 'Bildbibliothek');
   bib.innerHTML = '<div class="ed-bib-kopf"><b>Bibliothek</b><button type="button" class="ed-bib-zu" aria-label="Schließen">Schließen</button></div>' +
-    '<div class="ed-filter"></div><p class="ed-bib-hinweis">Bild auf ein Feld ziehen. Am Tablet: Bild antippen, dann Feld antippen.</p><div class="ed-raster"></div>';
+    '<div class="ed-filter"></div><div class="ed-filter ed-bereich"></div><p class="ed-bib-hinweis">Bild auf ein Feld ziehen. Am Tablet: Bild antippen, dann Feld antippen. <b class="ed-zahl"></b></p><div class="ed-raster"></div>';
   d.body.appendChild(bib);
-  var raster = bib.querySelector('.ed-raster'), filter = bib.querySelector('.ed-filter');
+  var raster = bib.querySelector('.ed-raster'), filter = bib.querySelector('.ed-filter'), bfilter = bib.querySelector('.ed-bereich'), zahl = bib.querySelector('.ed-zahl');
+  var bereiche = ['Alle Bereiche', 'Gasthaus', 'Kaminstube', 'Vinothek', 'Bar', 'Greißlerei', 'Küche', 'Biergarten', 'Festsaal', 'Architektur'], bereichWert = 'Alle Bereiche';
+  bfilter.innerHTML = bereiche.map(function(g){ return '<button type="button" data-b="' + g + '"' + (g === bereichWert ? ' class="an"' : '') + '>' + g + '</button>'; }).join('');
+  bfilter.addEventListener('click', function(e){ var b = e.target.closest('button'); if(!b) return; bereichWert = b.dataset.b;
+    [].forEach.call(bfilter.children, function(x){ x.classList.toggle('an', x === b); }); zeichnen(); });
   var liste = window.FERUN_BIB || [], filterWert = 'Alle';
-  var gruppen = ['Alle', 'Favoriten', 'Ganzes Haus', 'Hero', 'Küche', 'Vinothek', 'Umbau', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände'];
+  var gruppen = ['Alle', 'Favoriten', 'Ganzes Haus', 'Hero', 'Küche', 'Vinothek', 'Umbau', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände', 'Außen'];
   /* Favoriten: Stern an jedem Bild, gilt fuer alle Seiten und Varianten, wird mit "Stand sichern" mitgesichert */
   var FAV_KEY = 'ferun_favoriten', favs = [];
   function istFav(f){ return favs.indexOf(f) >= 0; }
@@ -136,6 +140,8 @@
   function zeichnen(){
     var sicht = filterWert === 'Favoriten' ? favs.map(function(f){ return liste.filter(function(b){ return b.f === f; })[0]; }).filter(Boolean)
       : liste.filter(function(b){ return filterWert === 'Alle' || b.k === filterWert; });
+    if(bereichWert !== 'Alle Bereiche') sicht = sicht.filter(function(b){ return b.b === bereichWert; });
+    if(zahl) zahl.textContent = sicht.length + ' Bilder';
     raster.innerHTML = sicht.length ? sicht.map(function(b){ var fv = istFav(b.f);
       return '<figure draggable="true" data-f="' + b.f + '" title="' + b.f + ' (' + b.w + '×' + b.h + ')"><img loading="lazy" src="' + BIB_PFAD + 'thumb/' + b.f + '" alt="">' +
         '<button type="button" class="ed-stern' + (fv ? ' an' : '') + '" aria-pressed="' + fv + '" aria-label="' + (fv ? 'Aus Favoriten entfernen' : 'Zu Favoriten') + '" title="' + (fv ? 'Aus Favoriten entfernen' : 'Zu Favoriten') + '">' + STERN + '</button>' +

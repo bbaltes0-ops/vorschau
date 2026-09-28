@@ -63,3 +63,5 @@
 @media (hover:none){.ed-stern{opacity:1}}
 .ed-filter button[data-fav]{border-color:#AC845B}
 .ed-leer{grid-column:1/-1;font-size:12px;color:#566C75;margin:10px 0}
+.ed-bereich{padding-top:0}.ed-bereich button{border-style:dashed}.ed-bereich button.an{border-style:solid}
+.ed-zahl{font-weight:600;color:#1B3C4A}
