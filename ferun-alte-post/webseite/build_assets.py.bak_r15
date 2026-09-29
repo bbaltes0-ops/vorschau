@@ -1,0 +1,175 @@
+#!/usr/bin/env python3
+"""FERUN Webseite – Assets bauen (26.09.2026).
+- Bibliothek: alle freigegebenen Bilder der Runden 1-4 + Web-Formate (ohne "Nicht gut"-Ordner, ohne _aussortiert)
+  -> assets/bibliothek/<KUERZEL>_<id>.jpg (web-optimiert) + thumb/ (Vorschau fuer den Bild-Editor) + bibliothek.json
+- Hausteller freigestellt und rund entzerrt -> assets/teller_*.png (fuer den drehenden Teller)
+- Logo-SVGs, Kastanien-Schatten-Video, Hauszeichnung."""
+import glob, json, os, shutil
+import numpy as np
+from PIL import Image, ImageFilter
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+SRC = "/Users/bb/Desktop/Ferun Alte Post/Social Media Bilder"
+A = os.path.join(HERE, "assets")
+BIB = os.path.join(A, "bibliothek")
+ORDNER = {  # Kuerzel -> Ordner
+    "R1G": "Runde1_Gemini", "R1C": "Runde1_ChatGPT", "R2G": "Runde2_Gemini", "R2C": "Runde2_ChatGPT",
+    "WG": "Web_Formate_Gemini", "WC": "Web_Formate_ChatGPT", "R3G": "Runde3_Perspektiven_Gemini",
+    "R3C": "Runde3_Perspektiven_ChatGPT", "R4G": "Runde4_Magazin_Gemini", "R4C": "Runde4_Magazin_ChatGPT",
+    "BG": "Biergarten_Gemini", "BC": "Biergarten_ChatGPT", "H5G": "Runde5_Hero_Gemini", "H5C": "Runde5_Hero_ChatGPT",
+    "KG": "Kueche_Gemini", "KC": "Kueche_ChatGPT",
+    "VG": "Vinothek_Gemini", "VC": "Vinothek_ChatGPT",
+    "H8G": "Runde8_Haus_Gemini", "H8C": "Runde8_Haus_ChatGPT",
+    "H9G": "Runde9_Haus_Gemini", "H9C": "Runde9_Haus_ChatGPT",
+    "H10G": "Runde10_Haus_Gemini", "H11G": "Runde11_Haus_Gemini",
+    "STG": "Runde12_Stillleben_Gemini", "STC": "Runde12_Stillleben_ChatGPT",
+    "T13G": "Runde13_Stillleben_Gemini", "T13C": "Runde13_Stillleben_ChatGPT", "U14G": "Runde14_Stillleben_Gemini", "U14C": "Runde14_Stillleben_ChatGPT"}
+UMBAU = "/Users/bb/Desktop/Ferun Alte Post/Bilder/Umbau"
+BASIS = "/Users/bb/Desktop/Ferun Alte Post/Social Media Referenzen/ferun_basis"
+KATEGORIE = {"A": "Gedeck", "B": "Essen", "C": "Räume", "D": "Details", "E": "Getränke", "F": "Hände", "G": "Außen",
+             "H": "Greißlerei", "W": "Web-Format", "M": "Magazin", "N": "Magazin"}
+
+
+BEREICHE_REGEL = [("Kaminstube", ("_ks_",)), ("Vinothek", ("_vi_", "vinothek", "Vinothek_")), ("Bar", ("_ba_", "_bar_")),
+                  ("Greißlerei", ("_gr_", "_gs_", "greisslerei")), ("Küche", ("_ku_", "kueche", "Kueche_")),
+                  ("Biergarten", ("_au_", "garten", "Biergarten_")), ("Festsaal", ("_fs_", "festsaal")),
+                  ("Gasthaus", ("_ts_", "_tt_", "gasthaus")), ("Architektur", ("_ha_",))]
+
+
+def bereich(name, ordner):
+    """Bereich eines Bildes aus Dateiname/Ordner (fuer den Bereichs-Filter im Bild-Editor); leer = unbekannt."""
+    t = "_" + name.lower() + "_ " + ordner
+    for b, zeichen in BEREICHE_REGEL:
+        if any(z in t for z in zeichen):
+            return b
+    return ""
+
+
+RAUM_REF = [("kaminstube", "Kaminstube"), ("vinothek", "Vinothek"), ("greisslerei", "Greißlerei"), ("kueche", "Küche"),
+            ("bar_", "Bar"), ("bar.", "Bar"), ("fassade", "Biergarten"), ("biergarten", "Biergarten"), ("tafelstube", "Gasthaus")]
+
+
+def auftrags_refs():
+    """Job-ID -> Referenzbilder aus allen alten Auftragsdateien (fuer Bereich-Zuordnung aelterer Bilder)."""
+    base = "/Users/bb/Desktop/Ferun Alte Post/"
+    m = {}
+    for f in (glob.glob(base + "Social Media Bilder/_generator/*.json") + glob.glob(base + "Webseite/_generator/chatgpt/jobs*.json")
+              + glob.glob(base + "Webseite/_generator/*.json")):
+        try:
+            j = json.load(open(f))
+        except Exception:
+            continue
+        if isinstance(j, list):
+            for x in j:
+                if isinstance(x, dict) and "id" in x:
+                    m.setdefault(x["id"], x.get("refs") or [])
+    return m
+
+
+def bereich_aus_refs(refs):
+    for r in refs:
+        n = os.path.basename(r).lower()
+        for z, b in RAUM_REF:
+            if z in n:
+                return b
+    return ""
+
+
+def bibliothek():
+    os.makedirs(os.path.join(BIB, "thumb"), exist_ok=True)
+    liste = []
+    jobs = auftrags_refs()
+    for k, d in ORDNER.items():
+        for p in sorted(glob.glob(os.path.join(SRC, d, "*.png"))):
+            name = os.path.splitext(os.path.basename(p))[0]
+            f = f"{k}_{name}.jpg"
+            ziel, thumb = os.path.join(BIB, f), os.path.join(BIB, "thumb", f)
+            if not (os.path.exists(ziel) and os.path.getmtime(ziel) >= os.path.getmtime(p)):
+                im = Image.open(p).convert("RGB")
+                w, h = im.size
+                lang = 2400 if w / h > 1.5 else 1800
+                im.thumbnail((lang, lang), Image.LANCZOS)
+                im.save(ziel, quality=84, optimize=True, progressive=True)
+                t = im.copy(); t.thumbnail((360, 360), Image.LANCZOS); t.save(thumb, quality=72, optimize=True)
+            w, h = Image.open(ziel).size
+            kat = "Web-Format" if name.startswith("W") and k in ("WG", "WC") else KATEGORIE.get(name[0], "Sonstige")
+            if k in ("R3G", "R3C"):
+                kat = "Perspektiven"
+            if k in ("BG", "BC"):
+                kat = "Biergarten"
+            if k in ("H5G", "H5C"):
+                kat = "Hero"
+            if k in ("KG", "KC"):
+                kat = "Küche"
+            if k in ("VG", "VC"):
+                kat = "Vinothek"
+            if k in ("STG", "STC", "T13G", "T13C", "U14G", "U14C"):
+                kat = "Stillleben"
+            if k in ("H8G", "H8C", "H9G", "H9C", "H10G", "H11G"):
+                kat = "Ganzes Haus"
+            liste.append({"f": f, "o": d, "k": kat, "w": w, "h": h, "b": bereich(name, d) or bereich_aus_refs(jobs.get(name, []))})
+    # Umbau: echte Baustellenfotos (bereinigt, ohne Leute), echte Fassade, Raum-Entwuerfe
+    quellen = [(p, "UB_" + os.path.basename(p).split("_")[0]) for p in sorted(glob.glob(UMBAU + "/Aufgewertet_ChatGPT/*_clean.png"))]
+    quellen += [(BASIS + "/haus_fassade_echt.jpg", "UB_fassade_echt")]
+    quellen += [(p, "UB_entwurf_" + os.path.basename(p)[5:-4]) for p in sorted(glob.glob(BASIS + "/raum_*_uebersicht.jpg"))]
+    for p, name in quellen:
+        f = name + ".jpg"
+        ziel, thumb = os.path.join(BIB, f), os.path.join(BIB, "thumb", f)
+        if not (os.path.exists(ziel) and os.path.getmtime(ziel) >= os.path.getmtime(p)):
+            from PIL import ImageOps
+            im = ImageOps.exif_transpose(Image.open(p)).convert("RGB")
+            im.thumbnail((2400, 2400), Image.LANCZOS)
+            im.save(ziel, quality=84, optimize=True, progressive=True)
+            t = im.copy(); t.thumbnail((360, 360), Image.LANCZOS); t.save(thumb, quality=72, optimize=True)
+        w, h = Image.open(ziel).size
+        liste.append({"f": f, "o": "Umbau", "k": "Umbau", "w": w, "h": h, "b": bereich(name.replace("entwurf_tafelstube", "_ts_").replace("entwurf_kaminstube", "_ks_").replace("entwurf_bar", "_ba_"), "")})
+    json.dump(liste, open(os.path.join(BIB, "bibliothek.json"), "w"), ensure_ascii=False)
+    # auch als JS, damit die Seiten ohne Server (file://) die Liste laden koennen
+    open(os.path.join(A, "bibliothek.js"), "w").write("window.FERUN_BIB=" + json.dumps(liste, ensure_ascii=False) + ";\n")
+    print("Bibliothek:", len(liste), "Bilder")
+
+
+def teller(src, ziel):
+    """Teller vom Holztisch freistellen und die leichte Ellipse zum Kreis entzerren."""
+    im = Image.open(src).convert("RGB")
+    a = np.asarray(im).astype(np.float32) / 255
+    mx, mn = a.max(2), a.min(2)
+    sat = (mx - mn) / np.maximum(mx, 1e-3)
+    maske = (sat < 0.30) & (mx > 0.50)
+    ys, xs = np.nonzero(maske)
+    # robuste Box (Ausreisser ignorieren)
+    x0, x1 = np.percentile(xs, [0.5, 99.5]); y0, y1 = np.percentile(ys, [0.5, 99.5])
+    box = (int(x0), int(y0), int(x1), int(y1))
+    t = im.crop(box).resize((1000, 1000), Image.LANCZOS)
+    kreis = Image.new("L", (1000, 1000), 0)
+    from PIL import ImageDraw
+    ImageDraw.Draw(kreis).ellipse((8, 8, 992, 992), fill=255)
+    kreis = kreis.filter(ImageFilter.GaussianBlur(3))
+    t.putalpha(kreis)
+    t.thumbnail((720, 720), Image.LANCZOS)
+    t.save(ziel, optimize=True)
+
+
+def sonstiges():
+    logo = "/Users/bb/Desktop/Ferun Alte Post/Logo/FERUN_Logopaket_2026-09/01_Vektor/SVG/"
+    os.makedirs(os.path.join(A, "logo"), exist_ok=True)
+    for f in ("FERUN_04_Quer_Blatt_farbig", "FERUN_04_Quer_Blatt_weiss", "FERUN_04_Quer_Blatt_navy",
+              "FERUN_01_Hoch_Blatt_Eggstaett_farbig", "FERUN_01_Hoch_Blatt_Eggstaett_weiss",
+              "FERUN_08_Signet_Blatt_kupfer", "FERUN_08_Signet_Blatt_weiss", "FERUN_07_Wortmarke_Eggstaett_navy",
+              "FERUN_07_Wortmarke_Eggstaett_weiss"):
+        shutil.copy(logo + f + ".svg", os.path.join(A, "logo", f + ".svg"))
+    cs = "/Users/bb/Desktop/Ferun Alte Post/Webseite/ComingSoon/assets/"
+    for f in ("schatten.mp4", "schatten_poster.jpg"):
+        shutil.copy(cs + f, os.path.join(A, f))
+    tr = "/Users/bb/Desktop/Ferun Alte Post/Webseite/_generator/refs_teller/"
+    for f in ("teller_rosen", "teller_orange_blumen", "teller_grau_muster", "teller_rot_rand"):
+        teller(tr + f + ".jpg", os.path.join(A, f + ".png"))
+    haus = "/Users/bb/Desktop/Ferun Alte Post/Logo-Entwicklung/_referenz/fassade_zeichnung/master_haus_freigestellt.png"
+    im = Image.open(haus); im.thumbnail((1400, 1400)); im.save(os.path.join(A, "haus_zeichnung.png"), optimize=True)
+    print("Logos, Schatten, Teller, Haus fertig")
+
+
+if __name__ == "__main__":
+    os.makedirs(A, exist_ok=True)
+    bibliothek()
+    sonstiges()
