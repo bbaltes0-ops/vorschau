@@ -111,9 +111,14 @@ body.intro .hero>*:not(.slot){opacity:0}
 .satz.weg,.kennzeile.weg{opacity:0}
 
 /* Jobs-Band */
-.jobband{background:var(--salbei);text-align:center;padding:clamp(54px,9vh,96px) 20px clamp(54px,9vh,96px);position:relative;z-index:1}
+.claim{margin:clamp(10px,1.6vh,18px) 0 0;font:italic 400 clamp(20px,min(2vw,3vh),30px)/1.25 "Cormorant Garamond",Georgia,serif;color:var(--navy);max-width:34ch}
+.stellen-zeile{margin:18px 0 0;color:var(--navy)}
+.fuss{padding:26px 20px calc(24px + env(safe-area-inset-bottom,0px));text-align:center;position:relative;z-index:1;background:var(--papier)}
+.fuss .adr{margin:0;color:var(--navy-weich);letter-spacing:.22em;font-size:11px}
+.fuss .replay{margin:8px auto 0;color:var(--navy-weich)}
+.jobband{background:var(--salbei);text-align:center;padding:clamp(46px,7vh,76px) 20px clamp(46px,7vh,78px);position:relative;z-index:1}
 .jobband .caps{color:var(--navy)}
-.jobband h2{font-size:clamp(46px,min(7.6vw,11vh),112px);line-height:.98;letter-spacing:-.02em;margin:14px 0 0;text-wrap:balance}
+.jobband h2{font-size:clamp(44px,min(7.2vw,11vh),108px);line-height:.98;letter-spacing:-.02em;margin:0;text-wrap:balance}
 .jobband p.sub{margin:18px auto 0;max-width:46ch;font-size:clamp(15px,1.3vw,19px)}
 .stellen{margin:26px 0 0;display:flex;flex-wrap:wrap;gap:8px 8px;justify-content:center;list-style:none;padding:0}
 .stellen li{border:1px solid var(--navy);padding:9px 18px;font:500 11px/1 "Montserrat",sans-serif;letter-spacing:.24em;text-transform:uppercase}
@@ -154,7 +159,6 @@ body.intro .hero>*:not(.slot){opacity:0}
 .umbau-raster .bild{position:relative;overflow:hidden;margin:0;background:var(--flaeche)}
 .umbau-raster figcaption{font-size:12px;color:var(--navy-weich);margin-top:7px;line-height:1.4}
 .umbau-raster figure.u{margin:0}
-.fuss{background:var(--navy);color:var(--papier);padding:clamp(46px,7vh,78px) clamp(20px,5vw,60px) calc(34px + env(safe-area-inset-bottom,0px));position:relative;z-index:1}
 .fuss .inner{width:min(1040px,100%);margin:0 auto}
 .fuss .logo-fuss{width:min(260px,60vw);height:auto;display:block;margin:0 0 clamp(26px,4vh,40px)}
 .mails{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;border-top:1px solid rgba(246,245,241,.28);padding-top:22px}
@@ -248,14 +252,6 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
 <div class="schatten" aria-hidden="true"><video id="schattenVideo" src="assets/schatten.mp4" poster="assets/schatten_poster.jpg" muted autoplay loop playsinline preload="auto"></video></div>
 
 <header class="kopf" id="kopf">
-  <button type="button" class="menue-knopf" id="menueKnopf" aria-expanded="false" aria-controls="kopf">Menü</button>
-  <a class="nav" href="#zeiten">Öffnungszeiten</a>
-  <a class="nav" href="#mittag">Mittagstisch</a>
-  <a class="nav" href="#kaffee">Kaffee &amp; Kuchen</a>
-  <a class="nav" href="#feiern">Feiern</a>
-  <a class="nav" href="#gastgeber">Gastgeber</a>
-  <a class="nav" href="#anfahrt">Anfahrt</a>
-  <a class="nav jobs-nav" href="#jobs">Jobs</a>
   <button class="kontakt-knopf" id="kontaktKnopf" aria-expanded="false" aria-controls="kontaktBox">Kontakt</button>
   <div class="kontakt-box" id="kontaktBox">
     <a href="mailto:kontakt@ferun.de"><span>Allgemein</span><span>kontakt@ferun.de</span></a>
@@ -318,7 +314,8 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
 <path xmlns="http://www.w3.org/2000/svg" transform="matrix(1,0,0,-1,0,595.2756)" d="M537.3811 225.6228C537.3811 223.6658 535.7951 222.0798 533.8381 222.0798 531.8811 222.0798 530.2941 223.6658 530.2941 225.6228 530.2941 227.5798 531.8811 229.1658 533.8381 229.1658 535.7951 229.1658 537.3811 227.5798 537.3811 225.6228" fill="#1B3D4A" />
 </g></svg></a>
     <p class="ort caps">Eggstätt · Chiemseeregion</p>
-    <h1>Manche Orte besucht man. An anderen kommt man an.</h1>
+    <h1>Vorfreude ist die schönste Freude.</h1>
+    <p class="claim">Manche Orte besucht man. An anderen kommt man an.</p>
     <p class="sub">Alpine Küche und herzliche Gastlichkeit in einem Haus, das seit 1820 Menschen zusammenbringt.</p>
     <p class="status caps" aria-label="Eröffnung"><span class="sk">Wir öffnen im Dezember</span><span>Soft Opening <b>1.–5.12.</b></span><span>Eröffnungsfeier <b>6.12.</b></span><span>À la carte ab <b>7.12.</b></span></p>
 
@@ -348,75 +345,14 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   </section>
 
   <section class="jobband" id="jobs" aria-labelledby="jobsTitel">
-    <span class="caps">Jobs bei FERUN</span>
     <h2 id="jobsTitel">Wir suchen Verstärkung.</h2>
-    <p class="sub">Für ein neues Haus am Kirchplatz suchen wir Menschen mit Lust auf gute Gastlichkeit. Quereinsteiger sind willkommen, ein kurzes Hallo genügt.</p>
-    <ul class="stellen"><li>Service</li><li>Küche</li><li>Bar</li><li>Greißlerei</li><li>Vinothek</li></ul>
+    <p class="stellen-zeile caps">Service · Küche · Bar · Greißlerei · Vinothek</p>
     <a href="#bewerben" class="btn" id="jobLink">Jetzt bewerben</a>
-    <p class="jobmail">oder direkt an <a href="mailto:jobs@ferun.de">jobs@ferun.de</a></p>
-  </section>
-
-  <section class="abschnitt" id="zeiten" aria-labelledby="zeitenTitel">
-    <div class="inner">
-      <div class="kopfzeile"><span class="caps">Öffnungszeiten</span><h2 id="zeitenTitel">Täglich geöffnet. Auch mittags und zur Kaffeezeit.</h2>
-        <p class="lead">Die genauen Zeiten geben wir hier bekannt, sobald sie feststehen.</p></div>
-      <div class="karten">
-        <div class="karte" id="mittag"><span class="caps">Montag bis Freitag</span><h3>Z’Mittag</h3><p>Eine wechselnde Wochenkarte, ein Hauptgericht oder zwei bis drei Gänge. Hausgemachte Pasta, Saisonales, Fleisch und Fisch aus der Region. Für die Mittagspause und das Geschäftsessen.</p></div>
-        <div class="karte" id="kaffee"><span class="caps">Am Nachmittag</span><h3>Kaffee &amp; Kuchen</h3><p>Kaffee, Kuchen und alpine Patisserie. Nach dem Spaziergang am Hartsee oder zur Verabredung ohne großes Essen.</p></div>
-        <div class="karte"><span class="caps">Sonntag</span><h3>Frühschoppen &amp; Sonntagsbraten</h3><p>Der Sonntagmittag im Ferun, mit Braten, Beilagen und Mehlspeisen zum Kaffee.</p></div>
-        <div class="karte"><span class="caps">Mit wechselnder Karte</span><h3>Wiener Spitzen</h3><p>Eine Hommage an die österreichische Tafelkultur: entschleunigt, elegant, mit Tafelspitz, Mehlspeisen und gutem Wein.</p></div>
-        <div class="karte"><span class="caps">Auch nur auf ein Glas</span><h3>Vinothek &amp; Alpin-Bar</h3><p>Ein Glas Wein, ein Aperitif oder ein Snack, davor, danach oder einfach so. Dazu eine Auswahl aus rund 250 Weinen.</p></div>
-        <div class="karte"><span class="caps">Zum Mitnehmen</span><h3>Greißlerei</h3><p>Käse, Wurst und Schinken, Brot, Öle und Essige aus der Region und dem Alpenraum.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="abschnitt feiern" id="feiern" aria-labelledby="feiernTitel">
-    <div class="inner zweispaltig">
-      <div><span class="caps" style="color:var(--kupfer)">Veranstaltungen</span><h2 id="feiernTitel" style="margin:12px 0 18px">Für die Feste, an die man sich erinnert.</h2>
-        <p>Weihnachtsfeiern, Geschäftsessen und kleine Gesellschaften sind schon in den Gasträumen möglich, auch mittags. Hochzeiten, Familien- und Firmenfeiern und Tagungen finden mit dem Festsaal im Frühjahr 2027 ihren Platz. Anfragen nehmen wir jetzt gern entgegen.</p>
-        <a class="linkpfeil" href="mailto:bankett@ferun.de">bankett@ferun.de</a></div>
-      <div><div class="person"><b>Der Rahmen</b><span>Kirche, Biergarten, Vinothek, Gasthaus und Festsaal liegen nebeneinander: vom Empfang über das Essen bis zur Feier ohne lange Wege.</span></div>
-        <div class="person"><b>Was geplant ist</b><span>Menü, Getränke und Ablauf entwickeln wir gemeinsam mit Ihnen, passend zu Anlass, Gästezahl und Jahreszeit.</span></div></div>
-    </div>
-  </section>
-
-  <section class="abschnitt" id="gastgeber" aria-labelledby="gastTitel">
-    <div class="inner zweispaltig">
-      <div><span class="caps" style="color:var(--kupfer)">Gastgeber</span><h2 id="gastTitel" style="margin:12px 0 18px">Wer hinter FERUN steht.</h2>
-        <div class="person"><b>Holger Brunk</b><span>Gesamtkonzept, Betrieb und Gastgeberrolle. Viele Jahre Hoteldirektor in der Chiemsee-Region.</span></div>
-        <div class="person"><b>Frank Seimetz</b><span>Strategie, kulinarisches Konzept und Küche. Koch in der Spitzengastronomie, Betreiber eigener Restaurants, Kochschulen und Caterer.</span></div>
-        <div class="person"><b>Karolina Seimetz</b><span>Kaufmännische Organisation und Abläufe.</span></div></div>
-      <div id="anfahrt"><span class="caps" style="color:var(--kupfer)">Ort &amp; Anfahrt</span><h2 style="margin:12px 0 18px">Warum Eggstätt?</h2>
-        <p>Eggstätt liegt wenige Kilometer nördlich des Chiemsees, am Hartsee und an der Eggstätt-Hemhofer Seenplatte, zwischen München und Salzburg. Ein Besuch lässt sich mit einem Aufenthalt an den Seen, einer Wanderung oder einer Radtour verbinden.</p>
-        <p><b>FERUN – Alte Post</b><br>Kirchplatz 2, gegenüber der Kirche<br>83125 Eggstätt</p></div>
-    </div>
-  </section>
-
-  <section class="abschnitt" id="umbau" aria-labelledby="umbauTitel" style="padding-top:0">
-    <div class="inner">
-      <div class="kopfzeile"><span class="caps">Aus dem Umbau</span><h2 id="umbauTitel">Hier entsteht FERUN.</h2><p class="lead">Echte Einblicke aus dem Haus. Die Bilder oben sind Visualisierungen: Möbel, Bar und Einrichtung sehen am Ende anders aus.</p></div>
-      <div class="umbau-raster">
-      <figure class="u"><figure class="bild" data-edit="umbau-0" data-fest style="aspect-ratio:4/5"><div class="par"><img src="assets/umbau/umbau-0.jpg" alt="Das Gewölbe im Rohbau" decoding="async"></div></figure><figcaption>Das Gewölbe im Rohbau</figcaption></figure>
-      <figure class="u"><figure class="bild" data-edit="umbau-1" data-fest style="aspect-ratio:4/5"><div class="par"><img src="assets/umbau/umbau-1.jpg" alt="Bogenfenster in der Stube" decoding="async"></div></figure><figcaption>Bogenfenster in der Stube</figcaption></figure>
-      <figure class="u"><figure class="bild" data-edit="umbau-2" data-fest style="aspect-ratio:4/5"><div class="par"><img src="assets/umbau/umbau-2.jpg" alt="Die Bar-Theke entsteht" decoding="async"></div></figure><figcaption>Die Bar-Theke entsteht</figcaption></figure>
-      <figure class="u"><figure class="bild" data-edit="umbau-3" data-fest style="aspect-ratio:4/5"><div class="par"><img src="assets/umbau/umbau-3.jpg" alt="Die Treppe nach unten" decoding="async"></div></figure><figcaption>Die Treppe nach unten</figcaption></figure>
-      </div>
-    </div>
   </section>
 
   <footer class="fuss" id="kontakt">
-    <div class="inner">
-      <div class="logo-fuss" aria-hidden="true"></div>
-      <div class="mails">
-        <div><span class="caps">Allgemein</span><a href="mailto:kontakt@ferun.de">kontakt@ferun.de</a></div>
-        <div><span class="caps">Reservierung</span><a href="mailto:reservierung@ferun.de">reservierung@ferun.de</a></div>
-        <div><span class="caps">Feiern &amp; Tagungen</span><a href="mailto:bankett@ferun.de">bankett@ferun.de</a></div>
-        <div><span class="caps">Jobs &amp; Bewerben</span><a href="#bewerben" data-jobs="1">Jetzt bewerben</a><br><a href="mailto:jobs@ferun.de">jobs@ferun.de</a></div>
-      </div>
-      <p class="adr caps">FERUN · Alte Post · Kirchplatz 2 · 83125 Eggstätt</p>
-      <button type="button" class="replay caps" id="replay">Intro ansehen</button>
-    </div>
+    <p class="adr caps">Kirchplatz 2 · 83125 Eggstätt</p>
+    <button type="button" class="replay caps" id="replay">Intro ansehen</button>
   </footer>
 </main>
 
@@ -537,11 +473,9 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   zeige(0); takt();
 
   // Kopf: Hintergrund beim Scrollen, Menue auf kleinen Bildschirmen, Kontakt-Box
-  const kopf = document.getElementById('kopf'), mk = document.getElementById('menueKnopf');
+  const kopf = document.getElementById('kopf');
   const scr = () => kopf.classList.toggle('fest', scrollY > 30 || !document.getElementById('start').hidden && false);
   addEventListener('scroll', scr, {passive: true}); scr();
-  mk.addEventListener('click', e => { e.stopPropagation(); const o = kopf.classList.toggle('menue-offen'); mk.setAttribute('aria-expanded', o); });
-  kopf.querySelectorAll('a.nav').forEach(a => a.addEventListener('click', () => { kopf.classList.remove('menue-offen'); mk.setAttribute('aria-expanded', 'false'); }));
   const kk = document.getElementById('kontaktKnopf'), kb = document.getElementById('kontaktBox');
   kk.addEventListener('click', e => { e.stopPropagation(); const o = kb.classList.toggle('offen'); kk.setAttribute('aria-expanded', o); });
   addEventListener('click', e => { if (!kb.contains(e.target)) { kb.classList.remove('offen'); kk.setAttribute('aria-expanded', 'false'); } });
