@@ -148,7 +148,7 @@ body.intro .hero>*:not(.slot){opacity:0}
 .btn .pfeil{display:inline-block;margin-left:16px;letter-spacing:0;font-size:15px;animation:nudge 2.6s ease-in-out 2.6s infinite}
 @keyframes puls{0%,100%{box-shadow:0 0 0 0 rgba(27,61,74,0)}50%{box-shadow:0 0 0 13px rgba(27,61,74,.1)}}
 @keyframes nudge{0%,100%{transform:none}50%{transform:translateX(6px)}}
-.job-pille{position:fixed;right:0;top:50%;z-index:25;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:6px;width:clamp(210px,17vw,290px);
+.job-pille{position:fixed;right:0;top:var(--pille-y,44vh);z-index:25;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:6px;width:clamp(176px,17vw,290px);
   background:var(--navy);color:var(--papier);text-decoration:none;padding:clamp(20px,2.8vh,28px) clamp(20px,1.8vw,28px) clamp(19px,2.6vh,26px);box-shadow:-18px 22px 44px -18px rgba(27,61,74,.6);
   border-left:3px solid var(--kupfer);opacity:0;transform:translate(100%,-50%);pointer-events:none;
   transition:opacity .9s var(--ease),transform .9s var(--ease-out),background-color .5s var(--ease)}
@@ -157,14 +157,9 @@ body.intro .hero>*:not(.slot){opacity:0}
 .job-pille span{font:italic 400 clamp(25px,2.1vw,32px)/1.08 "Cormorant Garamond",Georgia,serif}
 .job-pille b{font:500 11.5px/1.5 "Montserrat",sans-serif;letter-spacing:.26em;text-transform:uppercase;color:var(--salbei);transition:letter-spacing .5s var(--ease)}
 .job-pille:hover{background:#153240}.job-pille:hover b{letter-spacing:.32em}
-@media (max-width:1100px){
-  .job-pille{right:auto;left:50%;top:auto;bottom:calc(clamp(16px,2.4vh,28px) + env(safe-area-inset-bottom,0px));width:auto;max-width:calc(100vw - 28px);align-items:center;text-align:center;
-    border-left:0;border-top:3px solid var(--kupfer);padding:16px clamp(28px,5vw,48px) 15px;transform:translate(-50%,24px);box-shadow:0 22px 42px -16px rgba(27,61,74,.62)}
-  .job-pille.zeigen,.job-pille.zeigen:hover{transform:translate(-50%,0)}
-  .job-pille span{font-size:clamp(23px,3.2vw,30px)}
-}
-@media (max-width:600px){
-  .job-pille{left:12px;right:12px;max-width:none;width:auto;transform:translateY(24px);padding:14px 16px 13px}
+@media (min-width:701px) and (max-width:1100px){.hero>.sub,.hero>.versprechen,.hero>.claim{max-width:min(54ch,calc(100vw - 400px))}}
+@media (max-width:700px){
+  .job-pille{left:12px;right:12px;top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));max-width:none;width:auto;align-items:center;text-align:center;border-left:0;border-top:3px solid var(--kupfer);transform:translateY(24px);padding:14px 16px 13px}
   .job-pille.zeigen,.job-pille.zeigen:hover{transform:none}
   .job-pille span{font-size:22px}.job-pille b{font-size:10.5px}
 }
@@ -431,8 +426,8 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   </div>
 </main>
 
-<script src="assets/medien-data.js?v=20261006133119" onerror="this.remove()"></script>
-<script src="webseite/assets/editor.js?v=20261006133119"></script>
+<script src="assets/medien-data.js?v=20261006133504" onerror="this.remove()"></script>
+<script src="webseite/assets/editor.js?v=20261006133504"></script>
 <script>
 (function(){
   const body = document.body, slot = document.getElementById('slot'), svg = slot.querySelector('svg');
@@ -524,6 +519,11 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   function pilleUpd(){ pille.classList.toggle('zeigen', !bandSicht && !body.classList.contains('intro') && !body.classList.contains('bearbeiten') && !document.getElementById('start').hidden && done); }
   new IntersectionObserver(es => { const e = es[0]; bandSicht = e.isIntersecting; if (e.intersectionRatio > .3) band.classList.add('sicht'); else if (!e.isIntersecting) band.classList.remove('sicht'); pilleUpd(); }, {threshold: [0, .3]}).observe(band);
   addEventListener('scroll', pilleUpd, {passive: true}); setInterval(pilleUpd, 500);
+  // Pille sitzt rechts am Rand auf der Hoehe von Franks Satz "Manche Orte besucht man ..." und geht beim Scrollen mit
+  const claimEl = document.querySelector('.claim');
+  function pillePos(){ if (!claimEl || !start || start.hidden) return; const c = claimEl.getBoundingClientRect(), y = c.top + scrollY + c.height / 2;
+    pille.style.setProperty('--pille-y', Math.round(Math.min(Math.max(y, innerHeight * .28), innerHeight * .62)) + 'px'); }
+  addEventListener('resize', pillePos); addEventListener('load', pillePos); setTimeout(pillePos, 300); setTimeout(pillePos, 1800); if (document.fonts) document.fonts.ready.then(pillePos);
 
   // Kopf: Hintergrund beim Scrollen, Menue auf kleinen Bildschirmen, Kontakt-Box
   const kopf = document.getElementById('kopf');
