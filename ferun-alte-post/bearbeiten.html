@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="de" data-variante="cs" data-seite="start" data-assets="webseite/assets/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>FERUN Alte Post · Eggstätt</title>
+<meta name="description" content="FERUN – Alte Post est. 1820 in Eggstätt, Chiemseeregion. Alpine Küche und herzliche Gastlichkeit. Soft Opening 1. bis 5. Dezember, Eröffnungsfeier 6. Dezember, à la carte ab 7. Dezember. Wir suchen Verstärkung.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600&display=swap">
+<style>
+:root{--papier:#F6F5F1;--salbei:#C4CBC1;--navy:#1B3D4A;--navy-weich:#566C75;--kupfer:#AC845B;--linie:#D7D8D0;--flaeche:#E9ECE6;
+  --ease:cubic-bezier(.4,0,.2,1);--ease-out:cubic-bezier(.22,.61,.36,1);--takt:5.4s;color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+html,body{margin:0;background:var(--papier);color:var(--navy);min-height:100%;overflow-x:clip}
+body{position:relative;font:400 15px/1.65 "Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.intro{overflow:hidden}
+a{color:inherit}
+.caps{font:500 11px/1.4 "Montserrat",system-ui,sans-serif;letter-spacing:.3em;text-transform:uppercase}
+:focus-visible{outline:2px solid var(--kupfer);outline-offset:4px}
+[hidden]{display:none!important}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;margin:0}
+.schatten{position:absolute;top:0;left:50%;width:max(100vw,1100px);aspect-ratio:16/9;transform:translateX(-50%);pointer-events:none;z-index:0;
+  -webkit-mask-image:linear-gradient(#000 45%,transparent 90%);mask-image:linear-gradient(#000 45%,transparent 90%)}
+.schatten video,.schatten img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Kopf mit Navigation */
+.kopf{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:flex-end;align-items:center;gap:clamp(14px,2vw,30px);
+  padding:calc(14px + env(safe-area-inset-top,0px)) clamp(18px,3.6vw,48px) 14px;transition:background-color .5s var(--ease),box-shadow .5s var(--ease),opacity .9s var(--ease) .4s}
+.kopf.fest{background:rgba(246,245,241,.94);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--linie)}
+.kopf a.nav,.kontakt-knopf{color:var(--navy);text-decoration:none;font:500 10.5px/1 "Montserrat",sans-serif;letter-spacing:.24em;text-transform:uppercase;padding:8px 0;position:relative;white-space:nowrap}
+.kopf a.nav::after{content:"";position:absolute;left:0;right:100%;bottom:2px;height:1px;background:var(--kupfer);transition:right .45s var(--ease)}
+.kopf a.nav:hover::after,.kopf a.nav:focus-visible::after{right:0}
+.kopf a.nav.jobs-nav{color:var(--kupfer)}
+.kontakt-knopf{display:flex;align-items:center;gap:12px;background:none;border:0;cursor:pointer}
+.kontakt-knopf::after{content:"";width:34px;height:1px;background:var(--kupfer);transition:width .5s var(--ease)}
+.kontakt-knopf:hover::after,.kontakt-knopf[aria-expanded="true"]::after{width:54px}
+.menue-knopf{display:none}
+.kontakt-box{position:absolute;right:clamp(18px,3.6vw,48px);top:calc(100% - 4px);background:rgba(246,245,241,.985);border:1px solid var(--linie);padding:18px 22px;min-width:290px;
+  display:grid;gap:10px;font-size:13.5px;box-shadow:0 18px 40px rgba(27,61,74,.1);opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.kontakt-box.offen{opacity:1;transform:none;pointer-events:auto}
+.kontakt-box a{text-decoration:none;display:flex;justify-content:space-between;gap:22px;border-bottom:1px solid transparent}
+.kontakt-box a span:first-child{color:var(--kupfer);font:500 10px/1.8 "Montserrat",sans-serif;letter-spacing:.22em;text-transform:uppercase}
+.kontakt-box a:hover{border-color:var(--kupfer)}
+.kontakt-box .jobs-zeile{margin-top:4px;padding-top:12px;border-top:1px solid var(--linie);font-weight:500}
+.kontakt-box .jobs-zeile span:last-child{color:var(--navy)}
+.kontakt-box .adr{color:var(--navy-weich);font-size:12.5px}
+.zurueck{position:absolute;top:calc(20px + env(safe-area-inset-top,0px));left:clamp(18px,3.6vw,48px);z-index:35;display:flex;align-items:center;gap:14px;background:none;border:0;padding:8px 0;color:var(--navy);cursor:pointer;text-decoration:none}
+.zurueck::before{content:"";width:40px;height:1px;background:var(--kupfer);transition:width .5s var(--ease)}
+.zurueck.schwebend{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));background:rgba(246,245,241,.94);border:1px solid var(--linie);padding:10px 16px;box-shadow:0 10px 24px rgba(27,61,74,.08)}
+.zurueck:hover::before{width:60px}
+
+/* Ansichten */
+.view{position:relative;z-index:1}
+.view.aus{opacity:0;transform:translateY(8px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.view.rein{animation:view-rein .8s var(--ease-out) both}
+@keyframes view-rein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+body.intro .kopf{opacity:0}
+body.intro #start>*:not(.hero){opacity:0}
+body.intro .hero>*:not(.slot){opacity:0}
+#start>*,.hero>*:not(.slot){transition:opacity 1.1s var(--ease)}
+.slot{display:block;margin:0 auto;width:clamp(200px,min(26vw,36vh),400px);aspect-ratio:var(--logo-ar,2.6);will-change:transform}
+.slot .logo{width:100%;height:auto;display:block;overflow:visible}
+.logo .glyph{stroke:none}
+
+/* Hero */
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(46px,6.8vh,78px) 20px clamp(30px,5vh,56px)}
+.ort{margin:clamp(12px,2vh,20px) 0 0;color:var(--kupfer)}
+.hero h1{font-size:clamp(31px,min(3.7vw,5.6vh),58px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance;max-width:25ch;margin-top:clamp(14px,2.2vh,26px)}
+.sub{margin:clamp(12px,1.8vh,18px) 0 0;font:400 clamp(14px,1.2vw,17px)/1.6 "Montserrat",sans-serif;letter-spacing:.06em;max-width:58ch;color:var(--navy)}
+.status{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin:clamp(16px,2.4vh,26px) 0 0;border-block:1px solid var(--kupfer);padding:12px 6px}
+.status>span{padding:3px clamp(12px,1.8vw,26px);position:relative}
+.status>span+span::before{content:"";position:absolute;left:0;top:50%;height:16px;margin-top:-8px;width:1px;background:var(--kupfer);opacity:.7}
+.status .sk{color:var(--kupfer)}
+.status b{font-weight:600}
+
+/* Bereiche und Buehne */
+.bereiche{list-style:none;margin:clamp(16px,2.6vh,28px) 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center}
+.bereiche li{position:relative;padding:4px clamp(14px,2.4vw,36px)}
+.bereiche li+li::before{content:"";position:absolute;left:0;top:50%;width:1px;height:26px;margin-top:-13px;background:var(--kupfer);opacity:.7}
+.bereich{display:block;padding:6px 0 14px;color:var(--navy);cursor:pointer;position:relative;background:none;border:0;font:inherit}
+.bereich .wort{display:inline-block;transition:color .6s var(--ease),letter-spacing .6s var(--ease)}
+.bereich::before{content:"";position:absolute;left:0;bottom:6px;height:1px;width:0;background:var(--kupfer)}
+.bereich::after{content:"";position:absolute;left:0;bottom:6px;width:100%;height:1px;background:var(--linie);z-index:-1}
+.bereich.an .wort,.bereich:hover .wort{color:var(--kupfer);letter-spacing:.34em}
+.bereich.an::before{animation:fuell var(--takt) linear forwards}
+.bereiche.halt .bereich.an::before{animation:none;width:100%}
+@keyframes fuell{to{width:100%}}
+.buehne-wrap{width:min(1020px,100%);margin-top:clamp(14px,2.4vh,26px)}
+.buehne{position:relative;height:clamp(220px,min(35vh,41vw),410px);box-shadow:0 34px 60px -38px rgba(27,61,74,.5);background:var(--flaeche);overflow:hidden}
+.buehne .bild{position:absolute;inset:0;margin:0;background:var(--flaeche);opacity:0;clip-path:inset(0 0 0 0);pointer-events:none;
+  transition:opacity .9s var(--ease),clip-path 1.1s var(--ease-out)}
+.buehne .bild.vorher{opacity:0;transition:opacity .9s var(--ease) .35s}
+.buehne .bild.sicht{opacity:1;pointer-events:auto;z-index:2}
+.buehne .bild.start-rein{clip-path:inset(14% 22% 14% 22%)}
+.bild .par{position:absolute;inset:0}
+.bild img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--px,50%) var(--py,50%);
+  transform:scale(var(--s,1));transform-origin:var(--px,50%) var(--py,50%)}
+.buehne .bild.sicht img{animation:atmen 9s var(--ease-out) both}
+@keyframes atmen{from{transform:scale(calc(var(--s,1) * 1.07))}to{transform:scale(var(--s,1))}}
+.buehne::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(80% 100% at 50% 50%,rgba(20,40,48,.38),rgba(20,40,48,.1))}
+.buehne .spruch{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;pointer-events:none;color:#fff;text-shadow:0 2px 26px rgba(0,0,0,.34);
+  font:italic 400 clamp(34px,min(5vw,7vh),70px)/1 "Cormorant Garamond",Georgia,serif;padding:0 16px;text-align:center}
+.spruch .z{display:inline-block;white-space:pre;opacity:0;transform:translateY(.35em);filter:blur(5px);animation:zeichen .9s var(--ease-out) forwards;animation-delay:calc(var(--i) * 36ms + .25s)}
+@keyframes zeichen{to{opacity:1;transform:none;filter:none}}
+.vis{position:absolute;right:12px;bottom:10px;z-index:5;font:500 9px/1 "Montserrat",sans-serif;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.88);pointer-events:none}
+.kennzeile{margin:18px 0 0;color:var(--kupfer);min-height:1.4em}
+.satz{margin:6px auto 0;max-width:46ch;font:400 clamp(20px,2vw,27px)/1.3 "Cormorant Garamond",Georgia,serif;min-height:3.9em;transition:opacity .45s var(--ease)}
+.satz.weg,.kennzeile.weg{opacity:0}
+
+/* Jobs-Band */
+.jobband{background:var(--salbei);text-align:center;padding:clamp(54px,9vh,96px) 20px clamp(54px,9vh,96px);position:relative;z-index:1}
+.jobband .caps{color:var(--navy)}
+.jobband h2{font-size:clamp(46px,min(7.6vw,11vh),112px);line-height:.98;letter-spacing:-.02em;margin:14px 0 0;text-wrap:balance}
+.jobband p.sub{margin:18px auto 0;max-width:46ch;font-size:clamp(15px,1.3vw,19px)}
+.stellen{margin:26px 0 0;display:flex;flex-wrap:wrap;gap:8px 8px;justify-content:center;list-style:none;padding:0}
+.stellen li{border:1px solid var(--navy);padding:9px 18px;font:500 11px/1 "Montserrat",sans-serif;letter-spacing:.24em;text-transform:uppercase}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;margin-top:clamp(22px,3.4vh,34px);min-width:clamp(250px,24vw,340px);
+  border:1px solid var(--navy);color:var(--papier);background:var(--navy);text-decoration:none;padding:clamp(16px,2.2vh,21px) 36px;font:500 12px/1 "Montserrat",sans-serif;
+  letter-spacing:.3em;text-transform:uppercase;cursor:pointer;isolation:isolate;transition:color .7s var(--ease),letter-spacing .7s var(--ease)}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--papier);transform:scaleY(0);transform-origin:50% 100%;transition:transform .7s var(--ease)}
+.btn:hover,.btn:focus-visible{color:var(--navy);letter-spacing:.34em}
+.btn:hover::before,.btn:focus-visible::before{transform:scaleY(1)}
+.btn.hell{background:transparent;color:var(--navy);border-color:var(--kupfer)}
+.btn.hell::before{background:var(--navy)}
+.btn.hell:hover,.btn.hell:focus-visible{color:var(--papier);border-color:var(--navy)}
+.jobmail{margin:18px 0 0;font-size:14px}
+.jobmail a{text-decoration:none;border-bottom:1px solid var(--navy)}
+
+/* Abschnitte */
+.abschnitt{position:relative;z-index:1;padding:clamp(56px,9vh,100px) clamp(20px,5vw,60px)}
+.abschnitt .inner{width:min(1040px,100%);margin:0 auto}
+.abschnitt .kopfzeile{text-align:center;margin-bottom:clamp(30px,5vh,50px)}
+.abschnitt .kopfzeile .caps{color:var(--kupfer)}
+.abschnitt h2{font-size:clamp(34px,4.2vw,56px);line-height:1.05;margin-top:12px;text-wrap:balance}
+.abschnitt .lead{max-width:56ch;margin:14px auto 0;color:var(--navy);font-size:clamp(14px,1.2vw,16.5px)}
+.karten{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--navy)}
+.karte{padding:26px clamp(14px,2vw,28px) 30px;border-bottom:1px solid var(--linie);border-right:1px solid var(--linie)}
+.karte:nth-child(3n){border-right:0}
+.karte h3{font-size:clamp(25px,2.2vw,32px);line-height:1.1;margin:0 0 8px}
+.karte .caps{color:var(--kupfer);display:block;margin-bottom:10px}
+.karte p{margin:0;font-size:14px;color:var(--navy)}
+.feiern{background:var(--paperSoft,#FBFAF6)}
+.zweispaltig{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(28px,6vw,80px);align-items:start}
+.zweispaltig h3{font-size:clamp(26px,2.4vw,34px);margin:0 0 10px}
+.zweispaltig p{margin:0 0 14px;font-size:14.5px}
+.person{padding:14px 0;border-bottom:1px solid var(--linie)}
+.person b{display:block;font:500 11px/1.4 "Montserrat",sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--kupfer);margin-bottom:4px}
+.person span{font-size:14px}
+.linkpfeil{display:inline-block;margin-top:6px;text-decoration:none;border-bottom:1px solid var(--kupfer);font-weight:500;padding-bottom:2px}
+.umbau-raster{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1.4vw,16px);align-items:start}
+.umbau-raster .bild{position:relative;overflow:hidden;margin:0;background:var(--flaeche)}
+.umbau-raster figcaption{font-size:12px;color:var(--navy-weich);margin-top:7px;line-height:1.4}
+.umbau-raster figure.u{margin:0}
+.fuss{background:var(--navy);color:var(--papier);padding:clamp(46px,7vh,78px) clamp(20px,5vw,60px) calc(34px + env(safe-area-inset-bottom,0px));position:relative;z-index:1}
+.fuss .inner{width:min(1040px,100%);margin:0 auto}
+.fuss .logo-fuss{width:min(260px,60vw);height:auto;display:block;margin:0 0 clamp(26px,4vh,40px)}
+.mails{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;border-top:1px solid rgba(246,245,241,.28);padding-top:22px}
+.mails .caps{color:var(--salbei);display:block;margin-bottom:6px;font-size:10px}
+.mails a{text-decoration:none;font-size:14px;border-bottom:1px solid transparent}
+.mails a:hover{border-color:var(--kupfer)}
+.fuss .adr{margin:26px 0 0;font-size:12.5px;letter-spacing:.16em;color:var(--salbei)}
+.replay{background:none;border:0;padding:6px 0;margin-top:14px;font:inherit;color:var(--salbei);cursor:pointer;opacity:.7;font-size:10px;display:block}
+.replay:hover{opacity:1}
+
+/* Bewerbungsseite */
+#bewerben{display:flex;flex-direction:column;align-items:center;text-align:center;min-height:100svh;padding:clamp(84px,11vh,120px) 20px 60px}
+#bewerben .eyebrow{color:var(--kupfer)}
+#bewerben h1{font-size:clamp(34px,5vw,64px);line-height:1.04;margin-top:14px;max-width:18ch;text-wrap:balance}
+#bewerben .sub{max-width:52ch;line-height:1.7}
+.b-grid{display:grid;grid-template-columns:minmax(0,1fr) 1px minmax(0,1.25fr);gap:clamp(28px,5vw,72px);width:min(1080px,100%);margin-top:clamp(30px,5vh,56px);text-align:left;align-items:start}
+.b-grid::before{content:"";grid-column:2;grid-row:1;background:var(--kupfer);opacity:.6;align-self:stretch}
+.wege{grid-column:1;grid-row:1;display:grid;gap:22px}
+.wege h2,.formular h2{font-size:clamp(24px,2.2vw,30px);line-height:1.15}
+.kanaele{display:grid;gap:10px}
+.kanal{display:flex;justify-content:space-between;align-items:baseline;gap:16px;text-decoration:none;border-bottom:1px solid var(--linie);padding:10px 0;transition:border-color .5s var(--ease)}
+.kanal span:first-child{color:var(--kupfer)}
+.kanal span:last-child{font-size:14.5px}
+.kanal:hover{border-color:var(--kupfer)}
+.hinweis-links{margin:0;font-size:13.5px;color:var(--navy-weich);max-width:36ch}
+.formular{grid-column:3;grid-row:1;display:grid;gap:18px}
+.feld label,.feld legend{display:block;margin-bottom:6px;color:var(--navy-weich)}
+.feld input,.feld textarea{width:100%;font:inherit;color:var(--navy);background:transparent;border:0;border-bottom:1px solid var(--navy-weich);padding:8px 0;border-radius:0;transition:border-color .4s var(--ease)}
+.feld textarea{min-height:76px;resize:vertical}
+.feld input:focus,.feld textarea:focus{outline:none;border-bottom-color:var(--kupfer)}
+fieldset{border:0;padding:0;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;position:relative}
+.chips input{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none}
+.chips label{border:1px solid var(--linie);padding:9px 15px;cursor:pointer;font-size:13px;background:rgba(255,255,255,.6);margin:0;color:var(--navy);transition:background-color .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease)}
+.chips label:hover{border-color:var(--kupfer)}
+.chips input:checked+label{background:var(--navy);color:var(--papier);border-color:var(--navy)}
+.chips input:focus-visible+label{outline:2px solid var(--kupfer);outline-offset:2px}
+.formular .btn{justify-self:start;margin-top:4px}
+.hinweis{font-size:12px;color:var(--navy-weich);margin:0}
+.danke{border-left:2px solid var(--kupfer);padding:6px 0 6px 16px;margin:0}
+
+/* Bearbeiten-Modus (Bild-Editor aus der Webseite) */
+body.bearbeiten .buehne .bild.sicht{outline:1px dashed rgba(172,132,91,.9);outline-offset:-1px}
+body.bearbeiten .buehne::after,body.bearbeiten .buehne .spruch{pointer-events:none}
+body.bearbeiten .buehne::after{opacity:.35}
+body.bearbeiten .intro-weg{display:none}
+body.bearbeiten .kopf{pointer-events:none}
+body.bearbeiten .kopf a,body.bearbeiten .kopf button,body.bearbeiten .kopf .kontakt-box{pointer-events:auto}
+body.bearbeiten .umbau-raster .bild{cursor:grab}
+
+@media (max-width:1080px){
+  .kopf a.nav{display:none}
+  .menue-knopf{display:flex;align-items:center;background:none;border:0;cursor:pointer;color:var(--navy);font:500 10.5px/1 "Montserrat",sans-serif;letter-spacing:.24em;text-transform:uppercase;padding:8px 0}
+  .kopf.menue-offen{background:var(--papier);flex-wrap:wrap;justify-content:flex-end}
+  .kopf.menue-offen a.nav{display:block;width:100%;text-align:right;padding:11px 0;border-top:1px solid var(--linie)}
+  .kontakt-box{right:18px;left:18px}
+}
+@media (max-width:900px){
+  .karten{grid-template-columns:1fr}.karte{border-right:0}
+  .zweispaltig{grid-template-columns:1fr}
+  .umbau-raster{grid-template-columns:1fr 1fr}
+  .mails{grid-template-columns:1fr 1fr}
+  .b-grid{grid-template-columns:1fr;gap:36px}.b-grid::before{display:none}
+  .wege,.formular{grid-column:1;grid-row:auto}
+  .formular{border-top:1px solid var(--kupfer);padding-top:30px}
+}
+@media (max-width:760px){
+  .bereiche{display:grid;grid-template-columns:repeat(3,auto);justify-content:center;row-gap:2px}
+  .bereiche li{padding:4px 12px}
+  .bereiche li+li::before{height:16px;margin-top:-8px}
+  .bereiche li:nth-child(3n+1)::before{display:none}
+  .buehne{height:clamp(210px,56vw,320px)}
+  .satz{min-height:5.2em}
+  .status{flex-direction:column;gap:2px}.status>span+span::before{display:none}
+  .schatten{width:max(100vw,720px)}
+}
+@media (max-width:520px){
+  .bereiche{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;max-width:340px}
+  .bereiche li:nth-child(3n+1)::before{display:block}.bereiche li:nth-child(2n+1)::before{display:none}
+  .bereich .wort{letter-spacing:.22em}.bereich.an .wort,.bereich:hover .wort{letter-spacing:.22em}
+  .btn{min-width:0;width:100%;max-width:340px}
+  .mails{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+@media print{.kopf,.schatten{display:none}}
+</style>
+<link rel="stylesheet" href="webseite/assets/editor.css?v=20261006a">
+</head>
+<body>
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&location.hash!=='#bewerben'&&!/[?&]ohneintro/.test(location.search)&&sessionStorage.getItem('ferun_bearbeiten')!=='1'){document.body.classList.add('intro');}</script>
+<div class="schatten" aria-hidden="true"><video id="schattenVideo" src="assets/schatten.mp4" poster="assets/schatten_poster.jpg" muted autoplay loop playsinline preload="auto"></video></div>
+
+<header class="kopf" id="kopf">
+  <button type="button" class="menue-knopf" id="menueKnopf" aria-expanded="false" aria-controls="kopf">Menü</button>
+  <a class="nav" href="#zeiten">Öffnungszeiten</a>
+  <a class="nav" href="#mittag">Mittagstisch</a>
+  <a class="nav" href="#kaffee">Kaffee &amp; Kuchen</a>
+  <a class="nav" href="#feiern">Feiern</a>
+  <a class="nav" href="#gastgeber">Gastgeber</a>
+  <a class="nav" href="#anfahrt">Anfahrt</a>
+  <a class="nav jobs-nav" href="#jobs">Jobs</a>
+  <button class="kontakt-knopf" id="kontaktKnopf" aria-expanded="false" aria-controls="kontaktBox">Kontakt</button>
+  <div class="kontakt-box" id="kontaktBox">
+    <a href="mailto:kontakt@ferun.de"><span>Allgemein</span><span>kontakt@ferun.de</span></a>
+    <a href="mailto:reservierung@ferun.de"><span>Reservierung</span><span>reservierung@ferun.de</span></a>
+    <a href="mailto:bankett@ferun.de"><span>Feiern</span><span>bankett@ferun.de</span></a>
+    <a class="jobs-zeile" href="#bewerben" data-jobs="1"><span>Jobs &amp; Bewerben</span><span>Jetzt bewerben &rarr;</span></a>
+    <span class="adr">Kirchplatz 2 · 83125 Eggstätt</span>
+  </div>
+</header>
+<a class="zurueck caps" id="zurueck" href="#" hidden>Zurück</a>
+
+<main class="view" id="start">
+  <section class="hero" id="oben">
+    <a class="slot" id="slot" href="#oben" aria-label="FERUN Alte Post, Est. 1820 – nach oben"><svg class="logo" viewBox="189.98 187.98 464.30 208.05" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="FERUN Alte Post, Est. 1820"><defs><path xmlns="http://www.w3.org/2000/svg" id="font_2_2" d="M.042007448 0C.040664674 0 .039993287 .0019989014 .039993287 .005996704 .039993287 .009994507 .040664674 .011993408 .042007448 .011993408 .06666565 .011993408 .0851593 .013661702 .0974884 .016998291 .109827678 .020334879 .11816406 .02700297 .12249756 .037002565 .12683106 .047002157 .1289978 .06166585 .1289978 .08099365V.54400637C.1289978 .56333419 .12683106 .57783 .12249756 .5874939 .11816406 .59716799 .10999552 .60383608 .09799194 .60749819 .085998538 .6111705 .06766764 .6130066 .042999269 .6130066 .041666669 .6130066 .041000368 .6150055 .041000368 .6190033 .041000368 .6230011 .041666669 .625 .042999269 .625H.44500733C.45099894 .625 .45399476 .6219991 .45399476 .6159973L.45599366 .49299623C.45599366 .4910024 .4541626 .48983766 .4505005 .48950196 .44683839 .48916627 .44500733 .4900004 .44500733 .4920044 .44300334 .52800497 .43216453 .5556691 .41249085 .57499697 .39282737 .5943349 .36732994 .6040039 .33599855 .6040039H.2749939C.2416687 .6040039 .21967061 .60000106 .20899964 .59199526 .19832866 .58399966 .19299317 .56766769 .19299317 .54299929V.085006717C.19299317 .06499735 .19582622 .04982503 .20149231 .039489747 .20716858 .029164633 .21883647 .021998087 .23649597 .017990113 .25416566 .01399231 .28033448 .011993408 .31500245 .011993408 .31699626 .011993408 .31799317 .009994507 .31799317 .005996704 .31799317 .0019989014 .31699626 0 .31500245 0 .29299928 0 .26949565 .0003306071 .24449158 .0009918213 .21949768 .001663208 .19166565 .0019989014 .16099549 .0019989014 .13900249 .0019989014 .11767069 .001663208 .09700012 .0009918213 .07632955 .0003306071 .057998659 0 .042007448 0M.3939972 .22099304C.3939972 .2503306 .38616435 .2713318 .37049867 .28399659 .35483299 .29666139 .32866923 .30299378 .29200746 .30299378H.16299439V.32400514H.29499818C.33033753 .32400514 .35550437 .32967124 .37049867 .34100343 .38550315 .3523356 .39300538 .3700002 .39300538 .3939972 .39300538 .3953298 .39500428 .3959961 .39900209 .3959961 .40299989 .3959961 .40499879 .3953298 .40499879 .3939972 .40499879 .37399803 .40483094 .3584951 .40449525 .3474884 .4041697 .3364919 .40400697 .32499696 .40400697 .31300355 .40400697 .29766337 .40433757 .2826589 .40499879 .2679901 .40567018 .2533315 .40600587 .23766582 .40600587 .22099304 .40600587 .21966045 .40400187 .21899414 .3999939 .21899414 .3959961 .21899414 .3939972 .21966045 .3939972 .22099304Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_2_1" d="M.46200563 0H.042999269C.041666669 0 .041000368 .0019989014 .041000368 .005996704 .041000368 .009994507 .041666669 .011993408 .042999269 .011993408 .06766764 .011993408 .085998538 .013661702 .09799194 .016998291 .10999552 .020334879 .11816406 .02700297 .12249756 .037002565 .12683106 .047002157 .1289978 .06166585 .1289978 .08099365V.54400637C.1289978 .56333419 .12683106 .57783 .12249756 .5874939 .11816406 .59716799 .10999552 .60383608 .09799194 .60749819 .085998538 .6111705 .06766764 .6130066 .042999269 .6130066 .041666669 .6130066 .041000368 .6150055 .041000368 .6190033 .041000368 .6230011 .041666669 .625 .042999269 .625H.44500733C.45099894 .625 .45399476 .6219991 .45399476 .6159973L.45599366 .49299623C.45599366 .4910024 .4541626 .48983766 .4505005 .48950196 .44683839 .48916627 .44500733 .4900004 .44500733 .4920044 .44300334 .52800497 .43216453 .5556691 .41249085 .57499697 .39282737 .5943349 .36732994 .6040039 .33599855 .6040039H.2749939C.2523295 .6040039 .23516338 .60233566 .22349549 .598999 .21182759 .5956624 .2038269 .58932498 .19949341 .5799866 .19515991 .5706584 .19299317 .55699667 .19299317 .53900149V.085006717C.19299317 .06767273 .19515991 .054336549 .19949341 .04499817 .2038269 .035669965 .2114919 .029337565 .2224884 .026000977 .23349507 .022664389 .25 .020996094 .27200318 .020996094H.352005C.3839976 .020996094 .41082765 .032496137 .43249513 .055496217 .4541626 .0784963 .46833293 .10966492 .4750061 .14900208 .4750061 .1509959 .477005 .1516571 .4810028 .15098572 .4850006 .15032451 .4869995 .148997 .4869995 .14700318 .48433433 .12966919 .48216758 .10866801 .48049928 .083999637 .47883097 .059331258 .47799684 .036331178 .47799684 .01499939 .47799684 .0049997966 .4726664 0 .46200563 0M.40600587 .23300171C.40600587 .2623291 .39883933 .2833252 .38450624 .29599 .37017314 .30866496 .3463389 .31500245 .31300355 .31500245H.16299439V.33599855H.31599427C.34799705 .33599855 .37082926 .3414968 .38449098 .3524933 .39816285 .36349998 .40499879 .3813375 .40499879 .40600587 .40499879 .40733848 .40699769 .40800477 .41099549 .40800477 .41500346 .40800477 .41700746 .40733848 .41700746 .40600587 .41700746 .38600669 .4168396 .37050376 .4165039 .35949708 .4161682 .34850059 .41600038 .33700053 .41600038 .32499696 .41600038 .30966697 .41633097 .29466758 .4169922 .27999879 .41766358 .26533 .41799928 .2496643 .41799928 .23300171 .41799928 .23166912 .41600038 .23100281 .41200257 .23100281 .40800477 .23100281 .40600587 .23166912 .40600587 .23300171Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_2_5" d="M.55400088 0C.54266867 0 .52450057 .012832642 .49949647 .038497926 .47450257 .06416321 .4441681 .10116068 .40849305 .14949036 .37282817 .1978302 .33299766 .2549998 .28900147 .32099916L.34500123 .33799745C.4016622 .25732932 .449824 .19316101 .4894867 .14549256 .52915957 .09783427 .5641632 .06366984 .5944977 .042999269 .62483218 .022328696 .6540019 .011993408 .68200686 .011993408 .6840007 .011993408 .68499758 .009994507 .68499758 .005996704 .68499758 .0019989014 .6840007 0 .68200686 0 .64867147 0 .6215007 0 .6004944 0 .5794983 0 .5640004 0 .55400088 0M.30200196 .628006C.35533653 .628006 .39616905 .61583456 .4244995 .5914917 .45283 .567159 .46699525 .53532919 .46699525 .4960022 .46699525 .46000163 .4564972 .4275004 .4355011 .39849855 .414505 .36949668 .38683573 .34665934 .3524933 .32998658 .318161 .31332398 .28066508 .30499269 .2400055 .30499269 .23333232 .30499269 .22583008 .30532838 .21749878 .30599977 .20916748 .30667115 .20167034 .30733744 .19500733 .30799867V.08099365C.19500733 .06166585 .19683838 .047002157 .20050049 .037002565 .2041626 .02700297 .2121582 .020334879 .2244873 .016998291 .23682659 .013661702 .2553304 .011993408 .27999879 .011993408 .28200279 .011993408 .28300477 .009994507 .28300477 .005996704 .28300477 .0019989014 .28200279 0 .27999879 0 .2639974 0 .24616497 .0003306071 .22650147 .0009918213 .20683797 .001663208 .18533834 .0019989014 .16200257 .0019989014 .13999939 .0019989014 .11883036 .001663208 .09849548 .0009918213 .07816061 .0003306071 .059661867 0 .042999269 0 .041666669 0 .041000368 .0019989014 .041000368 .005996704 .041000368 .009994507 .041666669 .011993408 .042999269 .011993408 .06766764 .011993408 .08616638 .013661702 .09849548 .016998291 .110834758 .020334879 .1193339 .02700297 .12399292 .037002565 .12866211 .047002157 .1309967 .06166585 .1309967 .08099365V.54400637C.1309967 .56333419 .12882996 .57783 .12449646 .5874939 .120162967 .59716799 .11199442 .60383608 .099990848 .60749819 .08799744 .6111705 .06966654 .6130066 .04499817 .6130066 .043004354 .6130066 .042007448 .6150055 .042007448 .6190033 .042007448 .6230011 .043004354 .625 .04499817 .625 .060999555 .625 .07899984 .62449648 .09899902 .6234894 .11899821 .6224925 .13999939 .621994 .16200257 .621994 .18266297 .621994 .20649211 .62299606 .23348999 .625 .26049806 .62700399 .28333537 .628006 .30200196 .628006M.39900209 .46699525C.39900209 .5036672 .39349876 .53266909 .38249208 .55400088 .37149558 .57533267 .3559977 .5904999 .33599855 .59950259 .31599937 .60850527 .29200236 .6130066 .26400758 .6130066 .23933919 .6130066 .22166951 .6086731 .21099854 .6000061 .20033773 .5913391 .19500733 .5720062 .19500733 .54200747V.33200074C.20433553 .33066813 .21433003 .32966615 .22499085 .32899476 .23566182 .32833354 .24533081 .32800294 .2539978 .32800294 .30800376 .32800294 .3456726 .3398336 .3670044 .36349488 .38833619 .38716636 .39900209 .42166648 .39900209 .46699525Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_2_4" d="M.5720062 .5149994C.5720062 .5476634 .56483969 .5721639 .5505066 .588501 .5361735 .6048381 .5143382 .6130066 .4850006 .6130066 .4829966 .6130066 .48199464 .6150055 .48199464 .6190033 .48199464 .6230011 .4829966 .625 .4850006 .625 .5003306 .625 .5159963 .62449648 .5319977 .6234894 .5479991 .6224925 .56566879 .621994 .5850067 .621994 .60033676 .621994 .6160024 .6224925 .6320038 .6234894 .6480052 .62449648 .6626689 .625 .6759949 .625 .67732748 .625 .6779938 .6230011 .6779938 .6190033 .6779938 .6150055 .67732748 .6130066 .6759949 .6130066 .6493327 .6130066 .6293335 .6048381 .6159973 .588501 .60266116 .5721639 .59599307 .5476634 .59599307 .5149994V.23100281C.59599307 .17967224 .5861613 .13583882 .5664978 .09950256 .5468343 .0631663 .5193329 .03532918 .48399354 .015991211 .44866435-.0033365887 .40733338-.013000488 .3600006-.013000488 .31066386-.013000488 .26749674-.0033365887 .23049927 .015991211 .19350179 .03532918 .16483562 .062830608 .14450073 .09849548 .124165859 .13416036 .11399841 .17599488 .11399841 .22399903V.54400637C.11399841 .56333419 .11199951 .57783 .10800171 .5874939 .104003909 .59716799 .095835369 .60383608 .083496097 .60749819 .07116699 .6111705 .05300395 .6130066 .029006958 .6130066 .027664185 .6130066 .026992798 .6150055 .026992798 .6190033 .026992798 .6230011 .027664185 .625 .029006958 .625 .04499817 .625 .06282552 .62449648 .08248901 .6234894 .10216268 .6224925 .1233317 .621994 .1459961 .621994 .16933187 .621994 .19099935 .6224925 .21099854 .6234894 .23099773 .62449648 .24833171 .625 .2630005 .625 .2650045 .625 .26600648 .6230011 .26600648 .6190033 .26600648 .6150055 .2650045 .6130066 .2630005 .6130066 .2390035 .6130066 .22100322 .6110026 .20899964 .6069946 .19699605 .6029968 .18899536 .5959981 .18499756 .58599856 .18099976 .57599899 .17900086 .56133529 .17900086 .54200747V.2590027C.17900086 .17966716 .1968333 .119496669 .23249817 .07849121 .26816307 .03749593 .31799827 .016998291 .38200379 .016998291 .44200135 .016998291 .48866783 .03583272 .5220032 .07350159 .55533859 .11117045 .5720062 .16333516 .5720062 .22999573V.5149994Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_2_3" d="M.11999512 .10899353V.602005L.14300537 .6000061V.10899353C.14300537 .07433573 .14900208 .049504598 .16099549 .034500123 .17299907 .019495646 .19299825 .011993408 .22099304 .011993408 .22299703 .011993408 .22399903 .009994507 .22399903 .005996704 .22399903 .0019989014 .22299703 0 .22099304 0 .20766704 0 .19400025 .0003306071 .17999268 .0009918213 .16599529 .001663208 .15032959 .0019989014 .1329956 .0019989014 .11633301 .0019989014 .10033163 .001663208 .084991458 .0009918213 .06966146 .0003306071 .05499776 0 .041000368 0 .039667768 0 .039001466 .0019989014 .039001466 .005996704 .039001466 .009994507 .039667768 .011993408 .041000368 .011993408 .07033793 .011993408 .09083557 .019495646 .102493289 .034500123 .11416117 .049504598 .11999512 .07433573 .11999512 .10899353M.6239929-.011993408C.6239929-.013336182 .62232467-.014170329 .61898806-.01449585 .6156616-.014831543 .6133321-.014668782 .6119995-.014007568L.1519928 .54299929C.12932842 .5703328 .10916138 .5888316 .0914917 .5984955 .07383219 .60816958 .05700175 .6130066 .041000368 .6130066 .03899638 .6130066 .037994386 .6150055 .037994386 .6190033 .037994386 .6230011 .03899638 .625 .041000368 .625 .05300395 .625 .06517029 .6246643 .07749939 .6239929 .08982849 .6233317 .100992839 .6230011 .11099243 .6230011 .12299601 .6230011 .1343282 .6233317 .14498902 .6239929 .15565999 .6246643 .16366577 .625 .16900635 .625 .17767334 .625 .18367005 .621165 .18699646 .6134949 .19033306 .60583499 .20000203 .592336 .21600342 .57299807L.6159973 .08200073 .6239929-.011993408M.6239929 .5149994V-.011993408L.6009979 .018997193V.5149994C.6009979 .54966738 .595164 .5746663 .5834961 .58999636 .5718282 .6053365 .55232748 .6130066 .5249939 .6130066 .5236613 .6130066 .522995 .6150055 .522995 .6190033 .522995 .6230011 .5236613 .625 .5249939 .625 .5383301 .625 .55216476 .62449648 .5664978 .6234894 .5808309 .6224925 .5963338 .621994 .6130066 .621994 .6289978 .621994 .64482626 .6224925 .66049197 .6234894 .6761678 .62449648 .69066879 .625 .70399478 .625 .7059987 .625 .70700076 .6230011 .70700076 .6190033 .70700076 .6150055 .7059987 .6130066 .70399478 .6130066 .67532858 .6130066 .65482589 .6053365 .6424866 .58999636 .6301575 .5746663 .6239929 .54966738 .6239929 .5149994Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_3_1" d="M-.0010070801 0 .31599427 .69999697H.4149933L.7330017 0H.628006L.34500123 .6439972H.3849945L.102005008 0H-.0010070801M.13400269 .17500305 .16099549 .25500489H.5549927L.58399966 .17500305H.13400269Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_3_3" d="M.10499573 0V.69999697H.20500183V.087005618H.58399966V0H.10499573Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_3_7" d="M.2440033 0V.6130066H.0039978029V.69999697H.58299258V.6130066H.34300233V0H.2440033Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_3_2" d="M.10499573 0V.69999697H.598999V.6130066H.20500183V.087005618H.6130066V0H.10499573M.19599915 .31300355V.397995H.55599978V.31300355H.19599915Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_3_8" d="" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_3_5" d="M.10499573 0V.69999697H.37800599C.43933616 .69999697 .4916687 .69032797 .53500369 .67099 .5783386 .6516622 .6116689 .6236623 .6349945 .58699038 .65833029 .55032858 .66999819 .506663 .66999819 .45599366 .66999819 .40533448 .65833029 .36183677 .6349945 .3255005 .6116689 .28916423 .5783386 .26116435 .53500369 .24150086 .4916687 .22183736 .43933616 .21200562 .37800599 .21200562H.16000366L.20500183 .2590027V0H.10499573M.20500183 .24899292 .16000366 .29899598H.375C.43899537 .29899598 .4874929 .31266276 .52049258 .33999635 .5535024 .36732994 .5700073 .4059957 .5700073 .45599366 .5700073 .5060018 .5535024 .54467269 .52049258 .5720062 .4874929 .5993398 .43899537 .6130066 .375 .6130066H.16000366L.20500183 .6629944V.24899292Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_3_4" d="M.42100526-.0079956059C.36767069-.0079956059 .3181661 .0010019938 .27249146 .018997193 .22682698 .037002565 .18732707 .06216939 .1539917 .09449768 .120666507 .12683614 .094670619 .16466777 .07600403 .20799256 .057337446 .2513275 .04800415 .29866538 .04800415 .3500061 .04800415 .40133668 .057337446 .44866944 .07600403 .4920044 .094670619 .53533938 .120666507 .57317098 .1539917 .60549929 .18732707 .6378377 .22665914 .6630046 .27198792 .68099978 .31732688 .69899496 .3669993 .70799258 .42100526 .70799258 .4743398 .70799258 .5235036 .6991577 .5684967 .68148806 .61349996 .66382858 .65283206 .6388295 .6864929 .6064911 .720164 .5741628 .746165 .5363312 .76449587 .49299623 .7828369 .44966126 .79200747 .4019979 .79200747 .3500061 .79200747 .29800416 .7828369 .2503357 .76449587 .20700073 .746165 .16366577 .720164 .12582906 .6864929 .0934906 .65283206 .06116231 .61349996 .03616333 .5684967 .018493653 .5235036 .00083414718 .4743398-.0079956059 .42100526-.0079956059M.42100526 .08099365C.45967103 .08099365 .49550376 .08766174 .5285034 .100997928 .5615031 .11433411 .59016928 .13316854 .61450198 .15750122 .63883468 .18183391 .65783187 .21033223 .67149356 .24299622 .6851654 .27567039 .69200137 .31134034 .69200137 .3500061 .69200137 .38867188 .6851654 .42433677 .67149356 .45700074 .65783187 .4896647 .63883468 .518163 .61450198 .5424957 .59016928 .5668284 .5615031 .58566287 .5285034 .598999 .49550376 .6123352 .45967103 .6190033 .42100526 .6190033 .3816681 .6190033 .34549967 .6123352 .3125 .598999 .27950035 .58566287 .2506663 .5668284 .22599793 .5424957 .20132955 .518163 .18215943 .4896647 .16848755 .45700074 .15482585 .42433677 .147995 .38867188 .147995 .3500061 .147995 .31134034 .15482585 .27567039 .16848755 .24299622 .18215943 .21033223 .20132955 .18183391 .22599793 .15750122 .2506663 .13316854 .27950035 .11433411 .3125 .100997928 .34549967 .08766174 .3816681 .08099365 .42100526 .08099365Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_3_6" d="M.30900575-.0079956059C.25567118-.0079956059 .20466614 .00016784668 .1559906 .016494751 .10732523 .03283183 .068995159 .054000856 .041000368 .08000183L.07800293 .15800476C.10466512 .13466899 .1386617 .11533102 .17999268 .099990848 .22133382 .08466085 .26433818 .07699585 .30900575 .07699585 .3496653 .07699585 .3826599 .08165995 .4079895 .09098816 .43332926 .10032654 .45199586 .11316427 .46398927 .12950135 .47599284 .14583843 .48199464 .16433716 .48199464 .18499756 .48199464 .20899455 .47416178 .22832744 .4584961 .24299622 .4428304 .257665 .4224955 .26950074 .39749146 .27850343 .37249757 .2875061 .34500123 .29533897 .31500245 .30200196 .28500367 .30866496 .25483705 .3164978 .22450257 .3255005 .19416809 .33450318 .16649883 .3460032 .14149475 .3600006 .116500858 .37399803 .096333827 .39282737 .08099365 .41648866 .06566366 .44016014 .057998659 .47066245 .057998659 .5079956 .057998659 .54399618 .067499797 .5771637 .086502078 .60749819 .10550436 .63783267 .13483684 .66216537 .17449951 .6804962 .21416219 .6988271 .2646637 .70799258 .32600404 .70799258 .3666636 .70799258 .40699259 .70265707 .44699098 .6919861 .4869995 .68132528 .5216675 .6659953 .5509949 .6459961L.5180054 .56599429C.4880066 .58599349 .4563395 .6004944 .42300416 .6094971 .3896688 .61849978 .35733543 .6230011 .32600404 .6230011 .28666688 .6230011 .2543284 .6180013 .22898865 .6080017 .20365906 .59800216 .18516033 .58466598 .17349243 .56799319 .16183472 .55133059 .15600586 .532664 .15600586 .5119934 .15600586 .4873352 .1638387 .46767173 .1795044 .45300294 .19517009 .43833415 .21549988 .42666627 .24049378 .41799928 .26549784 .40933229 .29299928 .40149943 .32299806 .39450074 .35299684 .38750205 .38316346 .3796692 .41349793 .3710022 .4438324 .3623352 .47149659 .35099793 .49649049 .33699037 .52149459 .32299296 .54166159 .3043264 .5569916 .2809906 .5723317 .257665 .58000186 .22766622 .58000186 .19099427 .58000186 .15566509 .5703328 .12283325 .5509949 .09249878 .53166708 .062164308 .5018361 .037831624 .46150209 .019500733 .421168 .0011698405 .3703359-.0079956059 .30900575-.0079956059Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_4_3" d="M.09399414 0V.69999697H.6049957V.5910034H.22399903V.10899353H.6190033V0H.09399414M.21400452 .30200196V.40899659H.56199648V.30200196H.21400452Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_4_7" d="M.24699402-.007003784C.20232646-.007003784 .15949504-.0011698405 .118499759 .010498047 .07750448 .022165934 .045003255 .036331178 .020996094 .052993776L.069000247 .147995C.09299723 .132665 .121663417 .120000209 .15499878 .11000061 .18833415 .100001018 .22166951 .09500122 .25500489 .09500122 .29433189 .09500122 .3228302 .10033163 .34049989 .11099243 .35816957 .121663417 .3670044 .13600159 .3670044 .15400696 .3670044 .16866558 .3610026 .17982991 .34899903 .1875 .33699546 .19517009 .32132469 .20100403 .3019867 .20500183 .2826589 .20899964 .26115928 .21266175 .2374878 .21598816 .21382649 .21932476 .19016011 .2238261 .16648865 .22949219 .14282735 .23516846 .12132772 .24350484 .101989749 .25450135 .08266195 .26549784 .066996257 .28032939 .054992677 .29899598 .042999269 .31766258 .037002565 .34233094 .037002565 .3730011 .037002565 .40699769 .046666463 .43649293 .06599426 .46148683 .08533224 .48649089 .11249796 .5058238 .14749146 .5194855 .18249512 .53315737 .22399903 .5399933 .27200318 .5399933 .30800376 .5399933 .34433494 .5359955 .3809967 .5279999 .41766868 .5200043 .44800315 .50867208 .47200013 .4940033L.42399598 .39900209C.39866639 .41433207 .37316896 .4248301 .34750367 .43049623 .32183839 .43616233 .29633586 .43899537 .2709961 .43899537 .23300171 .43899537 .20483399 .43332926 .18649292 .42199708 .16816204 .4106649 .15899658 .3963318 .15899658 .3789978 .15899658 .36299644 .16499837 .35099284 .17700196 .34298707 .18900554 .33499146 .20467122 .32865907 .22399903 .32398988 .24333699 .31933085 .26483665 .3155009 .28849793 .3125 .3121694 .3094991 .33566795 .30499778 .35899354 .29899598 .38232932 .29299418 .40382896 .28482566 .42349244 .27449037 .4431661 .26416526 .45899964 .24966939 .47099305 .23100281 .4829966 .21233623 .4889984 .18800354 .4889984 .15800476 .4889984 .124669399 .4791616 .09566752 .45948792 .070999149 .43982444 .04633077 .4119924 .027160645 .37599183 .0134887699 .34000144-.00017293294 .29700218-.007003784 .24699402-.007003784Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_4_8" d="M.28300477-.007003784C.2243398-.007003784 .17900594 .008163452 .14700318 .038497926 .115000408 .0688324 .09899902 .11366781 .09899902 .17300415V.6519928H.22399903V.17599488C.22399903 .15066529 .23049927 .1309967 .24349976 .116989139 .25650025 .10299174 .27466838 .09599304 .29800416 .09599304 .32599894 .09599304 .34932963 .10332743 .36799623 .117996219L.40299989 .029006958C.3883311 .017003378 .3703308 .008000691 .34899903 .0019989014 .32766725-.004002889 .30566917-.007003784 .28300477-.007003784M.011001587 .43400575V.5339966H.3670044V.43400575H.011001587Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_4_14" d="M.12199402-.007003784C.09932963-.007003784 .07999674 .00082906088 .06399536 .016494751 .047993978 .032160444 .039993287 .051996869 .039993287 .07600403 .039993287 .10133362 .047993978 .12149557 .06399536 .13648987 .07999674 .15149434 .09932963 .15899658 .12199402 .15899658 .14466858 .15899658 .16400147 .15149434 .17999268 .13648987 .19599407 .12149557 .20399475 .10133362 .20399475 .07600403 .20399475 .051996869 .19599407 .032160444 .17999268 .016494751 .16400147 .00082906088 .14466858-.007003784 .12199402-.007003784Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_4_13" d="" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_4_10" d="M.15600586 0V.6499939L.21299744 .5910034H.0079956059V.69999697H.28599549V0H.15600586Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_4_12" d="M.32499696-.009994507C.2670034-.009994507 .21666973-.0013275147 .17399597 .01600647 .1313324 .033340455 .098332729 .057835897 .07499695 .0894928 .051661176 .121159877 .039993287 .15833028 .039993287 .20100403 .039993287 .2436676 .05132548 .2796631 .07398987 .30899049 .09666443 .33832804 .1293335 .36066184 .17199707 .37599183 .21466065 .391332 .2656606 .39900209 .32499696 .39900209 .38433329 .39900209 .4355011 .391332 .47850038 .37599183 .52149966 .36066184 .5544993 .33816529 .5774994 .3085022 .60049948 .2788391 .6119995 .2430064 .6119995 .20100403 .6119995 .15833028 .60016378 .121159877 .5764923 .0894928 .552831 .057835897 .51950076 .033340455 .47650147 .01600647 .4335022-.0013275147 .3830007-.009994507 .32499696-.009994507M.32499696 .09199524C.3730011 .09199524 .41100059 .101994838 .43899537 .12199402 .46700035 .14199321 .4810028 .16966248 .4810028 .20500183 .4810028 .2396698 .46700035 .2670034 .43899537 .28700257 .41100059 .30700175 .3730011 .31700135 .32499696 .31700135 .27700297 .31700135 .23933919 .30700175 .21200562 .28700257 .18467205 .2670034 .17100525 .2396698 .17100525 .20500183 .17100525 .16966248 .18467205 .14199321 .21200562 .12199402 .23933919 .101994838 .27700297 .09199524 .32499696 .09199524M.32499696 .41099549C.3663279 .41099549 .3989919 .41983033 .4229889 .4375 .44699607 .45516969 .45899964 .4790039 .45899964 .5090027 .45899964 .54033407 .44666545 .56466677 .42199708 .58200076 .3973287 .5993347 .36499534 .6080017 .32499696 .6080017 .28499858 .6080017 .25299583 .5993347 .22898865 .58200076 .20499166 .56466677 .19299317 .54033407 .19299317 .5090027 .19299317 .4790039 .2048289 .45516969 .22850037 .4375 .25217185 .41983033 .28433738 .41099549 .32499696 .41099549M.32499696 .33099366C.2710012 .33099366 .22467041 .3381602 .18600464 .3524933 .14733887 .3668264 .117502849 .38782756 .09649658 .41549684 .07550049 .4431661 .06500244 .47633363 .06500244 .5149994 .06500244 .55499777 .07583618 .58949789 .09750366 .61849978 .11917114 .64750167 .14966838 .67000326 .18899536 .68600466 .22833252 .70200607 .27366639 .7100067 .32499696 .7100067 .3769989 .7100067 .42266337 .70200607 .46199037 .68600466 .5013275 .67000326 .5319977 .64750167 .55400088 .61849978 .576004 .58949789 .5870056 .55499777 .5870056 .5149994 .5870056 .47633363 .5765025 .4431661 .5554962 .41549684 .5345001 .38782756 .5043335 .3668264 .46499635 .3524933 .42566935 .3381602 .3790029 .33099366 .32499696 .33099366Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_4_11" d="M.035003663 0V.087005618L.31300355 .35099793C.33633933 .3730011 .3536733 .39233399 .3650055 .40899659 .37633769 .42566935 .38383485 .44117228 .38749696 .45550538 .39116923 .46983848 .39300538 .4833374 .39300538 .4960022 .39300538 .52800497 .38200379 .5528361 .3600006 .5704956 .33799745 .5881653 .30566407 .5970001 .2630005 .5970001 .2290039 .5970001 .19817098 .59099838 .17050171 .57899478 .14283245 .56700137 .11899821 .5486705 .09899902 .5240021L.0079956059 .59399417C.03532918 .6306661 .0721639 .6591695 .118499759 .6795044 .16483562 .6998393 .21666973 .7100067 .27400209 .7100067 .32467143 .7100067 .36883546 .7018382 .40649415 .6855011 .444163 .669164 .4731649 .6459961 .49349977 .6159973 .51383468 .58599856 .5240021 .5503337 .5240021 .5090027 .5240021 .4863383 .52100118 .46383668 .5149994 .4414978 .5089976 .4191691 .4976603 .39567057 .48098756 .3710022 .46432496 .34633384 .43999736 .31866456 .40800477 .28799439L.16900635 .06100464 .14199829 .11000061H.5509949V0H.035003663Z" />
+<path xmlns="http://www.w3.org/2000/svg" id="font_4_9" d="M.33599855-.009994507C.28067018-.009994507 .23083496 .004002889 .18649292 .03199768 .14216106 .060002645 .10733032 .10083517 .08200073 .15449524 .056671144 .20816548 .044006349 .27333579 .044006349 .3500061 .044006349 .42666627 .056671144 .49183146 .08200073 .5455017 .10733032 .59917196 .14216106 .64000448 .18649292 .66799929 .23083496 .6960042 .28067018 .7100067 .33599855 .7100067 .3919983 .7100067 .44199626 .6960042 .48599244 .66799929 .5299988 .64000448 .5648346 .59917196 .5904999 .5455017 .61616519 .49183146 .6289978 .42666627 .6289978 .3500061 .6289978 .27333579 .61616519 .20816548 .5904999 .15449524 .5648346 .10083517 .5299988 .060002645 .48599244 .03199768 .44199626 .004002889 .3919983-.009994507 .33599855-.009994507M.33599855 .102996829C.3686625 .102996829 .396993 .111831668 .42099 .12950135 .44499717 .14717102 .46383158 .17433675 .4774933 .21099854 .49116517 .24767049 .4980011 .29400636 .4980011 .3500061 .4980011 .40666709 .49116517 .45316569 .4774933 .48950196 .46383158 .5258382 .44499717 .5528361 .42099 .5704956 .396993 .5881653 .3686625 .5970001 .33599855 .5970001 .30466715 .5970001 .2768351 .5881653 .25250245 .5704956 .22816976 .5528361 .20916748 .5258382 .1954956 .48950196 .18183391 .45316569 .17500305 .40666709 .17500305 .3500061 .17500305 .29400636 .18183391 .24767049 .1954956 .21099854 .20916748 .17433675 .22816976 .14717102 .25250245 .12950135 .2768351 .111831668 .30466715 .102996829 .33599855 .102996829Z" />
+</defs><g class="ferun"><use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="F" xlink:href="#font_2_2" transform="matrix(104,0,0,-104,204.11057,271.57048)" fill="#1B3D4A" class="glyph" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="E" xlink:href="#font_2_1" transform="matrix(104,0,0,-104,285.85459,271.57048)" fill="#1B3D4A" class="glyph" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="R" xlink:href="#font_2_5" transform="matrix(104,0,0,-104,370.5106,271.57048)" fill="#1B3D4A" class="glyph" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="U" xlink:href="#font_2_4" transform="matrix(104,0,0,-104,460.99058,271.57048)" fill="#1B3D4A" class="glyph" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="N" xlink:href="#font_2_3" transform="matrix(104,0,0,-104,562.39059,271.57048)" fill="#1B3D4A" class="glyph" />
+</g><g class="alte"><use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="A" xlink:href="#font_3_1" transform="matrix(45,0,0,-45,247.78098,332.54899)" fill="#AC845B" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="L" xlink:href="#font_3_3" transform="matrix(45,0,0,-45,292.421,332.54899)" fill="#AC845B" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="T" xlink:href="#font_3_7" transform="matrix(45,0,0,-45,330.85099,332.54899)" fill="#AC845B" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="E" xlink:href="#font_3_2" transform="matrix(45,0,0,-45,368.96598,332.54899)" fill="#AC845B" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text=" " xlink:href="#font_3_8" transform="matrix(45,0,0,-45,410.81599,332.54899)" fill="#AC845B" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="P" xlink:href="#font_3_5" transform="matrix(45,0,0,-45,434.62098,332.54899)" fill="#AC845B" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="O" xlink:href="#font_3_4" transform="matrix(45,0,0,-45,478.81098,332.54899)" fill="#AC845B" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="S" xlink:href="#font_3_6" transform="matrix(45,0,0,-45,528.311,332.54899)" fill="#AC845B" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="T" xlink:href="#font_3_7" transform="matrix(45,0,0,-45,567.956,332.54899)" fill="#AC845B" />
+</g><g class="klein"><use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="E" xlink:href="#font_4_3" transform="matrix(24,0,0,-24,341.3498,377.39277)" fill="#1B3D4A" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="s" xlink:href="#font_4_7" transform="matrix(24,0,0,-24,364.0778,377.39277)" fill="#1B3D4A" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="t" xlink:href="#font_4_8" transform="matrix(24,0,0,-24,383.0858,377.39277)" fill="#1B3D4A" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="." xlink:href="#font_4_14" transform="matrix(24,0,0,-24,399.9098,377.39277)" fill="#1B3D4A" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text=" " xlink:href="#font_4_13" transform="matrix(24,0,0,-24,412.4138,377.39277)" fill="#1B3D4A" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="1" xlink:href="#font_4_10" transform="matrix(24,0,0,-24,425.6858,377.39277)" fill="#1B3D4A" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="8" xlink:href="#font_4_12" transform="matrix(24,0,0,-24,441.47779,377.39277)" fill="#1B3D4A" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="2" xlink:href="#font_4_11" transform="matrix(24,0,0,-24,463.77378,377.39277)" fill="#1B3D4A" />
+<use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-text="0" xlink:href="#font_4_9" transform="matrix(24,0,0,-24,484.38978,377.39277)" fill="#1B3D4A" />
+<path xmlns="http://www.w3.org/2000/svg" transform="matrix(1,0,0,-1,0,595.2756)" d="M311.5952 225.6228C311.5952 223.6658 310.0092 222.0798 308.0522 222.0798 306.0952 222.0798 304.5082 223.6658 304.5082 225.6228 304.5082 227.5798 306.0952 229.1658 308.0522 229.1658 310.0092 229.1658 311.5952 227.5798 311.5952 225.6228" fill="#1B3D4A" />
+<path xmlns="http://www.w3.org/2000/svg" transform="matrix(1,0,0,-1,0,595.2756)" d="M537.3811 225.6228C537.3811 223.6658 535.7951 222.0798 533.8381 222.0798 531.8811 222.0798 530.2941 223.6658 530.2941 225.6228 530.2941 227.5798 531.8811 229.1658 533.8381 229.1658 535.7951 229.1658 537.3811 227.5798 537.3811 225.6228" fill="#1B3D4A" />
+</g></svg></a>
+    <p class="ort caps">Eggstätt · Chiemseeregion</p>
+    <h1>Manche Orte besucht man. An anderen kommt man an.</h1>
+    <p class="sub">Alpine Küche und herzliche Gastlichkeit in einem Haus, das seit 1820 Menschen zusammenbringt.</p>
+    <p class="status caps" aria-label="Eröffnung"><span class="sk">Wir öffnen im Dezember</span><span>Soft Opening <b>1.–5.12.</b></span><span>Eröffnungsfeier <b>6.12.</b></span><span>À la carte ab <b>7.12.</b></span></p>
+
+    <ul class="bereiche" id="bereiche" aria-label="Was entsteht">
+    <li><button type="button" class="bereich" data-b="gasthaus"><span class="wort caps">Gasthaus</span></button></li>
+    <li><button type="button" class="bereich" data-b="vinothek"><span class="wort caps">Vinothek</span></button></li>
+    <li><button type="button" class="bereich" data-b="biergarten"><span class="wort caps">Biergarten</span></button></li>
+    <li><button type="button" class="bereich" data-b="greisslerei"><span class="wort caps">Greißlerei</span></button></li>
+    <li><button type="button" class="bereich" data-b="bar"><span class="wort caps">Bar</span></button></li>
+    <li><button type="button" class="bereich" data-b="festsaal"><span class="wort caps">Festsaal</span></button></li>
+    </ul>
+    <div class="buehne-wrap">
+      <div class="buehne" id="buehne" aria-live="off">
+      <figure class="bild start-rein" data-edit="gasthaus" data-fest><div class="par"><img src="assets/fotos/gasthaus.jpg" alt="Gasthaus" decoding="async"></div></figure>
+      <figure class="bild start-rein" data-edit="vinothek" data-fest><div class="par"><img src="assets/fotos/vinothek.jpg" alt="Vinothek" decoding="async"></div></figure>
+      <figure class="bild start-rein" data-edit="biergarten" data-fest><div class="par"><img src="assets/fotos/biergarten.jpg" alt="Biergarten" decoding="async"></div></figure>
+      <figure class="bild start-rein" data-edit="greisslerei" data-fest><div class="par"><img src="assets/fotos/greisslerei.jpg" alt="Greißlerei" decoding="async"></div></figure>
+      <figure class="bild start-rein" data-edit="bar" data-fest><div class="par"><img src="assets/fotos/bar.jpg" alt="Bar" decoding="async"></div></figure>
+      <figure class="bild start-rein" data-edit="festsaal" data-fest><div class="par"><img src="assets/fotos/festsaal.jpg" alt="Festsaal" decoding="async"></div></figure>
+        <div class="spruch" id="spruch" aria-hidden="true"></div>
+        <span class="vis">Visualisierung</span>
+      </div>
+      <p class="kennzeile caps" id="kennzeile"></p>
+      <p class="satz" id="satz"></p>
+    </div>
+    <div hidden id="bdaten"><div class="bd" data-b="gasthaus" data-spruch="Mahlzeit." data-kz="Tafelstube &amp; Kaminstube" data-satz="Gute Küche. Gute Gläser. Warme Stuben. Und das schöne Gefühl, Gast zu sein." hidden></div><div class="bd" data-b="vinothek" data-spruch="Zum Wohl." data-kz="Vinothek" data-satz="250 Weine. Alpin gedacht, persönlich kuratiert. Zum Entdecken, Teilen, Bleiben – und Mitnehmen." hidden></div><div class="bd" data-b="biergarten" data-spruch="Unter der Kastanie." data-kz="Biergarten" data-satz="Zusammenrücken, einschenken, sitzen bleiben. Bayerisches Leben unter alten Kastanien." hidden></div><div class="bd" data-b="greisslerei" data-spruch="Für daheim." data-kz="Greißlerei" data-satz="Ein Stück Ferun für zu Hause. Dinge, die wir selbst mögen, kochen, trinken und gerne weitergeben." hidden></div><div class="bd" data-b="bar" data-spruch="Auf ein Glaserl." data-kz="Alpin-Bar" data-satz="Ankommen. Anstoßen. Hängenbleiben. Der Treffpunkt im Ferun – davor, danach oder einfach so." hidden></div><div class="bd" data-b="festsaal" data-spruch="Feiern." data-kz="Festsaal" data-satz="Für die Feste, an die man sich erinnert. Und für alles, was Menschen zusammenbringt." hidden></div></div>
+  </section>
+
+  <section class="jobband" id="jobs" aria-labelledby="jobsTitel">
+    <span class="caps">Jobs bei FERUN</span>
+    <h2 id="jobsTitel">Wir suchen Verstärkung.</h2>
+    <p class="sub">Für ein neues Haus am Kirchplatz suchen wir Menschen mit Lust auf gute Gastlichkeit. Quereinsteiger sind willkommen, ein kurzes Hallo genügt.</p>
+    <ul class="stellen"><li>Service</li><li>Küche</li><li>Bar</li><li>Greißlerei</li><li>Vinothek</li></ul>
+    <a href="#bewerben" class="btn" id="jobLink">Jetzt bewerben</a>
+    <p class="jobmail">oder direkt an <a href="mailto:jobs@ferun.de">jobs@ferun.de</a></p>
+  </section>
+
+  <section class="abschnitt" id="zeiten" aria-labelledby="zeitenTitel">
+    <div class="inner">
+      <div class="kopfzeile"><span class="caps">Öffnungszeiten</span><h2 id="zeitenTitel">Täglich geöffnet. Auch mittags und zur Kaffeezeit.</h2>
+        <p class="lead">Die genauen Zeiten geben wir hier bekannt, sobald sie feststehen.</p></div>
+      <div class="karten">
+        <div class="karte" id="mittag"><span class="caps">Montag bis Freitag</span><h3>Z’Mittag</h3><p>Eine wechselnde Wochenkarte, ein Hauptgericht oder zwei bis drei Gänge. Hausgemachte Pasta, Saisonales, Fleisch und Fisch aus der Region. Für die Mittagspause und das Geschäftsessen.</p></div>
+        <div class="karte" id="kaffee"><span class="caps">Am Nachmittag</span><h3>Kaffee &amp; Kuchen</h3><p>Kaffee, Kuchen und alpine Patisserie. Nach dem Spaziergang am Hartsee oder zur Verabredung ohne großes Essen.</p></div>
+        <div class="karte"><span class="caps">Sonntag</span><h3>Frühschoppen &amp; Sonntagsbraten</h3><p>Der Sonntagmittag im Ferun, mit Braten, Beilagen und Mehlspeisen zum Kaffee.</p></div>
+        <div class="karte"><span class="caps">Mit wechselnder Karte</span><h3>Wiener Spitzen</h3><p>Eine Hommage an die österreichische Tafelkultur: entschleunigt, elegant, mit Tafelspitz, Mehlspeisen und gutem Wein.</p></div>
+        <div class="karte"><span class="caps">Auch nur auf ein Glas</span><h3>Vinothek &amp; Alpin-Bar</h3><p>Ein Glas Wein, ein Aperitif oder ein Snack, davor, danach oder einfach so. Dazu eine Auswahl aus rund 250 Weinen.</p></div>
+        <div class="karte"><span class="caps">Zum Mitnehmen</span><h3>Greißlerei</h3><p>Käse, Wurst und Schinken, Brot, Öle und Essige aus der Region und dem Alpenraum.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="abschnitt feiern" id="feiern" aria-labelledby="feiernTitel">
+    <div class="inner zweispaltig">
+      <div><span class="caps" style="color:var(--kupfer)">Veranstaltungen</span><h2 id="feiernTitel" style="margin:12px 0 18px">Für die Feste, an die man sich erinnert.</h2>
+        <p>Weihnachtsfeiern, Geschäftsessen und kleine Gesellschaften sind schon in den Gasträumen möglich, auch mittags. Hochzeiten, Familien- und Firmenfeiern und Tagungen finden mit dem Festsaal im Frühjahr 2027 ihren Platz. Anfragen nehmen wir jetzt gern entgegen.</p>
+        <a class="linkpfeil" href="mailto:bankett@ferun.de">bankett@ferun.de</a></div>
+      <div><div class="person"><b>Der Rahmen</b><span>Kirche, Biergarten, Vinothek, Gasthaus und Festsaal liegen nebeneinander: vom Empfang über das Essen bis zur Feier ohne lange Wege.</span></div>
+        <div class="person"><b>Was geplant ist</b><span>Menü, Getränke und Ablauf entwickeln wir gemeinsam mit Ihnen, passend zu Anlass, Gästezahl und Jahreszeit.</span></div></div>
+    </div>
+  </section>
+
+  <section class="abschnitt" id="gastgeber" aria-labelledby="gastTitel">
+    <div class="inner zweispaltig">
+      <div><span class="caps" style="color:var(--kupfer)">Gastgeber</span><h2 id="gastTitel" style="margin:12px 0 18px">Wer hinter FERUN steht.</h2>
+        <div class="person"><b>Holger Brunk</b><span>Gesamtkonzept, Betrieb und Gastgeberrolle. Viele Jahre Hoteldirektor in der Chiemsee-Region.</span></div>
+        <div class="person"><b>Frank Seimetz</b><span>Strategie, kulinarisches Konzept und Küche. Koch in der Spitzengastronomie, Betreiber eigener Restaurants, Kochschulen und Caterer.</span></div>
+        <div class="person"><b>Karolina Seimetz</b><span>Kaufmännische Organisation und Abläufe.</span></div></div>
+      <div id="anfahrt"><span class="caps" style="color:var(--kupfer)">Ort &amp; Anfahrt</span><h2 style="margin:12px 0 18px">Warum Eggstätt?</h2>
+        <p>Eggstätt liegt wenige Kilometer nördlich des Chiemsees, am Hartsee und an der Eggstätt-Hemhofer Seenplatte, zwischen München und Salzburg. Ein Besuch lässt sich mit einem Aufenthalt an den Seen, einer Wanderung oder einer Radtour verbinden.</p>
+        <p><b>FERUN – Alte Post</b><br>Kirchplatz 2, gegenüber der Kirche<br>83125 Eggstätt</p></div>
+    </div>
+  </section>
+
+  <section class="abschnitt" id="umbau" aria-labelledby="umbauTitel" style="padding-top:0">
+    <div class="inner">
+      <div class="kopfzeile"><span class="caps">Aus dem Umbau</span><h2 id="umbauTitel">Hier entsteht FERUN.</h2><p class="lead">Echte Einblicke aus dem Haus. Die Bilder oben sind Visualisierungen: Möbel, Bar und Einrichtung sehen am Ende anders aus.</p></div>
+      <div class="umbau-raster">
+      <figure class="u"><figure class="bild" data-edit="umbau-0" data-fest style="aspect-ratio:4/5"><div class="par"><img src="assets/umbau/umbau-0.jpg" alt="Das Gewölbe im Rohbau" decoding="async"></div></figure><figcaption>Das Gewölbe im Rohbau</figcaption></figure>
+      <figure class="u"><figure class="bild" data-edit="umbau-1" data-fest style="aspect-ratio:4/5"><div class="par"><img src="assets/umbau/umbau-1.jpg" alt="Bogenfenster in der Stube" decoding="async"></div></figure><figcaption>Bogenfenster in der Stube</figcaption></figure>
+      <figure class="u"><figure class="bild" data-edit="umbau-2" data-fest style="aspect-ratio:4/5"><div class="par"><img src="assets/umbau/umbau-2.jpg" alt="Die Bar-Theke entsteht" decoding="async"></div></figure><figcaption>Die Bar-Theke entsteht</figcaption></figure>
+      <figure class="u"><figure class="bild" data-edit="umbau-3" data-fest style="aspect-ratio:4/5"><div class="par"><img src="assets/umbau/umbau-3.jpg" alt="Die Treppe nach unten" decoding="async"></div></figure><figcaption>Die Treppe nach unten</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <footer class="fuss" id="kontakt">
+    <div class="inner">
+      <div class="logo-fuss" aria-hidden="true"></div>
+      <div class="mails">
+        <div><span class="caps">Allgemein</span><a href="mailto:kontakt@ferun.de">kontakt@ferun.de</a></div>
+        <div><span class="caps">Reservierung</span><a href="mailto:reservierung@ferun.de">reservierung@ferun.de</a></div>
+        <div><span class="caps">Feiern &amp; Tagungen</span><a href="mailto:bankett@ferun.de">bankett@ferun.de</a></div>
+        <div><span class="caps">Jobs &amp; Bewerben</span><a href="#bewerben" data-jobs="1">Jetzt bewerben</a><br><a href="mailto:jobs@ferun.de">jobs@ferun.de</a></div>
+      </div>
+      <p class="adr caps">FERUN · Alte Post · Kirchplatz 2 · 83125 Eggstätt</p>
+      <button type="button" class="replay caps" id="replay">Intro ansehen</button>
+    </div>
+  </footer>
+</main>
+
+<main class="view" id="bewerben" hidden aria-labelledby="bTitel">
+  <span class="caps eyebrow">Bewerbung · FERUN Alte Post</span>
+  <h1 id="bTitel">Wir suchen Menschen, keine Lebensläufe.</h1>
+  <p class="sub">Bewirb Dich jetzt für Service, Küche, Bar, Greißlerei oder Vinothek. Quereinsteiger sind herzlich willkommen –
+    ein kurzes Hallo genügt, den Rest besprechen wir persönlich.</p>
+  <div class="b-grid">
+    <div class="wege">
+      <h2>Einfach melden</h2>
+      <p class="hinweis-links">Schreib uns ein paar Zeilen, gern ohne Lebenslauf. Wir melden uns persönlich bei Dir.</p>
+      <div class="kanaele">
+        <a class="kanal" href="mailto:jobs@ferun.de"><span class="caps">E-Mail</span><span>jobs@ferun.de</span></a>
+        
+      </div>
+    </div>
+    <form class="formular" id="form" novalidate>
+      <h2>Oder kurz das Formular</h2>
+      <fieldset class="feld">
+        <legend class="caps">Wofür interessierst Du Dich?</legend>
+        <div class="chips">
+          <input type="radio" name="bereich" id="b1" value="Service" checked><label for="b1">Service</label>
+          <input type="radio" name="bereich" id="b2" value="Küche"><label for="b2">Küche</label>
+          <input type="radio" name="bereich" id="b3" value="Bar"><label for="b3">Bar</label>
+          <input type="radio" name="bereich" id="b4" value="Greißlerei"><label for="b4">Greißlerei</label>
+          <input type="radio" name="bereich" id="b5" value="Vinothek"><label for="b5">Vinothek</label>
+          <input type="radio" name="bereich" id="b6" value="Noch offen"><label for="b6">Noch offen</label>
+        </div>
+      </fieldset>
+      <div class="feld"><label class="caps" for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+      <div class="feld"><label class="caps" for="f-kontakt">Telefon oder E-Mail</label><input id="f-kontakt" name="kontakt" autocomplete="email" required></div>
+      <div class="feld"><label class="caps" for="f-text">Ein paar Worte zu Dir (freiwillig)</label><textarea id="f-text" name="text"></textarea></div>
+      <p class="hinweis" id="fehler" hidden>Bitte Name und Telefon oder E-Mail angeben.</p>
+      <button class="btn hell" type="submit">Absenden</button>
+      <p class="danke" id="danke" hidden>Danke! Dein E-Mail-Programm öffnet sich mit Deiner Nachricht – einfach noch auf Senden drücken.</p>
+    </form>
+  </div>
+</main>
+
+<script src="webseite/assets/bibliothek.js?v=20261006a"></script>
+<script src="assets/medien-data.js?v=20261006a" onerror="this.remove()"></script>
+<script src="webseite/assets/editor.js?v=20261006a"></script>
+<script>
+(function(){
+  const body = document.body, slot = document.getElementById('slot'), svg = slot.querySelector('svg');
+  const glyphs = [...svg.querySelectorAll('.glyph')], alte = svg.querySelector('.alte'), klein = svg.querySelector('.klein');
+  const vb = svg.viewBox.baseVal; slot.style.setProperty('--logo-ar', vb.width + '/' + vb.height);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  let anims = [], done = true;
+  // Fusslogo = Kopie des Logos in Weiss/Salbei
+  const lf = document.querySelector('.logo-fuss'); if (lf) { const c = svg.cloneNode(true); c.removeAttribute('class'); c.setAttribute('class', 'logo'); c.style.width = '100%';
+    c.querySelectorAll('.ferun [fill]').forEach(e => e.setAttribute('fill', '#F6F5F1')); c.querySelectorAll('.klein [fill]').forEach(e => e.setAttribute('fill', '#F6F5F1'));
+    lf.appendChild(c); }
+
+  // Einstieg: das Logo schreibt sich in der Mitte, dann gleitet es nach oben an seinen Platz, die Seite blendet ein
+  function finish(){
+    anims.forEach(a => { try{ a.cancel(); }catch(e){} }); anims = [];
+    slot.style.transform = ''; glyphs.forEach(g => g.style.opacity = ''); [alte, klein].forEach(g => g && (g.style.opacity = ''));
+    body.classList.remove('intro'); done = true;
+  }
+  async function play(){
+    if (reduce) { finish(); return; }
+    done = false; body.classList.add('intro'); scrollTo(0, 0);
+    await wait(60);
+    const r = slot.getBoundingClientRect(), k = Math.min(innerWidth * .66, 460) / r.width;
+    const dx = innerWidth / 2 - (r.left + r.width / 2), dy = innerHeight / 2 - (r.top + r.height / 2);
+    slot.style.transformOrigin = '50% 50%'; slot.style.transform = `translate(${dx}px,${dy}px) scale(${k})`;
+    glyphs.forEach(g => g.style.opacity = 0); [alte, klein].forEach(g => g && (g.style.opacity = 0));
+    await wait(250); if (done) return;
+    glyphs.forEach((g, i) => anims.push(g.animate([{opacity: 0, filter: 'blur(8px)'}, {opacity: 1, filter: 'blur(0)'}], {duration: 900, delay: i * 190, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'forwards'})));
+    await wait(glyphs.length * 190 + 500); if (done) return;
+    [alte, klein].forEach((g, i) => g && anims.push(g.animate([{opacity: 0}, {opacity: 1}], {duration: 800, delay: i * 250, fill: 'forwards'})));
+    await wait(1700); if (done) return;
+    body.classList.remove('intro');
+    const a = slot.animate([{transform: slot.style.transform}, {transform: 'none'}], {duration: 1400, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards'}); anims.push(a);
+    await wait(1450); if (done) return;
+    finish();
+  }
+  addEventListener('keydown', e => { if (!done && (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter')) finish(); });
+  addEventListener('pointerdown', () => { if (!done) finish(); }, {passive: true});
+  document.getElementById('replay').addEventListener('click', () => { finish(); scrollTo(0, 0); setTimeout(play, 120); });
+  slot.addEventListener('click', e => { e.preventDefault(); scrollTo({top: 0, behavior: reduce ? 'auto' : 'smooth'}); });
+
+  // Bereiche: Bilder oeffnen sich selbststaendig im Rhythmus; Hover/Klick springt dorthin und haelt an
+  const liste = document.getElementById('bereiche'), btns = [...liste.querySelectorAll('.bereich')];
+  const buehne = document.getElementById('buehne'), figs = [...buehne.querySelectorAll('.bild')];
+  const spruch = document.getElementById('spruch'), kz = document.getElementById('kennzeile'), satz = document.getElementById('satz');
+  const bd = {}; document.querySelectorAll('#bdaten .bd').forEach(d => bd[d.dataset.b] = d.dataset);
+  const TAKT = 5400; let idx = -1, timer = 0, halt = false, sichtbar = true;
+  function zeige(i){
+    if (i === idx) return; const alt = figs[idx]; idx = i;
+    const k = btns[i].dataset.b, f = figs.find(x => x.dataset.edit === k);
+    figs.forEach(x => { if (x !== f && x !== alt) x.classList.remove('sicht', 'vorher'); });
+    if (alt && alt !== f) { alt.classList.remove('sicht'); alt.classList.add('vorher'); setTimeout(() => alt.classList.remove('vorher'), 1400); }
+    f.classList.remove('vorher'); f.classList.add('start-rein'); void f.offsetWidth; f.classList.remove('start-rein'); f.classList.add('sicht');
+    btns.forEach((b, n) => { b.classList.toggle('an', n === i); });
+    const d = bd[k]; spruch.innerHTML = [...d.spruch].map((c, n) => `<span class="z" style="--i:${n}">${c}</span>`).join('');
+    kz.classList.add('weg'); satz.classList.add('weg');
+    setTimeout(() => { kz.innerHTML = d.kz; satz.textContent = d.satz; kz.classList.remove('weg'); satz.classList.remove('weg'); }, 280);
+    const bs = btns[i]; bs.style.animation = 'none'; void bs.offsetWidth; bs.style.animation = '';
+  }
+  function weiter(){ if (halt || !sichtbar || document.hidden || body.classList.contains('bearbeiten') || reduce) return; zeige((idx + 1) % btns.length); }
+  function takt(){ clearInterval(timer); timer = setInterval(weiter, TAKT); }
+  function haltAn(i){ halt = true; liste.classList.add('halt'); clearInterval(timer); zeige(i); }
+  function haltAus(){ halt = false; liste.classList.remove('halt'); const b = btns[idx]; if (b){ b.style.animation = 'none'; void b.offsetWidth; b.style.animation = ''; } takt(); }
+  btns.forEach((b, i) => {
+    b.addEventListener('mouseenter', () => haltAn(i));
+    b.addEventListener('focus', () => haltAn(i));
+    b.addEventListener('click', () => haltAn(i));
+  });
+  liste.addEventListener('mouseleave', () => { if (!body.classList.contains('bearbeiten')) haltAus(); });
+  buehne.addEventListener('mouseenter', () => { if (!body.classList.contains('bearbeiten')) { halt = true; liste.classList.add('halt'); clearInterval(timer); } });
+  buehne.addEventListener('mouseleave', () => { if (!body.classList.contains('bearbeiten')) haltAus(); });
+  new IntersectionObserver(es => { sichtbar = es[0].isIntersecting; }, {threshold: .15}).observe(buehne);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) takt(); });
+  zeige(0); takt();
+
+  // Kopf: Hintergrund beim Scrollen, Menue auf kleinen Bildschirmen, Kontakt-Box
+  const kopf = document.getElementById('kopf'), mk = document.getElementById('menueKnopf');
+  const scr = () => kopf.classList.toggle('fest', scrollY > 30 || !document.getElementById('start').hidden && false);
+  addEventListener('scroll', scr, {passive: true}); scr();
+  mk.addEventListener('click', e => { e.stopPropagation(); const o = kopf.classList.toggle('menue-offen'); mk.setAttribute('aria-expanded', o); });
+  kopf.querySelectorAll('a.nav').forEach(a => a.addEventListener('click', () => { kopf.classList.remove('menue-offen'); mk.setAttribute('aria-expanded', 'false'); }));
+  const kk = document.getElementById('kontaktKnopf'), kb = document.getElementById('kontaktBox');
+  kk.addEventListener('click', e => { e.stopPropagation(); const o = kb.classList.toggle('offen'); kk.setAttribute('aria-expanded', o); });
+  addEventListener('click', e => { if (!kb.contains(e.target)) { kb.classList.remove('offen'); kk.setAttribute('aria-expanded', 'false'); } });
+
+  // Ansichten: Start <-> Bewerbung
+  const start = document.getElementById('start'), bew = document.getElementById('bewerben'), back = document.getElementById('zurueck');
+  function zeigeAnsicht(ziel, sofort){
+    const von = ziel === bew ? start : bew;
+    const tausch = () => { von.hidden = true; von.classList.remove('aus'); ziel.hidden = false; ziel.classList.remove('rein'); void ziel.offsetWidth; ziel.classList.add('rein');
+      back.hidden = ziel !== bew; kopf.hidden = ziel === bew; scrollTo(0, 0); if (ziel === bew) document.getElementById('bTitel').focus({preventScroll: true}); };
+    if (sofort || reduce || von.hidden) { tausch(); return; }
+    von.classList.add('aus'); setTimeout(tausch, 450);
+  }
+  document.querySelectorAll('[data-jobs],#jobLink').forEach(a => a.addEventListener('click', e => { e.preventDefault(); kb.classList.remove('offen'); history.pushState(null, '', '#bewerben'); zeigeAnsicht(bew); }));
+  back.addEventListener('click', e => { e.preventDefault(); history.pushState(null, '', location.pathname + location.search); zeigeAnsicht(start); });
+  addEventListener('popstate', () => zeigeAnsicht(location.hash === '#bewerben' ? bew : start));
+  document.getElementById('bTitel').tabIndex = -1;
+  addEventListener('scroll', () => { back.classList.toggle('schwebend', !bew.hidden && scrollY > 180); }, {passive: true});
+
+  // Formular: ohne Server -> fertige E-Mail an jobs@ oeffnen
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target, ok = f.name.value.trim() && f.kontakt.value.trim();
+    document.getElementById('fehler').hidden = !!ok;
+    if (!ok) return;
+    const betreff = 'Bewerbung ' + f.bereich.value + ' – ' + f.name.value.trim();
+    const text = 'Hallo,\n\nich interessiere mich für: ' + f.bereich.value + '\n\nName: ' + f.name.value.trim() + '\nKontakt: ' + f.kontakt.value.trim() + '\n\n' + f.text.value.trim();
+    location.href = 'mailto:jobs@ferun.de?subject=' + encodeURIComponent(betreff) + '&body=' + encodeURIComponent(text);
+    document.getElementById('danke').hidden = false;
+  });
+
+  const sv = document.getElementById('schattenVideo');
+  if (sv && !reduce) { const los = () => sv.play().catch(() => {}); los(); sv.addEventListener('canplay', los, {once: true}); addEventListener('pointerdown', los, {once: true}); }
+  const ohneIntro = /[?&]ohneintro/.test(location.search) || sessionStorage.getItem('ferun_bearbeiten') === '1';
+  if (location.hash === '#bewerben') { zeigeAnsicht(bew, true); } else if (ohneIntro) { finish(); } else { play(); }
+})();
+</script>
+</body>
+</html>
