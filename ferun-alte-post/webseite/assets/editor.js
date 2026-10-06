@@ -128,7 +128,7 @@
   bfilter.addEventListener('click', function(e){ var b = e.target.closest('button'); if(!b) return; bereichWert = b.dataset.b;
     [].forEach.call(bfilter.children, function(x){ x.classList.toggle('an', x === b); }); zeichnen(); });
   var liste = window.FERUN_BIB || [], filterWert = 'Alle';
-  var gruppen = ['Alle', 'Favoriten', 'Ganzes Haus', 'Stillleben', 'Hero', 'Küche', 'Vinothek', 'Umbau', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände', 'Außen'];
+  var gruppen = ['Alle', 'Favoriten', 'Ganzes Haus', 'Stillleben', 'Hero', 'Küche', 'Bar', 'Vinothek', 'Umbau', 'Biergarten', 'Räume', 'Magazin', 'Web-Format', 'Perspektiven', 'Gedeck', 'Essen', 'Getränke', 'Greißlerei', 'Details', 'Hände', 'Außen'];
   /* Favoriten: Stern an jedem Bild, gilt fuer alle Seiten und Varianten, wird mit "Stand sichern" mitgesichert */
   var FAV_KEY = 'ferun_favoriten', favs = [];
   function istFav(f){ return favs.indexOf(f) >= 0; }
