@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>FERUN Alte Post · Eggstätt</title>
-<meta name="description" content="FERUN – Alte Post est. 1820 in Eggstätt, Chiemseeregion. Alpine Küche und herzliche Gastlichkeit. Soft Opening 1. bis 5. Dezember, Eröffnungsfeier 6. Dezember, à la carte ab 7. Dezember. Wir suchen Verstärkung.">
+<meta name="description" content="FERUN – Alte Post est. 1820 in Eggstätt, Chiemseeregion. Alpine Küche und herzliche Gastfreundschaft. Soft Opening 1. bis 5. Dezember, Eröffnungsfeier 6. Dezember, à la carte ab 7. Dezember. Wir suchen Verstärkung.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600&display=swap">
@@ -61,7 +61,7 @@ body.intro .kopf{opacity:0}
 body.intro #start>*:not(.hero){opacity:0}
 body.intro .hero>*:not(.slot){opacity:0}
 #start>*,.hero>*:not(.slot){transition:opacity 1.6s var(--ease)}
-.hero>.ort{transition-delay:.15s}.hero>h1{transition-delay:.3s}.hero>.claim{transition-delay:.45s}.hero>.sub{transition-delay:.6s}
+.hero>.ort{transition-delay:.15s}.hero>h1{transition-delay:.3s}.hero>.claim{transition-delay:.45s}.hero>.sub{transition-delay:.6s}.hero>.versprechen{transition-delay:.7s}
 .hero>.status{transition-delay:.75s}.hero>.bereiche{transition-delay:.95s}.hero>.buehne-wrap{transition-delay:1.15s}.jobband,.fuss{transition-delay:1.3s}
 .slot{display:block;margin:0 auto;width:clamp(200px,min(26vw,36vh),400px);aspect-ratio:var(--logo-ar,2.6);will-change:transform}
 .slot .logo{width:100%;height:auto;display:block;overflow:visible}
@@ -71,7 +71,7 @@ body.intro .hero>*:not(.slot){opacity:0}
 .hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(46px,6.8vh,78px) 20px clamp(30px,5vh,56px)}
 .ort{margin:clamp(12px,2vh,20px) 0 0;color:var(--kupfer)}
 .hero h1{font-size:clamp(31px,min(3.7vw,5.6vh),58px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance;max-width:25ch;margin-top:clamp(14px,2.2vh,26px)}
-.sub{margin:clamp(12px,1.8vh,18px) 0 0;font:400 clamp(14px,1.2vw,17px)/1.6 "Montserrat",sans-serif;letter-spacing:.06em;max-width:58ch;color:var(--navy)}
+.sub{margin:clamp(10px,1.5vh,16px) 0 0;font:400 clamp(13px,1.05vw,15.5px)/1.6 "Montserrat",sans-serif;letter-spacing:.06em;max-width:76ch;color:var(--navy)}
 .status{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin:clamp(16px,2.4vh,26px) 0 0;border-block:1px solid var(--kupfer);padding:12px 6px}
 .status>span{padding:3px clamp(12px,1.8vw,26px);position:relative}
 .status>span+span::before{content:"";position:absolute;left:0;top:50%;height:16px;margin-top:-8px;width:1px;background:var(--kupfer);opacity:.7}
@@ -113,6 +113,7 @@ body.intro .hero>*:not(.slot){opacity:0}
 .satz.weg,.kennzeile.weg{opacity:0}
 
 /* Jobs-Band */
+.versprechen{margin:clamp(10px,1.6vh,16px) 0 0;max-width:54ch;font:400 clamp(13.5px,1.05vw,15.5px)/1.65 "Montserrat",sans-serif;color:var(--navy-weich);text-wrap:balance}
 .claim{margin:clamp(10px,1.6vh,18px) 0 0;font:italic 400 clamp(20px,min(2vw,3vh),30px)/1.25 "Cormorant Garamond",Georgia,serif;color:var(--navy);max-width:34ch}
 .stellen-zeile{margin:18px 0 0;color:var(--navy)}
 .fuss{padding:26px 20px calc(24px + env(safe-area-inset-bottom,0px));text-align:center;position:relative;z-index:1;background:var(--papier)}
@@ -318,7 +319,8 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
     <p class="ort caps">Eggstätt · Chiemseeregion</p>
     <h1>Vorfreude ist die schönste Freude.</h1>
     <p class="claim">Manche Orte besucht man. An anderen kommt man an.</p>
-    <p class="sub">Alpine Küche und herzliche Gastlichkeit in einem Haus, das seit 1820 Menschen zusammenbringt.</p>
+    <p class="sub">Alpine Küche und herzliche Gastfreundschaft in einem Haus, das seit 1820 Menschen zusammenbringt.</p>
+    <p class="versprechen">Wir freuen uns, bald unsere Gäste zu begrüßen: mit einem Erlebnis, das es in der Region so nur einmal gibt. Unter einem Dach. In einem Haus voller Geschichte.</p>
     <p class="status caps" aria-label="Eröffnung"><span class="sk">Wir öffnen im Dezember</span><span>Soft Opening <b>1.–5.12.</b></span><span>Eröffnungsfeier <b>6.12.</b></span><span>À la carte ab <b>7.12.</b></span></p>
 
     <ul class="bereiche" id="bereiche" aria-label="Was entsteht">
