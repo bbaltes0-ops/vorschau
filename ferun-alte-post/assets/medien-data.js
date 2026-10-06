@@ -1,2 +1,2 @@
-/* FERUN Coming Soon Bild-Stand (leer = Ausgangsbilder). Mit "Stand sichern" in bearbeiten.html erzeugen und mit stand_cs.py uebernehmen. */
-window.FERUN_MEDIA = {};
+/* FERUN Coming Soon Bild-Stand */
+window.FERUN_MEDIA = {"ferun_cs_start_bar": {"src": "bib:R4C_N03_3x2.jpg", "py": 30.609190686963053, "px": 28.657899532040645, "s": 1.2400000000000002}, "ferun_cs_start_biergarten": {"src": "bib:H9C_HBC20_au_16x9.jpg", "py": 12.212832216041456, "px": 53.388633578431374, "s": 1}, "ferun_cs_start_festsaal": {"src": "bib:H9C_HBC22_fs_16x9.jpg", "py": 45.66312461370228, "px": 52.28619025735294, "s": 1}, "ferun_cs_start_gasthaus": {"src": "bib:H9C_HBC04_ts_16x9.jpg", "py": 76.54162506537347, "px": 51.01397824754902, "s": 1}, "ferun_cs_start_greisslerei": {"src": "bib:H8C_HAC25_gr_3x4.jpg", "py": 49.551538059240244, "px": 54.329733455882355, "s": 1}, "ferun_cs_start_vinothek": {"src": "bib:R4C_N04_16x9.jpg", "py": 60.191722531260396, "px": 50.65085018382353, "s": 1}};
