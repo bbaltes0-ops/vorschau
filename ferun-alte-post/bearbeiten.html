@@ -67,6 +67,25 @@ body.intro .hero>*:not(.slot){opacity:0}
 .slot .logo{width:100%;height:auto;display:block;overflow:visible}
 .logo .glyph{stroke:none}
 
+
+/* Einstieg "Formation Loader - Slices" (nach Cadence/Codrops, MIT), hier langsam und ruhig */
+.sl-stage{position:fixed;inset:0;z-index:40;overflow:hidden;background:var(--papier);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sl-stage:not(.is-ready){visibility:hidden}
+.sl-word{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--landscape) center / cover no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent;
+  font:500 100px/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.07em;white-space:nowrap;pointer-events:none}
+.sl-word span{display:inline-block;flex:none;padding-left:.07em;padding-bottom:.04em}
+.sl-cols,.sl-slices{position:absolute;inset:0}
+.sl-col{position:absolute;overflow:hidden;border-radius:3px;background:#e9ece6;will-change:transform,opacity}
+.sl-col img{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+.sl-lab{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 15px;text-align:center;color:#fff;font:500 10.5px/1 "Montserrat",sans-serif;letter-spacing:.3em;text-transform:uppercase;
+  background:linear-gradient(transparent,rgba(16,32,40,.5));z-index:2;opacity:0}
+.sl-wipe{position:absolute;inset:0;overflow:hidden;z-index:3}
+.sl-wipe-inner{position:absolute;inset:0;background-image:var(--landscape);background-repeat:no-repeat}
+.sl-slice{position:absolute;inset:0;background:var(--landscape) center / cover no-repeat;visibility:hidden}
+.sl-skip{position:absolute;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom,0px));text-align:center;color:var(--navy-weich);opacity:.5;pointer-events:none;z-index:5}
+body.intro.slmode .slot{opacity:0}
+.slot{transition:opacity 1.8s var(--ease) .2s}
+
 /* Hero */
 .hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(46px,6.8vh,78px) 20px clamp(30px,5vh,56px)}
 .ort{margin:clamp(12px,2vh,20px) 0 0;color:var(--kupfer)}
@@ -276,11 +295,18 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
 @media print{.kopf,.schatten{display:none}}
 </style>
-<link rel="stylesheet" href="webseite/assets/editor.css?v=20261006133504">
+<link rel="stylesheet" href="webseite/assets/editor.css?v=20261010112600">
 </head>
 <body>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&location.hash!=='#bewerben'&&!/[?&]ohneintro/.test(location.search)&&sessionStorage.getItem('ferun_bearbeiten')!=='1'){document.body.classList.add('intro');}</script>
 <div class="schatten" aria-hidden="true"><video id="schattenVideo" src="assets/schatten.mp4" poster="assets/schatten_poster.jpg" muted autoplay loop playsinline preload="auto"></video></div>
+
+<div class="sl-stage" id="slStage" hidden aria-hidden="true">
+  <div class="sl-word" id="slWord"><span>FERUN</span></div>
+  <div class="sl-cols" id="slCols"></div>
+  <div class="sl-slices" id="slSlices"></div>
+  <span class="sl-skip caps">Klicken zum Überspringen</span>
+</div>
 
 <header class="kopf" id="kopf">
   <button class="kontakt-knopf" id="kontaktKnopf" aria-expanded="false" aria-controls="kontaktBox">Kontakt</button>
@@ -426,9 +452,10 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   </div>
 </main>
 
-<script src="webseite/assets/bibliothek.js?v=20261006133504"></script>
-<script src="assets/medien-data.js?v=20261006133504" onerror="this.remove()"></script>
-<script src="webseite/assets/editor.js?v=20261006133504"></script>
+<script src="webseite/assets/bibliothek.js?v=20261010112600"></script>
+<script src="assets/medien-data.js?v=20261010112600" onerror="this.remove()"></script>
+<script src="webseite/assets/editor.js?v=20261010112600"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
 <script>
 (function(){
   const body = document.body, slot = document.getElementById('slot'), svg = slot.querySelector('svg');
@@ -446,9 +473,10 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   function finish(){
     anims.forEach(a => { try{ a.cancel(); }catch(e){} }); anims = [];
     slot.style.transform = ''; glyphs.forEach(g => g.style.opacity = ''); [alte, klein].forEach(g => g && (g.style.opacity = ''));
-    body.classList.remove('intro'); done = true;
+    body.classList.remove('intro', 'slmode'); done = true;
+    if (slTl) { slTl.kill(); slTl = null; } if (slStage) { slStage.hidden = true; slStage.classList.remove('is-ready'); if (window.gsap) gsap.set(slStage, {clearProps: 'opacity,visibility'}); }
   }
-  async function play(){
+  async function playLogo(){
     if (reduce) { finish(); return; }
     done = false; body.classList.add('intro'); scrollTo(0, 0);
     await wait(80);
@@ -473,9 +501,86 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
     await wait(2300); if (done) return;
     finish();
   }
-  addEventListener('keydown', e => { if (!done && (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter')) finish(); });
-  addEventListener('pointerdown', () => { if (!done) finish(); }, {passive: true});
-  document.getElementById('replay').addEventListener('click', () => { finish(); scrollTo(0, 0); setTimeout(play, 120); });
+
+  // ---- Einstieg: Formation Loader (Slices), langsam, mit Pausen ----
+  const SL_LIST = [{"k": "gasthaus", "label": "Gasthaus"}, {"k": "vinothek", "label": "Vinothek"}, {"k": "biergarten", "label": "Biergarten"}, {"k": "greisslerei", "label": "Greißlerei"}, {"k": "bar", "label": "Bar"}, {"k": "festsaal", "label": "Festsaal"}], SL_NARROW = [0, 1, 5];
+  const SL_LAND = {src: 'assets/intro/hero.jpg', w: 1672, h: 941};
+  const SWING_FROM = {transformOrigin: '100% -450%', scaleX: 1.05, skewX: 15, xPercent: 50, rotation: -10};
+  const SWING_DUR = 2.3, SWING_STAGGER = 0.24, SWING_EASE = 'power2.out', HOLD_COLS = 0.85;
+  const WIPE_DUR = 1.6, WIPE_STAGGER = 0.17, WIPE_EASE = 'power2.inOut';
+  const CLOSE_DUR = 1.9, CLOSE_EASE = 'power2.inOut', LIFT_DUR = 1.6, LIFT_STAGGER = 0.12, LIFT_EASE = 'power2.inOut', PAUSE = 0.6, HOLD_END = 1.3;
+  const slStage = document.getElementById('slStage'), slColsBox = document.getElementById('slCols'), slSlicesBox = document.getElementById('slSlices');
+  const slWord = document.getElementById('slWord'), slWordText = slWord.querySelector('span');
+  let slTl = null, slCols = [], slSlices = [], slRects = [], slSize = '';
+
+  function slBuild(){
+    const vw = document.documentElement.clientWidth, vh = innerHeight, narrow = vw < 700 || vw / vh < 0.8;
+    const list = narrow ? SL_NARROW.map(i => SL_LIST[i]) : SL_LIST, n = list.length, gap = narrow ? 8 : 11;
+    const areaW = narrow ? vw * 0.88 : Math.min(vw * 0.86, 1280), areaH = vh * (narrow ? 0.6 : 0.64), w = (areaW - (n - 1) * gap) / n, left0 = (vw - areaW) / 2, top = (vh - areaH) / 2;
+    slRects = list.map((_, i) => ({l: left0 + i * (w + gap), t: top, w, h: areaH}));
+    const sc = Math.max(vw / SL_LAND.w, vh / SL_LAND.h), W = SL_LAND.w * sc, H = SL_LAND.h * sc, ox = (vw - W) / 2, oy = (vh - H) / 2;
+    slColsBox.replaceChildren(); slSlicesBox.replaceChildren();
+    slCols = list.map((it, i) => {
+      const r = slRects[i], col = document.createElement('div'); col.className = 'sl-col';
+      Object.assign(col.style, {left: r.l + 'px', top: r.t + 'px', width: r.w + 'px', height: r.h + 'px'});
+      col.innerHTML = `<img src="assets/intro/${it.k}.jpg" alt="" width="780" height="1040"><span class="sl-lab">${it.label}</span><div class="sl-wipe"><div class="sl-wipe-inner"></div></div>`;
+      Object.assign(col.querySelector('.sl-wipe-inner').style, {backgroundSize: `${W}px ${H}px`, backgroundPosition: `${ox - r.l}px ${oy - r.t}px`});
+      slColsBox.append(col); return col;
+    });
+    slSlices = list.map(() => { const el = document.createElement('div'); el.className = 'sl-slice'; slSlicesBox.append(el); return el; });
+    slWord.style.fontSize = '100px';
+    const fit = (vw * (narrow ? 0.86 : 0.8)) / slWordText.getBoundingClientRect().width; slWord.style.fontSize = Math.min(100 * fit, vh * 0.44) + 'px';
+    slSize = vw + 'x' + vh;
+  }
+  const slInset = (t, r, b, l, rd) => `inset(${t}px ${r}px ${b}px ${l}px round ${rd}px)`;
+  const slColClip = i => { const r = slRects[i]; return slInset(r.t, document.documentElement.clientWidth - r.l - r.w, innerHeight - r.t - r.h, r.l, 3); };
+  const slFullClip = (i, lifted) => { const n = slSlices.length, vw = document.documentElement.clientWidth, sw = vw / n, right = Math.max(0, vw - (i + 1) * sw - 1); return slInset(0, right, lifted ? innerHeight : 0, i * sw, 0); };
+
+  function slTimeline(){
+    const wipes = slCols.map(c => c.querySelector('.sl-wipe')), inners = slCols.map(c => c.querySelector('.sl-wipe-inner')), labs = slCols.map(c => c.querySelector('.sl-lab')), n = slCols.length;
+    const t = gsap.timeline();
+    gsap.set(slWord, {autoAlpha: 0});
+    // 1. Die Bereiche schwingen als Streifen ein und bleiben einen Moment stehen
+    t.fromTo(slCols, {...SWING_FROM, autoAlpha: 0}, {scaleX: 1, skewX: 0, xPercent: 0, rotation: 0, autoAlpha: 1, duration: SWING_DUR, ease: SWING_EASE, stagger: SWING_STAGGER}, 0.2);
+    t.to(labs, {opacity: 1, duration: 1.2, ease: 'power1.out', stagger: SWING_STAGGER}, SWING_DUR * 0.6);
+    // 2. Vorhang: jeder Streifen wischt zu seinem Stueck des Hero-Bildes
+    const wipeAt = 0.2 + SWING_DUR + SWING_STAGGER * (n - 1) + HOLD_COLS;
+    t.to(labs, {opacity: 0, duration: 0.9, ease: 'power1.inOut'}, wipeAt - 0.2);
+    t.fromTo(wipes, {yPercent: -102}, {yPercent: 0, duration: WIPE_DUR, ease: WIPE_EASE, stagger: WIPE_STAGGER}, wipeAt);
+    t.fromTo(inners, {yPercent: 102}, {yPercent: 0, duration: WIPE_DUR, ease: WIPE_EASE, stagger: WIPE_STAGGER}, wipeAt);
+    // 3. Die Streifen schliessen sich zum ganzen Hero-Bild
+    const closeAt = wipeAt + WIPE_DUR + WIPE_STAGGER * (n - 1) + PAUSE;
+    t.set(slSlices, {visibility: 'visible', clipPath: i => slColClip(i)}, closeAt);
+    t.set(slCols, {visibility: 'hidden'}, closeAt);
+    t.to(slSlices, {clipPath: i => slFullClip(i, false), duration: CLOSE_DUR, ease: CLOSE_EASE, stagger: {amount: 0.2, from: 'center'}}, closeAt);
+    // 4. Das Bild hebt sich weg und bleibt im Schriftzug FERUN stehen
+    const liftAt = closeAt + CLOSE_DUR + 0.2 + PAUSE;
+    t.set(slWord, {autoAlpha: 1}, liftAt);
+    t.to(slSlices, {clipPath: i => slFullClip(i, true), duration: LIFT_DUR, ease: LIFT_EASE, stagger: LIFT_STAGGER}, liftAt);
+    // 5. Schriftzug steht kurz, dann blendet er weich in die Seite
+    t.add(() => slEnde(), liftAt + LIFT_DUR + LIFT_STAGGER * (n - 1) + HOLD_END);
+    return t;
+  }
+  function slEnde(sanft){
+    body.classList.remove('intro');
+    gsap.to(slStage, {autoAlpha: 0, duration: sanft ? 0.7 : 1.7, ease: 'power1.inOut', onComplete: () => setTimeout(finish, 600)});
+  }
+  function slDecode(src){ return new Promise(res => { const im = new Image(); im.onload = im.onerror = () => (im.decode ? im.decode().catch(() => {}).then(res) : res()); im.src = src; setTimeout(res, 7000); }); }
+  async function slPlay(){
+    done = false; body.classList.add('intro', 'slmode'); scrollTo(0, 0); slStage.hidden = false; slStage.classList.remove('is-ready'); gsap.set(slStage, {clearProps: 'opacity,visibility'});
+    slStage.style.setProperty('--landscape', `url("${SL_LAND.src}")`);
+    slBuild();
+    try { await Promise.race([Promise.all([document.fonts.load('500 100px "Cormorant Garamond"'), slDecode(SL_LAND.src), ...SL_LIST.map(i => slDecode(`assets/intro/${i.k}.jpg`))]), new Promise(r => setTimeout(r, 8000))]); } catch (e) {}
+    if (done) return;
+    slBuild(); slStage.classList.add('is-ready');
+    slTl = slTimeline();
+  }
+  function skipIntro(){ if (done) return; if (slTl && window.gsap) { slTl.kill(); slTl = null; slEnde(true); } else finish(); }
+  function playStart(){ if (reduce) { finish(); return; } if (!window.gsap) { playLogo(); return; } slPlay(); }
+  addEventListener('resize', () => { if (!done && slTl && (document.documentElement.clientWidth + 'x' + innerHeight).split('x')[0] !== slSize.split('x')[0]) finish(); });
+  addEventListener('keydown', e => { if (!done && (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter')) skipIntro(); });
+  addEventListener('pointerdown', () => { if (!done) skipIntro(); }, {passive: true});
+  document.getElementById('replay').addEventListener('click', () => { finish(); scrollTo(0, 0); setTimeout(playStart, 120); });
   slot.addEventListener('click', e => { e.preventDefault(); scrollTo({top: 0, behavior: reduce ? 'auto' : 'smooth'}); });
 
   // Bereiche: Bilder oeffnen sich selbststaendig im Rhythmus; Hover/Klick springt dorthin und haelt an
@@ -564,7 +669,7 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   const sv = document.getElementById('schattenVideo');
   if (sv && !reduce) { const los = () => sv.play().catch(() => {}); los(); sv.addEventListener('canplay', los, {once: true}); addEventListener('pointerdown', los, {once: true}); }
   const ohneIntro = /[?&]ohneintro/.test(location.search) || sessionStorage.getItem('ferun_bearbeiten') === '1';
-  if (location.hash === '#bewerben') { zeigeAnsicht(bew, true); } else if (ohneIntro) { finish(); } else { play(); }
+  if (location.hash === '#bewerben') { zeigeAnsicht(bew, true); } else if (ohneIntro) { finish(); } else { playStart(); }
 })();
 </script>
 </body>
