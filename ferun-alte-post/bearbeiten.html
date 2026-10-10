@@ -79,6 +79,8 @@ body.intro .hero>*:not(.slot){opacity:0}
 .sl-col img{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
 .sl-lab{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);padding:0 6px;text-align:center;color:#fff;font:500 11px/1.2 "Montserrat",sans-serif;letter-spacing:.3em;text-transform:uppercase;
   text-shadow:0 1px 14px rgba(10,24,30,.7),0 0 3px rgba(10,24,30,.4);z-index:2;opacity:0}
+.sl-stage.narrow .sl-lab{font-size:9px;letter-spacing:.2em;padding:0 3px;text-shadow:0 1px 10px rgba(10,24,30,.85),0 0 4px rgba(10,24,30,.6)}
+.sl-stage.narrow .sl-col::after{background:rgba(16,32,40,.26)}
 .sl-col::after{content:"";position:absolute;inset:0;background:rgba(16,32,40,.16);z-index:1;pointer-events:none}
 .sl-wipe{position:absolute;inset:0;overflow:hidden;z-index:3}
 .sl-wipe-inner{position:absolute;inset:0;background-image:var(--landscape);background-repeat:no-repeat}
@@ -305,7 +307,7 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
 @media print{.kopf,.schatten{display:none}}
 </style>
-<link rel="stylesheet" href="webseite/assets/editor.css?v=20261010121809">
+<link rel="stylesheet" href="webseite/assets/editor.css?v=20261010122251">
 </head>
 <body>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&location.hash!=='#bewerben'&&!/[?&]ohneintro/.test(location.search)&&sessionStorage.getItem('ferun_bearbeiten')!=='1'){document.body.classList.add('intro');}</script>
@@ -463,9 +465,9 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   </div>
 </main>
 
-<script src="webseite/assets/bibliothek.js?v=20261010121809"></script>
-<script src="assets/medien-data.js?v=20261010121809" onerror="this.remove()"></script>
-<script src="webseite/assets/editor.js?v=20261010121809"></script>
+<script src="webseite/assets/bibliothek.js?v=20261010122251"></script>
+<script src="assets/medien-data.js?v=20261010122251" onerror="this.remove()"></script>
+<script src="webseite/assets/editor.js?v=20261010122251"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
 <script>
 (function(){
@@ -514,7 +516,7 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   }
 
   // ---- Einstieg: Formation Loader (Slices), langsam, mit Pausen ----
-  const SL_LIST = [{"k": "gasthaus", "label": "Gasthaus"}, {"k": "vinothek", "label": "Vinothek"}, {"k": "biergarten", "label": "Biergarten"}, {"k": "greisslerei", "label": "Greißlerei"}, {"k": "bar", "label": "Bar"}, {"k": "festsaal", "label": "Festsaal"}], SL_NARROW = [0, 1, 5];
+  const SL_LIST = [{"k": "gasthaus", "label": "Gasthaus"}, {"k": "vinothek", "label": "Vinothek"}, {"k": "biergarten", "label": "Biergarten"}, {"k": "greisslerei", "label": "Greißlerei"}, {"k": "bar", "label": "Bar"}, {"k": "festsaal", "label": "Festsaal"}];
   const SL_DEF = {"gasthaus": ["WC_W15_21x9", 30], "vinothek": ["R4C_N04_16x9", 64], "biergarten": ["H9C_HBC20_au_16x9", 45], "greisslerei": ["WC_W19_21x9", 86], "bar": ["WC_W26_3x2", 30], "festsaal": ["H9C_HBC22_fs_16x9", 62]};   // Bereich -> [Bibliotheks-Bild, Standard-Ausschnitt x in %]
   const SL_HERO_DEF = 'WC_W01_16x9';
   let slHero = {src: 'webseite/assets/bibliothek/' + SL_HERO_DEF + '.jpg', px: 50, py: 50, s: 1, nw: 1672, nh: 941};
@@ -545,9 +547,12 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
 
   function slBuild(){
     const vw = document.documentElement.clientWidth, vh = innerHeight, narrow = vw < 700 || vw / vh < 0.8;
-    const list = narrow ? SL_NARROW.map(i => slItems[i]) : slItems, n = list.length, gap = narrow ? 8 : 11;
-    const areaW = narrow ? vw * 0.88 : Math.min(vw * 0.86, 1280), areaH = vh * (narrow ? 0.6 : 0.64), w = (areaW - (n - 1) * gap) / n, left0 = (vw - areaW) / 2, top = (vh - areaH) / 2;
-    slRects = list.map((_, i) => ({l: left0 + i * (w + gap), t: top, w, h: areaH}));
+    const list = slItems, n = list.length, gap = narrow ? 8 : 11;
+    const areaW = narrow ? vw * 0.88 : Math.min(vw * 0.86, 1280), areaH = vh * (narrow ? 0.66 : 0.64), left0 = (vw - areaW) / 2, top = (vh - areaH) / 2;
+    slStage.classList.toggle('narrow', narrow);
+    // Hochkant (Handy, Tablet): 3 x 2 Felder, damit alle sechs Bereiche gross genug zu sehen sind
+    const cols = narrow ? 3 : n, rows = narrow ? 2 : 1, w = (areaW - (cols - 1) * gap) / cols, h = (areaH - (rows - 1) * gap) / rows;
+    slRects = list.map((_, i) => ({l: left0 + (i % cols) * (w + gap), t: top + Math.floor(i / cols) * (h + gap), w, h}));
     const sc = Math.max(vw / slHero.nw, vh / slHero.nh) * (slHero.s || 1), W = slHero.nw * sc, H = slHero.nh * sc, ox = (vw - W) * slHero.px / 100, oy = (vh - H) * slHero.py / 100;
     slStage.style.setProperty('--hsize', `${W}px ${H}px`); slStage.style.setProperty('--hpos', `${ox}px ${oy}px`);
     slColsBox.replaceChildren(); slSlicesBox.replaceChildren();
