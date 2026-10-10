@@ -91,7 +91,7 @@ body.intro.slmode .slot{opacity:0}
 body.bearbeiten .intro-edit{display:block;position:relative;z-index:1;padding:clamp(34px,6vh,60px) clamp(16px,4vw,48px);background:var(--paper,#F3EFE6);border-top:3px solid var(--kupfer)}
 .ie-kopf{max-width:900px;margin:0 auto 22px;text-align:center}.ie-kopf h2{font-size:clamp(26px,3vw,38px);margin:0 0 8px}.ie-kopf p{margin:0 0 14px;color:var(--navy-weich);font-size:13.5px}
 .ie-btn{background:var(--navy);color:var(--papier);border:0;padding:13px 26px;font:500 11px/1 "Montserrat",sans-serif;letter-spacing:.26em;text-transform:uppercase;cursor:pointer}
-.ie-hero{max-width:640px;margin:0 auto 22px}.ie-hero figcaption{font:500 10px/1 "Montserrat",sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--kupfer);margin:0 0 7px;text-align:center}.ie-hero .bild{position:relative;overflow:hidden;width:100%}
+.ie-heros{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:center;gap:20px;margin:0 auto 26px}.ie-hero{max-width:100%;margin:0}.ie-hero figcaption{white-space:nowrap;font:500 10px/1 "Montserrat",sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--kupfer);margin:0 0 7px;text-align:center}.ie-hero .bild{position:relative;overflow:hidden;width:100%}
 .ie-raster{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;max-width:1100px;margin:0 auto}
 .ie-f{margin:0}.ie-f figcaption{font:500 10px/1 "Montserrat",sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--kupfer);margin:0 0 7px;text-align:center}
 .ie-f .bild{position:relative;overflow:hidden;width:100%}
@@ -465,8 +465,8 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   </div>
 </main>
 
-<script src="assets/medien-data.js?v=20261010122251" onerror="this.remove()"></script>
-<script src="webseite/assets/editor.js?v=20261010122251"></script>
+<script src="assets/medien-data.js?v=20261010122607" onerror="this.remove()"></script>
+<script src="webseite/assets/editor.js?v=20261010122607"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
 <script>
 (function(){
@@ -533,13 +533,15 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
     const base = window.FERUN_MEDIA || {}, out = {};
     let db = null;
     try { db = await new Promise(res => { const rq = indexedDB.open('ferun_medien', 1); rq.onupgradeneeded = e => e.target.result.createObjectStore('m'); rq.onsuccess = e => res(e.target.result); rq.onerror = () => res(null); setTimeout(() => res(null), 1500); }); } catch (e) {}
-    for (const it of SL_LIST.concat([{k: 'hero'}])) {
+    for (const it of SL_LIST.concat([{k: 'hero'}, {k: 'hero-tablet'}, {k: 'hero-handy'}])) {
       const key = 'ferun_cs_start_intro-' + it.k; let st = Object.assign({}, base[key] || {});
       if (db) { try { const v = await new Promise(res => { const rq = db.transaction('m', 'readonly').objectStore('m').get(key); rq.onsuccess = () => res(rq.result); rq.onerror = () => res(null); }); if (v) st = Object.assign(st, v); } catch (e) {} }
-      const [def, fx] = it.k === 'hero' ? [SL_HERO_DEF, 50] : SL_DEF[it.k];
+      const [def, fx] = /^hero/.test(it.k) ? [SL_HERO_DEF, 50] : SL_DEF[it.k];
       const src = st.src ? (/^bib:/.test(st.src) ? 'webseite/assets/bibliothek/' + st.src.slice(4) : st.src) : `webseite/assets/bibliothek/${def}.jpg`;
-      out[it.k] = {src, px: st.px == null ? (st.src ? 50 : fx) : st.px, py: st.py == null ? 50 : st.py, s: st.s || 1};
+      out[it.k] = {src, px: st.px == null ? (st.src ? 50 : fx) : st.px, py: st.py == null ? 50 : st.py, s: st.s || 1, own: !!st.src};
     }
+    // Hochformat-Varianten ohne eigenes Bild nehmen das Bild des Querformat-Heros
+    for (const k of ['hero-tablet', 'hero-handy']) if (!out[k].own) out[k].src = out.hero.src;
     if (db) db.close();
     return out;
   }
@@ -604,7 +606,7 @@ body.bearbeiten .umbau-raster .bild{cursor:grab}
   function slDecode(src){ return new Promise(res => { const im = new Image(); im.onload = im.onerror = () => (im.decode ? im.decode().catch(() => {}).then(res) : res()); im.src = src; setTimeout(res, 7000); }); }
   async function slPlay(){
     done = false; body.classList.add('intro', 'slmode'); scrollTo(0, 0); slStage.hidden = false; slStage.classList.remove('is-ready'); gsap.set(slStage, {clearProps: 'opacity,visibility'});
-    const stt = await slStates(); slItems = SL_LIST.map(it => Object.assign({}, it, stt[it.k])); slHero = Object.assign({}, slHero, stt.hero);
+    const stt = await slStates(); slItems = SL_LIST.map(it => Object.assign({}, it, stt[it.k])); const vw0 = document.documentElement.clientWidth, hoch = vw0 < 700 || vw0 / innerHeight < 0.8; slHero = Object.assign({}, slHero, stt[hoch ? (vw0 < 700 ? 'hero-handy' : 'hero-tablet') : 'hero']);
     slStage.style.setProperty('--landscape', `url("${slHero.src}")`);
     await new Promise(res => { const im = new Image(); im.onload = () => { slHero.nw = im.naturalWidth; slHero.nh = im.naturalHeight; res(); }; im.onerror = res; im.src = slHero.src; setTimeout(res, 7000); });
     slBuild();
